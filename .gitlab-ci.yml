@@ -1,0 +1,60 @@
+stages:
+  - build
+  - deploy
+
+default:
+  image: node:12.13.0-alpine
+  cache:
+    paths:
+      - node_modules/
+
+before_script:
+  - npm i -g firebase-tools
+
+# development build jobs
+build_development:
+  stage: build
+  script:
+    - cd development
+    - npm i
+    - npm run build
+  only:
+    refs:
+      - development
+  artifacts:
+    paths:
+      - build
+    expire_in: 1 hour
+
+# production build jobs
+build_production:
+  stage: build
+  script:
+    - cd production
+    - npm i
+    - npm run build:prod
+  only:
+    refs:
+      - production
+  artifacts:
+    paths:
+      - build
+    expire_in: 1 hour
+
+# development deploy jobs
+deploy_development:
+  stage: deploy
+  script:
+    - firebase deploy --only hosting:development --token $FIREBASE_TOKEN
+  only:
+    refs:
+      - development
+
+# production deploy jobs
+deploy_production:
+  stage: deploy
+  script:
+    - firebase deploy --only hosting:testing --token $FIREBASE_TOKEN
+  only:
+    refs:
+      - production

@@ -17,6 +17,7 @@
     "draft-convert": "^2.1.13",
     "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",
+    "env-cmd": "^10.1.0",
     "formik": "^2.2.9",
     "html-to-draftjs": "^1.5.0",
     "html-to-text": "^9.0.4",
@@ -42,11 +43,12 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "dev": "env-cmd -f development.env react-scripts start",
+    "start": "env-cmd -f production.env react-scripts start",
+    "build": "env-cmd -f development.env react-scripts build",
+    "build:prod": "env-cmd -f production.env react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "deploy": "npm run build && firebase deploy"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [

@@ -1,8 +1,6 @@
-// staging
-export const host = 'https://parami-project.herokuapp.com/api'
+export const host = process.env.REACT_APP_BACKEND_API
 
-// development
-// export const host = 'https://parami-dev-project.herokuapp.com/api'
+console.log({host});
 
 // auth api
 export const authRoute = `${host}/auth`
