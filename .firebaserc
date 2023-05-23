@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "parami-project"
+  },
+  "targets": {
+    "parami-project": {
+      "hosting": {
+        "development": [
+          "parami-project-dev"
+        ],
+        "testing": ["parami-project"]
+      }
+    }
+  }
+}
