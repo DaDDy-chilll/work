@@ -17,7 +17,7 @@ build_development:
   script:
     - npm i
     - CI=false 
-    - REACT_APP_BACKEND_API = $DEVELOPMENT_BACKEND_API
+    # - REACT_APP_BACKEND_API = $DEVELOPMENT_BACKEND_API
     - npm run build
   only:
     refs:
@@ -33,8 +33,8 @@ build_production:
   script:
     - npm i
     - CI=false 
-    - REACT_APP_BACKEND_API = $PRODUCTION_BACKEND_API
-    - npm run build
+    # - REACT_APP_BACKEND_API = $PRODUCTION_BACKEND_API
+    - npm run build:prod
   only:
     refs:
       - production
