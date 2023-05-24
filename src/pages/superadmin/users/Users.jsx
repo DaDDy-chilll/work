@@ -39,7 +39,7 @@ const Users = () => {
           color="primary"
           onClick={setOpen}
         >
-          Create New User <AddOutlinedIcon sx={{ ml: "5px" }} />
+          Create New User (dev) <AddOutlinedIcon sx={{ ml: "5px" }} />
         </Button>
       </Box>
 

@@ -1,0 +1,32 @@
+[debug] [2023-05-24T03:32:00.828Z] ----------------------------------------------------------------------
+[debug] [2023-05-24T03:32:00.835Z] Command:       /usr/local/bin/node /usr/local/bin/firebase login:ci
+[debug] [2023-05-24T03:32:00.836Z] CLI Version:   12.0.0
+[debug] [2023-05-24T03:32:00.837Z] Platform:      linux
+[debug] [2023-05-24T03:32:00.838Z] Node Version:  v18.15.0
+[debug] [2023-05-24T03:32:00.839Z] Time:          Wed May 24 2023 10:02:00 GMT+0630 (Myanmar Time)
+[debug] [2023-05-24T03:32:00.839Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-05-24T03:32:00.849Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[warn] ⚠  Authenticating with a `login:ci` token is deprecated and will be removed in a future major version of `firebase-tools`. Instead, use a service account key with `GOOGLE_APPLICATION_CREDENTIALS`: https://cloud.google.com/docs/authentication/getting-started 
+[info] 
+[info] Visit this URL on this device to log in:
+[info] https://accounts.google.com/o/oauth2/auth?client_id=563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com&scope=email%20openid%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloudplatformprojects.readonly%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffirebase%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloud-platform&response_type=code&state=24596966&redirect_uri=http%3A%2F%2Flocalhost%3A9005
+[info] 
+[info] Waiting for authentication...
+[debug] [2023-05-24T03:33:23.982Z] >>> [apiv2][query] POST https://accounts.google.com/o/oauth2/token [none]
+[debug] [2023-05-24T03:33:23.982Z] >>> [apiv2][body] POST https://accounts.google.com/o/oauth2/token [omitted]
+[debug] [2023-05-24T03:33:24.279Z] <<< [apiv2][status] POST https://accounts.google.com/o/oauth2/token 200
+[debug] [2023-05-24T03:33:24.279Z] <<< [apiv2][body] POST https://accounts.google.com/o/oauth2/token [omitted]
+[info] 
+[info] ✔  Success! Use this token to login on a CI server:
+
+1//0gAfbG_QHJJPaCgYIARAAGBASNwF-L9IrXeOYyBy7v7ILZECxQAOU_WjfCZPhUdTkSye4fMSLr8Bn5h0cPvOH9svC5mbS9BR529U
+
+Example: firebase deploy --token "$FIREBASE_TOKEN"
+ 
+[debug] [2023-05-24T03:33:32.119Z] Error: Timed out.
+    at Timeout.<anonymous> (/usr/local/lib/node_modules/firebase-tools/lib/utils.js:253:49)
+    at listOnTimeout (node:internal/timers:569:17)
+    at process.processTimers (node:internal/timers:512:7)
+[error] 
+[error] Error: An unexpected error has occurred.
