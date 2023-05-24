@@ -16,7 +16,9 @@ build_development:
   stage: build
   script:
     - npm i
-    - CI=false npm run build
+    - CI=false 
+    - REACT_APP_BACKEND_API = $DEVELOPMENT_BACKEND_API
+    - npm run build
   only:
     refs:
       - development
@@ -30,7 +32,9 @@ build_production:
   stage: build
   script:
     - npm i
-    - CI=false npm run build:prod
+    - CI=false 
+    - REACT_APP_BACKEND_API = $PRODUCTION_BACKEND_API
+    - npm run build
   only:
     refs:
       - production
