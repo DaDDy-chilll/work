@@ -47,7 +47,7 @@ build_production:
 deploy_development:
   stage: deploy
   script:
-    - firebase deploy --only hosting:development -non-interactive  --token $FIREBASE_TOKEN
+    - firebase deploy --only hosting:development --token "$FIREBASE_TOKEN"
   only:
     refs:
       - development
@@ -56,7 +56,7 @@ deploy_development:
 deploy_production:
   stage: deploy
   script:
-    - firebase deploy --only hosting:testing -non-interactive  --token $FIREBASE_TOKEN
+    - firebase deploy --only hosting:testing --token "$FIREBASE_TOKEN"
   only:
     refs:
       - production
