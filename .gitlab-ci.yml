@@ -33,7 +33,7 @@ deploy_development:
   stage: deploy
   script:
     - firebase deploy
-        --token $FIREBASE_TOKEN
+        --token "$FIREBASE_TOKEN"
         --message "Pipeline $CI_PIPELINE_ID, build $CI_BUILD_ID"
         --non-interactive
         --only hosting
