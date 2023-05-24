@@ -16,7 +16,7 @@ build_development:
   stage: build
   script:
     - npm i
-    - npm run build
+    - CI=false npm run build
   only:
     refs:
       - development
@@ -30,7 +30,7 @@ build_production:
   stage: build
   script:
     - npm i
-    - npm run build:prod
+    - CI=false npm run build:prod
   only:
     refs:
       - production
