@@ -10,7 +10,10 @@ export const getColumns = () => {
     
         { field: "email", headerName: "Email", width: 350 },
     
-        { field: "department", headerName: "Department", width: 300 },
+        { 
+            field: "department", headerName: "Department", width: 300,
+            valueGetter: ({ value }) => value.name
+        },
     
         { field: "jobLabel", headerName: "Job Label", width: 200 },
     

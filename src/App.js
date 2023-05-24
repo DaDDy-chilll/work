@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import { useMode } from './utils/theme';
 import { ThemeProvider } from '@mui/material';
 
-import { documentAccess, groupAccess, normalAccess, userAccess } from './utils/accessControl';
+import { departmentAccess, documentAccess, groupAccess, normalAccess, userAccess } from './utils/accessControl';
 
 import RequireAuth from './utils/RequireAuth';
 import Login from './pages/auth/Login';
@@ -26,6 +26,7 @@ import GroupDetail from './pages/superadmin/groups/GroupDetail';
 import RightDrawer from './components/mains/RightDrawer';
 import ToAcknowledge from './pages/admin/ToAcknowledge';
 import Inbox from './pages/admin/Inbox';
+import Departments from './pages/superadmin/departments/Departments';
 
 function App() {
   const [theme] = useMode()
@@ -71,6 +72,11 @@ function App() {
         <Route path='/work-flows' element={<RequireAuth allowedRoles={groupAccess} />}>
           <Route path='' element={<Groups />} />
           <Route path=':id' element={<GroupDetail />} />
+        </Route>
+
+        <Route path='/departments' element={<RequireAuth allowedRoles={departmentAccess} />}>
+          <Route path='' element={<Departments />} />
+          {/* <Route path=':id' element={<GroupDetail />} /> */}
         </Route>
 
         <Route path='/login' element={<Login />} />

@@ -3,7 +3,7 @@ import { Box, Button } from '@mui/material'
 import React from 'react'
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { documentAccess, groupAccess, normalAccess, userAccess } from '../../utils/accessControl'
+import { departmentAccess, documentAccess, groupAccess, normalAccess, userAccess } from '../../utils/accessControl'
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
     return (
@@ -27,7 +27,8 @@ const Navbar = ({ me }) => {
         isActive("inbox") ? "Inbox" :
         isActive("to-acknowledge") ? "To Acknowledge" :
         isActive("users") ? "Users" :
-        isActive("work-flows") ? "Work Flows" : "My Requests"
+        isActive("work-flows") ? "Work Flows" : 
+        isActive("departments") ? "Departments" : "My Requests"
     );
 
     return (
@@ -57,6 +58,10 @@ const Navbar = ({ me }) => {
             {
                 groupAccess.includes(me.role) &&
                 <Item title="Work Flows" to="/work-flows" selected={selected} setSelected={setSelected} icon={<Groups sx={{ mr: 1 }} />} />
+            }
+            {
+                departmentAccess.includes(me.role) &&
+                <Item title="Departments" to="/departments" selected={selected} setSelected={setSelected} icon={<Groups sx={{ mr: 1 }} />} />
             }
         </Box>
     )

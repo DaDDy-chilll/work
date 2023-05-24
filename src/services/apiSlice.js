@@ -10,6 +10,6 @@ export const apiSlice = createApi({
             headers.set('Authorization', "Bearer " + Cookies.get('accessToken'));
         },
     }),
-    tagTypes: ['Document', 'User', 'Group'],
+    tagTypes: ['Document', 'User', 'Group', 'Department'],
     endpoints: builder => ({})
 })

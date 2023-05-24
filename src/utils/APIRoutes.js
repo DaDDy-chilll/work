@@ -11,6 +11,9 @@ export const userRoute = `${host}/users`
 // group api
 export const groupRoute = `${host}/reviewer-groups`
 
+// group api
+export const departmentRoute = `${host}/departments`
+
 // document api
 export const documentRoute = `${host}/documents`
 

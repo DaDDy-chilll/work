@@ -30,18 +30,18 @@ const Groups = () => {
     dataTable = <DataTable loading={groupsLoading} rows={groupsData && groupsData.payload} columns={columns} />
   }
 
-  // fetch clinical admins
-  const { isLoading: clinicalAdminsLoading, data: clinicalAdmins, error: clinicalAdminsError } = useGetClinicalAdminsQuery()
-  const { isLoading: BOMsLoading, data: BOMs, error: BOMsError } = useGetBOMsQuery()
-  const { isLoading: FADsLoading, data: FADs, error: FADsError } = useGetFADsQuery()
+  // // fetch clinical admins
+  // const { isLoading: clinicalAdminsLoading, data: clinicalAdmins, error: clinicalAdminsError } = useGetClinicalAdminsQuery()
+  // const { isLoading: BOMsLoading, data: BOMs, error: BOMsError } = useGetBOMsQuery()
+  // const { isLoading: FADsLoading, data: FADs, error: FADsError } = useGetFADsQuery()
 
-  let createForm;
+  // let createForm;
 
-  if (clinicalAdminsError || BOMsError || FADsError) {
-    toast.error(clinicalAdminsError.data.message, toastOptions)
-  } else {
-    createForm = <CreateGroup loading={clinicalAdminsLoading} clinicalAdmins={clinicalAdmins && clinicalAdmins.payload} BOMs={BOMs && BOMs.payload} FADs={FADs && FADs.payload} setClose={setClose} isOpen={isOpen} />
-  }
+  // if (clinicalAdminsError || BOMsError || FADsError) {
+  //   toast.error(clinicalAdminsError.data.message, toastOptions)
+  // } else {
+  //   createForm = <CreateGroup loading={clinicalAdminsLoading} clinicalAdmins={clinicalAdmins && clinicalAdmins.payload} BOMs={BOMs && BOMs.payload} FADs={FADs && FADs.payload} setClose={setClose} isOpen={isOpen} />
+  // }
 
   return (
     <Box>
@@ -62,7 +62,7 @@ const Groups = () => {
 
       {dataTable}
 
-      {createForm}
+      {/* {createForm} */}
 
     </Box>
   )

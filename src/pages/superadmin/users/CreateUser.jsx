@@ -10,6 +10,8 @@ import UserForm from '../../../forms/UserForm';
 import { initialCreateValues } from '../../../schemas/User.schema';
 import { apiSlice } from '../../../services/apiSlice';
 import { useDispatch } from 'react-redux';
+import { useGetDepartmentsQuery } from '../../../services/departmentSlice';
+import Loading from '../../../components/mains/Loading';
 
 const CreateUser = ({ setClose, isOpen }) => {
 
@@ -19,6 +21,12 @@ const CreateUser = ({ setClose, isOpen }) => {
 
   const dispatch = useDispatch()
 
+  const { isLoading, data, error } = useGetDepartmentsQuery()
+
+  if (error) {
+    toast.error(error.data.message, toastOptions)
+  }
+
   const handleFormSubmit = async (values) => {
 
     const {
@@ -27,60 +35,12 @@ const CreateUser = ({ setClose, isOpen }) => {
     } =
       values;
 
-    /*
-    let permissions;
-
-    if (role === "executive") {
-      permissions = {
-        admin: {
-          approve: adminApprove,
-          reject: adminReject,
-          verify: adminVerify
-        },
-        fad: {
-          approve: financeApprove,
-          reject: financeReject,
-          verify: financeVerify,
-          acknowledge: financeAcknowledge
-        }
-      }
-    }
-    if (role === "fad") {
-      permissions = {
-        fad: {
-          approve: financeApprove,
-          reject: financeReject,
-          verify: financeVerify,
-          acknowledge: financeAcknowledge
-        }
-      }
-    }
-
-    if (role === "admin") {
-      permissions = {
-        admin: {
-          approve: adminApprove,
-          reject: adminReject,
-          verify: adminVerify
-        }
-      }
-    }
-
-    if (role === "normal") {
-      permissions = {}
-    }
-    
-    if (permissions) {
-
-    }
-    */
-
     try {
       setBtnLoading(true)
       const { data } = await axios.post(`${authRoute}/register`,
         {
           name, email, password, jobLabel,
-          department: department === "CUSTOM" ? customDepartment : department,
+          department,
           permissions: {
             canApprove, canEdit, canPrepare, canVerify
           }
@@ -117,14 +77,18 @@ const CreateUser = ({ setClose, isOpen }) => {
         Create New User
       </DialogTitle>
       <DialogContent>
-        <UserForm 
+        {
+          isLoading ? <Loading /> :
+          <UserForm 
           btnLoading={btnLoading} 
           handleFormSubmit={handleFormSubmit} 
           setClose={setClose} 
           loading={false} 
           initialValues={initialCreateValues} 
           isEdit={false}
+          departments={data && data.payload}
         />
+        }
       </DialogContent>
     </Dialog>
   )
