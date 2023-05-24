@@ -15,7 +15,6 @@ before_script:
 build_development:
   stage: build
   script:
-    - cd development
     - npm i
     - npm run build
   only:
@@ -30,7 +29,6 @@ build_development:
 build_production:
   stage: build
   script:
-    - cd production
     - npm i
     - npm run build:prod
   only:
