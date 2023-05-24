@@ -31,8 +31,8 @@ build_development:
 deploy_development:
   stage: deploy
   script:
-    - firebase use parami-project --token "$FIREBASE_TOKEN"
-    - firebase deploy --only hosting:development --message "Pipeline $CI_PIPELINE_ID, build $CI_BUILD_ID" --token "$FIREBASE_TOKEN"
+    - firebase use parami-project --token $FIREBASE_TOKEN
+    - firebase deploy --only hosting:development --message "Pipeline $CI_PIPELINE_ID, build $CI_BUILD_ID" --token $FIREBASE_TOKEN
     # - firebase deploy --only hosting:development --token "$FIREBASE_TOKEN"
   only:
     refs:
