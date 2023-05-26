@@ -8,16 +8,6 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
       providesTags: (result, error, arg) => ["Group"]
     }),
 
-    getAdminGroups: builder.query({
-      query: () => '/reviewer-groups/approval-eligibility/admin',
-      providesTags: (result, error, arg) => ["Group"]
-    }),
-
-    getFadGroups: builder.query({
-      query: () => '/reviewer-groups/approval-eligibility/fad',
-      providesTags: (result, error, arg) => ["Group"]
-    }),
-
     getGroup: builder.query({
       query: (id) => `/reviewer-groups/${id}`,
     }),
@@ -25,4 +15,4 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
   })
 })
 
-export const { useGetGroupsQuery, useGetAdminGroupsQuery, useGetFadGroupsQuery, useGetGroupQuery } = extendedApiSlice
+export const { useGetGroupsQuery, useGetGroupQuery } = extendedApiSlice

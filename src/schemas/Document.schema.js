@@ -3,8 +3,6 @@ import * as yup from "yup";
 export const checkoutSchema = yup.object().shape({
     name: yup.string().required("Name is required"),
     description: yup.string().required("Description is required"),
-    type: yup.string().required("Payment Type is required"),
-    amount: yup.number().positive().required("Amount is required"),
     attachments: yup.mixed()
     .nullable(),
     // .notRequired()
@@ -19,6 +17,7 @@ export const claimCheckoutSchema = yup.object().shape({
     name: yup.string().required("Name is required"),
     description: yup.string().required("Description is required"),
     amount: yup.number().positive().required("Amount is required"),
+    type: yup.string().required("Payment Type is required"),
     attachments: yup.mixed()
     .nullable(),
 });
@@ -26,8 +25,6 @@ export const claimCheckoutSchema = yup.object().shape({
 export const initialCreateValues = {
     name: "",
     description: "",
-    type: "",
-    amount: 0,
     attachments: [],
     // groupId: "",
 };

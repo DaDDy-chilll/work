@@ -71,10 +71,10 @@ const ActionForm = ({
 
                         {/* NO PERMISSIONS */}
                         {/* REQUESTED_REVISION => no permissions */}
-                        {
+                        {/* {
                             reviewer.department !== "OFFICE_ADMIN" &&
                             <Action action="revision" icon={<FlipCameraAndroidOutlined sx={{ fontSize: 40, color: colors.purple[800] }} />} selected={selected} setSelected={setSelected} />
-                        }                       
+                        }                        */}
 
                         {/* COMMENTED => no permissions */}
                         <Action action="comment" icon={<SmsOutlined sx={{ fontSize: 40, color: colors.darkYellow[800] }} />} selected={selected} setSelected={setSelected} />
@@ -85,7 +85,7 @@ const ActionForm = ({
 
                         {/* SELECT REVIEWER GROUP */}
                         {
-                            selected === "approve" && reviewer.department === "OFFICE_ADMIN" &&
+                            selected === "approve" && reviewer.reviewer.department.isStartingDepartment &&
                             <FormControl variant="filled" sx={{ gridColumn: "span 4" }}>
                                 <InputLabel id="demo-simple-select-filled-label">
                                     Select Work Flow

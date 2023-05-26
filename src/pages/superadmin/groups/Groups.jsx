@@ -8,14 +8,13 @@ import { useDisclosure } from '../../../hooks/dialog'
 import { useGetGroupsQuery } from '../../../services/groupSlice'
 import { toastOptions } from '../../../utils/toastOptions'
 import DataTable from '../../../components/tables/DataTable'
-import { useGetBOMsQuery, useGetClinicalAdminsQuery, useGetFADsQuery, useGetUsersQuery } from '../../../services/userSlice'
 import PageTitle from '../../../components/mains/PageTitle'
-import CreateGroup from './CreateGroup'
 import { getColumns } from '../../../columns/Group.columns'
+import { Link } from 'react-router-dom'
 
 const Groups = () => {
 
-  const { isOpen, setOpen, setClose } = useDisclosure()
+  const { setOpen } = useDisclosure()
 
   // fetch groups
   const { isLoading: groupsLoading, data: groupsData, error: groupsError } = useGetGroupsQuery()
@@ -30,39 +29,28 @@ const Groups = () => {
     dataTable = <DataTable loading={groupsLoading} rows={groupsData && groupsData.payload} columns={columns} />
   }
 
-  // // fetch clinical admins
-  // const { isLoading: clinicalAdminsLoading, data: clinicalAdmins, error: clinicalAdminsError } = useGetClinicalAdminsQuery()
-  // const { isLoading: BOMsLoading, data: BOMs, error: BOMsError } = useGetBOMsQuery()
-  // const { isLoading: FADsLoading, data: FADs, error: FADsError } = useGetFADsQuery()
-
-  // let createForm;
-
-  // if (clinicalAdminsError || BOMsError || FADsError) {
-  //   toast.error(clinicalAdminsError.data.message, toastOptions)
-  // } else {
-  //   createForm = <CreateGroup loading={clinicalAdminsLoading} clinicalAdmins={clinicalAdmins && clinicalAdmins.payload} BOMs={BOMs && BOMs.payload} FADs={FADs && FADs.payload} setClose={setClose} isOpen={isOpen} />
-  // }
-
   return (
     <Box>
       <PageTitle title={"Work Flows"} />
 
       <Box sx={{ display: "flex", justifyContent: "right" }}>
-        <Button
-          className="no-underline"
-          variant="contained"
-          color="primary"
-          onClick={setOpen}
-        >
-          Create New Work Flow <AddOutlined sx={{ ml: "5px" }} />
-        </Button>
+
+        <Link to="/work-flows/create" style={{ textDecoration: "none" }}>
+          <Button
+            className="no-underline"
+            variant="contained"
+            color="primary"
+            onClick={setOpen}
+          >
+            Create New Work Flow <AddOutlined sx={{ ml: "5px" }} />
+          </Button>
+        </Link>
+
       </Box>
 
       <ToastContainer />
 
       {dataTable}
-
-      {/* {createForm} */}
 
     </Box>
   )

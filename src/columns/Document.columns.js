@@ -32,15 +32,15 @@ export const getColumns = () => {
         //     width: 150
         // },
 
-        {
-            field: "amount", headerName: "Amount",
-            width: 150,
-            renderCell: ({ value }) => (
-                <Typography>
-                    {value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} MMK
-                </Typography>
-            )
-        },
+        // {
+        //     field: "amount", headerName: "Amount",
+        //     width: 150,
+        //     renderCell: ({ value }) => (
+        //         <Typography>
+        //             {value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} MMK
+        //         </Typography>
+        //     )
+        // },
 
         {
             field: "isCaseClosed", headerName: "Case",
@@ -100,7 +100,7 @@ export const getColumns = () => {
                         <Typography
                             sx={{ color: textColor ? textColor : colors.grey[600] }}
                         >
-                            {value.action} by {value.actor.name} ({value.department})
+                            {value.action} by {value.actor.name} ({value.department.name})
                         </Typography>
                     </Box>
                 )

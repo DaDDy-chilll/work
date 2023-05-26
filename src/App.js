@@ -27,6 +27,7 @@ import RightDrawer from './components/mains/RightDrawer';
 import ToAcknowledge from './pages/admin/ToAcknowledge';
 import Inbox from './pages/admin/Inbox';
 import Departments from './pages/superadmin/departments/Departments';
+import CreateGroup from './pages/superadmin/groups/CreateGroup';
 
 function App() {
   const [theme] = useMode()
@@ -71,6 +72,7 @@ function App() {
 
         <Route path='/work-flows' element={<RequireAuth allowedRoles={groupAccess} />}>
           <Route path='' element={<Groups />} />
+          <Route path='create' element={<CreateGroup />} />
           <Route path=':id' element={<GroupDetail />} />
         </Route>
 

@@ -1,4 +1,4 @@
-export const host = process.env.REACT_APP_BACKEND_API
+export const host = "https://parami-dev-project.herokuapp.com/api"
 
 console.log({host});
 

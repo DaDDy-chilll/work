@@ -30,7 +30,7 @@ const CreateUser = ({ setClose, isOpen }) => {
   const handleFormSubmit = async (values) => {
 
     const {
-      name, email, password, jobLabel, department, customDepartment,
+      name, email, password, jobLabel, department,
       canApprove, canEdit, canPrepare, canVerify
     } =
       values;
@@ -43,7 +43,7 @@ const CreateUser = ({ setClose, isOpen }) => {
           department,
           permissions: {
             canApprove, canEdit, canPrepare, canVerify
-          }
+          },
         },
         {
           headers: {

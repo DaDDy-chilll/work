@@ -49,7 +49,7 @@ const Item = ({ remark, revisions, me, scrollToRef, handleAcknowledge, btnLoadin
                     <ApartmentOutlined fontSize='small' />
                     <Typography variant='h6'>
 
-                        {remark.actor.department}
+                        {remark.actor.department.name}
                     </Typography>
                 </Box>
             </Box>

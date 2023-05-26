@@ -3,156 +3,99 @@ import Cookies from "js-cookie";
 import React, { useState } from "react";
 import { groupRoute } from "../../../utils/APIRoutes";
 import { toastOptions } from "../../../utils/toastOptions";
-import { toast } from "react-toastify";
-import { Dialog, DialogContent, DialogTitle } from "@mui/material";
-import Loading from "../../../components/mains/Loading";
-import GroupForm from "../../../forms/GroupForm";
-import { useDispatch } from "react-redux";
-import { apiSlice } from "../../../services/apiSlice";
+import { ToastContainer, toast } from "react-toastify";
+import { Box, Button } from "@mui/material";
+import PageTitle from "../../../components/mains/PageTitle";
+import { Link } from "react-router-dom";
+import DepartmentFlowForm from "../../../forms/DepartmentFlowForm";
+import { colors } from "../../../utils/theme";
+import { useDisclosure } from "../../../hooks/dialog";
+import WorkFlowForm from "../../../forms/WorkFlowForm";
+import { Formik } from "formik";
+import { checkoutSchema, initialValues } from "../../../schemas/Group.schema";
 
-const CreateGroup = ({ setClose, isOpen, clinicalAdmins, BOMs, FADs, loading }) => {
+const CreateGroup = () => {
 
   const accessToken = Cookies.get('accessToken')
 
-  const [btnLoading, setBtnLoading] = useState(false)
+  const { isOpen, setOpen, setClose } = useDisclosure()
 
-  const [selectedOptions, setSelectedOptions] = useState([]);
+  const [selectDepartments, setSelectDepartments] = useState([])
 
-  const handleSelect = (selectedList, selectedItem) => {
-    setSelectedOptions(selectedList);
-  };
+  const handleDepartmentChange = (e) => {
+
+    if (e.target.checked === true) {
+      setSelectDepartments((prev) => ([
+        ...prev.filter(selectedDepartment => selectedDepartment.name !== e.target.name),
+        {
+          _id: e.target.name,
+          name: e.target.value,
+          order: prev.length
+        }
+      ]))
+
+    } else if (e.target.checked === false) {
+      setSelectDepartments(
+        prev => prev.filter(selectedDepartment => selectedDepartment._id !== e.target.name)
+          .map((department, index) => ({
+            ...department,
+            order: index
+          }))
+      )
+    }
+  }
 
   const [selectedUsers, setSelectedUsers] = useState([])
 
-  const handleSelectChange = ({ reviewer, checked, department }) => {
-
+  const handleSelectChange = ({ userId, userName, departmentId, departmentName, checked }) => {
     if (checked === true) {
       setSelectedUsers((prev) => ([
         ...prev,
-        { reviewer, department, index: prev.length }
+        { userId, name: userName, departmentId, departmentName, index: prev.length }
       ]))
 
     } else if (checked === false) {
-      setSelectedUsers(prev => prev.filter(user => user.reviewer !== reviewer).map((user, index) => ({
+      console.log('ok');
+      setSelectedUsers(prev => prev.filter(user => user.userId !== userId).map((user, index) => ({
         ...user,
         index
       })))
     }
-
   }
 
-  const handleApproveClick = ({ reviewer, checked, department }) => {
-
-    if (checked === true) {
-      setSelectedUsers((prev) => ([
-        ...selectedUsers.filter(selectedUser => selectedUser.reviewer !== reviewer),
-
-        ...selectedUsers.filter(selectedUser => selectedUser.reviewer === reviewer).map((user, index) => ({
-          ...user,
-          canApprove: true
-        }))
-      ]))
-
-    } else if (checked === false) {
-      setSelectedUsers((prev) => ([
-        ...selectedUsers.filter(selectedUser => selectedUser.reviewer !== reviewer),
-
-        ...selectedUsers.filter(selectedUser => selectedUser.reviewer === reviewer).map((user, index) => ({
-          ...user,
-          canApprove: false
-        }))
-      ]))
+  const departments = selectDepartments.map((department) => {
+    return {
+      name: department.name,
+      users: selectedUsers.filter(user => {
+        if(user.departmentId === department._id){
+          return user
+        }
+      })
     }
-
-  }
-
-  const handleVerifyClick = ({ reviewer, checked, department }) => {
-
-    if (checked === true) {
-      setSelectedUsers((prev) => ([
-        ...selectedUsers.filter(selectedUser => selectedUser.reviewer !== reviewer),
-
-        ...selectedUsers.filter(selectedUser => selectedUser.reviewer === reviewer).map((user, index) => ({
-          ...user,
-          canVerify: true
-        }))
-      ]))
-
-    } else if (checked === false) {
-      setSelectedUsers((prev) => ([
-        ...selectedUsers.filter(selectedUser => selectedUser.reviewer !== reviewer),
-
-        ...selectedUsers.filter(selectedUser => selectedUser.reviewer === reviewer).map((user, index) => ({
-          ...user,
-          canVerify: false
-        }))
-      ]))
-    }
-
-  }
-
-  const handleEditClick = ({ reviewer, checked, department }) => {
-
-    if (checked === true) {
-      setSelectedUsers((prev) => ([
-        ...selectedUsers.filter(selectedUser => selectedUser.reviewer !== reviewer),
-
-        ...selectedUsers.filter(selectedUser => selectedUser.reviewer === reviewer).map((user, index) => ({
-          ...user,
-          canEdit: true
-        }))
-      ]))
-
-    } else if (checked === false) {
-      setSelectedUsers((prev) => ([
-        ...selectedUsers.filter(selectedUser => selectedUser.reviewer !== reviewer),
-
-        ...selectedUsers.filter(selectedUser => selectedUser.reviewer === reviewer).map((user, index) => ({
-          ...user,
-          canEdit: false
-        }))
-      ]))
-    }
-
-  }
-
-  const handlePrepareClick = ({ reviewer, checked, department }) => {
-
-    if (checked === true) {
-      setSelectedUsers((prev) => ([
-        ...prev.filter(selectedUser => selectedUser.reviewer !== reviewer),
-
-        ...prev.filter(selectedUser => selectedUser.reviewer === reviewer).map((user, index) => ({
-          ...user,
-          canPrepare: true
-        }))
-      ]))
-
-    } else if (checked === false) {
-      setSelectedUsers((prev) => ([
-        ...selectedUsers.filter(selectedUser => selectedUser.reviewer !== reviewer),
-
-        ...selectedUsers.filter(selectedUser => selectedUser.reviewer === reviewer).map((user, index) => ({
-          ...user,
-          canPrepare: false
-        }))
-      ]))
-    }
-
-  }
-
-  const dispatch = useDispatch()
+  })
 
   const handleFormSubmit = async (values) => {
     const { groupName } = values
 
+    const departmentOrders = selectDepartments.map((department) => ({
+      department: department._id, 
+      index: department.order
+    }))
+
+    const reviewers = selectedUsers.map((user) => ({
+      reviewer: user.userId,
+      department: user.departmentId,
+      index: user.index
+    }))
+
+    // console.log({ reviewers: selectedUsers });
     try {
-      setBtnLoading(true)
 
       const { data } = await axios.post(groupRoute,
         {
           name: groupName,
-          reviewers: selectedUsers
+          reviewers,
+          departmentOrders
         },
         {
           headers: {
@@ -161,47 +104,79 @@ const CreateGroup = ({ setClose, isOpen, clinicalAdmins, BOMs, FADs, loading }) 
         }
       );
 
-      setBtnLoading(false)
-
-      setClose()
+      // setClose()
 
       toast.success(data.message, toastOptions);
 
-      return dispatch(apiSlice.util.invalidateTags(["Group"]))
+      // return dispatch(apiSlice.util.invalidateTags(["Group"]))
 
     } catch (err) {
-      setBtnLoading(false)
       return toast.error(err.response.data.message, toastOptions);
     }
   }
 
   return (
-    <Dialog maxWidth={"lg"} open={isOpen} onClose={setClose}>
-      <DialogTitle variant='h2' fontWeight='bold' sx={{ mb: "5px", textTransform: 'uppercase' }}>Create New Work Flow</DialogTitle>
-      <DialogContent>
-        {
-          loading ? <Loading /> :
-            <GroupForm
-              handleSelectChange={handleSelectChange}
-              handleApproveClick={handleApproveClick}
-              handleVerifyClick={handleVerifyClick}
-              handleEditClick={handleEditClick}
-              handlePrepareClick={handlePrepareClick}
-              selectedUsers={selectedUsers}
+    <Box>
+      <PageTitle title="Create Form" />
 
-              clinicalAdmins={clinicalAdmins}
-              BOMs={BOMs}
-              FADs={FADs}
-              btnLoading={btnLoading}
-              handleFormSubmit={handleFormSubmit}
-              setClose={setClose}
-              loading={false}
-              handleSelect={handleSelect}
-              selectedOptions={selectedOptions}
-            />
-        }
-      </DialogContent>
-    </Dialog>
+      <Box sx={{ display: "flex", justifyContent: "right", mb: "20px", mx: "20px" }}>
+        <Link to="/work-flows" style={{ textDecoration: "none" }}>
+          <Button
+            className="no-underline"
+            variant="contained"
+            color="primary"
+          >
+            Back
+          </Button>
+        </Link>
+      </Box>
+
+      <ToastContainer />
+
+      <Box bgcolor={colors.white[100]} m="20px" p="20px" borderRadius="10px">
+        <Formik
+          onSubmit={handleFormSubmit}
+          initialValues={initialValues}
+          validationSchema={checkoutSchema}
+        >
+          {({
+            values,
+            errors,
+            touched,
+            handleBlur,
+            handleChange,
+            handleSubmit,
+          }) => (
+            <form onSubmit={handleSubmit} style={{ height: "auto" }}>
+              {
+                !isOpen &&
+                <DepartmentFlowForm
+                  selectDepartments={selectDepartments}
+                  handleDepartmentChange={handleDepartmentChange}
+                  setOpen={setOpen}
+
+                  values={values}
+                  errors={errors}
+                  touched={touched}
+                  handleBlur={handleBlur}
+                  handleChange={handleChange}
+                />
+              }
+              {
+                isOpen &&
+                <WorkFlowForm
+                  selectDepartments={selectDepartments}
+                  selectedUsers={selectedUsers}
+                  departments={departments}
+                  handleSelectChange={handleSelectChange}
+                  setClose={setClose}
+                />
+              }
+            </form>
+          )}
+        </Formik>
+      </Box>
+    </Box>
   )
 }
 

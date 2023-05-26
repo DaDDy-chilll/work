@@ -6,10 +6,4 @@ export const checkoutSchema = yup.object().shape({
 
 export const initialValues = {
     groupName: "",
-    clinicalAdmin1: {
-        canApprove: false,
-        canEdit: false,
-        canPrepare: false,
-        canVerify: false
-    }
 };

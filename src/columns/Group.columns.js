@@ -9,9 +9,9 @@ export const getColumns = () => {
         {
             field: "_id",
             headerName: "Actions",
-            renderCell: ({ row }) =>
+            renderCell: ({ value }) =>
             (
-                <GroupActionBtn row={row} /> 
+                <GroupActionBtn id={value} /> 
             ),
         }
     ];
