@@ -3,7 +3,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import React, { useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 // icon
 import { documentRoute } from '../../utils/APIRoutes';
@@ -12,6 +12,8 @@ import PageTitle from '../../components/mains/PageTitle';
 import RequestForm from '../../forms/RequestForm';
 import { useGetDocumentQuery } from '../../services/documentSlice';
 import { colors } from '../../utils/theme';
+import { useDispatch } from 'react-redux';
+import { apiSlice } from '../../services/apiSlice';
 
 const EditRequest = ({ status, path }) => {
 
@@ -20,6 +22,10 @@ const EditRequest = ({ status, path }) => {
     const [btnLoading, setBtnLoading] = useState(false)
 
     const { id } = useParams()
+
+    const navigate = useNavigate()
+
+    const dispatch = useDispatch()
 
     const handleFormSubmit = async (values) => {
 
@@ -53,7 +59,12 @@ const EditRequest = ({ status, path }) => {
                     }
                 );
                 setBtnLoading(false)
-                return toast.success(data.message, toastOptions);
+
+                toast.success(data.message, toastOptions);
+
+                dispatch(apiSlice.util.invalidateTags(["Document"]))
+
+                navigate(`/all/${id}`)
 
             } catch (err) {
                 setBtnLoading(false)

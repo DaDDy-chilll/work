@@ -13,6 +13,8 @@ import { useDisclosure } from "../../../hooks/dialog";
 import WorkFlowForm from "../../../forms/WorkFlowForm";
 import { Formik } from "formik";
 import { checkoutSchema, initialValues } from "../../../schemas/Group.schema";
+import { useDispatch } from "react-redux";
+import { apiSlice } from "../../../services/apiSlice";
 
 const CreateGroup = () => {
 
@@ -63,6 +65,8 @@ const CreateGroup = () => {
     }
   }
 
+  const dispatch = useDispatch()
+
   const departments = selectDepartments.map((department) => {
     return {
       name: department.name,
@@ -88,7 +92,6 @@ const CreateGroup = () => {
       index: user.index
     }))
 
-    // console.log({ reviewers: selectedUsers });
     try {
 
       const { data } = await axios.post(groupRoute,
@@ -108,7 +111,7 @@ const CreateGroup = () => {
 
       toast.success(data.message, toastOptions);
 
-      // return dispatch(apiSlice.util.invalidateTags(["Group"]))
+      return dispatch(apiSlice.util.invalidateTags(["Group"]))
 
     } catch (err) {
       return toast.error(err.response.data.message, toastOptions);

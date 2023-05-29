@@ -63,7 +63,7 @@
 	font-size: 30px;
 	font-weight: bold;
 	font-family: "Source Code Pro", monospace;
-	z-index: 2;
+	/* z-index: 2; */
 	animation: anim-ball 5s ease forwards;
   }
   main #wrap .hand {
@@ -192,7 +192,7 @@
 	background: #fff;
 	border: 2px solid #ccc;
 	box-shadow: var(--block-shadow);
-	z-index: 2;
+	/* z-index: 2; */
   }
   main #server #bottom-block .bottom-line {
 	width: calc(100% - 4px);

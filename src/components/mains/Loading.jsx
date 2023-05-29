@@ -3,9 +3,9 @@ import React from 'react'
 
 const Loading = ({ open }) => {
     return (
-        <Backdrop
-            sx={{ position: 'fixed', inset: 0 }}            
+        <Backdrop          
             open={open}
+            sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
         >
             <CircularProgress size={"50px"} color="primary" />
         </Backdrop>

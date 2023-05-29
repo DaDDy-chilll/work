@@ -2,7 +2,7 @@ import { Box, Button, CircularProgress, FormControl, IconButton, InputAdornment,
 import { Formik } from 'formik'
 import React from 'react'
 import RichTextEditor from '../components/form_controls/RichTextEditor'
-import { Cancel, CheckCircle, FlipCameraAndroidOutlined, SmsOutlined } from '@mui/icons-material'
+import { Cancel, CheckCircle, SmsOutlined } from '@mui/icons-material'
 import { colors } from '../utils/theme'
 import { checkoutSchema as approveCheckoutSchema, initialValues as approveInitialValue } from '../schemas/ApproveRemark.schema';
 import { checkoutSchema as revisionCheckoutSchema, initialValues as revisionInitialValue } from '../schemas/RevisionRemark.schema';

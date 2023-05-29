@@ -10,6 +10,8 @@ import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import { getDuration, getNotiText } from '../../helpers'
 import Loading from './Loading'
+import { useDispatch } from 'react-redux'
+import { apiSlice } from '../../services/apiSlice'
 
 const RightDrawer = ({ open, setOpen, notis, me }) => {
 
@@ -18,6 +20,8 @@ const RightDrawer = ({ open, setOpen, notis, me }) => {
   const accessToken = Cookies.get('accessToken')
 
   const [loading, setLoading] = useState(false)
+
+  const dispatch = useDispatch()
 
   const handleOpen = async ({ _id, documentId }) => {
 
@@ -42,6 +46,7 @@ const RightDrawer = ({ open, setOpen, notis, me }) => {
       if (me.role === "BASIC") navigate(`/${documentId}`)
       if (me.role === "AUTHORIZED") navigate(`/all/${documentId}`)
 
+      return dispatch(apiSlice.util.invalidateTags(["Notification"]))
 
     } catch (err) {
       return toast.error(err.response.data.message, toastOptions);

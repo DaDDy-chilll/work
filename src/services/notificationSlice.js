@@ -6,6 +6,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
 
         getNotifications: builder.query({
             query: () => `${notiRoute}/me`,
+            providesTags: (result, error, arg) => ["Notification"]
         }),
 
     })

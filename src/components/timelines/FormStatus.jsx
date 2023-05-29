@@ -65,12 +65,7 @@ const FormStatus = ({ reviewers }) => {
             users
         }
     })
-
-    const officeAdmins = reviewers.filter((reviewer) => (reviewer.department === "OFFICE_ADMIN"))
-    const clinicalAdmins = reviewers.filter((reviewer) => (reviewer.department === "COO"))
-    const BOMs = reviewers.filter((reviewer) => (reviewer.department === "BOM"))
-    const FADs = reviewers.filter((reviewer) => (reviewer.department === "FAD"))
-
+    
     return (
         <Box
             sx={{ display: 'flex', gap: 2 }}

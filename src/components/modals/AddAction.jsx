@@ -1,6 +1,6 @@
 import { Dialog, DialogContent } from '@mui/material'
 import React, { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -8,6 +8,8 @@ import ActionForm from '../../forms/ActionForm';
 import { documentRoute } from '../../utils/APIRoutes';
 import { toastOptions } from '../../utils/toastOptions';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { apiSlice } from '../../services/apiSlice';
 
 const AddAction = ({ setClose, isOpen, groups, reviewer }) => {
 
@@ -25,6 +27,10 @@ const AddAction = ({ setClose, isOpen, groups, reviewer }) => {
     const { id } = useParams()
 
     const [selected, setSelected] = useState()
+
+    const dispatch = useDispatch()
+
+    const navigate = useNavigate()
 
     const handleFormSubmit = async (values) => {
 
@@ -58,10 +64,16 @@ const AddAction = ({ setClose, isOpen, groups, reviewer }) => {
                 })
 
             setLoading(false)
+            
+            dispatch(apiSlice.util.invalidateTags(["Document"]))
+            dispatch(apiSlice.util.invalidateTags(["History"]))
 
             setClose()
 
-            return toast.success(data.message, toastOptions)
+            toast.success(data.message, toastOptions)
+
+            window.location.pathname.includes("all") ? navigate(`/inbox/${id}`) : 
+            window.location.pathname.includes("inbox") && navigate(`/all/${id}`)         
 
         } catch (err) {
             setLoading(false)
