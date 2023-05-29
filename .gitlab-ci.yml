@@ -32,8 +32,8 @@ deploy_development:
   stage: deploy
   script:
     - echo "$$FIREBASE_TOKEN"
-    - firebase use $PROJECT_ID --token ${FIREBASE_TOKEN}
-    - firebase deploy --only hosting:development --token ${FIREBASE_TOKEN}
+    - firebase use $PROJECT_ID --token 1//0gko9KIR_4FzlCgYIARAAGBASNwF-L9IrEpegQMNWJfN_LLAJY0tNojBv4qsmOxvvAwTO0ZrVtoHbza8n71TyFixdsFBDdamWulQ
+    - firebase deploy --only hosting:development --token 1//0gko9KIR_4FzlCgYIARAAGBASNwF-L9IrEpegQMNWJfN_LLAJY0tNojBv4qsmOxvvAwTO0ZrVtoHbza8n71TyFixdsFBDdamWulQ
     # - firebase deploy --only hosting:development --token "$FIREBASE_TOKEN"
   only:
     refs:
