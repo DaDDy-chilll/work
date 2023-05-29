@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: parami-web-app
+    image: parami-project
+    build: 
+      context: .
+    ports:
+      - 8080:80

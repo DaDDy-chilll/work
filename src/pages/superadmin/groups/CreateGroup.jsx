@@ -57,7 +57,6 @@ const CreateGroup = () => {
       ]))
 
     } else if (checked === false) {
-      console.log('ok');
       setSelectedUsers(prev => prev.filter(user => user.userId !== userId).map((user, index) => ({
         ...user,
         index

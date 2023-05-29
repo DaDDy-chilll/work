@@ -11,7 +11,6 @@ import { colors } from '../../utils/theme'
 import Loading from '../../components/mains/Loading'
 import PageTitle from '../../components/mains/PageTitle'
 import { useGetRemarksQuery } from '../../services/historySlice'
-import CreateRequest from './CreateRequest'
 import { initialCreateValues } from '../../schemas/Document.schema'
 import RequestForm from '../../forms/RequestForm'
 import axios from 'axios'
@@ -30,7 +29,7 @@ const MyRequestDetail = () => {
 
   const { id } = useParams()
 
-  const { isLoading: remarksLoading, data: remarks, error: remarksError } = useGetRemarksQuery(id)
+  const { data: remarks, error: remarksError } = useGetRemarksQuery(id)
 
   if (remarksError) {
     toast.error(remarksError.data.message, toastOptions)
@@ -112,7 +111,7 @@ const MyRequestDetail = () => {
   const { data: revisions } = useGetRevisionsQuery(id)
 
   // fetch my info
-  const { isLoading: myInfoLoading, data: me, error: myInfoError } = useGetMyInfoQuery()
+  const { data: me } = useGetMyInfoQuery()
 
   if (error) {
     toast.error(error.data.message, toastOptions)
@@ -178,8 +177,6 @@ const MyRequestDetail = () => {
       return toast.error(err.response.data.message, toastOptions);
     }
   }
-
-  console.log(data && data.payload);
 
   return (
     <Box p="20px">

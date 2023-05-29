@@ -1,12 +1,23 @@
 import { Box } from '@mui/material'
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import React, { useState } from 'react'
 import { colors } from '../../utils/theme';
 import Loading from '../mains/Loading';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 
-const DataTable = ({ rows, columns, loading, pageOptions }) => {
-    
-    const [pageSize, setPageSize] = useState(12);
+const DataTable = ({ rows, columns, loading, total }) => {
+
+    const [paginationModel, setPaginationModel] = useState({
+        page: 0,
+        pageSize: 5
+    })
+
+    const handlePageChange = ({ page, pageSize }) => {
+
+        setPaginationModel({
+            page: page,
+            pageSize
+        })
+    }
 
     return (
         <Box
@@ -49,16 +60,27 @@ const DataTable = ({ rows, columns, loading, pageOptions }) => {
         >
             {
                 rows ? <DataGrid
-                    checkboxSelection
+                    // checkboxSelection
                     getRowId={(row) => row._id}
                     rows={rows}
                     columns={columns}
-                    pageSize={pageSize}
-                    rowsPerPageOptions={[10, 20, 30]}
-                    onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+                    initialState={{
+                        pinnedColumns: { left: ['name'], right: ['actions'] },
+                    }}
+
+                    paginationModel={paginationModel}
+                    onPaginationModelChange={handlePageChange}
+                    rowCount={total}     
+                    loading={loading}                                
+
+                    // page={page}
+                    // onPageChange={(e) => console.log(e)}                    
+                    // pageSize={10}
+                    // rowsPerPageOptions={[10, 20, 30]}
+                    // onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+
                     components={{ Toolbar: GridToolbar }}
-                    initialState={{ pinnedColumns: { left: ['name'], right: ['actions'] } }}
-                    
+
                 /> : <Loading open={loading ? true : false} />
             }
         </Box>

@@ -1,6 +1,5 @@
 export const host = "https://parami-dev-project.herokuapp.com/api"
-
-console.log({host});
+// export const host = "https://parami-project.herokuapp.com/api"
 
 // auth api
 export const authRoute = `${host}/auth`

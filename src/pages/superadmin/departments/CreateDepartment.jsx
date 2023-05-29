@@ -29,7 +29,6 @@ const CreateDepartment = ({ setClose, isOpen }) => {
             return dispatch(apiSlice.util.invalidateTags(["Department"]))
 
         } catch (err) {
-            console.log(err.data);
             return toast.error(err.data.message, toastOptions);
         }
     }

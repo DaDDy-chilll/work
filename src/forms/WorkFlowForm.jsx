@@ -1,15 +1,13 @@
-import { ApartmentOutlined, Info } from '@mui/icons-material'
-import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material'
+import { Box, Button } from '@mui/material'
 import React from 'react'
-import SelectMemberListsTable from '../components/tables/SelectMemberListsTable'
-import { colors } from '../utils/theme'
-import { useGetUserByDeptIdQuery, useGetUsersQuery } from '../services/userSlice'
 import { userRoute } from '../utils/APIRoutes'
 import axios from 'axios'
 import { useEffect } from 'react'
 import Cookies from 'js-cookie'
 import { useState } from 'react'
 import DepartmentLists from '../components/details/DepartmentLists'
+import { toast } from 'react-toastify'
+import { toastOptions } from '../utils/toastOptions'
 
 const WorkFlowForm = ({
     selectDepartments,
@@ -45,7 +43,7 @@ const WorkFlowForm = ({
                 setIsLoading(false)
 
             } catch (err) {
-                console.log(err.response.data);
+                return toast.error(err.response.data.message, toastOptions)
             }
         }
         fetchData()

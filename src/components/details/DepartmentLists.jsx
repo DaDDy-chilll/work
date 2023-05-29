@@ -33,8 +33,6 @@ const DepartmentLists = ({
         }
     }
 
-    console.log({ departments });
-
     return (
         <Box sx={{ gridColumn: "span 4" }}>
             <Typography variant='h5' fontWeight={"bold"}>Department Lists</Typography>

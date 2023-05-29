@@ -16,7 +16,7 @@ const Users = () => {
 
   const { isOpen, setOpen, setClose } = useDisclosure()
 
-  const { isLoading, data, error } = useGetUsersQuery()
+  const { isLoading, data, error } = useGetUsersQuery(1)
 
   const columns = getColumns()
 
@@ -25,8 +25,7 @@ const Users = () => {
   if(error){
     toast.error(error.data.message, toastOptions)
   } else {
-    console.log({users: data && data.payload});
-    content = <DataTable loading={isLoading} rows={data && data.payload} columns={columns} pageOptions={data && data.total} /> 
+    content = <DataTable loading={isLoading} rows={data && data.payload} columns={columns} total={data && data.total} /> 
   }
 
   return (

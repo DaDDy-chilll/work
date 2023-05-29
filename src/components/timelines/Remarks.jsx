@@ -108,7 +108,6 @@ const Remarks = ({ remarks, revisions, me, scrollToRef }) => {
     const [btnLoading, setBtnLoading] = useState(false)
     
     const handleAcknowledge = async ({ documentId, revisionId }) => {
-        console.log({ documentId, revisionId });
         try {
             setBtnLoading(true)
 

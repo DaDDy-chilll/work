@@ -34,13 +34,13 @@ const RequestDetail = ({ path }) => {
   const { isOpen, setOpen, setClose } = useDisclosure()
 
   // fetch my info
-  const { isLoading: myInfoLoading, data: me, error: myInfoError } = useGetMyInfoQuery()
+  const { data: me, error: myInfoError } = useGetMyInfoQuery()
 
   if (myInfoError) {
     toast.error(myInfoError.data.message, toastOptions)
   }
 
-  const { isLoading: remarksLoading, data: remarks, error: remarksError } = useGetRemarksQuery(id)
+  const { data: remarks, error: remarksError } = useGetRemarksQuery(id)
 
   if (remarksError) {
     toast.error(remarksError.data.message, toastOptions)
@@ -123,7 +123,6 @@ const RequestDetail = ({ path }) => {
   if (error) {
     toast.error(error.data.message, toastOptions)
   } else {
-    // console.log({ current: data && data.payload.reviewers.list[data.payload.reviewers.currentReviewerIndex] });
     content =
       <DocumentDetail
         document={data && data.payload}
@@ -135,7 +134,7 @@ const RequestDetail = ({ path }) => {
   }
 
   // fetch groups
-  const { isLoading: groupLoading, data: groupData, error: groupError } = useGetGroupsQuery()
+  const { data: groupData } = useGetGroupsQuery()
 
   const navigate = useNavigate()
 
@@ -145,8 +144,6 @@ const RequestDetail = ({ path }) => {
   const handleRevise = () => {
     navigate(`${path}/revise/${id}`)
   }
-
-  console.log(revisions && revisions.payload);
 
   return (
     <Box p="20px">

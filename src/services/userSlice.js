@@ -4,7 +4,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
 
     getUsers: builder.query({
-      query: () => '/users',
+      query: (page) => `/users?page=${page}&limit=12`,
       providesTags: (result, error, arg) => ["User"]
     }),
 

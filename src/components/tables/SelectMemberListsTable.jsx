@@ -13,8 +13,6 @@ const SelectMemberListsTable = ({
     handleSelectChange,
 }) => {
 
-    // console.log({ department });
-
     return (
         <>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>

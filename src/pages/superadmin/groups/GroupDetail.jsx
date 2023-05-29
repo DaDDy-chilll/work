@@ -1,18 +1,10 @@
-import axios from "axios";
-import Cookies from "js-cookie";
-import React, { useState } from "react";
-import { groupRoute } from "../../../utils/APIRoutes";
+import React from "react";
 import { toastOptions } from "../../../utils/toastOptions";
 import { ToastContainer, toast } from "react-toastify";
 import { Box, Button } from "@mui/material";
 import PageTitle from "../../../components/mains/PageTitle";
 import { Link, useParams } from "react-router-dom";
-import DepartmentFlowForm from "../../../forms/DepartmentFlowForm";
 import { colors } from "../../../utils/theme";
-import { useDisclosure } from "../../../hooks/dialog";
-import WorkFlowForm from "../../../forms/WorkFlowForm";
-import { Formik } from "formik";
-import { checkoutSchema, initialValues } from "../../../schemas/Group.schema";
 import { useGetGroupQuery } from "../../../services/groupSlice";
 import DepartmentLists from "../../../components/details/DepartmentLists";
 
@@ -20,7 +12,7 @@ const GroupDetail = () => {
 
   const { id } = useParams()
 
-  const { isLoading, data, error } = useGetGroupQuery(id)
+  const { data, error } = useGetGroupQuery(id)
 
   if (error) {
     toast.error(error.data.message, toastOptions)
@@ -57,14 +49,10 @@ const GroupDetail = () => {
       }
     })
 
-    // console.log({ departments: payloads });
-
     render =
       <DepartmentLists
         departments={payloads}
       />
-    // const result = data.payload.reviewers.filter(user => user.department.name === "Customer Service")
-    // console.log({ result });
   }
 
   return (
