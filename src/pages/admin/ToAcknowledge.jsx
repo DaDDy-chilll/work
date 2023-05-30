@@ -27,7 +27,7 @@ const ToAcknowledge = () => {
   if (error) {
     toast.error(error.data.message, toastOptions)
   } else {
-    content = <DataTable loading={isLoading} rows={data && data.payload} columns={columns} />
+    content = <DataTable loading={isLoading} rows={data && data.payload} columns={columns} total={data && data.total} />
   }
 
   return (

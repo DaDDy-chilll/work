@@ -1,7 +1,7 @@
-import { Box, Button, Checkbox, CircularProgress, FormControlLabel, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import { Box, Checkbox, CircularProgress, Typography } from '@mui/material'
+import React from 'react'
 import { colors } from '../../utils/theme'
-import { ApartmentOutlined, CheckCircle } from '@mui/icons-material'
+import { ApartmentOutlined } from '@mui/icons-material'
 import { useGetDepartmentsQuery } from '../../services/departmentSlice'
 import { toast } from 'react-toastify'
 import { toastOptions } from '../../utils/toastOptions'
@@ -40,7 +40,7 @@ const SelectDepartment = ({
 
     return (
         <Box sx={{ gridColumn: "span 4" }}>
-            <Typography variant='h5'>Select Department Flow</Typography>
+            <Typography variant='h5' mb={2}>Select Department Flow</Typography>
 
             <Box sx={{ display: 'flex', gap: 5 }}>
                 <Box sx={{
@@ -76,6 +76,10 @@ const SelectDepartment = ({
                     </Box>
 
                     {
+                        isLoading ? 
+                        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                            <CircularProgress />
+                        </Box> :                        
                         data && data.payload.map((department) => (
                             <Box key={department._id} sx={{
                                 display: 'flex',

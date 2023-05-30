@@ -3,7 +3,7 @@ import { Box, Button } from '@mui/material'
 import React from 'react'
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { departmentAccess, documentAccess, groupAccess, normalAccess, userAccess } from '../../utils/accessControl'
+import { departmentAccess, groupAccess, normalAccess, userAccess } from '../../utils/accessControl'
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
     return (
@@ -38,11 +38,11 @@ const Navbar = ({ me }) => {
                 <Item title="My Requests" to="/" selected={selected} setSelected={setSelected} icon={<PublishOutlined sx={{ mr: 1 }} />} />
             }
             {
-                documentAccess.includes(me.role) &&
+                normalAccess.includes(me.role) &&
                 <Item title="All Requests" to="/all" selected={selected} setSelected={setSelected} icon={<PublishOutlined sx={{ mr: 1 }} />} />
             }
             {
-                documentAccess.includes(me.role) &&
+                normalAccess.includes(me.role) &&
                 <Item title="Inbox" to="/inbox" selected={selected} setSelected={setSelected} icon={<ArticleOutlined sx={{ mr: 1 }} />} />
             }
             {

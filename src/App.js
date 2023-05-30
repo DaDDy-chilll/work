@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import { useMode } from './utils/theme';
 import { ThemeProvider } from '@mui/material';
 
-import { departmentAccess, documentAccess, groupAccess, normalAccess, userAccess } from './utils/accessControl';
+import { departmentAccess, groupAccess, normalAccess, userAccess } from './utils/accessControl';
 
 import RequireAuth from './utils/RequireAuth';
 import Login from './pages/auth/Login';
@@ -23,7 +23,6 @@ import Users from './pages/superadmin/users/Users';
 import UserDetail from './pages/superadmin/users/UserDetail';
 import Groups from './pages/superadmin/groups/Groups';
 import GroupDetail from './pages/superadmin/groups/GroupDetail';
-import RightDrawer from './components/mains/RightDrawer';
 import ToAcknowledge from './pages/admin/ToAcknowledge';
 import Inbox from './pages/admin/Inbox';
 import Departments from './pages/superadmin/departments/Departments';
@@ -49,15 +48,14 @@ function App() {
           <Route path='revise/:id' element={<EditRequest status="REVISED" path={'/to-acknowledge'} />} />
         </Route>
 
-        {/* AUTHORIZED */}
-        <Route path='/all' element={<RequireAuth allowedRoles={documentAccess} />}>
+        <Route path='/all' element={<RequireAuth allowedRoles={normalAccess} />}>
           <Route path='' element={<AllRequests />} />
           <Route path=':id' element={<RequestDetail path={'/all'} />} />
           <Route path='edit/:id' element={<EditRequest status="PREPARED" path={'/all'} />} />
           <Route path='revise/:id' element={<EditRequest status="REVISED" path={'/all'} />} />
         </Route>
 
-        <Route path='/inbox' element={<RequireAuth allowedRoles={documentAccess} />}>
+        <Route path='/inbox' element={<RequireAuth allowedRoles={normalAccess} />}>
           <Route path='' element={<Inbox />} />
           <Route path=':id' element={<RequestDetail path={'/inbox'} />} />
           <Route path='edit/:id' element={<EditRequest status="PREPARED" path={'/inbox'} />} />
@@ -78,12 +76,9 @@ function App() {
 
         <Route path='/departments' element={<RequireAuth allowedRoles={departmentAccess} />}>
           <Route path='' element={<Departments />} />
-          {/* <Route path=':id' element={<GroupDetail />} /> */}
         </Route>
 
         <Route path='/login' element={<Login />} />
-
-        <Route path='/test/drawer' element={<RightDrawer />} />
 
         <Route path='*' element={<NotFound />} />
 

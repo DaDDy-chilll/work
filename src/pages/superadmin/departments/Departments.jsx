@@ -23,7 +23,7 @@ const Departments = () => {
   if (error) {
     toast.error(error.data.message, toastOptions)
   } else {
-    dataTable = <DataTable loading={isLoading} rows={data && data.payload} columns={columns} />
+    dataTable = <DataTable loading={isLoading} rows={data && data.payload} columns={columns} total={data && data.total} />
   }
 
   return (

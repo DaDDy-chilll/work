@@ -8,7 +8,7 @@ const DataTable = ({ rows, columns, loading, total }) => {
 
     const [paginationModel, setPaginationModel] = useState({
         page: 0,
-        pageSize: 5
+        pageSize: 10
     })
 
     const handlePageChange = ({ page, pageSize }) => {
@@ -70,14 +70,8 @@ const DataTable = ({ rows, columns, loading, total }) => {
 
                     paginationModel={paginationModel}
                     onPaginationModelChange={handlePageChange}
-                    rowCount={total}     
-                    loading={loading}                                
-
-                    // page={page}
-                    // onPageChange={(e) => console.log(e)}                    
-                    // pageSize={10}
-                    // rowsPerPageOptions={[10, 20, 30]}
-                    // onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+                    rowCount={total}
+                    loading={loading}
 
                     components={{ Toolbar: GridToolbar }}
 

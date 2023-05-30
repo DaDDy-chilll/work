@@ -26,7 +26,7 @@ const Groups = () => {
   if (groupsError) {
     toast.error(groupsError.data.message, toastOptions)
   } else {
-    dataTable = <DataTable loading={groupsLoading} rows={groupsData && groupsData.payload} columns={columns} />
+    dataTable = <DataTable loading={groupsLoading} rows={groupsData && groupsData.payload} columns={columns} total={groupsData && groupsData.total} />
   }
 
   return (

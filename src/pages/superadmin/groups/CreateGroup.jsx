@@ -69,6 +69,7 @@ const CreateGroup = () => {
   const departments = selectDepartments.map((department) => {
     return {
       name: department.name,
+      // eslint-disable-next-line
       users: selectedUsers.filter(user => {
         if(user.departmentId === department._id){
           return user
@@ -135,7 +136,7 @@ const CreateGroup = () => {
 
       <ToastContainer />
 
-      <Box bgcolor={colors.white[100]} m="20px" p="20px" borderRadius="10px">
+      <Box bgcolor={colors.white[100]} m="20px" p={5} borderRadius="10px">
         <Formik
           onSubmit={handleFormSubmit}
           initialValues={initialValues}

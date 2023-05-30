@@ -7,12 +7,13 @@ import { Link, useParams } from "react-router-dom";
 import { colors } from "../../../utils/theme";
 import { useGetGroupQuery } from "../../../services/groupSlice";
 import DepartmentLists from "../../../components/details/DepartmentLists";
+import Loading from "../../../components/mains/Loading";
 
 const GroupDetail = () => {
 
   const { id } = useParams()
 
-  const { data, error } = useGetGroupQuery(id)
+  const { isLoading, data, error } = useGetGroupQuery(id)
 
   if (error) {
     toast.error(error.data.message, toastOptions)
@@ -73,8 +74,9 @@ const GroupDetail = () => {
 
       <ToastContainer />
 
-      <Box bgcolor={colors.white[100]} m="20px" p="20px" borderRadius="10px">
+      <Box bgcolor={colors.white[100]} m="20px" p={5} borderRadius="10px">
         {
+          isLoading ? <Loading open={isLoading} /> :
           data && render
         }
       </Box>

@@ -39,7 +39,7 @@ const SelectMemberListsTable = ({
                                 <Box sx={{ display: 'flex', gap: 1 }}>
                                     <Typography variant='h6'>Name & Role</Typography>
                                     <Typography variant='h6' color={colors.paleBlue[800]} sx={{ display: 'flex', gap: "2px" }}>
-                                        {
+                                        {/* {
                                             selectedUsers &&
                                             <>
                                                 <Typography>
@@ -48,7 +48,7 @@ const SelectMemberListsTable = ({
                                                 </Typography>
                                                 selected)
                                             </>
-                                        }
+                                        } */}
                                     </Typography>
                                 </Box>
                             </TableCell>

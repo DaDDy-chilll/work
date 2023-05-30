@@ -1,6 +1,5 @@
-import { Box, Typography } from '@mui/material'
+import { Box, CircularProgress, Typography } from '@mui/material'
 import React from 'react'
-import Loading from '../mains/Loading'
 import SelectMemberListsTable from '../tables/SelectMemberListsTable'
 import { colors } from '../../utils/theme'
 
@@ -15,29 +14,29 @@ const DepartmentLists = ({
     let result
 
     if (!isLoading) {
-        if(payloads){
+        if (payloads) {
             let depts = [];
-        payloads.forEach(p => {
-            depts.push(p.department.name)
-        })
+            payloads.forEach(p => {
+                depts.push(p.department.name)
+            })
 
-        depts = [...new Set([...depts])]
+            depts = [...new Set([...depts])]
 
-        result = depts.map(dpt => {
-            const users = payloads.filter(p => p.department.name === dpt)                
-            return {
-                name: dpt,
-                users
-            }
-        })
+            result = depts.map(dpt => {
+                const users = payloads.filter(p => p.department.name === dpt)
+                return {
+                    name: dpt,
+                    users
+                }
+            })
         }
     }
 
     return (
         <Box sx={{ gridColumn: "span 4" }}>
-            <Typography variant='h5' fontWeight={"bold"}>Department Lists</Typography>
+            <Typography variant='h5' pb={2} fontWeight={"bold"}>Department Lists</Typography>
 
-            <Box sx={{ display: 'flex', gap: 5 }}>
+            <Box sx={{ display: 'flex', gap: 5, pb: 4 }}>
                 {
                     departments && departments.map((department, i) => (
                         <Box
@@ -74,7 +73,7 @@ const DepartmentLists = ({
                             </Box>
                             {
                                 department.users.map((user, i) => (
-                                    <Box sx={{ display: 'flex', gap: 1 }}>
+                                    <Box sx={{ display: 'flex', gap: 1, p: 1 }}>
                                         <Typography>{i + 1}</Typography>
                                         <Typography>{user.name}</Typography>
                                     </Box>
@@ -86,9 +85,12 @@ const DepartmentLists = ({
             </Box>
 
             {
-                isLoading ? <Loading /> :
+                isLoading ?
+                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                        <CircularProgress />
+                    </Box> :
                     result ? result.map((department) => (
-                        <Box sx={{ gridColumn: "span 4" }}>
+                        <Box sx={{ gridColumn: "span 4", pb: 2 }}>
 
                             <SelectMemberListsTable
                                 department={department}
@@ -100,18 +102,18 @@ const DepartmentLists = ({
 
                         </Box>
                     )) :
-                    departments && departments.map((department) => (
-                        <Box sx={{ gridColumn: "span 4" }}>
+                        departments && departments.map((department) => (
+                            <Box sx={{ gridColumn: "span 4", pb: 2 }}>
 
-                            <SelectMemberListsTable
-                                department={department}
-                                
-                                handleSelectChange={handleSelectChange}
-                                selectedUsers={selectedUsers}
-                            />
+                                <SelectMemberListsTable
+                                    department={department}
 
-                        </Box>
-                    )) 
+                                    handleSelectChange={handleSelectChange}
+                                    selectedUsers={selectedUsers}
+                                />
+
+                            </Box>
+                        ))
             }
         </Box>
     )
