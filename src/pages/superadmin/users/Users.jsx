@@ -1,5 +1,5 @@
 import { Box, Button } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 
 // icons
@@ -11,22 +11,51 @@ import { toastOptions } from '../../../utils/toastOptions';
 import DataTable from '../../../components/tables/DataTable';
 import PageTitle from '../../../components/mains/PageTitle';
 import CreateUser from './CreateUser';
+import { userRoute } from '../../../utils/APIRoutes';
+import Cookies from 'js-cookie';
+import axios from 'axios';
 
 const Users = () => {
 
   const { isOpen, setOpen, setClose } = useDisclosure()
 
-  const { isLoading, data, error } = useGetUsersQuery(1)
+  const [pageState, setPageState] = useState({
+    isLoading: true,
+    data: undefined,
+    total: 0,
+    page: 1,
+    pageSize: 10
+  })
+
+  useEffect(() => {
+    const accessToken = Cookies.get('accessToken')
+    const fetchData = async () => {
+      console.log('ON')
+      setPageState(old => ({ ...old, isLoading: true }))
+
+      const { data } = await axios.get(`${userRoute}?page=${pageState.page}&limit=${pageState.pageSize}&sort=+createdAt`, {
+        headers: {
+          Authorization: "Bearer " + accessToken
+        }
+      })
+
+      setPageState(old => ({ ...old, isLoading: false, data: data.payload, total: data.total }))
+    }
+    fetchData()
+  }, [pageState.page, pageState.pageSize])
+
+  // const { isLoading, data, error } = useGetUsersQuery(paginationModel.page + 1)
 
   const columns = getColumns()
 
-  let content;
+  // let content;
 
-  if(error){
-    toast.error(error.data.message, toastOptions)
-  } else {
-    content = <DataTable loading={isLoading} rows={data && data.payload} columns={columns} total={data && data.total} /> 
-  }
+  // if (error) {
+  //   toast.error(error.data.message, toastOptions)
+  // } else {
+  //   content =
+
+  // }
 
   return (
     <Box>
@@ -45,7 +74,22 @@ const Users = () => {
 
       <ToastContainer />
 
-      {content}
+      {/* {content} */}
+      {
+        pageState.data &&
+        <DataTable
+          rows={pageState.data}
+          rowCount={pageState.total}
+          loading={pageState.isLoading}
+          page={pageState.page - 1}
+          pageSize={pageState.pageSize}
+          onPageChange={(newPage) => {
+            setPageState(old => ({ ...old, page: newPage + 1 }))
+          }}
+          onPageSizeChange={(newPageSize) => setPageState(old => ({ ...old, pageSize: newPageSize }))}
+          columns={columns}
+        />
+      }
 
       <CreateUser setClose={setClose} isOpen={isOpen} />
     </Box>

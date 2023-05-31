@@ -1,23 +1,20 @@
-import { Box } from '@mui/material'
+import { Box, CircularProgress } from '@mui/material'
 import React, { useState } from 'react'
 import { colors } from '../../utils/theme';
 import Loading from '../mains/Loading';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 
-const DataTable = ({ rows, columns, loading, total }) => {
-
-    const [paginationModel, setPaginationModel] = useState({
-        page: 0,
-        pageSize: 10
-    })
-
-    const handlePageChange = ({ page, pageSize }) => {
-
-        setPaginationModel({
-            page: page,
-            pageSize
-        })
-    }
+const DataTable = ({
+    rows,
+    rowCount,
+    columns,
+    loading,
+    page,
+    pageSize,
+    onPageChange,
+    onPageSizeChange
+}) => {
+    console.log({loading});
 
     return (
         <Box
@@ -59,23 +56,29 @@ const DataTable = ({ rows, columns, loading, total }) => {
             }}
         >
             {
-                rows ? <DataGrid
-                    // checkboxSelection
-                    getRowId={(row) => row._id}
+                // loading && page === 1 ? <Loading open={loading} /> :
+                rows && <DataGrid
+                    // autoHeight
                     rows={rows}
-                    columns={columns}
-                    initialState={{
-                        pinnedColumns: { left: ['name'], right: ['actions'] },
-                    }}
-
-                    paginationModel={paginationModel}
-                    onPaginationModelChange={handlePageChange}
-                    rowCount={total}
+                    rowCount={rowCount}
                     loading={loading}
+                    rowsPerPageOptions={[10, 30, 50, 70, 100]}
+                    pagination
+                    page={page}
+                    pageSize={pageSize}
+                    paginationMode="server"
+                    onPageChange={onPageChange}
+                    onPageSizeChange={onPageSizeChange}
+                    columns={columns}
+
+                    getRowId={(row) => row._id}
 
                     components={{ Toolbar: GridToolbar }}
+                    initialState={{ pinnedColumns: { left: ['name'], right: ['actions'] } }}                   
 
-                /> : <Loading open={loading ? true : false} />
+                />
+                
+                // : <Loading open={true} />
             }
         </Box>
     )

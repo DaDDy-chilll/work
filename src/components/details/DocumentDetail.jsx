@@ -1,24 +1,33 @@
-import { History } from '@mui/icons-material'
-import { Box, Divider, ScopedCssBaseline, Typography } from '@mui/material'
-import React from 'react'
+import { Close, History } from '@mui/icons-material'
+import { Box, Dialog, DialogContent, DialogTitle, Divider, IconButton, Modal, Typography } from '@mui/material'
+import React, { useState } from 'react'
 
 import PDF from "../../assets/PDF.png"
 import { colors } from '../../utils/theme'
 import FormStatus from '../timelines/FormStatus'
 import Remarks from '../timelines/Remarks'
+import { useDisclosure } from '../../hooks/dialog'
 
 const DocumentDetail = ({ document, remarks, revisions, me, scrollToRef }) => {
+
+    const { isOpen, setClose, setOpen } = useDisclosure()
+
+    const [image, setImage] = useState({
+        url: "",
+        filename: ""
+    })
+
+    const handleClick = ({ url, filename }) => {
+        setOpen()
+        setImage({
+            url, filename
+        })
+    }
 
     return (
         <>
             <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
                 <Typography variant='h3' fontWeight="bold">{document.updatedAt.split("T")[0]}</Typography>
-                <Box sx={{ display: "flex", justifyContent: "center", color: colors.paleBlue[800] }}>
-                    <History />
-                    <Typography>
-                        Form History
-                    </Typography>
-                </Box>                
             </Box>
             <Divider />
 
@@ -50,29 +59,29 @@ const DocumentDetail = ({ document, remarks, revisions, me, scrollToRef }) => {
                 <Box sx={{ display: "flex", gap: "30px", flexWrap: "wrap" }}>
                     {
                         document.attachments.length ?
-                        document.attachments.map((attachment, i) => (
+                            document.attachments.map((attachment, i) => (
                                 <Box key={i} sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px" }}>
                                     {
                                         attachment.mimetype.includes("image") ?
                                             (
-                                                <a href={attachment.url}>
+                                                <Box onClick={() => handleClick({ url: attachment.url, filename: attachment.filename })}>
                                                     <img
                                                         style={{ width: "145px", height: "145px", objectFit: "cover" }}
                                                         src={attachment.url}
-                                                        alt={attachment.key}
+                                                        alt={attachment.filename}
                                                     />
-                                                </a>
+                                                </Box>
                                             ) : (
                                                 <a href={attachment.url}>
                                                     <img
                                                         style={{ width: "145px", height: "145px", objectFit: "cover" }}
                                                         src={PDF}
-                                                        alt={attachment.key}
+                                                        alt={attachment.filename}
                                                     />
                                                 </a>
                                             )
                                     }
-                                    <Typography variant='h5' fontWeight="bold">{attachment.key}</Typography>
+                                    <Typography variant='h5' fontWeight="bold">{attachment.filename}</Typography>
                                 </Box>
                             ))
                             : <></>
@@ -88,7 +97,25 @@ const DocumentDetail = ({ document, remarks, revisions, me, scrollToRef }) => {
             <Box sx={{ display: "flex", flexDirection: "column", gap: "10px", mt: 4 }}>
                 <Typography variant='h4' fontWeight="bold">Other Remarks</Typography>
                 <Remarks remarks={remarks} revisions={revisions} me={me} scrollToRef={scrollToRef} />
-            </Box>            
+            </Box>
+            {/* image preview */}
+            <Dialog open={isOpen} onClose={setClose}>
+                <DialogTitle sx={{ display: 'flex', justifyContent: 'right' }}>
+                    <IconButton onClick={setClose}>
+                        <Close 
+                            fontSize='large'
+                            sx={{ color: "#000" }}
+                        />
+                    </IconButton>
+                </DialogTitle>
+                <DialogContent>
+                    <img
+                        style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                        src={image.url}
+                        alt={image.filename}
+                    />
+                </DialogContent>
+            </Dialog >
         </>
     )
 }
