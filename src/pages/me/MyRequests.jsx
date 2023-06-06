@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material'
+import { Box, Button, CircularProgress } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 import { Link } from 'react-router-dom'
@@ -47,7 +47,7 @@ const MyRequests = () => {
   useEffect(() => {
     const accessToken = Cookies.get('accessToken')
     const fetchData = async () => {
-      console.log('ON')
+
       setPageState(old => ({ ...old, isLoading: true }))
 
       const { data } = await axios.get(`${documentRoute}/me?page=${pageState.page}&limit=${pageState.pageSize}&sort=+createdAt`, {
@@ -69,7 +69,7 @@ const MyRequests = () => {
 
         {/* <SelectCaseType documentCase={documentCase} handleChange={handleChange} /> */}
 
-        <Link to="/create" style={{ textDecoration: "none" }}>
+        <Link to="/my-requests/create" style={{ textDecoration: "none" }}>
           <Button
             className="no-underline"
             variant="contained"
@@ -86,19 +86,21 @@ const MyRequests = () => {
 
       {
         pageState.data ?
-        <DataTable
-          rows={pageState.data}
-          rowCount={pageState.total}
-          loading={pageState.isLoading}
-          page={pageState.page - 1}
-          pageSize={pageState.pageSize}
-          onPageChange={(newPage) => {
-            setPageState(old => ({ ...old, page: newPage + 1 }))
-          }}
-          onPageSizeChange={(newPageSize) => setPageState(old => ({ ...old, pageSize: newPageSize }))}
-          columns={columns}
-        />
-        : <Loading open={true} />
+          <DataTable
+            rows={pageState.data}
+            rowCount={pageState.total}
+            loading={pageState.isLoading}
+            page={pageState.page - 1}
+            pageSize={pageState.pageSize}
+            onPageChange={(newPage) => {
+              setPageState(old => ({ ...old, page: newPage + 1 }))
+            }}
+            onPageSizeChange={(newPageSize) => setPageState(old => ({ ...old, pageSize: newPageSize }))}
+            columns={columns}
+          /> :
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <CircularProgress />
+          </Box>
       }
 
       {/* <DataTable loading={loading} rows={requests} columns={columns} /> */}

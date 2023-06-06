@@ -22,9 +22,9 @@ const CreateRequest = () => {
     const dispatch = useDispatch()
 
     const handleFormSubmit = async (values) => {
-        
+
         const { attachments } = values
-        
+
         const formData = new FormData();
 
         for (let value in values) {
@@ -57,7 +57,7 @@ const CreateRequest = () => {
 
             dispatch(apiSlice.util.invalidateTags(["Document"]))
 
-            return navigate('/')
+            return navigate('/my-requests')
 
         } catch (err) {
             setBtnLoading(false)

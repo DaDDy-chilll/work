@@ -14,7 +14,6 @@ const DataTable = ({
     onPageChange,
     onPageSizeChange
 }) => {
-    console.log({loading});
 
     return (
         <Box
@@ -56,11 +55,16 @@ const DataTable = ({
             }}
         >
             {
+                loading === true ? 
+                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <CircularProgress />
+                </Box> :
                 // loading && page === 1 ? <Loading open={loading} /> :
                 rows && <DataGrid
                     // autoHeight
                     rows={rows}
                     rowCount={rowCount}
+
                     loading={loading}
                     rowsPerPageOptions={[10, 30, 50, 70, 100]}
                     pagination

@@ -43,8 +43,8 @@ const RightDrawer = ({ open, setOpen, notis, me }) => {
       setLoading(false)
 
       // toNavigate({ action, documentId })
-      if (me.role === "BASIC") navigate(`/${documentId}`)
-      if (me.role === "AUTHORIZED") navigate(`/all/${documentId}`)
+      if (me.role === "BASIC") navigate(`/my-requests/${documentId}`)
+      if (me.role === "AUTHORIZED") navigate(`/${documentId}`)
 
       return dispatch(apiSlice.util.invalidateTags(["Notification"]))
 

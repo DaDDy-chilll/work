@@ -61,7 +61,7 @@ const ActionForm = ({
                             reviewer.canApprove &&
                             <Action action="approve" icon={<CheckCircle sx={{ fontSize: 40, color: colors.paleGreen[800] }} />} selected={selected} setSelected={setSelected} />
                         }
-                        {                            
+                        {
                             <Action action="reject" icon={<Cancel sx={{ fontSize: 40, color: colors.red[800] }} />} selected={selected} setSelected={setSelected} />
                         }
                         {
@@ -82,32 +82,6 @@ const ActionForm = ({
 
 
                     <Box sx={{ display: 'flex', flexDirection: "column", justifyContent: "space-evenly", gap: "20px", mt: 5 }}>
-
-                        {/* SELECT REVIEWER GROUP */}
-                        {
-                            selected === "approve" && reviewer.reviewer.department.isStartingDepartment &&
-                            <FormControl variant="filled" sx={{ gridColumn: "span 4" }}>
-                                <InputLabel id="demo-simple-select-filled-label">
-                                    Select Work Flow
-                                </InputLabel>
-                                <Select
-                                    labelId="demo-simple-select-filled-label"
-                                    id="demo-simple-select-filled"
-                                    value={values.groupId}
-                                    name="groupId"
-                                    error={!!touched.groupId && !!errors.groupId}
-                                    helpertext={touched.groupId && errors.groupId}
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                >
-                                    {groups && groups.map((group, i) => (
-                                        <MenuItem sx={{ textTransform: "capitalize" }} value={group._id} key={i}>
-                                            {group.name}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                        }
                         {/* SELECT DEPARTMENT */}
                         {
                             selected === "revision" &&
@@ -135,7 +109,7 @@ const ActionForm = ({
                                     ))}
                                 </Select>
                             </FormControl>
-                        }                       
+                        }
 
                         {/* remark */}
                         <Box sx={{ gridColumn: "span 4" }}>

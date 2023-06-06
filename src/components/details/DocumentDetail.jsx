@@ -10,6 +10,8 @@ import { useDisclosure } from '../../hooks/dialog'
 
 const DocumentDetail = ({ document, remarks, revisions, me, scrollToRef }) => {
 
+    console.log({ document })
+
     const { isOpen, setClose, setOpen } = useDisclosure()
 
     const [image, setImage] = useState({
@@ -102,7 +104,7 @@ const DocumentDetail = ({ document, remarks, revisions, me, scrollToRef }) => {
             <Dialog open={isOpen} onClose={setClose}>
                 <DialogTitle sx={{ display: 'flex', justifyContent: 'right' }}>
                     <IconButton onClick={setClose}>
-                        <Close 
+                        <Close
                             fontSize='large'
                             sx={{ color: "#000" }}
                         />

@@ -35,7 +35,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <Routes>
         {/* BASIC */}
-        <Route path='/' element={<RequireAuth allowedRoles={normalAccess} />}>
+        <Route path='/my-requests' element={<RequireAuth allowedRoles={normalAccess} />}>
           <Route path='' element={<MyRequests />} />
           <Route path=':id' element={<MyRequestDetail />} />
           <Route path='create' element={<CreateRequest />} />
@@ -48,11 +48,11 @@ function App() {
           <Route path='revise/:id' element={<EditRequest status="REVISED" path={'/to-acknowledge'} />} />
         </Route>
 
-        <Route path='/all' element={<RequireAuth allowedRoles={normalAccess} />}>
+        <Route path='/' element={<RequireAuth allowedRoles={normalAccess} />}>
           <Route path='' element={<AllRequests />} />
-          <Route path=':id' element={<RequestDetail path={'/all'} />} />
-          <Route path='edit/:id' element={<EditRequest status="PREPARED" path={'/all'} />} />
-          <Route path='revise/:id' element={<EditRequest status="REVISED" path={'/all'} />} />
+          <Route path=':id' element={<RequestDetail path={''} />} />
+          <Route path='edit/:id' element={<EditRequest status="PREPARED" path={'/'} />} />
+          <Route path='revise/:id' element={<EditRequest status="REVISED" path={'/'} />} />
         </Route>
 
         <Route path='/inbox' element={<RequireAuth allowedRoles={normalAccess} />}>

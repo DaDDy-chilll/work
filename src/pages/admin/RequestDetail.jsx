@@ -19,6 +19,7 @@ import Cookies from 'js-cookie'
 import axios from 'axios'
 import { documentRoute, remarkRoute, revisionRoute } from '../../utils/APIRoutes'
 import { useState } from 'react'
+import AssignWorkFlow from '../../components/modals/AssignWorkFlow'
 
 // components
 
@@ -27,11 +28,13 @@ const RequestDetail = ({ path }) => {
   const [originalRemarks, setOriginalRemarks] = useState()
   const [originalRevisions, setOriginalRevisions] = useState()
 
+  const { isOpen, setOpen, setClose } = useDisclosure()
+
+  const [isAssignOpen, setIsAssignOpen] = useState(false)
+
   const { id } = useParams()
 
   const scrollToRef = useRef();
-
-  const { isOpen, setOpen, setClose } = useDisclosure()
 
   // fetch my info
   const { data: me, error: myInfoError } = useGetMyInfoQuery()
@@ -208,6 +211,28 @@ const RequestDetail = ({ path }) => {
           me.payload._id === data.payload.currentReviewer &&
           <>
             <Box display="flex" justifyContent="flex-end" gap="10px" mt="40px">
+              {
+                data.payload.isWorkflowAssigned === false &&
+                data.payload.reviewers.list[data.payload.reviewers.currentReviewerIndex].reviewer.department.isStartingDepartment
+                &&
+                <>
+                  <Button
+                    sx={{ width: "200px" }}
+                    type="button"
+                    color="warning"
+                    variant="contained"
+                    onClick={() => setIsAssignOpen(true)}
+                  >
+                    Assign WorkFlow
+                  </Button>
+                  <AssignWorkFlow
+                    setClose={() => setIsAssignOpen(false)}
+                    isOpen={isAssignOpen}
+                    groups={groupData && groupData.payload}
+                  />
+                </>
+              }
+
               {
                 data.payload.status !== "REQUESTED_REVISION" && data.payload.reviewers.list[data.payload.reviewers.currentReviewerIndex].canPrepare &&
                 <Button

@@ -64,7 +64,7 @@ const EditRequest = ({ status, path }) => {
 
                 dispatch(apiSlice.util.invalidateTags(["Document"]))
 
-                navigate(`/all/${id}`)
+                navigate(`/${id}`)
 
             } catch (err) {
                 setBtnLoading(false)

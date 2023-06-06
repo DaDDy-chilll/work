@@ -9,7 +9,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
     return (
         <Link to={to} style={{ textDecoration: "none" }}>
             <Button
-                variant='contained' sx={{ borderRadius: "50px" }} 
+                variant='contained' sx={{ borderRadius: "50px" }}
                 onClick={() => setSelected(title)}
                 color={selected === title ? "primary" : 'secondary'}
             > {icon} {title}</Button>
@@ -23,23 +23,23 @@ const Navbar = ({ me }) => {
     }
 
     const [selected, setSelected] = useState(
-        isActive("all") ? "All Requests" :
-        isActive("inbox") ? "Inbox" :
-        isActive("to-acknowledge") ? "To Acknowledge" :
-        isActive("users") ? "Users" :
-        isActive("work-flows") ? "Work Flows" : 
-        isActive("departments") ? "Departments" : "My Requests"
+        isActive("my-requests") ? "My Requests" :
+            isActive("inbox") ? "Inbox" :
+                isActive("to-acknowledge") ? "To Acknowledge" :
+                    isActive("users") ? "Users" :
+                        isActive("work-flows") ? "Work Flows" :
+                            isActive("departments") ? "Departments" : "All Requests"
     );
 
     return (
-        <Box display="flex" gap="10px">            
+        <Box display="flex" gap="10px">
             {
                 normalAccess.includes(me.role) &&
-                <Item title="My Requests" to="/" selected={selected} setSelected={setSelected} icon={<PublishOutlined sx={{ mr: 1 }} />} />
+                <Item title="All Requests" to="/" selected={selected} setSelected={setSelected} icon={<PublishOutlined sx={{ mr: 1 }} />} />
             }
             {
                 normalAccess.includes(me.role) &&
-                <Item title="All Requests" to="/all" selected={selected} setSelected={setSelected} icon={<PublishOutlined sx={{ mr: 1 }} />} />
+                <Item title="My Requests" to="/my-requests" selected={selected} setSelected={setSelected} icon={<PublishOutlined sx={{ mr: 1 }} />} />
             }
             {
                 normalAccess.includes(me.role) &&
@@ -48,8 +48,8 @@ const Navbar = ({ me }) => {
             {
                 normalAccess.includes(me.role) &&
                 <Item title="To Acknowledge" to="/to-acknowledge" selected={selected} setSelected={setSelected} icon={<ArticleOutlined sx={{ mr: 1 }} />} />
-            }            
-            
+            }
+
             {/* FOR SUPERADMIN */}
             {
                 userAccess.includes(me.role) &&

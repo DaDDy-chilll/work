@@ -170,7 +170,7 @@ const MyRequestDetail = () => {
 
       toast.success(data.message, toastOptions);
 
-      return navigate('/')
+      return navigate('/my-requests')
 
     } catch (err) {
       setBtnLoading(false)
@@ -185,7 +185,7 @@ const MyRequestDetail = () => {
       <ToastContainer />
 
       <Box sx={{ display: "flex", justifyContent: "right", mb: "20px", mx: "20px" }}>
-        <Link to="/" style={{ textDecoration: "none" }}>
+        <Link to="/my-requests" style={{ textDecoration: "none" }}>
           <Button
             className="no-underline"
             variant="contained"

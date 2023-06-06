@@ -4,7 +4,7 @@ import { getColumns } from '../../columns/Document.columns';
 import { ToastContainer, toast } from 'react-toastify';
 import DataTable from '../../components/tables/DataTable';
 import { toastOptions } from '../../utils/toastOptions';
-import { Box } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 import PageTitle from '../../components/mains/PageTitle';
 import SelectCaseType from '../../components/form_controls/SelectCaseType';
 import Cookies from 'js-cookie';
@@ -45,7 +45,7 @@ const ToAcknowledge = () => {
   useEffect(() => {
     const accessToken = Cookies.get('accessToken')
     const fetchData = async () => {
-      console.log('ON')
+      
       setPageState(old => ({ ...old, isLoading: true }))
 
       const { data } = await axios.get(`${documentRoute}/to-acknowledge?page=${pageState.page}&limit=${pageState.pageSize}&sort=+createdAt`, {
@@ -76,19 +76,21 @@ const ToAcknowledge = () => {
 
       {
         pageState.data ?
-        <DataTable
-          rows={pageState.data}
-          rowCount={pageState.total}
-          loading={pageState.isLoading}
-          page={pageState.page - 1}
-          pageSize={pageState.pageSize}
-          onPageChange={(newPage) => {
-            setPageState(old => ({ ...old, page: newPage + 1 }))
-          }}
-          onPageSizeChange={(newPageSize) => setPageState(old => ({ ...old, pageSize: newPageSize }))}
-          columns={columns}
-        /> 
-        : <Loading open={true} />
+          <DataTable
+            rows={pageState.data}
+            rowCount={pageState.total}
+            loading={pageState.isLoading}
+            page={pageState.page - 1}
+            pageSize={pageState.pageSize}
+            onPageChange={(newPage) => {
+              setPageState(old => ({ ...old, page: newPage + 1 }))
+            }}
+            onPageSizeChange={(newPageSize) => setPageState(old => ({ ...old, pageSize: newPageSize }))}
+            columns={columns}
+          /> :
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <CircularProgress />
+          </Box>
       }
 
     </Box>

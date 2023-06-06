@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material'
+import { Box, Button, CircularProgress } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify'
 
@@ -30,7 +30,7 @@ const Users = () => {
   useEffect(() => {
     const accessToken = Cookies.get('accessToken')
     const fetchData = async () => {
-      console.log('ON')
+      
       setPageState(old => ({ ...old, isLoading: true }))
 
       const { data } = await axios.get(`${userRoute}?page=${pageState.page}&limit=${pageState.pageSize}&sort=+createdAt`, {
@@ -76,19 +76,22 @@ const Users = () => {
 
       {/* {content} */}
       {
-        pageState.data &&
-        <DataTable
-          rows={pageState.data}
-          rowCount={pageState.total}
-          loading={pageState.isLoading}
-          page={pageState.page - 1}
-          pageSize={pageState.pageSize}
-          onPageChange={(newPage) => {
-            setPageState(old => ({ ...old, page: newPage + 1 }))
-          }}
-          onPageSizeChange={(newPageSize) => setPageState(old => ({ ...old, pageSize: newPageSize }))}
-          columns={columns}
-        />
+        pageState.data ?
+          <DataTable
+            rows={pageState.data}
+            rowCount={pageState.total}
+            loading={pageState.isLoading}
+            page={pageState.page - 1}
+            pageSize={pageState.pageSize}
+            onPageChange={(newPage) => {
+              setPageState(old => ({ ...old, page: newPage + 1 }))
+            }}
+            onPageSizeChange={(newPageSize) => setPageState(old => ({ ...old, pageSize: newPageSize }))}
+            columns={columns}
+          /> :
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <CircularProgress />
+          </Box>
       }
 
       <CreateUser setClose={setClose} isOpen={isOpen} />

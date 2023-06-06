@@ -44,8 +44,8 @@ const RequestForm = ({ handleFormSubmit, setClose, initialValues, loading, disab
                             variant="filled"
                             type="text"
                             label="Name"
-                            // multiline
-                            // rows={3}
+                            multiline
+                            rows={6}
                             onBlur={handleBlur}
                             onChange={handleChange}
                             value={values.name}
@@ -91,19 +91,19 @@ const RequestForm = ({ handleFormSubmit, setClose, initialValues, loading, disab
                         {/* amount */}
                         {
                             disabled &&
-                                <TextField
-                                    fullWidth
-                                    variant="filled"
-                                    type="number"
-                                    label="Amount"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    value={values.amount}
-                                    name="amount"
-                                    error={!!touched.amount && !!errors.amount}
-                                    helperText={touched.amount && errors.amount}
-                                    sx={{ gridColumn: "span 4" }}
-                                />
+                            <TextField
+                                fullWidth
+                                variant="filled"
+                                type="number"
+                                label="Amount"
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                value={values.amount}
+                                name="amount"
+                                error={!!touched.amount && !!errors.amount}
+                                helperText={touched.amount && errors.amount}
+                                sx={{ gridColumn: "span 4" }}
+                            />
                         }
 
                         {/* attachment */}

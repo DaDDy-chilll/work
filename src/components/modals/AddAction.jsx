@@ -46,11 +46,11 @@ const AddAction = ({ setClose, isOpen, groups, reviewer }) => {
         try {
             setLoading(true)
             const { data } = await axios.post(`${documentRoute}/${id}/${selected === "approve" ? approveRoute :
-                    selected === "reject" ? rejectRoute :
+                selected === "reject" ? rejectRoute :
                     selected === "verify" ? verifyRoute :
-                    selected === "prepare" ? prepareRoute :
-                    selected === "comment" ? commentRoute :
-                    selected === "revision" && requestRevisionRoute
+                        selected === "prepare" ? prepareRoute :
+                            selected === "comment" ? commentRoute :
+                                selected === "revision" && requestRevisionRoute
                 }`,
                 {
                     remark,
@@ -64,7 +64,7 @@ const AddAction = ({ setClose, isOpen, groups, reviewer }) => {
                 })
 
             setLoading(false)
-            
+
             dispatch(apiSlice.util.invalidateTags(["Document"]))
             dispatch(apiSlice.util.invalidateTags(["History"]))
 
@@ -72,8 +72,8 @@ const AddAction = ({ setClose, isOpen, groups, reviewer }) => {
 
             toast.success(data.message, toastOptions)
 
-            window.location.pathname.includes("all") ? navigate(`/inbox/${id}`) : 
-            window.location.pathname.includes("inbox") && navigate(`/all/${id}`)         
+            window.location.pathname.includes("all") ? navigate(`/${id}`) :
+                window.location.pathname.includes("inbox") && navigate(`/inbox/${id}`)
 
         } catch (err) {
             setLoading(false)
