@@ -50,7 +50,7 @@ function App() {
 
         <Route path='/' element={<RequireAuth allowedRoles={normalAccess} />}>
           <Route path='' element={<AllRequests />} />
-          <Route path=':id' element={<RequestDetail path={''} />} />
+          <Route path=':id' element={<RequestDetail path={'/'} />} />
           <Route path='edit/:id' element={<EditRequest status="PREPARED" path={'/'} />} />
           <Route path='revise/:id' element={<EditRequest status="REVISED" path={'/'} />} />
         </Route>

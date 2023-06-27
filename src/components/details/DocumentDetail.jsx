@@ -10,8 +10,6 @@ import { useDisclosure } from '../../hooks/dialog'
 
 const DocumentDetail = ({ document, remarks, revisions, me, scrollToRef }) => {
 
-    console.log({ document })
-
     const { isOpen, setClose, setOpen } = useDisclosure()
 
     const [image, setImage] = useState({

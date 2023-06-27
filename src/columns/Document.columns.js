@@ -112,7 +112,7 @@ export const getColumns = () => {
             headerName: "Actions",
             renderCell: ({ value }) =>
             (
-                <ActionBtn id={value} />
+                <ActionBtn id={value} isUser={false} />
             )
         }
     ]
