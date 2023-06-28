@@ -17,10 +17,10 @@ export const getColumns = () => {
             valueGetter: ({ value }) => value.split("T")[0]
         },
 
-        { field: "name", headerName: "Item", width: 200 },
+        { field: "name", headerName: "Subject", width: 200 },
 
         {
-            field: "description", headerName: "Reason", width: 250,
+            field: "description", headerName: "Description", width: 250,
             valueGetter: ({ value }) => convert(value).replace(/<[^>]+>/g, '')
         },
 

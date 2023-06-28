@@ -1,4 +1,5 @@
-export const host = "https://parami-dev-project.herokuapp.com/api"
+export const host = process.env.REACT_APP_API_URL
+// "https://parami-dev-project.herokuapp.com/api"
 // export const host = "https://parami-project.herokuapp.com/api"
 
 // auth api

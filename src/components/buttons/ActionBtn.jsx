@@ -43,7 +43,7 @@ const ActionBtn = ({ id, isDisabled, isUser }) => {
       </Button>
       {
         isUser && <Button variant="contained" color="error" disabled={isDisabled} onClick={() => handleStatusChange()}>
-          Diable
+          Disable
         </Button>
       }
     </Box>

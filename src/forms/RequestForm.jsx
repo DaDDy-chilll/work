@@ -43,7 +43,7 @@ const RequestForm = ({ handleFormSubmit, setClose, initialValues, loading, disab
                             fullWidth
                             variant="filled"
                             type="text"
-                            label="Name"
+                            label="Subject"
                             multiline
                             rows={6}
                             onBlur={handleBlur}

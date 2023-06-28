@@ -45,8 +45,7 @@
   "scripts": {
     "dev": "react-scripts start",
     "start": "react-scripts start",
-    "build": "set \"REACT_APP_BACKEND_API=https://parami-dev-project.herokuapp.com/api\" && react-scripts build",
-    "build:prod": "set \"REACT_APP_BACKEND_API=https://parami-project.herokuapp.com/api\" && react-scripts build",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
