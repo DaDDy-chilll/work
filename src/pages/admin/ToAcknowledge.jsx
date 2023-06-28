@@ -1,23 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import { useGetToAcknowledgeDocumentsQuery } from '../../services/documentSlice';
 import { getColumns } from '../../columns/Document.columns';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import DataTable from '../../components/tables/DataTable';
-import { toastOptions } from '../../utils/toastOptions';
 import { Box, CircularProgress } from '@mui/material';
 import PageTitle from '../../components/mains/PageTitle';
-import SelectCaseType from '../../components/form_controls/SelectCaseType';
 import Cookies from 'js-cookie';
 import { documentRoute } from '../../utils/APIRoutes';
 import axios from 'axios';
-import Loading from '../../components/mains/Loading';
 
 const ToAcknowledge = () => {
-  const [documentCase, setDocumentCase] = useState()
+  // const [documentCase, setDocumentCase] = useState()
 
-  const handleChange = async (value) => {
-    setDocumentCase(value)
-  }
+  // const handleChange = async (value) => {
+  //   setDocumentCase(value)
+  // }
 
   // const { isLoading, data, error } = useGetToAcknowledgeDocumentsQuery(
   //   documentCase === "OPEN" ? "open" :
