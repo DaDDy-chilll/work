@@ -169,6 +169,7 @@ const RequestDetail = ({ path }) => {
 
       {
         revisions && revisions.payload && revisions.payload.acknowledgements
+          // eslint-disable-next-line array-callback-return
           .filter((acknowledgement) => {
             if (acknowledgement.user === me.payload._id && acknowledgement.hasAcknowledged === false)
               return acknowledgement
@@ -191,6 +192,7 @@ const RequestDetail = ({ path }) => {
         sx={{
           border: `1px solid
           ${revisions && revisions.payload && revisions.payload.acknowledgements
+              // eslint-disable-next-line array-callback-return
               .filter((acknowledgement) => {
                 if (acknowledgement.user === me.payload._id && acknowledgement.hasAcknowledged === false)
                   return acknowledgement
@@ -294,6 +296,7 @@ const RequestDetail = ({ path }) => {
           sx={{
             border: `1px solid
           ${originalRevisions && originalRevisions.acknowledgements
+                // eslint-disable-next-line array-callback-return
                 .filter((acknowledgement) => {
                   if (acknowledgement.user === me.payload._id && acknowledgement.hasAcknowledged === false)
                     return acknowledgement

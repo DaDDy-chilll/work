@@ -1,10 +1,7 @@
-import { Box, Button, CircularProgress, TextField, useMediaQuery } from '@mui/material'
-import { Formik } from 'formik'
+import { Box, Button, TextField, useMediaQuery } from '@mui/material'
 import React from 'react'
 
 // icons
-import { checkoutSchema, initialValues } from '../schemas/Group.schema';
-import Loading from '../components/mains/Loading';
 import SelectDepartment from '../components/form_controls/SelectDepartment';
 
 const DepartmentFlowForm = ({    

@@ -31,7 +31,7 @@ const RightDrawer = ({ open, setOpen, notis, me }) => {
 
       setLoading(true)
 
-      const { data } = await axios.patch(`${notiRoute}/${_id}`,
+      await axios.patch(`${notiRoute}/${_id}`,
         null,
         {
           headers: {

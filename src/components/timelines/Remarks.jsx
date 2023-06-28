@@ -65,6 +65,7 @@ const Item = ({ remark, revisions, me, scrollToRef, handleAcknowledge, btnLoadin
                     <Box ref={scrollToRef} sx={{ display: "flex", alignItems: "center", gap: "10px", mt: 1 }}>
                         {
                             revisions.acknowledgements
+                                // eslint-disable-next-line array-callback-return
                                 .filter((acknowledgement) => {
                                     if (acknowledgement.user === me.payload._id && acknowledgement.hasAcknowledged === false) return acknowledgement                                            
                                 }).length ?
@@ -84,6 +85,7 @@ const Item = ({ remark, revisions, me, scrollToRef, handleAcknowledge, btnLoadin
                         <Typography variant='h6'>
                             {
                                 revisions.acknowledgements
+                                    // eslint-disable-next-line array-callback-return
                                     .filter((acknowledgement) => {
                                         if (acknowledgement.hasAcknowledged === true) return acknowledgement                                                
                                     }).length

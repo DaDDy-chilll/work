@@ -22,7 +22,7 @@ const SelectFadReviewers = ({ setClose, isOpen }) => {
     const isNonMobile = useMediaQuery("(min-width:600px)");
     const [btnLoading, setBtnLoading] = useState(false)
 
-    const [isLoading, setIsLoading] = useState(true)
+    const [setIsLoading] = useState(true)
 
     const handleFormSubmit = async (values) => {
         const accessToken = Cookies.get('accessToken')

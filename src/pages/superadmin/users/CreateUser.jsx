@@ -5,7 +5,6 @@ import React, { useState } from 'react'
 import { toast } from 'react-toastify';
 import { authRoute } from '../../../utils/APIRoutes';
 import { toastOptions } from '../../../utils/toastOptions';
-import { colors } from '../../../utils/theme';
 import UserForm from '../../../forms/UserForm';
 import { initialCreateValues } from '../../../schemas/User.schema';
 import { apiSlice } from '../../../services/apiSlice';

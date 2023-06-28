@@ -1,24 +1,20 @@
 import { Box, CircularProgress } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import PageTitle from '../../components/mains/PageTitle';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import { getColumns } from '../../columns/Document.columns';
 import DataTable from '../../components/tables/DataTable';
-import { toastOptions } from '../../utils/toastOptions';
-import { useGetInboxQuery } from '../../services/documentSlice';
-import SelectCaseType from '../../components/form_controls/SelectCaseType';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { documentRoute } from '../../utils/APIRoutes';
-import Loading from '../../components/mains/Loading';
 
 const Inbox = () => {
 
-    const [documentCase, setDocumentCase] = useState()
+    // const [documentCase, setDocumentCase] = useState()
 
-    const handleChange = async (value) => {
-        setDocumentCase(value)
-    }
+    // const handleChange = async (value) => {
+    //     setDocumentCase(value)
+    // }
 
     // const { isLoading, data, error } = useGetInboxQuery(
     //     documentCase === "OPEN" ? "open" :
