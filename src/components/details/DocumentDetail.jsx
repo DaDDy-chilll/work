@@ -1,16 +1,13 @@
-import { Close, History } from '@mui/icons-material'
-import { Box, Dialog, DialogContent, DialogTitle, Divider, IconButton, Modal, Typography } from '@mui/material'
+import { Close } from '@mui/icons-material'
+import { Box, Dialog, DialogContent, DialogTitle, Divider, IconButton, Typography } from '@mui/material'
 import React, { useState } from 'react'
 
 import PDF from "../../assets/PDF.png"
-import { colors } from '../../utils/theme'
 import FormStatus from '../timelines/FormStatus'
 import Remarks from '../timelines/Remarks'
 import { useDisclosure } from '../../hooks/dialog'
 
 const DocumentDetail = ({ document, remarks, revisions, me, scrollToRef }) => {
-
-    console.log({ document })
 
     const { isOpen, setClose, setOpen } = useDisclosure()
 
@@ -39,7 +36,7 @@ const DocumentDetail = ({ document, remarks, revisions, me, scrollToRef }) => {
             </Box>
 
             <Box sx={{ display: "flex", flexDirection: "column", gap: "10px", mt: 2 }}>
-                <Typography variant='h4' fontWeight="bold">Name</Typography>
+                <Typography variant='h4' fontWeight="bold">Subject</Typography>
                 <Typography variant='h5'>{document.name}</Typography>
             </Box>
 

@@ -1,5 +1,3 @@
-import GroupActionBtn from "../components/buttons/GroupActionBtn";
-
 export const getColumns = () => {
     return [
         { field: "departmentId", headerName: "ID" },

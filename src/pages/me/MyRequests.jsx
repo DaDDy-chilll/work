@@ -1,25 +1,21 @@
 import { Box, Button, CircularProgress } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { toast, ToastContainer } from 'react-toastify'
+import { ToastContainer } from 'react-toastify'
 import { Link } from 'react-router-dom'
-import { useGetMyRequestsQuery } from '../../services/documentSlice'
 import { getColumns } from '../../columns/Document.columns'
-import { toastOptions } from '../../utils/toastOptions'
 import DataTable from '../../components/tables/DataTable'
 import PageTitle from '../../components/mains/PageTitle'
-import SelectCaseType from '../../components/form_controls/SelectCaseType'
 import Cookies from 'js-cookie'
 import axios from 'axios'
 import { documentRoute } from '../../utils/APIRoutes'
-import Loading from '../../components/mains/Loading'
 
 const MyRequests = () => {
 
-  const [documentCase, setDocumentCase] = useState()
+  // const [documentCase, setDocumentCase] = useState()
 
-  const handleChange = async (value) => {
-    setDocumentCase(value)
-  }
+  // const handleChange = async (value) => {
+  //   setDocumentCase(value)
+  // }
 
   // const { isLoading, data, error } = useGetMyRequestsQuery(
   //   documentCase === "OPEN" ? "open" :

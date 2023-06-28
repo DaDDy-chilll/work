@@ -1,13 +1,11 @@
 import { Box, Button, CircularProgress } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { toast, ToastContainer } from 'react-toastify'
+import { ToastContainer } from 'react-toastify'
 
 // icons
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { useDisclosure } from '../../../hooks/dialog';
-import { useGetUsersQuery } from '../../../services/userSlice';
 import { getColumns } from '../../../columns/User.columns';
-import { toastOptions } from '../../../utils/toastOptions';
 import DataTable from '../../../components/tables/DataTable';
 import PageTitle from '../../../components/mains/PageTitle';
 import CreateUser from './CreateUser';
