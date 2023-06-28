@@ -24,7 +24,7 @@ jobs:
         if: github.ref == 'refs/heads/development'
         run: |
           touch .env
-          echo VITE_API_URL=${{ secrets.DEVELOPMENT_API_URL }} >> .env
+          echo REACT_APP_API_URL=${{ secrets.DEVELOPMENT_API_URL }} >> .env
           npm run build
           firebase deploy --only hosting:development --non-interactive --token ${{ secrets.FIREBASE_TOKEN }} -m "RunID ${{ github.run_id }} Commit SHA ${{ github.sha }}"
 
@@ -32,7 +32,7 @@ jobs:
         if: github.ref == 'refs/heads/staging'
         run: |
           touch .env
-          echo VITE_API_URL=${{ secrets.STAGING_API_URL }} >> .env
+          echo REACT_APP_API_URL=${{ secrets.STAGING_API_URL }} >> .env
           npm run build
           firebase deploy --only hosting:staging --non-interactive --token ${{ secrets.FIREBASE_TOKEN }} -m "RunID ${{ github.run_id }} Commit SHA ${{ github.sha }}"
       
@@ -40,7 +40,7 @@ jobs:
         if: github.ref == 'refs/heads/production'
         run: |
           touch .env
-          echo VITE_API_URL=${{ secrets.PRODUCTION_API_URL }} >> .env
+          echo REACT_APP_API_URL=${{ secrets.PRODUCTION_API_URL }} >> .env
           npm run build
           firebase deploy --only hosting:production --non-interactive --token ${{ secrets.FIREBASE_TOKEN }} -m "RunID ${{ github.run_id }} Commit SHA ${{ github.sha }}"
 
