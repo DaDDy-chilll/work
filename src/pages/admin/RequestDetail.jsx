@@ -136,9 +136,6 @@ const RequestDetail = ({ path }) => {
       />
   }
 
-  console.log(data && data.payload);
-  console.log(me);
-
   // fetch groups
   const { data: groupData } = useGetGroupsQuery()
 
