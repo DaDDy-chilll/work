@@ -49,7 +49,7 @@ const Item = ({ remark, revisions, me, scrollToRef, handleAcknowledge, btnLoadin
                     <ApartmentOutlined fontSize='small' />
                     <Typography variant='h6'>
 
-                        {remark.actor.department}
+                        {remark.actor.department.name}
                     </Typography>
                 </Box>
             </Box>
@@ -65,6 +65,7 @@ const Item = ({ remark, revisions, me, scrollToRef, handleAcknowledge, btnLoadin
                     <Box ref={scrollToRef} sx={{ display: "flex", alignItems: "center", gap: "10px", mt: 1 }}>
                         {
                             revisions.acknowledgements
+                                // eslint-disable-next-line array-callback-return
                                 .filter((acknowledgement) => {
                                     if (acknowledgement.user === me.payload._id && acknowledgement.hasAcknowledged === false) return acknowledgement                                            
                                 }).length ?
@@ -84,6 +85,7 @@ const Item = ({ remark, revisions, me, scrollToRef, handleAcknowledge, btnLoadin
                         <Typography variant='h6'>
                             {
                                 revisions.acknowledgements
+                                    // eslint-disable-next-line array-callback-return
                                     .filter((acknowledgement) => {
                                         if (acknowledgement.hasAcknowledged === true) return acknowledgement                                                
                                     }).length
@@ -108,7 +110,6 @@ const Remarks = ({ remarks, revisions, me, scrollToRef }) => {
     const [btnLoading, setBtnLoading] = useState(false)
     
     const handleAcknowledge = async ({ documentId, revisionId }) => {
-        console.log({ documentId, revisionId });
         try {
             setBtnLoading(true)
 

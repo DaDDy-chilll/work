@@ -51,19 +51,34 @@ const DepartmentActions = ({ department, reviewers }) => {
 
 const FormStatus = ({ reviewers }) => {
 
-    const officeAdmins = reviewers.filter((reviewer) => (reviewer.department === "OFFICE_ADMIN"))
-    const clinicalAdmins = reviewers.filter((reviewer) => (reviewer.department === "COO"))
-    const BOMs = reviewers.filter((reviewer) => (reviewer.department === "BOM"))
-    const FADs = reviewers.filter((reviewer) => (reviewer.department === "FAD"))
+    let departments = [];
+    reviewers.forEach(r => {
+        departments.push(r.reviewer.department.name)
+    })
 
+    departments = [...new Set([...departments])]
+
+    const departmentActionsArray = departments.map(dpt => {
+        const users = reviewers.filter(r => r.reviewer.department.name === dpt)
+        return {
+            departmentName: dpt,
+            users
+        }
+    })
+    
     return (
         <Box
             sx={{ display: 'flex', gap: 2 }}
         >
-            <DepartmentActions department="Office Admins" reviewers={officeAdmins} />
+            {
+                departmentActionsArray.map(dept => (
+                    <DepartmentActions key={dept.departmentName} department={dept.departmentName} reviewers={dept.users} />
+                ))
+            }
+            {/* <DepartmentActions department="Office Admins" reviewers={officeAdmins} />
             <DepartmentActions department="COO" reviewers={clinicalAdmins} />
             <DepartmentActions department="BOMs" reviewers={BOMs} />
-            <DepartmentActions department="FADs" reviewers={FADs} />
+            <DepartmentActions department="FADs" reviewers={FADs} /> */}
         </Box>
     )
 }

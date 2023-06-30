@@ -8,36 +8,17 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import Loading from '../components/mains/Loading';
 import { checkoutSchema } from '../schemas/User.schema';
 
-const UserForm = ({ handleFormSubmit, setClose, initialValues, loading, isEdit, btnLoading }) => {
+const UserForm = ({
+    handleFormSubmit,
+    setClose,
+    initialValues,
+    loading,
+    isEdit,
+    btnLoading,
+    departments
+}) => {
 
     const isNonMobile = useMediaQuery("(min-width:600px)");
-
-    const departments = [
-        {
-            id: "OFFICE_ADMIN",
-            name: "Office Admin"
-        },
-        {
-            id: "COO",
-            name: "COO"
-        },
-        {
-            id: "BOM",
-            name: "BOM"
-        },
-        {
-            id: "FAD",
-            name: "FAD"
-        },
-        {
-            id: "CUSTOM",
-            name: "Custom"
-        }
-    ]
-
-    const authorizedDepartments = [
-        "OFFICE_ADMIN", "CLINICAL_ADMIN", "BOM", "FAD"
-    ]
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -178,30 +159,13 @@ const UserForm = ({ handleFormSubmit, setClose, initialValues, loading, isEdit, 
                                 onBlur={handleBlur}
                                 onChange={handleChange}
                             >
-                                {departments.map((department, i) => (
-                                    <MenuItem value={department.id} key={i}>
+                                {departments && departments.map((department, i) => (
+                                    <MenuItem value={department._id} key={i}>
                                         {department.name}
                                     </MenuItem>
                                 ))}
                             </Select>
                         </FormControl>
-
-                        {
-                            values.department === "CUSTOM" &&
-                            <TextField
-                                fullWidth
-                                variant="filled"
-                                type="text"
-                                label="Custom Department"
-                                onBlur={handleBlur}
-                                onChange={handleChange}
-                                value={values.customDepartment}
-                                name="customDepartment"
-                                error={!!touched.customDepartment && !!errors.customDepartment}
-                                helperText={touched.customDepartment && errors.customDepartment}
-                                sx={{ gridColumn: "span 4" }}
-                            />
-                        }
 
                         {/* Job Label */}
                         <TextField
@@ -244,92 +208,80 @@ const UserForm = ({ handleFormSubmit, setClose, initialValues, loading, isEdit, 
                                     onBlur={handleBlur}
                                     onChange={handleChange}
                                 />
-                                {
-                                    authorizedDepartments.includes(values.department) &&
-                                    <>
-                                        <FormControlLabel
-                                            control={<Checkbox />}
-                                            label="Comment"
-                                            checked={true}
-                                            disabled={true}
-                                            value={values.canComment}
-                                            name="canComment"
-                                            // error={!!touched.approve && !!errors.approve}
-                                            // helpertext={touched.approve && errors.approve}
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                        />
-                                        <FormControlLabel
-                                            control={<Checkbox />}
-                                            label="Edit"
-                                            checked={values.canPrepare}
-                                            value={values.canPrepare}
-                                            name="canPrepare"
-                                            // error={!!touched.approve && !!errors.approve}
-                                            // helpertext={touched.approve && errors.approve}
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                        />
-                                    </>
-                                }
+                                <FormControlLabel
+                                    control={<Checkbox />}
+                                    label="Comment"
+                                    checked={true}
+                                    disabled={true}
+                                    value={values.canComment}
+                                    name="canComment"
+                                    // error={!!touched.approve && !!errors.approve}
+                                    // helpertext={touched.approve && errors.approve}
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                />
+                                <FormControlLabel
+                                    control={<Checkbox />}
+                                    label="Edit"
+                                    checked={values.canPrepare}
+                                    value={values.canPrepare}
+                                    name="canPrepare"
+                                    // error={!!touched.approve && !!errors.approve}
+                                    // helpertext={touched.approve && errors.approve}
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                />
                             </Box>
                             <Box sx={{ display: "flex", gap: 5 }}>
-                                {
-                                    authorizedDepartments.includes(values.department) &&
-                                    <>
-                                        <FormControlLabel
-                                            control={<Checkbox />}
-                                            label="Revise"
-                                            checked={values.canEdit}
-                                            value={values.canEdit}
-                                            name="canEdit"
-                                            // error={!!touched.reject && !!errors.reject}
-                                            // helpertext={touched.reject && errors.reject}
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                        />
-                                        <FormControlLabel
-                                            control={<Checkbox />}
-                                            label="Verify"
-                                            checked={values.canVerify}
-                                            value={values.canVerify}
-                                            name="canVerify"
-                                            // error={!!touched.reject && !!errors.reject}
-                                            // helpertext={touched.reject && errors.reject}
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                        />
-                                        <FormControlLabel
-                                            control={<Checkbox />}
-                                            label="Approve"
-                                            checked={values.canApprove}
-                                            value={values.canApprove}
-                                            name="canApprove"
-                                            // error={!!touched.approve && !!errors.approve}
-                                            // helpertext={touched.approve && errors.approve}
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                        />
-                                        <FormControlLabel
-                                            control={<Checkbox />}
-                                            label="Reject"
-                                            checked={true}
-                                            disabled={true}
-                                            value={values.canReject}
-                                            name="canReject"
-                                            // error={!!touched.approve && !!errors.approve}
-                                            // helpertext={touched.approve && errors.approve}
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                        />
-                                    </>
-                                }
-                            </Box>
-                            {
-                                authorizedDepartments.includes(values.department) &&
                                 <FormControlLabel
+                                    control={<Checkbox />}
+                                    label="Revise"
+                                    checked={values.canEdit}
+                                    value={values.canEdit}
+                                    name="canEdit"
+                                    // error={!!touched.reject && !!errors.reject}
+                                    // helpertext={touched.reject && errors.reject}
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                />
+                                <FormControlLabel
+                                    control={<Checkbox />}
+                                    label="Verify"
+                                    checked={values.canVerify}
+                                    value={values.canVerify}
+                                    name="canVerify"
+                                    // error={!!touched.reject && !!errors.reject}
+                                    // helpertext={touched.reject && errors.reject}
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                />
+                                <FormControlLabel
+                                    control={<Checkbox />}
+                                    label="Approve"
+                                    checked={values.canApprove}
+                                    value={values.canApprove}
+                                    name="canApprove"
+                                    // error={!!touched.approve && !!errors.approve}
+                                    // helpertext={touched.approve && errors.approve}
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                />
+                                <FormControlLabel
+                                    control={<Checkbox />}
+                                    label="Reject"
+                                    checked={true}
+                                    disabled={true}
+                                    value={values.canReject}
+                                    name="canReject"
+                                    // error={!!touched.approve && !!errors.approve}
+                                    // helpertext={touched.approve && errors.approve}
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                />
+                            </Box>
+                            <FormControlLabel
                                 control={<Checkbox />}
-                                label="Request Revision"
+                                label="Reverse"
                                 checked={true}
                                 disabled={true}
                                 value={values.canRequestRevision}
@@ -339,7 +291,6 @@ const UserForm = ({ handleFormSubmit, setClose, initialValues, loading, isEdit, 
                                 onBlur={handleBlur}
                                 onChange={handleChange}
                             />
-                            }
                         </FormGroup>
                     </Box>
                     <Box display="flex" justifyContent="center" gap={5} mt="40px">

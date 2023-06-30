@@ -1,0 +1,65 @@
+stages:
+  - build
+  - deploy
+
+default:
+  image: node:latest
+  cache:
+    paths:
+      - node_modules/
+
+before_script:
+  - npm i -g firebase-tools  
+
+# development build jobs
+build_development:
+  stage: build
+  script:
+    - npm i
+    - CI=false 
+    # - REACT_APP_BACKEND_API = $DEVELOPMENT_BACKEND_API
+    - npm run build
+  only:
+    refs:
+      - development
+  artifacts:
+    paths:
+      - build
+    expire_in: 1 hour
+
+# development deploy jobs
+deploy_development:
+  stage: deploy
+  script:
+    - echo $FIREBASE_TOKEN
+    - firebase use $PROJECT_ID --token $FIREBASE_TOKEN
+    - firebase deploy --only hosting:development --token $FIREBASE_TOKEN
+    # - firebase deploy --only hosting:development --token "$FIREBASE_TOKEN"
+  only:
+    refs:
+      - development
+
+# production build jobs
+build_production:
+  stage: build
+  script:
+    - npm i
+    - CI=false 
+    # - REACT_APP_BACKEND_API = $PRODUCTION_BACKEND_API
+    - npm run build:prod
+  only:
+    refs:
+      - production
+  artifacts:
+    paths:
+      - build
+    expire_in: 1 hour
+
+# production deploy jobs
+deploy_production:
+  stage: deploy
+  script:
+    - firebase deploy --only hosting:testing --token "$FIREBASE_TOKEN"
+  only:
+    refs:
+      - production

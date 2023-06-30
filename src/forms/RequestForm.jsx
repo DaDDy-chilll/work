@@ -43,9 +43,9 @@ const RequestForm = ({ handleFormSubmit, setClose, initialValues, loading, disab
                             fullWidth
                             variant="filled"
                             type="text"
-                            label="Name"
-                            // multiline
-                            // rows={3}
+                            label="Subject"
+                            multiline
+                            rows={6}
                             onBlur={handleBlur}
                             onChange={handleChange}
                             value={values.name}
@@ -64,13 +64,12 @@ const RequestForm = ({ handleFormSubmit, setClose, initialValues, loading, disab
 
                         {/* document type */}
                         {
-                            isClaimDocument === false &&
+                            disabled &&
                             <FormControl variant="filled" sx={{ gridColumn: "span 4" }}>
                                 <InputLabel id="demo-simple-select-filled-label">
                                     Select Document Type
                                 </InputLabel>
                                 <Select
-                                    disabled={disabled}
                                     labelId="demo-simple-select-filled-label"
                                     id="demo-simple-select-filled"
                                     value={values.type}
@@ -90,19 +89,22 @@ const RequestForm = ({ handleFormSubmit, setClose, initialValues, loading, disab
                         }
 
                         {/* amount */}
-                        <TextField
-                            fullWidth
-                            variant="filled"
-                            type="number"
-                            label="Amount"
-                            onBlur={handleBlur}
-                            onChange={handleChange}
-                            value={values.amount}
-                            name="amount"
-                            error={!!touched.amount && !!errors.amount}
-                            helperText={touched.amount && errors.amount}
-                            sx={{ gridColumn: "span 4" }}
-                        />
+                        {
+                            disabled &&
+                            <TextField
+                                fullWidth
+                                variant="filled"
+                                type="number"
+                                label="Amount"
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                value={values.amount}
+                                name="amount"
+                                error={!!touched.amount && !!errors.amount}
+                                helperText={touched.amount && errors.amount}
+                                sx={{ gridColumn: "span 4" }}
+                            />
+                        }
 
                         {/* attachment */}
                         <Box sx={{ gridColumn: "span 4" }}>

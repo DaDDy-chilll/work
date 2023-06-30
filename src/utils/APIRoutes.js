@@ -1,8 +1,4 @@
-// staging
-export const host = 'https://parami-project.herokuapp.com/api'
-
-// development
-// export const host = 'https://parami-dev-project.herokuapp.com/api'
+export const host = process.env.REACT_APP_API_URL
 
 // auth api
 export const authRoute = `${host}/auth`
@@ -12,6 +8,9 @@ export const userRoute = `${host}/users`
 
 // group api
 export const groupRoute = `${host}/reviewer-groups`
+
+// group api
+export const departmentRoute = `${host}/departments`
 
 // document api
 export const documentRoute = `${host}/documents`

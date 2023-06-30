@@ -2,7 +2,7 @@ import React from 'react'
 import "./ErrorPage.css"
 import { Box, Button, Typography } from '@mui/material'
 import { colors } from '../utils/theme'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { ArrowBackOutlined } from '@mui/icons-material'
 
 const ErrorPage = () => {

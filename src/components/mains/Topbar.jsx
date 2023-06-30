@@ -13,9 +13,7 @@ import { NotificationsNone } from "@mui/icons-material";
 import RightDrawer from "./RightDrawer";
 import { useGetNotificationsQuery } from "../../services/notificationSlice";
 import { toastOptions } from "../../utils/toastOptions";
-import { ToastContainer, toast } from "react-toastify";
-import axios from "axios";
-import { notiRoute } from "../../utils/APIRoutes";
+import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { apiSlice } from "../../services/apiSlice";
 

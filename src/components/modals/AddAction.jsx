@@ -1,6 +1,6 @@
 import { Dialog, DialogContent } from '@mui/material'
 import React, { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -8,6 +8,8 @@ import ActionForm from '../../forms/ActionForm';
 import { documentRoute } from '../../utils/APIRoutes';
 import { toastOptions } from '../../utils/toastOptions';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { apiSlice } from '../../services/apiSlice';
 
 const AddAction = ({ setClose, isOpen, groups, reviewer }) => {
 
@@ -26,6 +28,10 @@ const AddAction = ({ setClose, isOpen, groups, reviewer }) => {
 
     const [selected, setSelected] = useState()
 
+    const dispatch = useDispatch()
+
+    const navigate = useNavigate()
+
     const handleFormSubmit = async (values) => {
 
         const { remark, groupId, department } = values
@@ -40,11 +46,11 @@ const AddAction = ({ setClose, isOpen, groups, reviewer }) => {
         try {
             setLoading(true)
             const { data } = await axios.post(`${documentRoute}/${id}/${selected === "approve" ? approveRoute :
-                    selected === "reject" ? rejectRoute :
+                selected === "reject" ? rejectRoute :
                     selected === "verify" ? verifyRoute :
-                    selected === "prepare" ? prepareRoute :
-                    selected === "comment" ? commentRoute :
-                    selected === "revision" && requestRevisionRoute
+                        selected === "prepare" ? prepareRoute :
+                            selected === "comment" ? commentRoute :
+                                selected === "revision" && requestRevisionRoute
                 }`,
                 {
                     remark,
@@ -59,9 +65,15 @@ const AddAction = ({ setClose, isOpen, groups, reviewer }) => {
 
             setLoading(false)
 
+            dispatch(apiSlice.util.invalidateTags(["Document"]))
+            dispatch(apiSlice.util.invalidateTags(["History"]))
+
             setClose()
 
-            return toast.success(data.message, toastOptions)
+            toast.success(data.message, toastOptions)
+
+            window.location.pathname.includes("all") ? navigate(`/${id}`) :
+                window.location.pathname.includes("inbox") && navigate(`/inbox/${id}`)
 
         } catch (err) {
             setLoading(false)

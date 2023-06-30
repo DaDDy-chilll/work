@@ -19,6 +19,7 @@ import Cookies from 'js-cookie'
 import axios from 'axios'
 import { documentRoute, remarkRoute, revisionRoute } from '../../utils/APIRoutes'
 import { useState } from 'react'
+import AssignWorkFlow from '../../components/modals/AssignWorkFlow'
 
 // components
 
@@ -27,20 +28,22 @@ const RequestDetail = ({ path }) => {
   const [originalRemarks, setOriginalRemarks] = useState()
   const [originalRevisions, setOriginalRevisions] = useState()
 
+  const { isOpen, setOpen, setClose } = useDisclosure()
+
+  const [isAssignOpen, setIsAssignOpen] = useState(false)
+
   const { id } = useParams()
 
   const scrollToRef = useRef();
 
-  const { isOpen, setOpen, setClose } = useDisclosure()
-
   // fetch my info
-  const { isLoading: myInfoLoading, data: me, error: myInfoError } = useGetMyInfoQuery()
+  const { data: me, error: myInfoError } = useGetMyInfoQuery()
 
   if (myInfoError) {
     toast.error(myInfoError.data.message, toastOptions)
   }
 
-  const { isLoading: remarksLoading, data: remarks, error: remarksError } = useGetRemarksQuery(id)
+  const { data: remarks, error: remarksError } = useGetRemarksQuery(id)
 
   if (remarksError) {
     toast.error(remarksError.data.message, toastOptions)
@@ -123,7 +126,6 @@ const RequestDetail = ({ path }) => {
   if (error) {
     toast.error(error.data.message, toastOptions)
   } else {
-    // console.log({ current: data && data.payload.reviewers.list[data.payload.reviewers.currentReviewerIndex] });
     content =
       <DocumentDetail
         document={data && data.payload}
@@ -135,7 +137,7 @@ const RequestDetail = ({ path }) => {
   }
 
   // fetch groups
-  const { isLoading: groupLoading, data: groupData, error: groupError } = useGetGroupsQuery()
+  const { data: groupData } = useGetGroupsQuery()
 
   const navigate = useNavigate()
 
@@ -145,8 +147,6 @@ const RequestDetail = ({ path }) => {
   const handleRevise = () => {
     navigate(`${path}/revise/${id}`)
   }
-
-  console.log(revisions && revisions.payload);
 
   return (
     <Box p="20px">
@@ -169,6 +169,7 @@ const RequestDetail = ({ path }) => {
 
       {
         revisions && revisions.payload && revisions.payload.acknowledgements
+          // eslint-disable-next-line array-callback-return
           .filter((acknowledgement) => {
             if (acknowledgement.user === me.payload._id && acknowledgement.hasAcknowledged === false)
               return acknowledgement
@@ -191,6 +192,7 @@ const RequestDetail = ({ path }) => {
         sx={{
           border: `1px solid
           ${revisions && revisions.payload && revisions.payload.acknowledgements
+              // eslint-disable-next-line array-callback-return
               .filter((acknowledgement) => {
                 if (acknowledgement.user === me.payload._id && acknowledgement.hasAcknowledged === false)
                   return acknowledgement
@@ -211,6 +213,28 @@ const RequestDetail = ({ path }) => {
           me.payload._id === data.payload.currentReviewer &&
           <>
             <Box display="flex" justifyContent="flex-end" gap="10px" mt="40px">
+              {
+                data.payload.isWorkflowAssigned === false &&
+                data.payload.reviewers.list[data.payload.reviewers.currentReviewerIndex].reviewer.department.isStartingDepartment
+                &&
+                <>
+                  <Button
+                    sx={{ width: "200px" }}
+                    type="button"
+                    color="warning"
+                    variant="contained"
+                    onClick={() => setIsAssignOpen(true)}
+                  >
+                    Assign WorkFlow
+                  </Button>
+                  <AssignWorkFlow
+                    setClose={() => setIsAssignOpen(false)}
+                    isOpen={isAssignOpen}
+                    groups={groupData && groupData.payload}
+                  />
+                </>
+              }
+
               {
                 data.payload.status !== "REQUESTED_REVISION" && data.payload.reviewers.list[data.payload.reviewers.currentReviewerIndex].canPrepare &&
                 <Button
@@ -272,6 +296,7 @@ const RequestDetail = ({ path }) => {
           sx={{
             border: `1px solid
           ${originalRevisions && originalRevisions.acknowledgements
+                // eslint-disable-next-line array-callback-return
                 .filter((acknowledgement) => {
                   if (acknowledgement.user === me.payload._id && acknowledgement.hasAcknowledged === false)
                     return acknowledgement

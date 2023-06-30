@@ -10,6 +10,8 @@ import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import { getDuration, getNotiText } from '../../helpers'
 import Loading from './Loading'
+import { useDispatch } from 'react-redux'
+import { apiSlice } from '../../services/apiSlice'
 
 const RightDrawer = ({ open, setOpen, notis, me }) => {
 
@@ -19,6 +21,8 @@ const RightDrawer = ({ open, setOpen, notis, me }) => {
 
   const [loading, setLoading] = useState(false)
 
+  const dispatch = useDispatch()
+
   const handleOpen = async ({ _id, documentId }) => {
 
     try {
@@ -27,7 +31,7 @@ const RightDrawer = ({ open, setOpen, notis, me }) => {
 
       setLoading(true)
 
-      const { data } = await axios.patch(`${notiRoute}/${_id}`,
+      await axios.patch(`${notiRoute}/${_id}`,
         null,
         {
           headers: {
@@ -39,9 +43,10 @@ const RightDrawer = ({ open, setOpen, notis, me }) => {
       setLoading(false)
 
       // toNavigate({ action, documentId })
-      if (me.role === "BASIC") navigate(`/${documentId}`)
-      if (me.role === "AUTHORIZED") navigate(`/all/${documentId}`)
+      if (me.role === "BASIC") navigate(`/my-requests/${documentId}`)
+      if (me.role === "AUTHORIZED") navigate(`/${documentId}`)
 
+      return dispatch(apiSlice.util.invalidateTags(["Notification"]))
 
     } catch (err) {
       return toast.error(err.response.data.message, toastOptions);
