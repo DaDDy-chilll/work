@@ -19,6 +19,8 @@ const UserDetail = () => {
     toast.error(error.data.message, toastOptions)
   }
 
+  console.log(data && data.payload);
+
   return (
     <Box p="20px">
       <PageTitle title="User Details" />
@@ -44,8 +46,8 @@ const UserDetail = () => {
             <Divider />
 
             <Box sx={{ display: "flex", flexDirection: "column", gap: "10px", mt: 2 }}>
-              <Typography variant='h4' fontWeight="bold">Document Id</Typography>
-              <Typography variant='h5'>{data.payload.id}</Typography>
+              <Typography variant='h4' fontWeight="bold">User Id</Typography>
+              <Typography variant='h5'>{data.payload.userId}</Typography>
             </Box>
 
             <Box sx={{ display: "flex", flexDirection: "column", gap: "10px", mt: 2 }}>
@@ -68,6 +70,13 @@ const UserDetail = () => {
             <Box sx={{ display: "flex", flexDirection: "column", gap: "10px", my: 2 }}>
               <Typography variant='h4' fontWeight="bold">Role</Typography>
               <Typography variant='h5'>{data.payload.role}</Typography>
+            </Box>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: "10px", my: 2 }}>
+              <Typography variant='h4' fontWeight="bold">Permissions</Typography>
+              <Typography variant='h5'>{`canApprove: ${data.payload.permissions.canApprove}`}</Typography>
+              <Typography variant='h5'>{`canRevise: ${data.payload.permissions.canEdit}`}</Typography>
+              <Typography variant='h5'>{`canEdit: ${data.payload.permissions.canPrepare}`}</Typography>
+              <Typography variant='h5'>{`canVerify: ${data.payload.permissions.canVerify}`}</Typography>
             </Box>
           </Box>
       }

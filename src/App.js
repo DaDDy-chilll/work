@@ -66,6 +66,7 @@ function App() {
         <Route path='/users' element={<RequireAuth allowedRoles={userAccess} />}>
           <Route path='' element={<Users />} />
           <Route path=':id' element={<UserDetail />} />
+          {/* <Route path='edit/:id' element={<EditUser />} /> */}
         </Route>
 
         <Route path='/work-flows' element={<RequireAuth allowedRoles={groupAccess} />}>
