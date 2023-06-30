@@ -1,6 +1,4 @@
-import ActionBtn from "../components/buttons/ActionBtn";
-
-
+import UserActionBtn from "../components/buttons/UserActionBtn";
 
 export const getColumns = () => {
     return [
@@ -43,7 +41,7 @@ export const getColumns = () => {
             width: 300,
             renderCell: ({ value, row: { isDisabled } }) =>
             (
-                <ActionBtn id={value} isDisabled={isDisabled} isUser={true} />
+                <UserActionBtn id={value} isDisabled={isDisabled} isUser={true} />
             )
         }
     ];
