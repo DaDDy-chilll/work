@@ -56,11 +56,9 @@ const UserDetail = () => {
             </Box>
 
             <Box sx={{ display: "flex", flexDirection: "column", gap: "10px", my: 2 }}>
-              <Typography variant='h4' fontWeight="bold">Description</Typography>
+              <Typography variant='h4' fontWeight="bold">Email</Typography>
               <Typography variant='h5'>{data.payload.email}</Typography>
             </Box>
-
-            <Typography variant='h4' mr={1} display="inline" fontWeight="bold">Total: </Typography> {data.payload.approvalAmount} MMK
 
             <Box sx={{ display: "flex", flexDirection: "column", gap: "10px", my: 2 }}>
               <Typography variant='h4' fontWeight="bold">Job Label</Typography>
