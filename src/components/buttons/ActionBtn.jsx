@@ -126,9 +126,11 @@ const ActionBtn = ({ id, isDisabled, isUser }) => {
         <Button variant="contained" color="primary" onClick={() => handleView()}>
           View
         </Button>
-        <Button variant="contained" color="warning" onClick={() => handleEdit()}>
-          Edit
-        </Button>
+        {
+          isUser && <Button variant="contained" color="warning" onClick={() => handleEdit()}>
+            Edit
+          </Button>
+        }
         {
           isUser && <Button variant="contained" color="error" disabled={isDisabled} onClick={() => handleStatusChange()}>
             Disable
