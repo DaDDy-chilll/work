@@ -136,6 +136,9 @@ const RequestDetail = ({ path }) => {
       />
   }
 
+  console.log(data && data.payload);
+  console.log(me);
+
   // fetch groups
   const { data: groupData } = useGetGroupsQuery()
 
@@ -236,7 +239,7 @@ const RequestDetail = ({ path }) => {
               }
 
               {
-                data.payload.status !== "REQUESTED_REVISION" && data.payload.reviewers.list[data.payload.reviewers.currentReviewerIndex].canPrepare &&
+                data.payload.status !== "REQUESTED_REVISION" && me.payload.permissions.canPrepare &&
                 <Button
                   sx={{ width: "200px" }}
                   type="submit"
