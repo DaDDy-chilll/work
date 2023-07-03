@@ -222,9 +222,9 @@ const UserForm = ({
                                 />
                                 <FormControlLabel
                                     control={<Checkbox />}
-                                    label="Edit"
-                                    checked={values.canPrepare}
-                                    value={values.canPrepare}
+                                    label="Edit"                                    
+                                    value={values.canEditAmount ? true : values.canPrepare}
+                                    checked={values.canEditAmount ? true : values.canPrepare}
                                     name="canPrepare"
                                     // error={!!touched.approve && !!errors.approve}
                                     // helpertext={touched.approve && errors.approve}
@@ -268,6 +268,19 @@ const UserForm = ({
                                 />
                                 <FormControlLabel
                                     control={<Checkbox />}
+                                    label="Edit Amount"
+                                    checked={values.canEditAmount}
+                                    value={values.canEditAmount}
+                                    name="canEditAmount"
+                                    // error={!!touched.approve && !!errors.approve}
+                                    // helpertext={touched.approve && errors.approve}
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                />
+                            </Box>
+                            <Box sx={{ display: "flex", gap: 5 }}>
+                                <FormControlLabel
+                                    control={<Checkbox />}
                                     label="Reject"
                                     checked={true}
                                     disabled={true}
@@ -278,19 +291,19 @@ const UserForm = ({
                                     onBlur={handleBlur}
                                     onChange={handleChange}
                                 />
+                                <FormControlLabel
+                                    control={<Checkbox />}
+                                    label="Reverse"
+                                    checked={true}
+                                    disabled={true}
+                                    value={values.canRequestRevision}
+                                    name="canRequestRevision"
+                                    // error={!!touched.approve && !!errors.approve}
+                                    // helpertext={touched.approve && errors.approve}
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                />
                             </Box>
-                            <FormControlLabel
-                                control={<Checkbox />}
-                                label="Reverse"
-                                checked={true}
-                                disabled={true}
-                                value={values.canRequestRevision}
-                                name="canRequestRevision"
-                                // error={!!touched.approve && !!errors.approve}
-                                // helpertext={touched.approve && errors.approve}
-                                onBlur={handleBlur}
-                                onChange={handleChange}
-                            />
                         </FormGroup>
                     </Box>
                     <Box display="flex" justifyContent="center" gap={5} mt="40px">
