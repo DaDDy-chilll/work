@@ -4,7 +4,7 @@ import React from 'react'
 // icons
 import SelectDepartment from '../components/form_controls/SelectDepartment';
 
-const DepartmentFlowForm = ({    
+const DepartmentFlowForm = ({
     setClose,
     setOpen,
     selectDepartments,
@@ -42,6 +42,23 @@ const DepartmentFlowForm = ({
                     error={!!touched.groupName && !!errors.groupName}
                     helperText={touched.groupName && errors.groupName}
                     sx={{ gridColumn: "span 4" }}
+                    multiline
+                />
+                {/* description */}
+                <TextField
+                    fullWidth
+                    variant="filled"
+                    type="text"
+                    label="Work Flow Description"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.description}
+                    name="description"
+                    error={!!touched.description && !!errors.description}
+                    helperText={touched.description && errors.description}
+                    sx={{ gridColumn: "span 4" }}
+                    multiline
+                    rows={6}
                 />
                 <SelectDepartment
                     selectDepartments={selectDepartments}

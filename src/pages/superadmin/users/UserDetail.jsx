@@ -19,8 +19,6 @@ const UserDetail = () => {
     toast.error(error.data.message, toastOptions)
   }
 
-  console.log(data && data.payload);
-
   return (
     <Box p="20px">
       <PageTitle title="User Details" />

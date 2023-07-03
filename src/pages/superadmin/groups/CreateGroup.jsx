@@ -18,6 +18,8 @@ import { apiSlice } from "../../../services/apiSlice";
 
 const CreateGroup = () => {
 
+  const [btnLoading, setBtnLoading] = useState(false)
+
   const accessToken = Cookies.get('accessToken')
 
   const { isOpen, setOpen, setClose } = useDisclosure()
@@ -71,7 +73,7 @@ const CreateGroup = () => {
       name: department.name,
       // eslint-disable-next-line
       users: selectedUsers.filter(user => {
-        if(user.departmentId === department._id){
+        if (user.departmentId === department._id) {
           return user
         }
       })
@@ -79,10 +81,10 @@ const CreateGroup = () => {
   })
 
   const handleFormSubmit = async (values) => {
-    const { groupName } = values
+    const { groupName, description } = values
 
     const departmentOrders = selectDepartments.map((department) => ({
-      department: department._id, 
+      department: department._id,
       index: department.order
     }))
 
@@ -93,10 +95,12 @@ const CreateGroup = () => {
     }))
 
     try {
+      setBtnLoading(true)
 
       const { data } = await axios.post(groupRoute,
         {
           name: groupName,
+          description,
           reviewers,
           departmentOrders
         },
@@ -107,13 +111,14 @@ const CreateGroup = () => {
         }
       );
 
-      // setClose()
+      setBtnLoading(false)
 
       toast.success(data.message, toastOptions);
 
       return dispatch(apiSlice.util.invalidateTags(["Group"]))
 
     } catch (err) {
+      setBtnLoading(false)
       return toast.error(err.response.data.message, toastOptions);
     }
   }
@@ -168,6 +173,7 @@ const CreateGroup = () => {
               {
                 isOpen &&
                 <WorkFlowForm
+                  btnLoading={btnLoading}
                   selectDepartments={selectDepartments}
                   selectedUsers={selectedUsers}
                   departments={departments}

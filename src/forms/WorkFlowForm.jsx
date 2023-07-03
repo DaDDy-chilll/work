@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material'
+import { Box, Button, CircularProgress } from '@mui/material'
 import React from 'react'
 import { userRoute } from '../utils/APIRoutes'
 import axios from 'axios'
@@ -14,7 +14,8 @@ const WorkFlowForm = ({
     setClose,
     handleSelectChange,
     selectedUsers,
-    departments
+    departments,
+    btnLoading
 }) => {
 
     const [payloads, setPayloads] = useState([])
@@ -33,7 +34,7 @@ const WorkFlowForm = ({
                     })
                     data && setPayloads((prev) => ([
                         ...prev,
-                        ...data.payload                      
+                        ...data.payload
                         // {
                         //     departmentName: data.payload[0].department.name,
                         //     users: data.payload
@@ -51,7 +52,7 @@ const WorkFlowForm = ({
 
     return (
         <Box>
-            <DepartmentLists 
+            <DepartmentLists
                 departments={departments}
                 handleSelectChange={handleSelectChange}
                 isLoading={isLoading}
@@ -73,8 +74,9 @@ const WorkFlowForm = ({
                     type="submit"
                     color="primary"
                     variant="contained"
+                    disabled={btnLoading ? true : false}
                 >
-                    Create
+                    {btnLoading ? <CircularProgress size="20px" /> : "Create"}
                 </Button>
             </Box>
         </Box>
