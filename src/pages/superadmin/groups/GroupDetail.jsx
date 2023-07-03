@@ -1,7 +1,7 @@
 import React from "react";
 import { toastOptions } from "../../../utils/toastOptions";
 import { ToastContainer, toast } from "react-toastify";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import PageTitle from "../../../components/mains/PageTitle";
 import { Link, useParams } from "react-router-dom";
 import { colors } from "../../../utils/theme";
@@ -50,10 +50,18 @@ const GroupDetail = () => {
       }
     })
 
-    render =
-      <DepartmentLists
-        departments={payloads}
-      />
+    render = (
+      <Box>
+        <Typography variant="h3" mb={1}>Work Flow Name</Typography>
+        <Typography variant="h3" mb={3} ml={2}>{data && data.payload.name}</Typography>
+        <Typography variant="h3" mb={1}>Work Flow Description</Typography>
+        <Typography variant="h3" mb={5} ml={2}>{data && data.payload.description}</Typography>
+        <DepartmentLists
+          departments={payloads}
+        />
+      </Box>
+    )
+
   }
 
   return (
@@ -77,7 +85,7 @@ const GroupDetail = () => {
       <Box bgcolor={colors.white[100]} m="20px" p={5} borderRadius="10px">
         {
           isLoading ? <Loading open={isLoading} /> :
-          data && render
+            data && render
         }
       </Box>
     </Box>
