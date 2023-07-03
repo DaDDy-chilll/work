@@ -4,7 +4,8 @@ export const getColumns = () => {
     return [
         { field: "groupId", headerName: "ID" },
     
-        { field: "name", headerName: "Work Flow Title", width: 1200 },
+        { field: "name", headerName: "Work Flow Title", width: 400 },
+        { field: "description", headerName: "Work Flow Description", width: 800 },
 
         {
             field: "_id",

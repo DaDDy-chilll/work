@@ -25,6 +25,7 @@ export const checkoutSchema = yup.object().shape({
     canEdit: yup.boolean(),
     canPrepare: yup.boolean(),
     canVerify: yup.boolean(),
+    canEditAmount: yup.boolean(),
 });
 
 export const initialCreateValues = {
@@ -39,5 +40,6 @@ export const initialCreateValues = {
     canApprove: false,
     canEdit: false,
     canPrepare: false,
-    canVerify: false
+    canVerify: false,
+    canEditAmount: false
 };

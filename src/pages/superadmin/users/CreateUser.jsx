@@ -30,7 +30,7 @@ const CreateUser = ({ setClose, isOpen }) => {
 
     const {
       name, email, password, jobLabel, department,
-      canApprove, canEdit, canPrepare, canVerify
+      canApprove, canEdit, canPrepare, canVerify, canEditAmount
     } =
       values;
 
@@ -41,7 +41,8 @@ const CreateUser = ({ setClose, isOpen }) => {
           name, email, password, jobLabel,
           department,
           permissions: {
-            canApprove, canEdit, canPrepare, canVerify
+            canApprove, canEdit, canEditAmount, canVerify,
+            canPrepare: canEditAmount ? true : canPrepare
           },
         },
         {
@@ -70,7 +71,7 @@ const CreateUser = ({ setClose, isOpen }) => {
     <Dialog open={isOpen} onClose={setClose}>
       <DialogTitle
         variant='h2'
-        fontWeight='bold' 
+        fontWeight='bold'
         sx={{ mb: "5px", textTransform: 'uppercase' }}
       >
         Create New User
@@ -78,15 +79,15 @@ const CreateUser = ({ setClose, isOpen }) => {
       <DialogContent>
         {
           isLoading ? <Loading /> :
-          <UserForm 
-          btnLoading={btnLoading} 
-          handleFormSubmit={handleFormSubmit} 
-          setClose={setClose} 
-          loading={false} 
-          initialValues={initialCreateValues} 
-          isEdit={false}
-          departments={data && data.payload}
-        />
+            <UserForm
+              btnLoading={btnLoading}
+              handleFormSubmit={handleFormSubmit}
+              setClose={setClose}
+              loading={false}
+              initialValues={initialCreateValues}
+              isEdit={false}
+              departments={data && data.payload}
+            />
         }
       </DialogContent>
     </Dialog>
