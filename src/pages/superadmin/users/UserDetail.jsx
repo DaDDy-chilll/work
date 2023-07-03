@@ -72,6 +72,7 @@ const UserDetail = () => {
               <Typography variant='h5'>{`canApprove: ${data.payload.permissions.canApprove}`}</Typography>
               <Typography variant='h5'>{`canRevise: ${data.payload.permissions.canEdit}`}</Typography>
               <Typography variant='h5'>{`canEdit: ${data.payload.permissions.canPrepare}`}</Typography>
+              <Typography variant='h5'>{`canEditAmount: ${data.payload.permissions.canEditAmount}`}</Typography>
               <Typography variant='h5'>{`canVerify: ${data.payload.permissions.canVerify}`}</Typography>
             </Box>
           </Box>

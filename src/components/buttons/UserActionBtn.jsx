@@ -39,6 +39,7 @@ const UserActionBtn = ({ id, isDisabled, isUser }) => {
     canEdit: yup.boolean(),
     canPrepare: yup.boolean(),
     canVerify: yup.boolean(),
+    canEditAmount: yup.boolean(),
   });
 
   const accessToken = Cookies.get('accessToken')
@@ -68,18 +69,20 @@ const UserActionBtn = ({ id, isDisabled, isUser }) => {
     canEdit: permissions.canEdit,
     canPrepare: permissions.canPrepare,
     canVerify: permissions.canVerify,
+    canEditAmount: permissions.canEditAmount
   }
 
   const dispatch = useDispatch()
 
   const handleFormSubmit = async (value) => {
-    const { canApprove, canEdit, canPrepare, canVerify } = value
+    const { canApprove, canEdit, canPrepare, canVerify, canEditAmount } = value
     try {
       setBtnLoading(true)
       const { data } = await axios.patch(`${userRoute}/${id}`,
         {
           permissions: {
-            canApprove, canEdit, canPrepare, canVerify
+            canApprove, canEdit, canEditAmount, canVerify,
+            canPrepare: canEditAmount ? true : canPrepare
           },
         },
         {
@@ -212,8 +215,8 @@ const UserActionBtn = ({ id, isDisabled, isUser }) => {
                           <FormControlLabel
                             control={<Checkbox />}
                             label="Edit"
-                            checked={values.canPrepare}
-                            value={values.canPrepare}
+                            value={values.canEditAmount ? true : values.canPrepare}
+                            checked={values.canEditAmount ? true : values.canPrepare}
                             name="canPrepare"
                             // error={!!touched.approve && !!errors.approve}
                             // helpertext={touched.approve && errors.approve}
@@ -257,6 +260,19 @@ const UserActionBtn = ({ id, isDisabled, isUser }) => {
                           />
                           <FormControlLabel
                             control={<Checkbox />}
+                            label="Edit Amount"
+                            checked={values.canEditAmount}
+                            value={values.canEditAmount}
+                            name="canEditAmount"
+                            // error={!!touched.approve && !!errors.approve}
+                            // helpertext={touched.approve && errors.approve}
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                          />
+                        </Box>
+                        <Box sx={{ display: "flex", gap: 5 }}>
+                          <FormControlLabel
+                            control={<Checkbox />}
                             label="Reject"
                             checked={true}
                             disabled={true}
@@ -267,19 +283,19 @@ const UserActionBtn = ({ id, isDisabled, isUser }) => {
                             onBlur={handleBlur}
                             onChange={handleChange}
                           />
+                          <FormControlLabel
+                            control={<Checkbox />}
+                            label="Reverse"
+                            checked={true}
+                            disabled={true}
+                            value={values.canRequestRevision}
+                            name="canRequestRevision"
+                            // error={!!touched.approve && !!errors.approve}
+                            // helpertext={touched.approve && errors.approve}
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                          />
                         </Box>
-                        <FormControlLabel
-                          control={<Checkbox />}
-                          label="Reverse"
-                          checked={true}
-                          disabled={true}
-                          value={values.canRequestRevision}
-                          name="canRequestRevision"
-                          // error={!!touched.approve && !!errors.approve}
-                          // helpertext={touched.approve && errors.approve}
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                        />
                       </FormGroup>
                     </Box>
                     <Box display="flex" justifyContent="center" gap={5} mt="40px">
