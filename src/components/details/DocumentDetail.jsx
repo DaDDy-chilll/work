@@ -51,7 +51,12 @@ const DocumentDetail = ({ document, remarks, revisions, me, scrollToRef }) => {
                 <Typography variant='h5'>{document.type}</Typography>
             </Box>
 
-            <Typography variant='h4' mr={1} display="inline" fontWeight="bold">Total: </Typography> {document.amount} MMK
+            {
+                document.amount &&
+                <>
+                    <Typography variant='h4' mr={1} display="inline" fontWeight="bold">Total: </Typography> {document.amount} MMK
+                </>
+            }
 
             <Box sx={{ display: "flex", flexDirection: "column", gap: "20px", my: 2 }}>
                 <Typography variant='h4' fontWeight="bold">Attachments</Typography>

@@ -33,6 +33,10 @@ const EditRequest = ({ status, path }) => {
 
         const formData = new FormData();
 
+        if (!values.amount || values.amount === 0) {
+            delete values.amount;
+        }
+
         for (let value in values) {
             if (value === 'attachments') {
                 continue;
@@ -91,8 +95,6 @@ const EditRequest = ({ status, path }) => {
                 return toast.error(err.response.data.message, toastOptions);
             }
         }
-
-
     }
 
     const { isLoading, data, error } = useGetDocumentQuery(id)
@@ -132,7 +134,7 @@ const EditRequest = ({ status, path }) => {
             <ToastContainer />
 
             <Box bgcolor={colors.white[100]} m="20px" p="20px" borderRadius="10px">
-                <RequestForm handleFormSubmit={handleFormSubmit} btnLoading={btnLoading} loading={isLoading} initialValues={initialEditValues} disabled={true} />
+                <RequestForm handleFormSubmit={handleFormSubmit} btnLoading={btnLoading} loading={isLoading} initialValues={initialEditValues} disabled={true} canEditAmount={data && data.payload.reviewers.list[data.payload.reviewers.currentReviewerIndex].reviewer.permissions.canEditAmount} />
             </Box>
         </Box>
     )
