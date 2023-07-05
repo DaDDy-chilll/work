@@ -1,12 +1,12 @@
 import { Box, Button, CircularProgress, FormControl, InputLabel, MenuItem, Select, TextField, useMediaQuery } from '@mui/material'
 import { Formik } from 'formik'
 import React from 'react'
-import { checkoutSchema, claimCheckoutSchema } from '../schemas/Document.schema';
+import { checkoutSchema, claimCheckoutSchema, editAmountSchema } from '../schemas/Document.schema';
 import Loading from '../components/mains/Loading';
 import FileInput from '../components/form_controls/FileInput';
 import RichTextEditor from '../components/form_controls/RichTextEditor';
 
-const RequestForm = ({ handleFormSubmit, setClose, initialValues, loading, disabled, btnLoading, isClaimDocument }) => {
+const RequestForm = ({ handleFormSubmit, setClose, initialValues, loading, disabled, btnLoading, canEditAmount }) => {
 
     const types = ["EXPENSE", "ADVANCE"]
 
@@ -17,7 +17,9 @@ const RequestForm = ({ handleFormSubmit, setClose, initialValues, loading, disab
             onSubmit={handleFormSubmit}
             initialValues={initialValues}
             validationSchema={
-                isClaimDocument ? claimCheckoutSchema : checkoutSchema
+                disabled ? claimCheckoutSchema :
+                    canEditAmount ? editAmountSchema :
+                        checkoutSchema
             }
         >
             {({
@@ -90,11 +92,11 @@ const RequestForm = ({ handleFormSubmit, setClose, initialValues, loading, disab
 
                         {/* amount */}
                         {
-                            disabled &&
+                            disabled && canEditAmount &&
                             <TextField
                                 fullWidth
                                 variant="filled"
-                                type="number"
+                                type="text"
                                 label="Amount"
                                 onBlur={handleBlur}
                                 onChange={handleChange}
