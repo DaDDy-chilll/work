@@ -19,7 +19,6 @@ import Cookies from 'js-cookie'
 import axios from 'axios'
 import { documentRoute, remarkRoute, revisionRoute } from '../../utils/APIRoutes'
 import { useState } from 'react'
-import AssignWorkFlow from '../../components/modals/AssignWorkFlow'
 
 // components
 
@@ -29,8 +28,6 @@ const RequestDetail = ({ path }) => {
   const [originalRevisions, setOriginalRevisions] = useState()
 
   const { isOpen, setOpen, setClose } = useDisclosure()
-
-  const [isAssignOpen, setIsAssignOpen] = useState(false)
 
   const { id } = useParams()
 
@@ -213,7 +210,7 @@ const RequestDetail = ({ path }) => {
           me.payload._id === data.payload.currentReviewer &&
           <>
             <Box display="flex" justifyContent="flex-end" gap="10px" mt="40px">
-              {
+              {/* {
                 data.payload.isWorkflowAssigned === false &&
                 data.payload.reviewers.list[data.payload.reviewers.currentReviewerIndex].reviewer.department.isStartingDepartment
                 &&
@@ -233,7 +230,7 @@ const RequestDetail = ({ path }) => {
                     groups={groupData && groupData.payload}
                   />
                 </>
-              }
+              } */}
 
               {
                 data.payload.status !== "REQUESTED_REVISION" && me.payload.permissions.canPrepare &&
