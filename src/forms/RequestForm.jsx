@@ -6,6 +6,8 @@ import Loading from '../components/mains/Loading';
 import FileInput from '../components/form_controls/FileInput';
 import RichTextEditor from '../components/form_controls/RichTextEditor';
 import { useGetGroupsQuery } from '../services/groupSlice';
+import DepartmentRoute from '../components/details/DepartmentRoute';
+import { getDepartmentsFromWorkflow } from '../helpers';
 
 const RequestForm = ({ handleFormSubmit, setClose, initialValues, loading, disabled, btnLoading, canEditAmount }) => {
 
@@ -13,7 +15,16 @@ const RequestForm = ({ handleFormSubmit, setClose, initialValues, loading, disab
 
     const isNonMobile = useMediaQuery("(min-width:600px)");
 
-    const { data: groups } = useGetGroupsQuery()
+    const { data } = useGetGroupsQuery()   
+
+    let groups
+
+    if(data?.payload){
+        groups = data?.payload.map((group) => ({
+            ...group,
+            departments: getDepartmentsFromWorkflow(group.reviewers)
+        }))
+    }
 
     const render = (
         <Formik
@@ -128,9 +139,9 @@ const RequestForm = ({ handleFormSubmit, setClose, initialValues, loading, disab
                                     onBlur={handleBlur}
                                     onChange={handleChange}
                                 >
-                                    {groups && groups.payload && groups.payload.map((group, i) => (
+                                    {groups && groups.map((group, i) => (
                                         <MenuItem sx={{ textTransform: "capitalize" }} value={group._id} key={i}>
-                                            {group.name}
+                                            <DepartmentRoute name={group.name} departments={group.departments} />
                                         </MenuItem>
                                     ))}
                                 </Select>
