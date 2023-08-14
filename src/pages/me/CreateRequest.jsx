@@ -22,6 +22,10 @@ const CreateRequest = () => {
     const dispatch = useDispatch()
 
     const handleFormSubmit = async (values) => {
+        if(!values.workflowId){
+            return toast.error("ကျေးဇူးပြု၍ workflow တစ်ခု ရွေးပေးပါ", toastOptions);
+        }
+
         const { attachments } = values
 
         const formData = new FormData();
