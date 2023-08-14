@@ -44,6 +44,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
 
     getDocument: builder.query({
       query: (id) => `/documents/${id}`,
+      providesTags: (result, error, arg) => ["Document"]
     }),
 
   })

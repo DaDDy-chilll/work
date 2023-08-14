@@ -22,7 +22,6 @@ const CreateRequest = () => {
     const dispatch = useDispatch()
 
     const handleFormSubmit = async (values) => {
-
         const { attachments } = values
 
         const formData = new FormData();
@@ -56,6 +55,7 @@ const CreateRequest = () => {
             toast.success(data.message, toastOptions);
 
             dispatch(apiSlice.util.invalidateTags(["Document"]))
+            dispatch(apiSlice.util.invalidateTags(["History"]))
 
             return navigate('/my-requests')
 

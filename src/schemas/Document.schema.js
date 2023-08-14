@@ -5,6 +5,7 @@ export const checkoutSchema = yup.object().shape({
     description: yup.string().required("Description is required"),
     attachments: yup.mixed()
         .nullable(),
+    workflowId: yup.string()
     // .notRequired()
     // .test("FILE_SIZE", "Uploaded file is too big.", 
     //     value => !value || (value && value.size <= FILE_SIZE))
@@ -18,6 +19,7 @@ export const claimCheckoutSchema = yup.object().shape({
     type: yup.string().required("Document Type is required"),
     attachments: yup.mixed()
         .nullable(),
+    workflowId: yup.string()
 });
 
 export const editAmountSchema = yup.object().shape({
@@ -27,6 +29,7 @@ export const editAmountSchema = yup.object().shape({
     type: yup.string().required("Document Type is required"),
     attachments: yup.mixed()
         .nullable(),
+    workflowId: yup.string()
 });
 
 export const initialCreateValues = {
