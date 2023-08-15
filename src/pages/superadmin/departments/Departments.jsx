@@ -29,7 +29,7 @@ const Departments = () => {
       
       setPageState(old => ({ ...old, isLoading: true }))
 
-      const { data } = await axios.get(`${departmentRoute}?page=${pageState.page}&limit=${pageState.pageSize}&sort=+createdAt`, {
+      const { data } = await axios.get(`${departmentRoute}?page=${pageState.page}&limit=${pageState.pageSize}&sort=-createdAt`, {
         headers: {
           Authorization: "Bearer " + accessToken
         }
