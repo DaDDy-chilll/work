@@ -5,12 +5,26 @@ import { checkoutSchema, claimCheckoutSchema, editAmountSchema } from '../schema
 import Loading from '../components/mains/Loading';
 import FileInput from '../components/form_controls/FileInput';
 import RichTextEditor from '../components/form_controls/RichTextEditor';
+import { useGetGroupsQuery } from '../services/groupSlice';
+import DepartmentRoute from '../components/details/DepartmentRoute';
+import { getDepartmentsFromWorkflow } from '../helpers';
 
 const RequestForm = ({ handleFormSubmit, setClose, initialValues, loading, disabled, btnLoading, canEditAmount }) => {
 
     const types = ["EXPENSE", "ADVANCE"]
 
     const isNonMobile = useMediaQuery("(min-width:600px)");
+
+    const { data } = useGetGroupsQuery()   
+
+    let groups
+
+    if(data?.payload){
+        groups = data?.payload.map((group) => ({
+            ...group,
+            departments: getDepartmentsFromWorkflow(group.reviewers)
+        }))
+    }
 
     const render = (
         <Formik
@@ -106,6 +120,32 @@ const RequestForm = ({ handleFormSubmit, setClose, initialValues, loading, disab
                                 helperText={touched.amount && errors.amount}
                                 sx={{ gridColumn: "span 4" }}
                             />
+                        }
+
+                        {/* SELECT REVIEWER GROUP */}
+                        {
+                            !disabled &&
+                            <FormControl variant="filled" sx={{ gridColumn: "span 4" }}>
+                                <InputLabel id="demo-simple-select-filled-label">
+                                    Select Work Flow
+                                </InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-filled-label"
+                                    id="demo-simple-select-filled"
+                                    value={values.workflowId}
+                                    name="workflowId"
+                                    error={!!touched.workflowId && !!errors.workflowId}
+                                    helpertext={touched.workflowId && errors.workflowId}
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                >
+                                    {groups && groups.map((group, i) => (
+                                        <MenuItem sx={{ textTransform: "capitalize" }} value={group._id} key={i}>
+                                            <DepartmentRoute name={group.name} departments={group.departments} />
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
                         }
 
                         {/* attachment */}
