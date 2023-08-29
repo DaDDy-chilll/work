@@ -9,6 +9,37 @@ import { useDisclosure } from '../../hooks/dialog'
 
 const DocumentDetail = ({ document, remarks, revisions, me, scrollToRef }) => {
 
+    let departments = [];
+    remarks.forEach(r => {
+        departments.push(r.department)
+    })
+
+    departments = [...new Set([...departments])]
+
+    const departmentActionsArray = departments.map(dpt => {
+        const originalUsers = remarks.filter(r => r.department === dpt)
+        
+        const users = originalUsers.map((user, i) => {
+            let action;
+            if(originalUsers.length - 1 === i) {
+                if(user.action === "PREPARED" || user.action === "VERIFIED" || user.action === "APPROVED") {
+                    action = "APPROVED"
+                }
+            }
+                
+            return {
+                ...user,
+                action: action ? action : user.action
+            }
+        })
+
+        return users
+    })
+
+    const transformedRemarks = departmentActionsArray.reduce((arr, val) => {
+        return arr.concat(val)
+    })
+
     const { isOpen, setClose, setOpen } = useDisclosure()
 
     const [image, setImage] = useState({
@@ -100,7 +131,7 @@ const DocumentDetail = ({ document, remarks, revisions, me, scrollToRef }) => {
 
             <Box sx={{ display: "flex", flexDirection: "column", gap: "10px", mt: 4 }}>
                 <Typography variant='h4' fontWeight="bold">Other Remarks</Typography>
-                <Remarks remarks={remarks} revisions={revisions} me={me} scrollToRef={scrollToRef} />
+                <Remarks remarks={transformedRemarks} revisions={revisions} me={me} scrollToRef={scrollToRef} />
             </Box>
             {/* image preview */}
             <Dialog open={isOpen} onClose={setClose}>
