@@ -4,7 +4,12 @@ import { colors } from "../utils/theme";
 import ActionBtn from "../components/buttons/ActionBtn";
 import { changeBgColor, changeTextColor } from "../helpers";
 
-// 
+const transformLastActivity = (lastActivity) => {
+    if(lastActivity === "PREPARED" || lastActivity === "VERIFIED" || lastActivity === "APPROVED"){
+        return "APPROVED"
+    }
+    return lastActivity
+}
 
 export const getColumns = () => {
     return [
@@ -84,9 +89,9 @@ export const getColumns = () => {
             width: 400,
             renderCell: ({ value }) => {
 
-                const textColor = changeTextColor({ action: value.action })
+                const textColor = changeTextColor({ action: transformLastActivity(value.action) })
                 
-                const bgColor = changeBgColor({ action: value.action })
+                const bgColor = changeBgColor({ action: transformLastActivity(value.action) })
 
                 return (
                     <Box
@@ -100,7 +105,7 @@ export const getColumns = () => {
                         <Typography
                             sx={{ color: textColor ? textColor : colors.grey[600] }}
                         >
-                            {value.action} by {value.actor.name} ({value.department.name})
+                            {transformLastActivity(value.action)} by {value.actor.name} ({value.department.name})
                         </Typography>
                     </Box>
                 )
