@@ -25,7 +25,7 @@ export const claimCheckoutSchema = yup.object().shape({
 export const editAmountSchema = yup.object().shape({
     name: yup.string().required("Subject is required"),
     description: yup.string().required("Description is required"),
-    amount: yup.number("Amount should be number value").positive("Amount should be greater than 0").required("Amount is required"),
+    amount: yup.number("Amount should be number value"),
     type: yup.string().required("Document Type is required"),
     attachments: yup.mixed()
         .nullable(),

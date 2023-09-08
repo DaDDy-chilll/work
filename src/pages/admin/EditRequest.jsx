@@ -33,7 +33,7 @@ const EditRequest = ({ status, path }) => {
 
         const formData = new FormData();
 
-        if (!values.amount || values.amount === 0) {
+        if (values.amount === undefined) {
             delete values.amount;
         }
 
@@ -110,7 +110,7 @@ const EditRequest = ({ status, path }) => {
             name: data.payload.name,
             description: data.payload.description,
             type: data.payload.type,
-            amount: data.payload.amount,
+            amount: data.payload.amount ? data.payload.amount : 0,
             attachments: []
         };
     }

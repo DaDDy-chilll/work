@@ -10,9 +10,11 @@ import { useDisclosure } from '../../hooks/dialog'
 const DocumentDetail = ({ document, remarks, revisions, me, scrollToRef }) => {
 
     let departments = [];
-    remarks.forEach(r => {
-        departments.push(r.department)
-    })
+    if(remarks){
+        remarks.forEach(r => {
+            departments.push(r.department)
+        })
+    }
 
     departments = [...new Set([...departments])]
 
@@ -36,9 +38,13 @@ const DocumentDetail = ({ document, remarks, revisions, me, scrollToRef }) => {
         return users
     })
 
-    const transformedRemarks = departmentActionsArray.reduce((arr, val) => {
-        return arr.concat(val)
-    })
+    let transformedRemarks;
+
+    if(departmentActionsArray.length !== 0){
+        transformedRemarks = departmentActionsArray.reduce((arr, val) => {
+            return arr.concat(val)
+        })
+    }
 
     const { isOpen, setClose, setOpen } = useDisclosure()
 
@@ -83,7 +89,7 @@ const DocumentDetail = ({ document, remarks, revisions, me, scrollToRef }) => {
             </Box>
 
             {
-                document.amount &&
+                document.amount !== undefined &&
                 <>
                     <Typography variant='h4' mr={1} display="inline" fontWeight="bold">Total: </Typography> {document.amount} MMK
                 </>
