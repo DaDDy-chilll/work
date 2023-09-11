@@ -38,7 +38,7 @@ export const getColumns = () => {
         {
             field: "_id",
             headerName: "Actions",
-            width: 300,
+            width: 400,
             renderCell: ({ value, row: { isDisabled } }) =>
             (
                 <UserActionBtn id={value} isDisabled={isDisabled} isUser={true} />

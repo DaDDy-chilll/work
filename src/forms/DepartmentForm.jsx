@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, TextField, useMediaQuery } from '@mui/material'
+import { Box, Button, Checkbox, CircularProgress, FormControlLabel, TextField, useMediaQuery } from '@mui/material'
 import { Formik } from 'formik'
 import React from 'react'
 
@@ -48,6 +48,15 @@ const DepartmentForm = ({
                             error={!!touched.name && !!errors.name}
                             helperText={touched.name && errors.name}
                             sx={{ gridColumn: "span 4" }}
+                        />
+                        <FormControlLabel
+                            control={<Checkbox />}
+                            label="Authorized"
+                            checked={values.isAuthorized}
+                            value={values.isAuthorized}
+                            name="isAuthorized"
+                            onBlur={handleBlur}
+                            onChange={handleChange}
                         />
                     </Box>
                     <Box display="flex" justifyContent="center" gap="10px" mt="40px">

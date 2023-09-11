@@ -1,11 +1,11 @@
-import { Box, Button, Checkbox, CircularProgress, Dialog, DialogContent, DialogTitle, FormControlLabel, FormGroup, useMediaQuery } from "@mui/material";
+import { Box, Button, Checkbox, CircularProgress, Dialog, DialogContent, DialogTitle, FormControlLabel, FormGroup, IconButton, InputAdornment, TextField, useMediaQuery } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
 // icons
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { toastOptions } from "../../utils/toastOptions";
-import { userRoute } from "../../utils/APIRoutes";
+import { authRoute, userRoute } from "../../utils/APIRoutes";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useDisclosure } from "../../hooks/dialog";
@@ -13,16 +13,23 @@ import * as yup from "yup";
 import { Formik } from "formik";
 import { useDispatch } from "react-redux";
 import { apiSlice } from "../../services/apiSlice";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { initialPasswordValues, passwordCheckoutSchema } from "../../schemas/User.schema";
 
 const UserActionBtn = ({ id, isDisabled, isUser }) => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   const [btnLoading, setBtnLoading] = useState()
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   const { isOpen, setOpen, setClose } = useDisclosure()
 
   const [permissions, setPermissions] = useState()
   const [isLoading, setIsLoading] = useState(true)
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleShowPassword = () => setShowPassword(!showPassword);
 
   const navigate = useNavigate()
 
@@ -32,6 +39,10 @@ const UserActionBtn = ({ id, isDisabled, isUser }) => {
 
   const handleEdit = () => {
     setOpen()
+  }
+
+  const handleEditPassword = () => {
+    setIsDialogOpen(true)
   }
 
   const checkoutSchema = yup.object().shape({
@@ -73,6 +84,35 @@ const UserActionBtn = ({ id, isDisabled, isUser }) => {
   }
 
   const dispatch = useDispatch()
+
+  const handleChangePassword = async (value) => {
+    try {
+      setBtnLoading(true)
+      const { data } = await axios.patch(`${authRoute}/password`,
+        {
+          ...value,
+          userId: id
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + accessToken
+          }
+        }
+      );
+
+      setBtnLoading(false)
+
+      setIsDialogOpen(false)
+
+      toast.success(data.message, toastOptions);
+
+      dispatch(apiSlice.util.invalidateTags(["User"]))
+
+    } catch (err) {
+      setBtnLoading(false)
+      return toast.error(err.response.data.message, toastOptions);
+    }
+  }
 
   const handleFormSubmit = async (value) => {
     const { canApprove, canEdit, canPrepare, canVerify, canEditAmount } = value
@@ -139,7 +179,127 @@ const UserActionBtn = ({ id, isDisabled, isUser }) => {
             Disable
           </Button>
         }
+        {
+          isUser && <Button variant="contained" color="success" onClick={() => handleEditPassword()}>
+            Change Password
+          </Button>
+        }
       </Box>
+      <Dialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
+        <DialogTitle
+          variant='h2'
+          fontWeight='bold'
+          sx={{ mb: "5px", textTransform: 'uppercase' }}
+        >
+          Change Password
+        </DialogTitle>
+        <DialogContent>
+          <Formik
+            onSubmit={handleChangePassword}
+            initialValues={initialPasswordValues}
+            validationSchema={passwordCheckoutSchema}
+          >
+            {({
+              values,
+              errors,
+              touched,
+              handleBlur,
+              handleChange,
+              handleSubmit,
+            }) => (
+              <form onSubmit={handleSubmit}>
+                <Box
+                  display="grid"
+                  gap="40px"
+                  gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+                  sx={{
+                    "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
+                  }}
+                >
+                  <TextField
+                    fullWidth
+                    variant="filled"
+                    type={showPassword ? "text" : "password"}
+                    label="New Password"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.password}
+                    name="password"
+                    error={!!touched.password && !!errors.password}
+                    helperText={touched.password && errors.password}
+                    sx={{ gridColumn: "span 4" }}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleShowPassword}
+                            edge="end">
+                            {showPassword ? (
+                              <Visibility />
+                            ) : (
+                              <VisibilityOff />
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                  <TextField
+                    fullWidth
+                    variant="filled"
+                    type={showPassword ? "text" : "password"}
+                    label="Confirm Password"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.confirmPassword}
+                    name="confirmPassword"
+                    error={!!touched.confirmPassword && !!errors.confirmPassword}
+                    helperText={touched.confirmPassword && errors.confirmPassword}
+                    sx={{ gridColumn: "span 4" }}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleShowPassword}
+                            edge="end">
+                            {showPassword ? (
+                              <Visibility />
+                            ) : (
+                              <VisibilityOff />
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </Box>
+                <Box display="flex" justifyContent="center" gap={5} mt="40px">
+                  <Button
+                    sx={{ width: "200px" }}
+                    type="reset"
+                    color="primary"
+                    variant="outlined"
+                    onClick={() => setIsDialogOpen(false)}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    sx={{ width: "200px" }}
+                    type="submit"
+                    color="primary"
+                    variant="contained"
+                    disabled={btnLoading ? true : false}
+                  >
+                    {btnLoading ? <CircularProgress size="20px" /> : "Change"}
+                  </Button>
+                </Box>
+              </form>
+            )}
+          </Formik>
+        </DialogContent>
+      </Dialog>
       <Dialog open={isOpen} onClose={setClose}>
         <DialogTitle
           variant='h2'

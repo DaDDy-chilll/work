@@ -15,11 +15,11 @@ const CreateDepartment = ({ setClose, isOpen }) => {
     const [addDepartment, { isLoading }] = useAddDepartmentMutation()
 
     const handleFormSubmit = async (values) => {
-        const { name } = values
+        const { name, isAuthorized } = values
 
         try {
-            const data = await addDepartment({ 
-                name
+            const data = await addDepartment({
+                name, type: isAuthorized ? "authorized" : ""
             }).unwrap();
 
             setClose()
