@@ -28,6 +28,12 @@ export const checkoutSchema = yup.object().shape({
     canEditAmount: yup.boolean(),
 });
 
+export const passwordCheckoutSchema = yup.object().shape({
+    password: yup.string().required("Password is required").min(8, "Password must be 8 characters long"),
+    confirmPassword: yup.string().required("Confirm password is required").min(8, "Password must be 8 characters long")
+        .oneOf([yup.ref("password"), null], "Passwords do not match"),
+});
+
 export const initialCreateValues = {
     name: "",
     email: "",
@@ -43,3 +49,8 @@ export const initialCreateValues = {
     canVerify: false,
     canEditAmount: false
 };
+
+export const initialPasswordValues = {
+    password: "",
+    confirmPassword: "",
+}

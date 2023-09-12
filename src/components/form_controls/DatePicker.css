@@ -1,0 +1,24 @@
+.date_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.date_calendar{
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #BBBBBB;
+    background-color: #FFFFFF;
+    cursor: pointer;
+    width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dateRange{
+    position: absolute;
+    top: 70px;
+    z-index: 500;
+}
