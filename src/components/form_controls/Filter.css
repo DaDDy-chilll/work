@@ -1,17 +1,18 @@
 .select_container{
     position: relative;
-    max-width: 350px;
+    max-width: 300px;
     width: 100%;
 }
 .select-btn{
     display: flex;
-    height: 50px;
+    height: 53px;
     align-items: center;
     justify-content: space-between;
     padding: 0 16px;
     border-radius: 8px;
     cursor: pointer;
     background-color: #fff;
+    border: 1px solid #BBBBBB;
 }
 .select-btn .btn-text{
     font-size: 17px;

@@ -11,6 +11,7 @@ import SearchBox from '../../components/form_controls/SearchBox'
 import Filter from '../../components/form_controls/Filter'
 import { useGetDepartmentsQuery } from '../../services/departmentSlice'
 import { useGetMyInfoQuery } from '../../services/userSlice'
+import DatePicker from '../../components/form_controls/DatePicker'
 
 const AllRequests = () => {
   const { data: userData } = useGetMyInfoQuery()
@@ -69,7 +70,17 @@ const AllRequests = () => {
   }
 
   // date range
-  // const [dates, setDates] = useState([])
+  const [date, setDate] = useState({
+    startDate: new Date(),
+    endDate: new Date(),
+    key: 'selection',
+  })
+
+  const [openDate, setOpenDate] = useState(false)
+
+  const handleDateChange = (ranges) => {
+    setDate(ranges.selection);
+  }
 
   // --------------------------------------------------------
   const columns = getColumns()
@@ -83,7 +94,7 @@ const AllRequests = () => {
   })
 
   useEffect(() => {
-    // console.log(dates);
+    console.log({ date });
 
     const queryArray = filteredDepartments.map((department, i) => {
       return "department=" + department
@@ -96,7 +107,7 @@ const AllRequests = () => {
 
       setPageState(old => ({ ...old, isLoading: true }))
 
-      const { data } = await axios.get(`${documentRoute}?page=${pageState.page}&limit=${pageState.pageSize}&sort=-createdAt&search=${searchValue}&${concatString}`, {
+      const { data } = await axios.get(`${documentRoute}?page=${pageState.page}&limit=${pageState.pageSize}&sort=-createdAt&search=${searchValue}&${concatString}&startDate=${date.startDate.toISOString()}&endDate=${date.endDate.toISOString()}`, {
         headers: {
           Authorization: "Bearer " + accessToken
         }
@@ -105,21 +116,19 @@ const AllRequests = () => {
       setPageState(old => ({ ...old, isLoading: false, data: data.payload, total: data.total }))
     }
     fetchData()
-  }, [pageState.page, pageState.pageSize, searchValue, filteredDepartments])
-
-  console.log(pageState.data);
+  }, [pageState.page, pageState.pageSize, searchValue, date, filteredDepartments])
 
   return (
     <Box mt="20px">
 
       <PageTitle title={"All Requests"} />
 
-      <Box display="grid" width={"50%"} gap="40px" gridTemplateColumns="repeat(4, minmax(0, 1fr))" sx={{ display: "flex", justifyContent: "right", gap: 2 }}>
+      <Box sx={{ display: "flex", alignItems: 'center', gap: 2 }}>
         <SearchBox search={searchValue} setSearch={setSearchValue} />
         {
           userData?.payload?.department?.type === 'authorized' && <Filter departments={departments} handleChange={handleChange} handleClick={handleClick} handleFilter={handleFilter} handleSearch={handleSearch} isOpen={isOpen} search={search} searchedDepartments={searchedDepartments} />
         }
-        {/* <DateRangePicker dates={dates} setDates={setDates} /> */}
+        <DatePicker date={date} openDate={openDate} setOpenDate={setOpenDate} handleDateChange={handleDateChange} />
       </Box>
 
       <ToastContainer />

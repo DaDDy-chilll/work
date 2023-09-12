@@ -8,6 +8,8 @@ import { store } from './services/store';
 import { Provider } from 'react-redux';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorPage from './pages/ErrorPage';
+import 'react-date-range/dist/styles.css'; // main style file
+import 'react-date-range/dist/theme/default.css'; // theme css file
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

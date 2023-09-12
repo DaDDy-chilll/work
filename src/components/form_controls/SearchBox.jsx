@@ -4,7 +4,7 @@ import './Filter.css'
 
 const SearchBox = ({ search, setSearch }) => {
     return (
-        <div className="select_search" style={{ width: '1000px' }}>
+        <div className="select_search" style={{ width: '300px' }}>
             <Search className='search_icon' />
             <input spellCheck="false" type="text" placeholder="Search Title" value={search} onChange={(e) => setSearch(e.target.value)} />
         </div>
