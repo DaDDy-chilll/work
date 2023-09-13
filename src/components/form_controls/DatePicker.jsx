@@ -8,7 +8,9 @@ const DatePicker = ({ openDate, date, setOpenDate, handleDateChange }) => {
   return (
     <div className="date_container">
       <div className='date_calendar' onClick={() => setOpenDate(prev => !prev)}>
-        {`${format(date.startDate, 'dd MMM yyyy')} - ${format(date.endDate, 'dd MMM yyyy')}`}
+        {
+          date.startDate && date.endDate ? `${format(date.startDate, 'dd MMM yyyy')} - ${format(date.endDate, 'dd MMM yyyy')}` : 'Select Date Range'
+        }
         <CalendarToday />
       </div>
       {
