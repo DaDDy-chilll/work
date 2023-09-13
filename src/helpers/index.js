@@ -1,5 +1,13 @@
 import { colors } from "../utils/theme";
 
+export const transformDate = (data) => {
+    const date = new Date(data);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return `${year}-${month}-${day}`;
+}
+
 export const getDepartmentsFromWorkflow = (reviewers) => {
     let departments = []
     reviewers.map((reviewer) => departments.push(reviewer.department.name))  
