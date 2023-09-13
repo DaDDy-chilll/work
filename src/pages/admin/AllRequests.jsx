@@ -12,6 +12,7 @@ import Filter from '../../components/form_controls/Filter'
 import { useGetDepartmentsQuery } from '../../services/departmentSlice'
 import { useGetMyInfoQuery } from '../../services/userSlice'
 import DatePicker from '../../components/form_controls/DatePicker'
+import { transformDate } from '../../helpers'
 
 const AllRequests = () => {
   const { data: userData } = useGetMyInfoQuery()
@@ -82,6 +83,14 @@ const AllRequests = () => {
     setDate(ranges.selection);
   }
 
+  const handleRemoveDate = () => {
+    setDate({
+      startDate: null,
+      endDate: null,
+      key: 'selection',
+    })
+  }
+
   // --------------------------------------------------------
   const columns = getColumns()
 
@@ -94,9 +103,8 @@ const AllRequests = () => {
   })
 
   useEffect(() => {
-
-    const startDateQuery = date.startDate ? date.startDate.toISOString() : ""
-    const endDateQuery = date.endDate ? date.endDate.toISOString() : ""
+    const startDateQuery = date.startDate ? transformDate(date.startDate) : ""
+    const endDateQuery = date.endDate ? transformDate(date.endDate) : ""
 
     const queryArray = filteredDepartments.map((department, i) => {
       const query = "department=" + department;
@@ -131,7 +139,7 @@ const AllRequests = () => {
         {
           userData?.payload?.department?.type === 'authorized' && <Filter departments={departments} handleChange={handleChange} handleClick={handleClick} handleFilter={handleFilter} handleSearch={handleSearch} isOpen={isOpen} search={search} searchedDepartments={searchedDepartments} />
         }
-        <DatePicker date={date} openDate={openDate} setOpenDate={setOpenDate} handleDateChange={handleDateChange} />
+        <DatePicker date={date} openDate={openDate} setOpenDate={setOpenDate} handleDateChange={handleDateChange} handleRemoveDate={handleRemoveDate} />
       </Box>
 
       <ToastContainer />
