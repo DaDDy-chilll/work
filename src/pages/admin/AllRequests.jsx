@@ -71,8 +71,8 @@ const AllRequests = () => {
 
   // date range
   const [date, setDate] = useState({
-    startDate: new Date(),
-    endDate: new Date(),
+    startDate: null,
+    endDate: null,
     key: 'selection',
   })
 
@@ -94,10 +94,13 @@ const AllRequests = () => {
   })
 
   useEffect(() => {
-    console.log({ date });
+
+    const startDateQuery = date.startDate ? date.startDate.toISOString() : ""
+    const endDateQuery = date.endDate ? date.endDate.toISOString() : ""
 
     const queryArray = filteredDepartments.map((department, i) => {
-      return "department=" + department
+      const query = "department=" + department;
+      return i === 0 ? "&" + query : query
     })
 
     const concatString = queryArray.join('&')
@@ -107,7 +110,7 @@ const AllRequests = () => {
 
       setPageState(old => ({ ...old, isLoading: true }))
 
-      const { data } = await axios.get(`${documentRoute}?page=${pageState.page}&limit=${pageState.pageSize}&sort=-createdAt&search=${searchValue}&${concatString}&startDate=${date.startDate.toISOString()}&endDate=${date.endDate.toISOString()}`, {
+      const { data } = await axios.get(`${documentRoute}?page=${pageState.page}&limit=${pageState.pageSize}&sort=-createdAt&search=${searchValue}${concatString}${date.startDate && date.startDate ? `&startDate=${startDateQuery}&endDate=${endDateQuery}` : ""}`, {
         headers: {
           Authorization: "Bearer " + accessToken
         }
