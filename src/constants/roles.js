@@ -1,0 +1,5 @@
+export const ROLES = {
+  SUPER_ADMIN: 'SUPERADMIN',
+  AUTHORIZED: 'AUTHORIZED',
+  BASIC: 'BASIC',
+};
