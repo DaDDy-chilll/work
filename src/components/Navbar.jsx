@@ -1,14 +1,16 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import {
   ArticleOutlined,
-  Groups,
-  PeopleOutlined,
+  // Groups,
+  // PeopleOutlined,
   PublishOutlined,
 } from '@mui/icons-material';
-import { Box, Button } from '@mui/material';
+import { Box, Paper, Tab, Tabs, makeStyles } from '@mui/material';
 import { useAuth } from '../hooks/useAuth';
 import { Link, useLocation } from 'react-router-dom';
 import { ROLES } from '../constants/roles';
+import React from 'react';
 
 const Item = ({ title, to, icon }) => {
   const location = useLocation();
@@ -16,14 +18,14 @@ const Item = ({ title, to, icon }) => {
 
   return (
     <Link to={to} style={{ textDecoration: 'none' }}>
-      <Button
+      {/* <Tabs
         variant="contained"
         sx={{ borderRadius: '50px', display: 'flex', gap: 1 }}
         color={isActive ? 'primary' : 'secondary'}
       >
         {' '}
         {icon} {title}
-      </Button>
+      </Tabs> */}
     </Link>
   );
 };
@@ -31,13 +33,38 @@ const Item = ({ title, to, icon }) => {
 const Navbar = () => {
   const { user } = useAuth();
 
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   return (
     <Box display="flex" gap="10px">
       {user?.role === ROLES.SUPER_ADMIN ? (
         <>
-          <Item title="Users" to="/users" icon={<PeopleOutlined />} />
+          {/* <Item title="Users" to="/users" icon={<PeopleOutlined />} />
           <Item title="Work Flows" to="/workflows" icon={<Groups />} />
-          <Item title="Departments" to="/departments" icon={<Groups />} />
+          <Item title="Departments" to="/departments" icon={<Groups />} /> */}
+
+          <Paper
+            style={{
+              display: 'flex',
+            }}
+          >
+            <Tabs
+              sx={{
+                display: 'flex',
+              }}
+              value={value}
+              onChange={handleChange}
+              centered
+            >
+              <Tab label="Item One" />
+              <Tab label="Item Two" />
+              <Tab label="Item Three" />
+            </Tabs>
+          </Paper>
         </>
       ) : (
         <>
