@@ -16,6 +16,7 @@ import DepartmentsPage from './pages/DepartmentsPage';
 import WorkFlowsPage from './pages/WorkFlowsPage';
 import CreateWorkflowPage from './pages/CreateWorkflowPage';
 import CreateRequest from './pages/CreateRequest';
+import DocumentDetail from './pages/DocumentDetail';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
               <Route path="my-requests" element={<MyRequestsPage />} />
               <Route path="my-requests/create" element={<CreateRequest />} />
               <Route path="inbox" element={<InboxPage />} />
+              <Route path="detail/:id" element={<DocumentDetail />} />
 
               {/* FOR SUPERADMIN */}
               <Route path="departments" element={<DepartmentsPage />} />
