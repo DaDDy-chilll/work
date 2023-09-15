@@ -3,7 +3,7 @@ import { fetcher } from '../lib/axios';
 
 export const getAllRemarks = async (documentId) => {
   return fetcher
-    .get(`/history?documentId=${documentId}?limit=0`)
+    .get(`/histories?documentId=${documentId}&limit=0`)
     .then((res) => {
       return res.data;
     });
