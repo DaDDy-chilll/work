@@ -5,6 +5,8 @@ import { ROLES } from '../constants/roles';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import TabIcon from '@mui/icons-material/Tab';
 import LocalPostOfficeOutlinedIcon from '@mui/icons-material/LocalPostOfficeOutlined';
+import EditNoteIcon from '@mui/icons-material/EditNote';
+
 import React from 'react';
 
 const Navbar = () => {
@@ -60,45 +62,44 @@ const Navbar = () => {
         </>
       ) : (
         <>
-          {/* <Item title="All Requests" to="/all" icon={<PublishOutlined />} />
-          <Item
-            title="My Requests"
-            to="/my-requests"
-            icon={<PublishOutlined />}
-          />
-          <Item title="Inbox" to="/inbox" icon={<ArticleOutlined />} /> */}
+          <Paper
+            style={{
+              display: 'flex',
+              width: 'auto',
+            }}
+          >
+            <Tabs>
+              <Tab
+                component={Link}
+                label="All Requests"
+                to="/all"
+                icon={<ListAltIcon />}
+                iconPosition="start"
+              />
+              <Tab
+                component={Link}
+                label="My Requests"
+                to="/my-requests"
+                icon={<TabIcon />}
+                iconPosition="start"
+              />
+              <Tab
+                component={Link}
+                label="Inbox"
+                to="/inbox"
+                icon={<LocalPostOfficeOutlinedIcon />}
+                iconPosition="start"
+              />
 
-          <Tabs>
-            <Tab
-              component={Link}
-              label="All Requests"
-              to="/users"
-              icon={<ListAltIcon />}
-              iconPosition="start"
-            />
-            <Tab
-              component={Link}
-              label="My Requests"
-              to="/workflows"
-              icon={<TabIcon />}
-              iconPosition="start"
-            />
-            <Tab
-              component={Link}
-              label="Inbox"
-              to="/departments"
-              icon={<LocalPostOfficeOutlinedIcon />}
-              iconPosition="start"
-            />
-
-            <Tab
-              component={Link}
-              label="To Acknowledge"
-              to="/departments"
-              icon={<LocalPostOfficeOutlinedIcon />}
-              iconPosition="start"
-            />
-          </Tabs>
+              <Tab
+                component={Link}
+                label="To Acknowledge"
+                to="/departments"
+                icon={<EditNoteIcon />}
+                iconPosition="start"
+              />
+            </Tabs>
+          </Paper>
         </>
       )}
     </Box>
