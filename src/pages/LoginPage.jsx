@@ -1,37 +1,40 @@
-import {
-  Box,
-  Button,
-  CircularProgress,
-  IconButton,
-  InputAdornment,
-  TextField,
-  Typography,
-} from '@mui/material';
-import { useState } from 'react';
+// import {
+//   Box,
+//   Button,
+//   CircularProgress,
+//   IconButton,
+//   InputAdornment,
+//   TextField,
+//   Typography,
+// } from '@mui/material';
+// import { useState } from 'react';
+import { Box, Typography } from '@mui/material';
 import { ToastContainer } from 'react-toastify';
-import { colors } from '../assets/theme/theme';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { useForm } from 'react-hook-form';
-import { useAuth } from '../hooks';
+import login_image from '../assets/images/login_image.png';
+import { red } from '@mui/material/colors';
+// import { colors } from '../assets/theme/theme';
+// import { Visibility, VisibilityOff } from '@mui/icons-material';
+// import { useForm } from 'react-hook-form';
+// import { useAuth } from '../hooks';
 
 const LoginPage = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  // const [showPassword, setShowPassword] = useState(false);
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors },
+  // } = useForm();
 
-  const { login, isLoggingIn } = useAuth();
+  // const { login, isLoggingIn } = useAuth();
 
-  const handleOnSubmit = handleSubmit(async (data) => {
-    await login(data);
-  });
+  // const handleOnSubmit = handleSubmit(async (data) => {
+  //   await login(data);
+  // });
 
   return (
     <Box>
       <ToastContainer />
-      <Box
+      {/* <Box
         mt="125px"
         mx="auto"
         width="400px"
@@ -98,6 +101,17 @@ const LoginPage = () => {
             </Button>
           </Box>
         </form>
+      </Box> */}
+
+      <Box display="flex">
+        <img
+          style={{ width: '100vw', height: '100vh', position: 'relative' }}
+          src={login_image}
+        ></img>
+        <div></div>
+        <Box border="1px solid red" position="absolute" top="50%" left="50%">
+          Test
+        </Box>
       </Box>
     </Box>
   );
