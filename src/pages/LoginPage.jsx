@@ -8,10 +8,10 @@
 //   Typography,
 // } from '@mui/material';
 // import { useState } from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { ToastContainer } from 'react-toastify';
 import login_image from '../assets/images/login_image.png';
-import { red } from '@mui/material/colors';
+
 // import { colors } from '../assets/theme/theme';
 // import { Visibility, VisibilityOff } from '@mui/icons-material';
 // import { useForm } from 'react-hook-form';
