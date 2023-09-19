@@ -95,7 +95,7 @@ const Navbar = () => {
                 component={Link}
                 label="To Acknowledge"
                 to="/departments"
-                icon={<EditNoteIcon />}
+                icon={<EditNoteIcon />} //still no exact route released yet
                 iconPosition="start"
               />
             </Tabs>
