@@ -34,7 +34,7 @@ const Item = ({ fieldName, value }) => {
   );
 };
 
-const DocumentDetail = () => {
+const DocumentDetailPage = () => {
   const { id } = useParams();
 
   const { user } = useAuth();
@@ -166,4 +166,4 @@ const DocumentDetail = () => {
   );
 };
 
-export default DocumentDetail;
+export default DocumentDetailPage;
