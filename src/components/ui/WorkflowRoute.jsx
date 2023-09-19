@@ -2,7 +2,7 @@
 import { Box } from '@mui/material';
 import { colors } from '../../assets/theme/theme';
 
-const WorkflowRoute = ({ departments }) => {
+const WorkflowRoute = ({ departments, name }) => {
   const concatString = '>>';
   return (
     <Box sx={{ display: 'flex', gap: 1 }}>
@@ -12,6 +12,7 @@ const WorkflowRoute = ({ departments }) => {
           {i !== departments.length - 1 && <span>{concatString}</span>}
         </>
       ))}
+      {name && <span>({name})</span>}
     </Box>
   );
 };

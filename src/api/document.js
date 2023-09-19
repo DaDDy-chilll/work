@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { fetcher } from '../lib/axios';
 
 export const getAllRequests = async (page) => {
@@ -49,5 +49,38 @@ export const useGetDocumentDetail = (id) => {
   return useQuery({
     queryKey: ['document', id],
     queryFn: () => getDocumentDetail(id),
+  });
+};
+
+const createRequest = async ({ data, attachments }) => {
+  const formData = new FormData();
+
+  Object.entries(data).forEach(([key, value]) => {
+    if (value) {
+      formData.append(key, value);
+    }
+  });
+
+  for (let i = 0; i < attachments.length; i++) {
+    formData.append('attachments', attachments[i]);
+  }
+
+  console.log(formData.get('attachments'));
+  console.log(formData.get('workflowId'));
+
+  // return fetcher
+  //   .post('/documents', formData, {
+  //     headers: {
+  //       'Content-Type': 'multipart/form-data',
+  //     },
+  //   })
+  //   .then((res) => {
+  //     return res.data;
+  //   });
+};
+
+export const useCreateRequest = () => {
+  return useMutation({
+    mutationFn: createRequest,
   });
 };
