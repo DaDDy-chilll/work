@@ -14,3 +14,19 @@
   width: 100%;
   font-family: 'Source Sans Pro', sans-serif;
 }
+
+.login_bg {
+  background: url('../assets/images/login_image.png');
+}
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: 'Urbanist', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--clr-bg);
+  color: var(--clr-gray-7);
+} */

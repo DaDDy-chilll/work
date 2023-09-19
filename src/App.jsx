@@ -17,6 +17,7 @@ import WorkFlowsPage from './pages/WorkFlowsPage';
 import CreateWorkflowPage from './pages/CreateWorkflowPage';
 import CreateRequest from './pages/CreateRequest';
 import DocumentDetail from './pages/DocumentDetail';
+import './index.css';
 
 function App() {
   return (

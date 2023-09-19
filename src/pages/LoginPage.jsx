@@ -8,9 +8,11 @@
 //   Typography,
 // } from '@mui/material';
 // import { useState } from 'react';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { ToastContainer } from 'react-toastify';
 import login_image from '../assets/images/login_image.png';
+import '../css/Login.css';
+import ParamiLogin from '../assets/images/ParamiLogin.jpg';
 
 // import { colors } from '../assets/theme/theme';
 // import { Visibility, VisibilityOff } from '@mui/icons-material';
@@ -103,16 +105,43 @@ const LoginPage = () => {
         </form>
       </Box> */}
 
-      <Box display="flex">
-        <img
-          style={{ width: '100vw', height: '100vh', position: 'relative' }}
-          src={login_image}
-        ></img>
-        <div></div>
-        <Box border="1px solid red" position="absolute" top="50%" left="50%">
-          Test
+      <div className="flex justify-center items-center">
+        <Box display="flex">
+          <img
+            style={{ width: '100vw', height: '100vh' }}
+            src={login_image}
+          ></img>
         </Box>
-      </Box>
+        <Box
+          width="523px"
+          height="65%"
+          position="absolute"
+          sx={{
+            top: '50%',
+            left: '50%',
+            borderRadius: '16px',
+            transform: 'translate(-50%,-50%)',
+            backgroundColor: 'white',
+          }}
+        >
+          <Box sx={{ justifyItems: 'center', display: 'flex' }}>
+            <img
+              style={{
+                width: '70%',
+                height: '20%',
+                objectFit: 'cover',
+                margin: 'auto',
+              }}
+              src={ParamiLogin}
+            ></img>
+          </Box>
+
+          <Typography textAlign="center" sx={{ fontWeight: 'bold' }}>
+            {' '}
+            Login with your email and password
+          </Typography>
+        </Box>
+      </div>
     </Box>
   );
 };
