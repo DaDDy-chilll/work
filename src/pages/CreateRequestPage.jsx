@@ -3,7 +3,7 @@ import { colors } from '../assets/theme/theme';
 import { transformDate } from '../helpers';
 import DocumentForm from '../components/form/DocumentForm';
 
-const CreateRequest = () => {
+const CreateRequestPage = () => {
   return (
     <Box
       sx={{
@@ -35,4 +35,4 @@ const CreateRequest = () => {
   );
 };
 
-export default CreateRequest;
+export default CreateRequestPage;
