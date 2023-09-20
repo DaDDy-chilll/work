@@ -10,10 +10,10 @@ import Remarks from '../components/ui/Remarks';
 import FormStatus from '../components/ui/FormStatus';
 import LinkButton from '../components/ui/LinkButton';
 import { useAuth } from '../hooks/useAuth';
-import CreateButton from '../components/ui/CreateButton';
 import { useDisclosure } from '../hooks/useDisclosure';
 import Modal from '../components/ui/Modal';
 import RemarkForm from '../components/form/RemarkForm';
+import ModalButton from '../components/ui/ModalButton';
 
 const Item = ({ fieldName, value }) => {
   return (
@@ -120,10 +120,16 @@ const DocumentDetailPage = () => {
                   gap: 1,
                 }}
               >
-                <LinkButton innerText="Back" to="/all" variant="contained" />
+                <LinkButton
+                  innerText="Back"
+                  to="/all"
+                  variant="contained"
+                  color="primary"
+                />
                 {user?._id === document?.payload?.currentReviewer &&
                   user?.permissions?.canPrepare && (
                     <LinkButton
+                      color="info"
                       innerText="Edit"
                       to={`/edit/${id}`}
                       variant="contained"
@@ -131,7 +137,11 @@ const DocumentDetailPage = () => {
                   )}
                 {user?._id === document?.payload?.currentReviewer && (
                   <>
-                    <CreateButton innerText="Add Remark" onOpen={onOpen} />
+                    <ModalButton
+                      color="success"
+                      innerText="Add Remark"
+                      onOpen={onOpen}
+                    />
                     <Modal
                       isOpen={isOpen}
                       onClose={onClose}

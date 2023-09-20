@@ -128,14 +128,12 @@ export const theme = createTheme({
       main: colors.white[100],
     },
     success: {
-      main: colors.darkGreen[800],
-      contrastText: colors.white[100],
+      main: colors.purple[800],
+      // contrastText: colors.white[100],
     },
     info: {
-      main: colors.orange[800],
-    },
-    warning: {
       main: colors.darkBlue[800],
+      contrastText: colors.white[100],
     },
     background: {
       default: colors.white[100],

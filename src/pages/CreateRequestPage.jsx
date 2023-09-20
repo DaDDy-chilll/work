@@ -29,7 +29,7 @@ const CreateRequestPage = () => {
         >
           {transformDate(Date.now())}
         </Box>
-        <DocumentForm isEdit={false} />
+        <DocumentForm oldData={undefined} />
       </Paper>
     </Box>
   );

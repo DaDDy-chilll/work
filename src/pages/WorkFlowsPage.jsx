@@ -21,6 +21,7 @@ const WorkFlowsPage = () => {
     <Box>
       <Box sx={{ display: 'flex', justifyContent: 'right', mb: '20px' }}>
         <LinkButton
+          color="primary"
           innerText="Create New Work Flow"
           to={'/workflows/create'}
           variant="contained"
