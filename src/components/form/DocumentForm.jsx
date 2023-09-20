@@ -33,7 +33,7 @@ const DocumentForm = ({ oldData }) => {
   let workflows;
 
   if (data?.payload) {
-    workflows = data?.payload.map((workflow) => ({
+    workflows = data?.payload?.map((workflow) => ({
       ...workflow,
       departments: getDepartmentsFromWorkflow(workflow.reviewers),
     }));
@@ -157,14 +157,15 @@ const DocumentForm = ({ oldData }) => {
                   name="workflowId"
                   formProps={props}
                 >
-                  {workflows.map((item) => (
-                    <MenuItem value={item._id} key={item._id}>
-                      <WorkflowRoute
-                        name={item?.name}
-                        departments={item?.departments}
-                      />
-                    </MenuItem>
-                  ))}
+                  {workflows &&
+                    workflows?.map((item) => (
+                      <MenuItem value={item._id} key={item._id}>
+                        <WorkflowRoute
+                          name={item?.name}
+                          departments={item?.departments}
+                        />
+                      </MenuItem>
+                    ))}
                 </FormSelect>
               </Box>
             )}
@@ -224,6 +225,7 @@ const DocumentForm = ({ oldData }) => {
             </Box>
 
             <FormActionButtons
+              onClick={() => navigate('/')}
               innerText={oldData ? 'Update' : 'Submit'}
               loading={oldData ? editLoading : createLoading}
               justifyContent="right"
