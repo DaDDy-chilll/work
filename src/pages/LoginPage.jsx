@@ -12,6 +12,7 @@ import { Box, Typography } from '@mui/material';
 import { ToastContainer } from 'react-toastify';
 import login_image from '../assets/images/login_image.png';
 import '../css/Login.css';
+// import '../css/App.css';
 import ParamiLogin from '../assets/images/ParamiLogin.jpg';
 
 // import { colors } from '../assets/theme/theme';
@@ -105,43 +106,45 @@ const LoginPage = () => {
         </form>
       </Box> */}
 
-      <div className="flex justify-center items-center">
-        <Box display="flex">
+      <div className="flex">
+        <img className="login_bg" src={login_image}></img>
+      </div>
+
+      <Box
+        width="523px"
+        height="65%"
+        position="absolute"
+        sx={{
+          top: '50%',
+          left: '50%',
+          borderRadius: '16px',
+          transform: 'translate(-50%,-50%)',
+          backgroundColor: 'white',
+        }}
+      >
+        <Box sx={{ justifyItems: 'center', display: 'flex' }}>
           <img
-            style={{ width: '100vw', height: '100vh' }}
-            src={login_image}
+            style={{
+              width: '70%',
+              height: '20%',
+              objectFit: 'cover',
+              margin: 'auto',
+            }}
+            src={ParamiLogin}
           ></img>
         </Box>
-        <Box
-          width="523px"
-          height="65%"
-          position="absolute"
-          sx={{
-            top: '50%',
-            left: '50%',
-            borderRadius: '16px',
-            transform: 'translate(-50%,-50%)',
-            backgroundColor: 'white',
-          }}
-        >
-          <Box sx={{ justifyItems: 'center', display: 'flex' }}>
-            <img
-              style={{
-                width: '70%',
-                height: '20%',
-                objectFit: 'cover',
-                margin: 'auto',
-              }}
-              src={ParamiLogin}
-            ></img>
-          </Box>
 
-          <Typography textAlign="center" sx={{ fontWeight: 'bold' }}>
-            {' '}
-            Login with your email and password
+        <Typography textAlign="center" sx={{ fontWeight: 'bold' }}>
+          {' '}
+          Login with your email and password
+        </Typography>
+
+        <form>
+          <Typography mt="30px" ml="30px">
+            Email
           </Typography>
-        </Box>
-      </div>
+        </form>
+      </Box>
     </Box>
   );
 };

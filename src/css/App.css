@@ -16,7 +16,12 @@
 }
 
 .login_bg {
-  background: url('../assets/images/login_image.png');
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: fill;
+  /* background-image: url('../assets/images/login_image.png'); */
 }
 /* @tailwind base;
 @tailwind components;
