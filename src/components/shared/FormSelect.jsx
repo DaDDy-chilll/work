@@ -1,9 +1,8 @@
 /* eslint-disable react/prop-types */
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import WorkflowRoute from '../ui/WorkflowRoute';
+import { FormControl, InputLabel, Select } from '@mui/material';
 
 const FormSelect = ({
-  items,
+  children,
   placeholder,
   name,
   formProps: { values, touched, errors, handleBlur, handleChange },
@@ -19,16 +18,7 @@ const FormSelect = ({
         onBlur={handleBlur}
         onChange={handleChange}
       >
-        {items &&
-          items.map((item) => (
-            <MenuItem
-              sx={{ textTransform: 'capitalize' }}
-              value={item._id}
-              key={item._id}
-            >
-              <WorkflowRoute name={item.name} departments={item.departments} />
-            </MenuItem>
-          ))}
+        {children}
       </Select>
     </FormControl>
   );

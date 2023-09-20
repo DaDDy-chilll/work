@@ -13,3 +13,11 @@ export const editSchema = yup.object().shape({
   name: yup.string().required('Subject is required'),
   amount: yup.number().integer().min(0).required('Amount is required'),
 });
+
+export const remarkValues = {
+  action: '',
+};
+
+export const remarkSchema = yup.object().shape({
+  action: yup.string().required('Please select form action'),
+});

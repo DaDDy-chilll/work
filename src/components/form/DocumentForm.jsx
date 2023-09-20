@@ -6,7 +6,7 @@ import {
   editSchema,
   initialValues,
 } from '../../schema/document.schema';
-import { Box, Button, IconButton, Typography } from '@mui/material';
+import { Box, Button, IconButton, MenuItem, Typography } from '@mui/material';
 import FormTextField from '../shared/FormTextField';
 import FormSelect from '../shared/FormSelect';
 import RichTextEditor from '../ui/RichTextEditor';
@@ -23,6 +23,7 @@ import { getDepartmentsFromWorkflow } from '../../helpers';
 import { toast } from 'react-toastify';
 import { useQueryClient } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
+import WorkflowRoute from '../ui/WorkflowRoute';
 
 const DocumentForm = ({ oldData }) => {
   const { id } = useParams();
@@ -152,11 +153,19 @@ const DocumentForm = ({ oldData }) => {
               <Box>
                 <label>Select Work Flow</label>
                 <FormSelect
-                  items={workflows}
                   placeholder="Select Work Flow"
                   name="workflowId"
                   formProps={props}
-                />
+                >
+                  {workflows.map((item) => (
+                    <MenuItem value={item._id} key={item._id}>
+                      <WorkflowRoute
+                        name={item?.name}
+                        departments={item?.departments}
+                      />
+                    </MenuItem>
+                  ))}
+                </FormSelect>
               </Box>
             )}
 

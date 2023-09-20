@@ -111,3 +111,19 @@ export const useEditRequest = () => {
     mutationFn: editRequest,
   });
 };
+
+const changeStatus = async ({ data, id }) => {
+  return fetcher
+    .post(`/documents/${id}/actions/${data.action}`, {
+      remark: data.remark,
+    })
+    .then((res) => {
+      return res.data;
+    });
+};
+
+export const useChangeStatus = () => {
+  return useMutation({
+    mutationFn: changeStatus,
+  });
+};

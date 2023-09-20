@@ -145,7 +145,7 @@ const DocumentDetailPage = () => {
                     <Modal
                       isOpen={isOpen}
                       onClose={onClose}
-                      content={<RemarkForm />}
+                      content={<RemarkForm onClose={onClose} />}
                       title="Add Remark"
                     />
                   </>
