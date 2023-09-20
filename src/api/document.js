@@ -65,22 +65,65 @@ const createRequest = async ({ data, attachments }) => {
     formData.append('attachments', attachments[i]);
   }
 
-  console.log(formData.get('attachments'));
-  console.log(formData.get('workflowId'));
-
-  // return fetcher
-  //   .post('/documents', formData, {
-  //     headers: {
-  //       'Content-Type': 'multipart/form-data',
-  //     },
-  //   })
-  //   .then((res) => {
-  //     return res.data;
-  //   });
+  return fetcher
+    .post('/documents', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    .then((res) => {
+      return res.data;
+    });
 };
 
 export const useCreateRequest = () => {
   return useMutation({
     mutationFn: createRequest,
+  });
+};
+
+const editRequest = async ({ data, attachments, id }) => {
+  const formData = new FormData();
+
+  Object.entries(data).forEach(([key, value]) => {
+    if (value) {
+      formData.append(key, value);
+    }
+  });
+
+  for (let i = 0; i < attachments.length; i++) {
+    formData.append('attachments', attachments[i]);
+  }
+
+  return fetcher
+    .post(`/documents/${id}/actions/prepare`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    .then((res) => {
+      return res.data;
+    });
+};
+
+export const useEditRequest = () => {
+  return useMutation({
+    mutationFn: editRequest,
+  });
+};
+
+const changeStatus = async ({ data, id }) => {
+  return fetcher
+    .post(`/documents/${id}/actions/${data.action}`, {
+      remark: data.remark,
+    })
+    .then((res) => {
+      return res.data;
+    });
+};
+
+export const useChangeStatus = () => {
+  return useMutation({
+    mutationFn: changeStatus,
   });
 };

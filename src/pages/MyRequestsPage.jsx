@@ -18,6 +18,7 @@ const MyRequestPage = () => {
     <Box>
       <Box sx={{ display: 'flex', justifyContent: 'right', mb: '20px' }}>
         <LinkButton
+          color="primary"
           innerText="Create New Request"
           to={'/my-requests/create'}
           variant="contained"

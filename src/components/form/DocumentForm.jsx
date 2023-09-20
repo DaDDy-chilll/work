@@ -1,8 +1,12 @@
 /* eslint-disable react/prop-types */
 import { Formik } from 'formik';
 import { useState } from 'react';
-import { checkoutSchema, initialValues } from '../../schema/document.schema';
-import { Box, Button, IconButton, Typography } from '@mui/material';
+import {
+  createSchema,
+  editSchema,
+  initialValues,
+} from '../../schema/document.schema';
+import { Box, Button, IconButton, MenuItem, Typography } from '@mui/material';
 import FormTextField from '../shared/FormTextField';
 import FormSelect from '../shared/FormSelect';
 import RichTextEditor from '../ui/RichTextEditor';
@@ -10,13 +14,20 @@ import { Cancel, CloudUpload } from '@mui/icons-material';
 import FormActionButtons from '../ui/FormActionButtons';
 import { colors } from '../../assets/theme/theme';
 import PDFSampleImage from '../../assets/images/PDF.png';
-import { useCreateRequest, useGetAllWorkflows } from '../../api';
+import {
+  useCreateRequest,
+  useEditRequest,
+  useGetAllWorkflows,
+} from '../../api';
 import { getDepartmentsFromWorkflow } from '../../helpers';
 import { toast } from 'react-toastify';
 import { useQueryClient } from 'react-query';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import WorkflowRoute from '../ui/WorkflowRoute';
 
-const DocumentForm = ({ isEdit }) => {
+const DocumentForm = ({ oldData }) => {
+  const { id } = useParams();
+
   const { data } = useGetAllWorkflows({ limit: 0 });
 
   let workflows;
@@ -28,7 +39,9 @@ const DocumentForm = ({ isEdit }) => {
     }));
   }
 
-  const [description, setDescription] = useState('');
+  const [description, setDescription] = useState(
+    oldData ? oldData.description : '',
+  );
 
   const [files, setFiles] = useState();
   const [pdfFiles, setPdfFiles] = useState();
@@ -66,6 +79,9 @@ const DocumentForm = ({ isEdit }) => {
 
   const { mutate: createMutation, isLoading: createLoading } =
     useCreateRequest();
+
+  const { mutate: editMutation, isLoading: editLoading } = useEditRequest();
+
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
@@ -88,37 +104,70 @@ const DocumentForm = ({ isEdit }) => {
   };
 
   const handleEdit = (values) => {
-    console.log(values);
-    console.log(description);
-    console.log(files);
+    editMutation(
+      { data: { ...values, description }, attachments: files, id },
+      {
+        onSuccess: () => {
+          toast.success('ok');
+          queryClient.invalidateQueries(['documents']);
+          navigate('/my-requests');
+        },
+        onSettled: () => {
+          setFiles(undefined);
+          setPdfFiles(undefined);
+          setImageUrls(undefined);
+        },
+      },
+    );
   };
 
   return (
     <Formik
-      initialValues={initialValues}
-      validationSchema={checkoutSchema}
-      onSubmit={isEdit ? handleEdit : handleCreate}
+      initialValues={oldData ? oldData : initialValues}
+      validationSchema={oldData ? editSchema : createSchema}
+      onSubmit={oldData ? handleEdit : handleCreate}
     >
       {(props) => (
         <form onSubmit={props.handleSubmit}>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <Box>
-              <label htmlFor="subject">Subject</label>
+              <label>Subject</label>
               <FormTextField
+                type="text"
                 formProps={props}
                 name="name"
                 placeholder="Subject"
               />
             </Box>
-            <Box>
-              <label htmlFor="">Select Work Flow</label>
-              <FormSelect
-                items={workflows}
-                placeholder="Select Work Flow"
-                name="workflowId"
-                formProps={props}
-              />
-            </Box>
+            {oldData ? (
+              <Box>
+                <label>Amount</label>
+                <FormTextField
+                  type="text"
+                  formProps={props}
+                  name="amount"
+                  placeholder="Amount"
+                />
+              </Box>
+            ) : (
+              <Box>
+                <label>Select Work Flow</label>
+                <FormSelect
+                  placeholder="Select Work Flow"
+                  name="workflowId"
+                  formProps={props}
+                >
+                  {workflows.map((item) => (
+                    <MenuItem value={item._id} key={item._id}>
+                      <WorkflowRoute
+                        name={item?.name}
+                        departments={item?.departments}
+                      />
+                    </MenuItem>
+                  ))}
+                </FormSelect>
+              </Box>
+            )}
 
             <RichTextEditor text={description} setText={setDescription} />
 
@@ -175,8 +224,8 @@ const DocumentForm = ({ isEdit }) => {
             </Box>
 
             <FormActionButtons
-              innerText="Submit"
-              loading={createLoading}
+              innerText={oldData ? 'Update' : 'Submit'}
+              loading={oldData ? editLoading : createLoading}
               justifyContent="right"
               width="200px"
             />

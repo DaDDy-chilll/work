@@ -5,9 +5,11 @@ const FormTextField = ({
   formProps: { handleBlur, handleChange, values, touched, errors },
   name,
   placeholder,
+  type,
 }) => {
   return (
     <TextField
+      type={type}
       fullWidth
       variant="filled"
       name={name}

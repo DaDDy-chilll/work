@@ -26,12 +26,13 @@ const SelectDepartments = ({ children, onOpen }) => {
         {children}
       </Box>
       <Box display="flex" justifyContent="end" gap={2} mt={2}>
-        <LinkButton innerText="Cancel" to="/workflows" variant="outlined" />
-        <Button
-          onClick={onOpen}
+        <LinkButton
+          innerText="Cancel"
+          to="/workflows"
+          variant="outlined"
           color="primary"
-          variant="contained"
-        >
+        />
+        <Button onClick={onOpen} color="primary" variant="contained">
           Continue
         </Button>
       </Box>

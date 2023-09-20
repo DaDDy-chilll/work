@@ -27,6 +27,7 @@ const DocumentRow = ({ payload }) => {
                 innerText="View"
                 to={`/detail/${data._id}`}
                 variant="contained"
+                color="primary"
               />
             </StyledTableCell>
           </StyledTableRow>
