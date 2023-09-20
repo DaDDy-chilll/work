@@ -63,7 +63,7 @@ const UsersPage = () => {
           title="Create New User"
           isOpen={isOpen}
           onClose={onClose}
-          content={<UserForm onClose={onClose} />}
+          content={<UserForm onClose={onClose} oldData={undefined} />}
         />
       </Box>
     </Box>

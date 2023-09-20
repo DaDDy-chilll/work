@@ -47,6 +47,7 @@ const DepartmentForm = ({ onClose }) => {
             </Box>
             <Box>
               <FormCheckbox
+                disabled={false}
                 formProps={props}
                 label="Authorized"
                 name="isAuthorized"

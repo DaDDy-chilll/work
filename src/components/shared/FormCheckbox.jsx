@@ -2,19 +2,22 @@
 import { Checkbox, FormControlLabel } from '@mui/material';
 
 const FormCheckbox = ({
+  defaultValue,
   label,
   name,
+  disabled,
   formProps: { values, handleBlur, handleChange },
 }) => {
   return (
     <FormControlLabel
       control={<Checkbox />}
       label={label}
-      checked={values.isAuthorized}
-      value={values.isAuthorized}
+      checked={defaultValue ? defaultValue : values[name]}
+      value={defaultValue ? defaultValue : values[name]}
       name={name}
       onBlur={handleBlur}
       onChange={handleChange}
+      disabled={disabled}
     />
   );
 };
