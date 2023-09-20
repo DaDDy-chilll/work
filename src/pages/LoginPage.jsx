@@ -8,31 +8,44 @@
 //   Typography,
 // } from '@mui/material';
 // import { useState } from 'react';
-import { Box, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  IconButton,
+  InputAdornment,
+  Typography,
+} from '@mui/material';
 import { ToastContainer } from 'react-toastify';
 import login_image from '../assets/images/login_image.png';
+import { Formik } from 'formik';
 import '../css/Login.css';
 // import '../css/App.css';
 import ParamiLogin from '../assets/images/ParamiLogin.jpg';
+import FormTextField from '../components/shared/FormTextField';
 
 // import { colors } from '../assets/theme/theme';
 // import { Visibility, VisibilityOff } from '@mui/icons-material';
 // import { useForm } from 'react-hook-form';
-// import { useAuth } from '../hooks';
+import { useAuth } from '../hooks';
+import { initialValues, loginSchema } from '../schema/login.schema';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { useState } from 'react';
 
 const LoginPage = () => {
-  // const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  // const handleShowPassword = () => setShowPassword(!showPassword);
   // const {
   //   register,
   //   handleSubmit,
   //   formState: { errors },
   // } = useForm();
 
-  // const { login, isLoggingIn } = useAuth();
+  const { login } = useAuth();
 
-  // const handleOnSubmit = handleSubmit(async (data) => {
-  //   await login(data);
-  // });
+  const handleOnSubmit = async (data) => {
+    await login(data);
+  };
 
   return (
     <Box>
@@ -90,9 +103,9 @@ const LoginPage = () => {
                 ),
               }}
             />
-          </Box>
+          </Box> */}
 
-          <Box display="flex" justifyContent="center" mt="40px">
+      {/* <Box display="flex" justifyContent="center" mt="40px">
             <Button
               sx={{ width: '400px' }}
               type="submit"
@@ -112,21 +125,20 @@ const LoginPage = () => {
 
       <Box
         width="523px"
-        height="65%"
+        height="649px"
         position="absolute"
         sx={{
           top: '50%',
           left: '50%',
-          borderRadius: '16px',
+          borderRadius: '40px',
           transform: 'translate(-50%,-50%)',
           backgroundColor: 'white',
         }}
       >
-        <Box sx={{ justifyItems: 'center', display: 'flex' }}>
+        <Box sx={{ justifyContent: 'center', display: 'flex', mt: '20px' }}>
           <img
             style={{
-              width: '70%',
-              height: '20%',
+              width: '60%',
               objectFit: 'cover',
               margin: 'auto',
             }}
@@ -134,12 +146,99 @@ const LoginPage = () => {
           ></img>
         </Box>
 
-        <Typography textAlign="center" sx={{ fontWeight: 'bold' }}>
-          {' '}
-          Login with your email and password
-        </Typography>
+        <Box justifyContent="center" mt="-30px">
+          <Typography
+            textAlign="center"
+            sx={{ fontWeight: 'bold', fontSize: '20px' }}
+          >
+            {' '}
+            Login with your email and password
+          </Typography>
+        </Box>
 
-        <Box></Box>
+        <Box>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={loginSchema}
+            onSubmit={handleOnSubmit}
+          >
+            {(props) => (
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  ml: '20px',
+                }}
+              >
+                <Typography
+                  mt="30px"
+                  sx={{ fontFamily: 'Poppins', fontSize: '20px' }}
+                >
+                  Email{' '}
+                </Typography>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    width: '485px',
+                  }}
+                >
+                  <FormTextField
+                    type="text"
+                    name="email"
+                    formProps={props}
+                    placeholder="Enter Email"
+                  />
+                </Box>
+                <Box mt="-15px">
+                  <Typography
+                    mt="30px"
+                    sx={{ fontFamily: 'Poppins', fontSize: '20px' }}
+                  >
+                    Password{' '}
+                  </Typography>
+                </Box>
+
+                <Box
+                  sx={{
+                    display: 'flex',
+                    width: '485px',
+                  }}
+                >
+                  <FormTextField
+                    type="text"
+                    name="password"
+                    formProps={props}
+                    placeholder="Enter Password"
+                    // sx={{ gridColumn: 'span 4' }}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={() => setShowPassword(!showPassword)}
+                            edge="end"
+                          >
+                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </Box>
+                <Box display="flex" mt="30px">
+                  <Button
+                    sx={{ width: '485px', height: '50px' }}
+                    type="submit"
+                    color="primary"
+                    variant="contained"
+                  >
+                    Login
+                  </Button>
+                </Box>
+              </Box>
+            )}
+          </Formik>
+        </Box>
       </Box>
     </Box>
   );
