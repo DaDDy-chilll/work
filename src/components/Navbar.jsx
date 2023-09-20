@@ -24,16 +24,14 @@ const Navbar = () => {
 
   const handleChange = (_e, newValue) => {
     setValue(newValue);
-    console.log(newValue);
   };
 
   return (
     <Box sx={{ borderBottom: `1px solid ${colors.grey[400]}` }}>
       {user?.role === ROLES.SUPER_ADMIN ? (
-        <Tab value={value} onChange={handleChange} aria-label="navbar-tab">
+        <Tabs value={value} onChange={handleChange} aria-label="navbar-tab">
           <Tab
             {...tabProps(0)}
-            value={value}
             component={Link}
             label="Users"
             to="/users"
@@ -42,7 +40,6 @@ const Navbar = () => {
           />
           <Tab
             {...tabProps(1)}
-            value={value}
             component={Link}
             label="Work Flows"
             to="/workflows"
@@ -51,16 +48,15 @@ const Navbar = () => {
           />
           <Tab
             {...tabProps(2)}
-            value={value}
             component={Link}
             label="Departments"
             to="/departments"
             icon={<MailOutline />}
             iconPosition="start"
           />
-        </Tab>
+        </Tabs>
       ) : (
-        <Tabs value={value} onChange={handleChange} aria-label="navbar tab">
+        <Tabs value={value} onChange={handleChange} aria-label="navbar-tab">
           <Tab
             {...tabProps(0)}
             component={Link}

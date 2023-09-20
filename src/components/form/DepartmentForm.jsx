@@ -1,67 +1,69 @@
 /* eslint-disable react/prop-types */
-import { Box, Checkbox, FormControlLabel, TextField } from '@mui/material';
-import { useForm } from 'react-hook-form';
+import { Box } from '@mui/material';
 import { useCreateDepartment } from '../../api';
 import FormActionButtons from '../ui/FormActionButtons';
 import { toast } from 'react-toastify';
 import { useQueryClient } from 'react-query';
+import { Formik } from 'formik';
+import FormTextField from '../shared/FormTextField';
+import {
+  departmentCreateSchema,
+  departmentCreateValues,
+} from '../../schema/department.schema';
+import FormCheckbox from '../shared/FormCheckbox';
 
 const DepartmentForm = ({ onClose }) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm();
-
   const { isLoading: createLoading, mutate: createMutation } =
     useCreateDepartment();
   const queryClient = useQueryClient();
 
-  const handleOnSubmit = handleSubmit(async ({ name, isAuthorized }) => {
-    createMutation(
-      {
-        name,
-        type: isAuthorized ? 'authorized' : '',
+  const handleCreate = (values) => {
+    createMutation(values, {
+      onSuccess: () => {
+        toast.success('ok');
+        queryClient.invalidateQueries(['departments']);
+        onClose();
       },
-      {
-        onSuccess: () => {
-          toast.success('ok');
-          queryClient.invalidateQueries(['departments']);
-        },
-        onSettled: () => {
-          reset();
-          onClose();
-        },
-      },
-    );
-  });
+    });
+  };
 
   return (
-    <form onSubmit={handleOnSubmit}>
-      <Box display="flex" flexDirection={'column'} gap={3}>
-        <TextField
-          fullWidth
-          label="Name"
-          variant="outlined"
-          {...register('name')}
-          error={!!errors.name}
-        />
-        <FormControlLabel
-          control={<Checkbox />}
-          label="Authorized"
-          {...register('isAuthorized')}
-        />
-      </Box>
+    <Formik
+      initialValues={departmentCreateValues}
+      validationSchema={departmentCreateSchema}
+      onSubmit={handleCreate}
+    >
+      {(props) => (
+        <form onSubmit={props.handleSubmit}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <Box>
+              <label>Subject</label>
+              <FormTextField
+                type="text"
+                formProps={props}
+                name="name"
+                placeholder="Subject"
+              />
+            </Box>
+            <Box>
+              <FormCheckbox
+                formProps={props}
+                label="Authorized"
+                name="isAuthorized"
+              />
+            </Box>
 
-      <FormActionButtons
-        onClick={onClose}
-        innerText="Create"
-        loading={createLoading}
-        justifyContent="center"
-        width="400px"
-      />
-    </form>
+            <FormActionButtons
+              onClick={onClose}
+              innerText="Save"
+              loading={createLoading}
+              justifyContent="right"
+              width="200px"
+            />
+          </Box>
+        </form>
+      )}
+    </Formik>
   );
 };
 
