@@ -190,6 +190,7 @@ const UserForm = () => {
       </Box>
 
       <FormActionButtons
+        onClick={() => {}}
         innerText="Create"
         loading={createLoading}
         justifyContent="center"
