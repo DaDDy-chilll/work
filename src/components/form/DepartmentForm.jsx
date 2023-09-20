@@ -54,7 +54,12 @@ const DepartmentForm = ({ onClose }) => {
         />
       </Box>
 
-      <FormActionButtons innerText="Create" loading={createLoading} />
+      <FormActionButtons
+        innerText="Create"
+        loading={createLoading}
+        justifyContent="center"
+        width="400px"
+      />
     </form>
   );
 };

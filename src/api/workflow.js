@@ -1,16 +1,22 @@
 import { useQuery } from 'react-query';
 import { fetcher } from '../lib/axios';
 
-export const getAllWorkflows = async (page) => {
-    return fetcher
-        .get(`/reviewer-groups?page=${page}&limit=10`)
-        .then((res) => {
-            return res.data;
-        });
-}
+export const getAllWorkflows = async ({ page, limit }) => {
+  return fetcher
+    .get(`/reviewer-groups?page=${page}&limit=${limit}`)
+    .then((res) => {
+      return res.data;
+    });
+};
 
-export const useGetAllWorkflows = (page) => {
-    return useQuery(['/reviewer-groups', page], () => getAllWorkflows(page), {
-    // keepPreviousData: true
-  })
-}
+export const useGetAllWorkflows = ({ page = 1, limit = 0 }) => {
+  console.log({ page, limit });
+
+  return useQuery(
+    ['/reviewer-groups', page],
+    () => getAllWorkflows({ page, limit }),
+    {
+      // keepPreviousData: true
+    },
+  );
+};

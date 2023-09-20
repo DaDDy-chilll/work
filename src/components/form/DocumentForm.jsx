@@ -1,50 +1,239 @@
-import { Box, TextField } from "@mui/material"
-import { useForm } from "react-hook-form";
-import FormActionButtons from "../ui/FormActionButtons";
+/* eslint-disable react/prop-types */
+import { Formik } from 'formik';
+import { useState } from 'react';
+import {
+  createSchema,
+  editSchema,
+  initialValues,
+} from '../../schema/document.schema';
+import { Box, Button, IconButton, MenuItem, Typography } from '@mui/material';
+import FormTextField from '../shared/FormTextField';
+import FormSelect from '../shared/FormSelect';
+import RichTextEditor from '../ui/RichTextEditor';
+import { Cancel, CloudUpload } from '@mui/icons-material';
+import FormActionButtons from '../ui/FormActionButtons';
+import { colors } from '../../assets/theme/theme';
+import PDFSampleImage from '../../assets/images/PDF.png';
+import {
+  useCreateRequest,
+  useEditRequest,
+  useGetAllWorkflows,
+} from '../../api';
+import { getDepartmentsFromWorkflow } from '../../helpers';
+import { toast } from 'react-toastify';
+import { useQueryClient } from 'react-query';
+import { useNavigate, useParams } from 'react-router-dom';
+import WorkflowRoute from '../ui/WorkflowRoute';
 
-const DocumentForm = () => {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm();
+const DocumentForm = ({ oldData }) => {
+  const { id } = useParams();
 
-    const handleOnSubmit = handleSubmit(async (data) => {
-        console.log(data);
-    })
+  const { data } = useGetAllWorkflows({ limit: 0 });
 
-    return (
-        <form onSubmit={handleOnSubmit}>
-            <Box display="flex" flexDirection={'column'} gap={3}>
-                <TextField
-                    fullWidth
-                    variant="filled"
-                    label="Subject"
-                    multiline
-                    rows={6}
-                    {...register('subject')}
-                    error={!!errors.subject}
+  let workflows;
+
+  if (data?.payload) {
+    workflows = data?.payload.map((workflow) => ({
+      ...workflow,
+      departments: getDepartmentsFromWorkflow(workflow.reviewers),
+    }));
+  }
+
+  const [description, setDescription] = useState(
+    oldData ? oldData.description : '',
+  );
+
+  const [files, setFiles] = useState();
+  const [pdfFiles, setPdfFiles] = useState();
+  const [imageUrls, setImageUrls] = useState();
+
+  const handleFileChange = (event) => {
+    const inputFiles = event.target.files;
+
+    let files = [];
+    let fileUrls = [];
+    let pdfFiles = [];
+
+    for (let i = 0; i < inputFiles.length; i++) {
+      const file = inputFiles[i];
+      files.push(file);
+      if (file.type?.includes('image')) {
+        fileUrls.push(URL.createObjectURL(file));
+      } else {
+        pdfFiles.push(file.name);
+      }
+    }
+    setFiles(files);
+    setImageUrls(fileUrls);
+    setPdfFiles(pdfFiles);
+  };
+
+  const handleDelete = ({ url, name }) => {
+    if (url) {
+      setImageUrls(imageUrls.filter((imageUrl) => imageUrl !== url));
+    }
+    if (name) {
+      setPdfFiles(pdfFiles.filter((pdfFile) => pdfFile !== name));
+    }
+  };
+
+  const { mutate: createMutation, isLoading: createLoading } =
+    useCreateRequest();
+
+  const { mutate: editMutation, isLoading: editLoading } = useEditRequest();
+
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  const handleCreate = (values) => {
+    createMutation(
+      { data: { ...values, description }, attachments: files },
+      {
+        onSuccess: () => {
+          toast.success('ok');
+          queryClient.invalidateQueries(['documents']);
+          navigate('/my-requests');
+        },
+        onSettled: () => {
+          setFiles(undefined);
+          setPdfFiles(undefined);
+          setImageUrls(undefined);
+        },
+      },
+    );
+  };
+
+  const handleEdit = (values) => {
+    editMutation(
+      { data: { ...values, description }, attachments: files, id },
+      {
+        onSuccess: () => {
+          toast.success('ok');
+          queryClient.invalidateQueries(['documents']);
+          navigate('/my-requests');
+        },
+        onSettled: () => {
+          setFiles(undefined);
+          setPdfFiles(undefined);
+          setImageUrls(undefined);
+        },
+      },
+    );
+  };
+
+  return (
+    <Formik
+      initialValues={oldData ? oldData : initialValues}
+      validationSchema={oldData ? editSchema : createSchema}
+      onSubmit={oldData ? handleEdit : handleCreate}
+    >
+      {(props) => (
+        <form onSubmit={props.handleSubmit}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <Box>
+              <label>Subject</label>
+              <FormTextField
+                type="text"
+                formProps={props}
+                name="name"
+                placeholder="Subject"
+              />
+            </Box>
+            {oldData ? (
+              <Box>
+                <label>Amount</label>
+                <FormTextField
+                  type="text"
+                  formProps={props}
+                  name="amount"
+                  placeholder="Amount"
                 />
-                <TextField
-                    fullWidth
-                    label="Email"
-                    variant="outlined"
-                    {...register('email')}
-                    error={!!errors.email}
-                />
+              </Box>
+            ) : (
+              <Box>
+                <label>Select Work Flow</label>
+                <FormSelect
+                  placeholder="Select Work Flow"
+                  name="workflowId"
+                  formProps={props}
+                >
+                  {workflows.map((item) => (
+                    <MenuItem value={item._id} key={item._id}>
+                      <WorkflowRoute
+                        name={item?.name}
+                        departments={item?.departments}
+                      />
+                    </MenuItem>
+                  ))}
+                </FormSelect>
+              </Box>
+            )}
 
-                <TextField
-                    fullWidth
-                    label="Job Label"
-                    variant="outlined"
-                    {...register('jobLabel')}
-                    error={!!errors.jobLabel}
+            <RichTextEditor text={description} setText={setDescription} />
+
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+              <label htmlFor="name">Attachments (Optional)</label>
+              <Box>
+                <input
+                  type="file"
+                  id="actual-btn"
+                  hidden
+                  multiple
+                  onChange={(e) => handleFileChange(e)}
+                  onClick={(e) => (e.currentTarget.value = '')}
                 />
+                <Button variant="contained" color="primary">
+                  <label
+                    htmlFor="actual-btn"
+                    style={{ display: 'flex', alignItems: 'center' }}
+                  >
+                    <CloudUpload sx={{ mr: 1 }} />
+                    <Typography color={colors.white}>Upload File</Typography>
+                  </label>
+                </Button>
+              </Box>
+              <Box sx={{ display: 'flex', gap: 3 }}>
+                {imageUrls &&
+                  imageUrls.map((url) => (
+                    <div key={url} className="attachment_container">
+                      <img src={url} alt="attachment" />
+                      <div className="attachment_delete_btn">
+                        <IconButton onClick={() => handleDelete({ url })}>
+                          <Cancel
+                            sx={{ color: colors.white[100] }}
+                            fontSize="large"
+                          />
+                        </IconButton>
+                      </div>
+                    </div>
+                  ))}
+                {pdfFiles &&
+                  pdfFiles.map((pdfFile) => (
+                    <div key={pdfFile} className="attachment_container">
+                      <img src={PDFSampleImage} alt="attachment" />
+                      <div className="attachment_delete_btn">
+                        <IconButton
+                          onClick={() => handleDelete({ name: pdfFile })}
+                        >
+                          <Cancel fontSize="large" />
+                        </IconButton>
+                      </div>
+                    </div>
+                  ))}
+              </Box>
             </Box>
 
-            <FormActionButtons innerText="Create" loading={false} />
+            <FormActionButtons
+              innerText={oldData ? 'Update' : 'Submit'}
+              loading={oldData ? editLoading : createLoading}
+              justifyContent="right"
+              width="200px"
+            />
+          </Box>
         </form>
-    )
-}
+      )}
+    </Formik>
+  );
+};
 
-export default DocumentForm
+export default DocumentForm;

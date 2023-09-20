@@ -54,33 +54,34 @@ const CreateWorkflowPage = () => {
   });
 
   // FETCH USERS BY DEPARTMENT ID
-  const [users, setUsers] = useState([])
-  const [fetchUserLoading, setFetchUserLoading] = useState(true)
+  const [users, setUsers] = useState([]);
+  const [fetchUserLoading, setFetchUserLoading] = useState(true);
 
   useEffect(() => {
-    const accessToken = localStorage.getItem("access-token")
+    const accessToken = localStorage.getItem('access-token');
     async function fetchData() {
       try {
-        setFetchUserLoading(true)
+        setFetchUserLoading(true);
         for (let i = 0; i < selectedDepartments.length; i++) {
-          const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/users?department=${selectedDepartments[i]._id}`, {
-            headers: {
-              "Authorization": "Bearer " + accessToken
-            }
-          })
-          data && setUsers((prev) => ([
-            ...prev,
-            ...data.payload
-          ]))
+          const { data } = await axios.get(
+            `${import.meta.env.VITE_API_URL}/users?department=${
+              selectedDepartments[i]._id
+            }`,
+            {
+              headers: {
+                Authorization: 'Bearer ' + accessToken,
+              },
+            },
+          );
+          data && setUsers((prev) => [...prev, ...data.payload]);
         }
-        setFetchUserLoading(false)
-
+        setFetchUserLoading(false);
       } catch (err) {
-        return toast.error(err.response.data.message)
+        return toast.error(err.response.data.message);
       }
     }
-    fetchData()
-  }, [selectedDepartments])
+    fetchData();
+  }, [selectedDepartments]);
 
   // SELECT USER
   const handleSelectChange = ({
@@ -113,7 +114,7 @@ const CreateWorkflowPage = () => {
     }
   };
 
-  const handleOnSubmit = () => { };
+  const handleOnSubmit = () => {};
 
   return (
     <Box>
@@ -125,7 +126,12 @@ const CreateWorkflowPage = () => {
           mx: '20px',
         }}
       >
-        <LinkButton to={'/workflows'} innerText="Back" variant="contained" />
+        <LinkButton
+          to={'/workflows'}
+          innerText="Back"
+          variant="contained"
+          color="primary"
+        />
       </Box>
       <Box bgcolor={colors.white[100]} m="20px" p={5} borderRadius="10px">
         <form onSubmit={handleOnSubmit} style={{ height: 'auto' }}>

@@ -15,9 +15,9 @@ import InboxPage from './pages/InboxPage';
 import DepartmentsPage from './pages/DepartmentsPage';
 import WorkFlowsPage from './pages/WorkFlowsPage';
 import CreateWorkflowPage from './pages/CreateWorkflowPage';
-import CreateRequest from './pages/CreateRequest';
-import DocumentDetail from './pages/DocumentDetail';
-import './index.css';
+import CreateRequestPage from './pages/CreateRequestPage';
+import DocumentDetailPage from './pages/DocumentDetailPage';
+import EditRequestPage from './pages/EditRequestPage';
 
 function App() {
   return (
@@ -36,9 +36,13 @@ function App() {
             >
               <Route path="all" element={<AllRequestsPage />} />
               <Route path="my-requests" element={<MyRequestsPage />} />
-              <Route path="my-requests/create" element={<CreateRequest />} />
+              <Route
+                path="my-requests/create"
+                element={<CreateRequestPage />}
+              />
               <Route path="inbox" element={<InboxPage />} />
-              <Route path="detail/:id" element={<DocumentDetail />} />
+              <Route path="detail/:id" element={<DocumentDetailPage />} />
+              <Route path="edit/:id" element={<EditRequestPage />} />
 
               {/* FOR SUPERADMIN */}
               <Route path="departments" element={<DepartmentsPage />} />
