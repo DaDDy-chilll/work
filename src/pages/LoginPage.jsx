@@ -139,11 +139,7 @@ const LoginPage = () => {
           Login with your email and password
         </Typography>
 
-        <form>
-          <Typography mt="30px" ml="30px">
-            Email
-          </Typography>
-        </form>
+        <Box></Box>
       </Box>
     </Box>
   );
