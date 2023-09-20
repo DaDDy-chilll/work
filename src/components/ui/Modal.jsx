@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Dialog, DialogContent, DialogTitle } from '@mui/material';
+import { colors } from '../../assets/theme/theme';
 
 const Modal = ({ isOpen, onClose, content, title }) => {
   return (
@@ -7,7 +8,11 @@ const Modal = ({ isOpen, onClose, content, title }) => {
       <DialogTitle
         variant="h2"
         fontWeight="bold"
-        sx={{ mb: '5px', textTransform: 'uppercase' }}
+        sx={{
+          mb: '5px',
+          textTransform: 'uppercase',
+          borderBottom: `1px solid ${colors.grey[400]}`,
+        }}
       >
         {title}
       </DialogTitle>

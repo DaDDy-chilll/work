@@ -7,6 +7,7 @@ import DocumentCase from '../ui/DocumentCase';
 import LinkButton from '../ui/LinkButton';
 
 const DocumentRow = ({ payload }) => {
+  console.log({ payload });
   return (
     <TableBody>
       {payload &&
@@ -14,8 +15,15 @@ const DocumentRow = ({ payload }) => {
           <StyledTableRow key={data?._id}>
             <StyledTableCell>{data?.documentId}</StyledTableCell>
             <StyledTableCell>{transformDate(data?.createdAt)}</StyledTableCell>
-            {/* <StyledTableCell>{data?.name}</StyledTableCell> */}
-            {/* <StyledTableCell>{data?.description}</StyledTableCell> */}
+            <StyledTableCell>
+              <div style={{ width: '200px' }}>{data?.name}</div>
+            </StyledTableCell>
+            <StyledTableCell>
+              <div
+                style={{ width: '500px' }}
+                dangerouslySetInnerHTML={{ __html: data?.description }}
+              />
+            </StyledTableCell>
             <StyledTableCell>
               <DocumentCase documentCase={data?.isCaseClosed} />
             </StyledTableCell>
@@ -24,6 +32,7 @@ const DocumentRow = ({ payload }) => {
             </StyledTableCell>
             <StyledTableCell>
               <LinkButton
+                width="100px"
                 innerText="View"
                 to={`/detail/${data._id}`}
                 variant="contained"

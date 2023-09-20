@@ -1,9 +1,12 @@
-import { Box, Paper, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { colors } from '../assets/theme/theme';
 import { transformDate } from '../helpers';
 import DocumentForm from '../components/form/DocumentForm';
+import { useNavigate } from 'react-router';
 
 const CreateRequestPage = () => {
+  const navigate = useNavigate();
+
   return (
     <Box
       sx={{
@@ -16,21 +19,24 @@ const CreateRequestPage = () => {
       }}
     >
       <Typography variant="h1">Create New Request</Typography>
-      <Paper sx={{ px: 5, py: 3 }}>
+      <Box bgcolor={colors.white[100]} borderRadius="1rem">
         <Box
           sx={{
             borderBottom: `1px solid ${colors.grey[400]}`,
-            pb: 2,
+            py: 2,
             display: 'flex',
             alignItems: 'center',
             gap: 1,
-            marginBottom: 2,
+            px: 5,
           }}
         >
           {transformDate(Date.now())}
         </Box>
-        <DocumentForm oldData={undefined} />
-      </Paper>
+        <DocumentForm
+          oldData={undefined}
+          onClick={() => navigate('/my-requests')}
+        />
+      </Box>
     </Box>
   );
 };

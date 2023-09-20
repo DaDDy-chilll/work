@@ -25,7 +25,7 @@ import { useQueryClient } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import WorkflowRoute from '../ui/WorkflowRoute';
 
-const DocumentForm = ({ oldData }) => {
+const DocumentForm = ({ oldData, onClick }) => {
   const { id } = useParams();
 
   const { data } = useGetAllWorkflows({ limit: 0 });
@@ -129,7 +129,15 @@ const DocumentForm = ({ oldData }) => {
     >
       {(props) => (
         <form onSubmit={props.handleSubmit}>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 3,
+              px: 5,
+              py: 3,
+            }}
+          >
             <Box>
               <label>Subject</label>
               <FormTextField
@@ -172,9 +180,9 @@ const DocumentForm = ({ oldData }) => {
 
             <RichTextEditor text={description} setText={setDescription} />
 
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+            <Box>
               <label htmlFor="name">Attachments (Optional)</label>
-              <Box>
+              <Box mt={1}>
                 <input
                   type="file"
                   id="actual-btn"
@@ -216,16 +224,22 @@ const DocumentForm = ({ oldData }) => {
                         <IconButton
                           onClick={() => handleDelete({ name: pdfFile })}
                         >
-                          <Cancel fontSize="large" />
+                          <Cancel
+                            sx={{ color: colors.grey[800] }}
+                            fontSize="large"
+                          />
                         </IconButton>
                       </div>
                     </div>
                   ))}
               </Box>
             </Box>
-
+          </Box>
+          <Box
+            sx={{ borderTop: `1px solid ${colors.grey[400]}`, pb: 3, px: 5 }}
+          >
             <FormActionButtons
-              onClick={() => navigate('/')}
+              onClick={onClick}
               innerText={oldData ? 'Update' : 'Submit'}
               loading={oldData ? editLoading : createLoading}
               justifyContent="right"

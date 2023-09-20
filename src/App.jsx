@@ -15,9 +15,9 @@ import InboxPage from './pages/InboxPage';
 import DepartmentsPage from './pages/DepartmentsPage';
 import WorkFlowsPage from './pages/WorkFlowsPage';
 import CreateWorkflowPage from './pages/CreateWorkflowPage';
-import CreateRequestPage from './pages/CreateRequestPage';
 import DocumentDetailPage from './pages/DocumentDetailPage';
 import EditRequestPage from './pages/EditRequestPage';
+import CreateRequestPage from './pages/CreateRequestPage';
 
 function App() {
   return (

@@ -27,6 +27,7 @@ const SelectDepartments = ({ children, onOpen }) => {
       </Box>
       <Box display="flex" justifyContent="end" gap={2} mt={2}>
         <LinkButton
+          width="200px"
           innerText="Cancel"
           to="/workflows"
           variant="outlined"

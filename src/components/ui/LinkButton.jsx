@@ -2,14 +2,14 @@
 import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-const LinkButton = ({ innerText, to, variant, color }) => {
+const LinkButton = ({ innerText, to, variant, color, width }) => {
   return (
     <Link to={to} style={{ textDecoration: 'none' }}>
       <Button
         className="no-underline"
         variant={variant}
         color={color}
-        sx={{ width: '200px' }}
+        sx={{ width }}
       >
         {innerText}
       </Button>

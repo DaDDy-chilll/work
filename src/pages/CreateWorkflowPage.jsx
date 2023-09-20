@@ -127,6 +127,7 @@ const CreateWorkflowPage = () => {
         }}
       >
         <LinkButton
+          width="200px"
           to={'/workflows'}
           innerText="Back"
           variant="contained"
