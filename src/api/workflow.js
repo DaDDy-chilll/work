@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { fetcher } from '../lib/axios';
 
 export const getAllWorkflows = async ({ page, limit }) => {
@@ -12,11 +12,19 @@ export const getAllWorkflows = async ({ page, limit }) => {
 export const useGetAllWorkflows = ({ page = 1, limit = 0 }) => {
   console.log({ page, limit });
 
-  return useQuery(
-    ['/reviewer-groups', page],
-    () => getAllWorkflows({ page, limit }),
-    {
-      // keepPreviousData: true
-    },
+  return useQuery(['/reviewer-groups', page], () =>
+    getAllWorkflows({ page, limit }),
   );
+};
+
+const createWorkflow = async (data) => {
+  return fetcher.post('/reviewer-groups', data).then((res) => {
+    return res.data;
+  });
+};
+
+export const useCreateWorkflow = () => {
+  return useMutation({
+    mutationFn: createWorkflow,
+  });
 };

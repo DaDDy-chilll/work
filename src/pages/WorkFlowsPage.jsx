@@ -41,7 +41,7 @@ const WorkFlowsPage = () => {
               <DataTable
                 columns={WorkflowColumn}
                 rows={<WorkflowRow payload={data?.payload} />}
-                hasAction={false}
+                hasAction={true}
               />
               <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
                 <Pagination

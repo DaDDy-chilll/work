@@ -76,7 +76,7 @@ const Item = ({ department }) => {
   );
 };
 
-const DepartmentFlow = ({ selectedDepartments, handleDepartmentChange }) => {
+const TestForm = ({ selectedDepartments, handleDepartmentChange }) => {
   const { data: departments, isLoading: departmentLoading } =
     useFetchAllDepartments({
       limit: 0,
@@ -135,17 +135,7 @@ const DepartmentFlow = ({ selectedDepartments, handleDepartmentChange }) => {
                 <TimelineItem key={i}>
                   <TimelineSeparator>
                     <TimelineConnector />
-                    <TimelineDot
-                      sx={{
-                        width: '30px',
-                        height: '30px',
-                        borderRadius: '50%',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}
-                      color="primary"
-                    >
+                    <TimelineDot sx={{ px: 1 }} color="primary">
                       {i + 1}
                     </TimelineDot>
                     <TimelineConnector />
@@ -167,4 +157,4 @@ const DepartmentFlow = ({ selectedDepartments, handleDepartmentChange }) => {
   );
 };
 
-export default DepartmentFlow;
+export default TestForm;
