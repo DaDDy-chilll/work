@@ -1,6 +1,11 @@
-import { z } from 'zod';
+import * as yup from 'yup';
 
-export const departmentSchema = z.object({
-  name: z.string({ required_error: 'Name is rerquired.' }),
-  isAuthorized: z.boolean(),
+export const departmentCreateValues = {
+  name: '',
+  isAuthorized: false,
+};
+
+export const departmentCreateSchema = yup.object().shape({
+  name: yup.string().required('Department name is required'),
+  isAuthorized: yup.boolean(),
 });

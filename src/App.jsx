@@ -15,9 +15,10 @@ import InboxPage from './pages/InboxPage';
 import DepartmentsPage from './pages/DepartmentsPage';
 import WorkFlowsPage from './pages/WorkFlowsPage';
 import CreateWorkflowPage from './pages/CreateWorkflowPage';
-import CreateRequestPage from './pages/CreateRequestPage';
 import DocumentDetailPage from './pages/DocumentDetailPage';
 import EditRequestPage from './pages/EditRequestPage';
+import CreateRequestPage from './pages/CreateRequestPage';
+import WorkflowDetailPage from './pages/WorkflowDetailPage';
 
 function App() {
   return (
@@ -49,6 +50,10 @@ function App() {
               <Route path="users" element={<UsersPage />} />
               <Route path="workflows" element={<WorkFlowsPage />} />
               <Route path="workflows/create" element={<CreateWorkflowPage />} />
+              <Route
+                path="workflows/detail/:id"
+                element={<WorkflowDetailPage />}
+              />
             </Route>
             <Route path="/login" element={<LoginPage />} />
           </Routes>

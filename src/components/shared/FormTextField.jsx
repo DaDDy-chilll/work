@@ -6,9 +6,11 @@ const FormTextField = ({
   name,
   placeholder,
   type,
+  disabled,
 }) => {
   return (
     <TextField
+      disabled={disabled}
       type={type}
       fullWidth
       variant="filled"

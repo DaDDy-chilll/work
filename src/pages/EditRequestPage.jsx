@@ -1,12 +1,13 @@
-import { Box, Paper, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { colors } from '../assets/theme/theme';
 import { transformDate } from '../helpers';
 import DocumentForm from '../components/form/DocumentForm';
 import { useGetDocumentDetail } from '../api';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const EditRequestPage = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const { data } = useGetDocumentDetail(id);
 
@@ -32,21 +33,24 @@ const EditRequestPage = () => {
       }}
     >
       <Typography variant="h1">Edit Request</Typography>
-      <Paper sx={{ px: 5, py: 3 }}>
+      <Box bgcolor={colors.white[100]} borderRadius="1rem">
         <Box
           sx={{
             borderBottom: `1px solid ${colors.grey[400]}`,
-            pb: 2,
+            py: 2,
             display: 'flex',
             alignItems: 'center',
             gap: 1,
-            marginBottom: 2,
+            px: 5,
           }}
         >
           {transformDate(data?.payload?.createdAt)}
         </Box>
-        <DocumentForm oldData={oldData} />
-      </Paper>
+        <DocumentForm
+          oldData={oldData}
+          onClick={() => navigate(`/detail/${id}`)}
+        />
+      </Box>
     </Box>
   );
 };

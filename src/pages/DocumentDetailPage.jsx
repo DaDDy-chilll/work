@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Box, CircularProgress, Paper, Typography } from '@mui/material';
+import { Box, CircularProgress, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useGetDocumentDetail } from '../api/document';
 import { colors } from '../assets/theme/theme';
@@ -22,7 +22,6 @@ const Item = ({ fieldName, value }) => {
         display: 'flex',
         flexDirection: 'column',
         gap: '10px',
-        mt: 2,
         minWidth: '30%',
       }}
     >
@@ -44,18 +43,23 @@ const DocumentDetailPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, my: 2 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, m: 2 }}>
       <Typography variant="h1">View Document Request</Typography>
       {isLoading ? (
         <CircularProgress size={48} />
       ) : (
         document?.payload && (
           <Box sx={{ display: 'flex', gap: 2 }}>
-            <Paper sx={{ px: 4, py: 2, width: '80%' }}>
+            <Box
+              bgcolor={colors.white[100]}
+              borderRadius="1rem"
+              sx={{ width: '80%' }}
+            >
               <Box
                 sx={{
                   borderBottom: `1px solid ${colors.grey[400]}`,
-                  pb: 1,
+                  px: 4,
+                  py: 2,
                   display: 'flex',
                   alignItems: 'center',
                   gap: 1,
@@ -65,18 +69,21 @@ const DocumentDetailPage = () => {
                 {transformDate(document?.payload?.updatedAt)}
               </Box>
               <Box
-                sx={{ display: 'flex', flexDirection: 'column', gap: 2, mb: 2 }}
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 2,
+                  px: 4,
+                  py: 2,
+                }}
               >
-                <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                   <Item
                     fieldName="Document Id"
                     value={document?.payload?.documentId}
                   />
                   <Item fieldName="Subject" value={document?.payload?.name} />
-                  <Item
-                    fieldName="Document Type"
-                    value={document?.payload?.type}
-                  />
+                  <Item fieldName="Amount" value={document?.payload?.amount} />
                 </Box>
                 <Box
                   sx={{
@@ -117,10 +124,12 @@ const DocumentDetailPage = () => {
                   justifyContent: 'right',
                   borderTop: `1px solid ${colors.grey[400]}`,
                   pt: 2,
+                  px: 4,
                   gap: 1,
                 }}
               >
                 <LinkButton
+                  width="200px"
                   innerText="Back"
                   to="/all"
                   variant="contained"
@@ -129,6 +138,7 @@ const DocumentDetailPage = () => {
                 {user?._id === document?.payload?.currentReviewer &&
                   user?.permissions?.canPrepare && (
                     <LinkButton
+                      width="200px"
                       color="info"
                       innerText="Edit"
                       to={`/edit/${id}`}
@@ -151,8 +161,12 @@ const DocumentDetailPage = () => {
                   </>
                 )}
               </Box>
-            </Paper>
-            <Paper sx={{ p: 2, width: '20%' }}>
+            </Box>
+            <Box
+              bgcolor={colors.white[100]}
+              borderRadius="1rem"
+              sx={{ p: 2, width: '20%' }}
+            >
               <Box
                 sx={{
                   borderBottom: `1px solid ${colors.grey[400]}`,
@@ -168,7 +182,7 @@ const DocumentDetailPage = () => {
                 isLoading={isLoading}
                 reviewers={document?.payload?.reviewers?.list}
               />
-            </Paper>
+            </Box>
           </Box>
         )
       )}

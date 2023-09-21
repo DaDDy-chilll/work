@@ -4,15 +4,8 @@
   box-sizing: border-box;
 }
 
-.app_container {
-  display: flex;
-  position: relative;
-}
-
-.app_body {
-  height: 100%;
-  width: 100%;
-  font-family: 'Source Sans Pro', sans-serif;
+body{
+  background-color: #EDF1F7;
 }
 
 .attachment_container{

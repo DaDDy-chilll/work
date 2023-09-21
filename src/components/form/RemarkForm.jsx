@@ -66,7 +66,9 @@ const RemarkForm = ({ onClose }) => {
         <form onSubmit={props.handleSubmit}>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <Box>
-              <label>Form Status</label>
+              <label>
+                Form Status <span style={{ color: colors.red[800] }}>*</span>
+              </label>
               <FormSelect
                 placeholder="Select Form Status"
                 name="action"
