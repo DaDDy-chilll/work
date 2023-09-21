@@ -14,7 +14,7 @@ function reducer(state, action) {
         isLoggingIn: true,
       };
 
-    case 'ENDED_LOG_IN':
+    case 'DONE_LOG_IN':
       return {
         ...state,
         ...action.payload,
@@ -61,9 +61,9 @@ const initialState = {
 
 export const AuthContext = createContext({
   ...initialState,
-  login: () => { },
-  logout: () => { },
-  validateUser: () => { },
+  login: () => {},
+  logout: () => {},
+  validateUser: () => {},
 });
 
 const AuthProvider = ({ children }) => {
