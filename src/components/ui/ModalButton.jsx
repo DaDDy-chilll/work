@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 import { Box, Button } from '@mui/material';
 
-const ModalButton = ({ onOpen, innerText, icon, color }) => {
+const ModalButton = ({ onOpen, innerText, icon, color, width }) => {
   return (
     <Box sx={{ display: 'flex', justifyContent: 'right', mb: 2 }}>
       <Button
-        sx={{ width: '200px' }}
+        sx={{ width }}
         className="no-underline"
         variant="contained"
         color={color}

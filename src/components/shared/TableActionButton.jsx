@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { KeyboardArrowDown } from '@mui/icons-material';
-import { Box, Button, Menu, MenuItem } from '@mui/material';
+import { Box, Button, CircularProgress, Menu, MenuItem } from '@mui/material';
 import { useState } from 'react';
 import { useDisableUser, useGetUserDetail } from '../../api';
 import { toast } from 'react-toastify';
@@ -45,7 +45,8 @@ const TableActionButton = ({ userId }) => {
   }
   console.log(data);
 
-  const { mutate: disableMutation } = useDisableUser();
+  const { mutate: disableMutation, isLoading: disableLoading } =
+    useDisableUser();
   const handleDisable = () => {
     disableMutation(userId, {
       onSuccess: () => {
@@ -85,15 +86,19 @@ const TableActionButton = ({ userId }) => {
         <MenuItem onClick={() => navigate(`/users/${userId}`)} disableRipple>
           View
         </MenuItem>
-        <MenuItem onClick={onOpen} disableRipple>
-          Edit
-        </MenuItem>
-        <MenuItem onClick={handleDisable} disableRipple>
-          Disable
-        </MenuItem>
-        <MenuItem onClick={() => setIsChangePassword(true)} disableRipple>
-          Change Password
-        </MenuItem>
+        {!data?.payload?.isDisabled && (
+          <>
+            <MenuItem onClick={onOpen} disableRipple>
+              Edit
+            </MenuItem>
+            <MenuItem onClick={handleDisable} disableRipple>
+              {disableLoading ? <CircularProgress size={20} /> : 'Disable'}
+            </MenuItem>
+            <MenuItem onClick={() => setIsChangePassword(true)} disableRipple>
+              Change Password
+            </MenuItem>
+          </>
+        )}
       </Menu>
       <Box>
         <Modal

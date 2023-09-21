@@ -148,6 +148,7 @@ const DocumentDetailPage = () => {
                 {user?._id === document?.payload?.currentReviewer && (
                   <>
                     <ModalButton
+                      width="200px"
                       color="success"
                       innerText="Add Remark"
                       onOpen={onOpen}

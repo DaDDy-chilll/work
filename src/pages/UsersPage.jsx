@@ -1,6 +1,5 @@
 import { Box, CircularProgress, Pagination } from '@mui/material';
 import { useDisclosure } from '../hooks/useDisclosure';
-import ModalButton from '../components/ui/ModalButton';
 import Modal from '../components/ui/Modal';
 import UserForm from '../components/form/UserForm';
 import { useGetAllUsers } from '../api/user';
@@ -11,6 +10,7 @@ import { colors } from '../assets/theme/theme';
 import { useState } from 'react';
 import { AddOutlined } from '@mui/icons-material';
 import Navbar from '../components/Navbar';
+import ModalButton from '../components/ui/ModalButton';
 
 const UsersPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -26,6 +26,7 @@ const UsersPage = () => {
       <Navbar />
       <Box p={3}>
         <ModalButton
+          width="200px"
           color="primary"
           innerText="Create New User"
           onOpen={onOpen}
