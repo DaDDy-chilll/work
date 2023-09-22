@@ -8,14 +8,28 @@ import { useState } from 'react';
 import Navbar from '../components/Navbar';
 import SearchBox from '../components/shared/SearchBox';
 import DateRangeFilter from '../components/shared/DateRangeFilter';
-import { useDateRangeFilter } from '../hooks';
+import { useDateRangeFilter, useDepartmentFilter } from '../hooks';
 import { transformDate } from '../helpers';
-// import DepartmentFilter from '../components/shared/DepartmentFilter';
-// import CustomChip from '../components/shared/CustomChip';
-// import { Clear } from '@mui/icons-material';
+import DepartmentFilter from '../components/shared/DepartmentFilter';
+import CustomChip from '../components/shared/CustomChip';
+import { Clear } from '@mui/icons-material';
 
 const AllRequestsPage = () => {
   const [page, setPage] = useState(1);
+
+  // DEPARTMENT FILTER
+  const {
+    filteredDepartments,
+    isOpen,
+    departments,
+    search,
+    searchedDepartments,
+    handleSearch,
+    handleFilter,
+    handleCancel,
+    handleChange,
+    handleDelete,
+  } = useDepartmentFilter();
 
   // DATE RANGE FILTER
   const { date, openDate, setOpenDate, handleDateChange, handleRemoveDate } =
@@ -28,6 +42,7 @@ const AllRequestsPage = () => {
     search: searchValue,
     startDate: transformDate(date.startDate ? date.startDate : ''),
     endDate: transformDate(date.endDate ? date.endDate : ''),
+    departments: filteredDepartments.map((department) => department.id),
     sort: '-createdAt',
     page,
     limit: 10,
@@ -41,7 +56,17 @@ const AllRequestsPage = () => {
       <Box p={3}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
           <SearchBox setSearch={setSearchValue} placeholder="Search subject" />
-          {/* <DepartmentFilter /> */}
+          <DepartmentFilter
+            departments={departments}
+            filteredDepartments={filteredDepartments}
+            search={search}
+            searchedDepartments={searchedDepartments}
+            isOpen={isOpen}
+            handleSearch={handleSearch}
+            handleChange={handleChange}
+            handleCancel={handleCancel}
+            handleFilter={handleFilter}
+          />
           <DateRangeFilter
             date={date}
             openDate={openDate}
@@ -50,10 +75,19 @@ const AllRequestsPage = () => {
             handleRemoveDate={handleRemoveDate}
           />
         </Box>
-        {/* <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
-          <CustomChip icon={<Clear />} onClick={() => {}} />
-          <CustomChip onClick={() => {}} />
-        </Box> */}
+        <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
+          {filteredDepartments.map((department) => (
+            <CustomChip
+              key={department.id}
+              department={department}
+              icon={<Clear />}
+              onClick={handleDelete}
+            />
+          ))}
+          {filteredDepartments.length !== 0 && (
+            <CustomChip onClick={() => handleChange({ name: 'clearAll' })} />
+          )}
+        </Box>
         {isFetching ? (
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <CircularProgress size={56} />

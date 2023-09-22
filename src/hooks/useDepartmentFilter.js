@@ -50,24 +50,37 @@ export const useDepartmentFilter = () => {
   const handleFilter = () => {
     const filteredValue = departments
       .filter((department) => department.isChecked === true)
-      .map((item) => item._id);
+      .map((item) => ({
+        id: item._id,
+        name: item.name
+      }));
     setFilteredDepartments(filteredValue);
+    setIsOpen(!isOpen);
   };
 
   const [isOpen, setIsOpen] = useState(false);
-  const handleClick = () => {
+  const handleCancel = () => {
+    setFilteredDepartments([])
+    handleChange({ name: 'clearAll' })
     setIsOpen(!isOpen);
   };
+
+  const handleDelete = (id) => {
+    const filteredValue = filteredDepartments.filter(department => department.id !== id)
+    setFilteredDepartments(filteredValue)
+  }
 
   return {
     isOpen,
     departments,
     filteredDepartments,
+    setFilteredDepartments,
     search,
     searchedDepartments,
     handleSearch,
     handleFilter,
-    handleClick,
+    handleCancel,
     handleChange,
+    handleDelete
   };
 };

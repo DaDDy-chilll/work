@@ -1,29 +1,27 @@
+/* eslint-disable react/prop-types */
 import { FilterAlt, Search } from '@mui/icons-material';
 import { Box, Button, Checkbox, FormControlLabel } from '@mui/material';
-import { useDepartmentFilter } from '../../hooks';
 
 const calculateCount = (departments) => {
   return departments.filter((department) => department.isChecked === true)
     .length;
 };
 
-const DepartmentFilter = () => {
-  const {
-    isOpen,
-    departments,
-    search,
-    searchedDepartments,
-    handleSearch,
-    handleFilter,
-    handleClick,
-    handleChange,
-  } = useDepartmentFilter();
-
+const DepartmentFilter = ({
+  isOpen,
+  departments,
+  search,
+  searchedDepartments,
+  handleSearch,
+  handleFilter,
+  handleCancel,
+  handleChange,
+}) => {
   return (
     <div className="filter_container">
       <div
         className={`filter_select_btn ${isOpen && 'open'}`}
-        onClick={handleClick}
+        onClick={handleCancel}
       >
         <span className="filter_select_btn_text">
           {calculateCount(departments) === 0
@@ -79,7 +77,7 @@ const DepartmentFilter = () => {
               </li>
             ))}
         <Box display="flex" justifyContent="center" gap={2}>
-          <Button onClick={handleClick} fullWidth variant="outlined">
+          <Button onClick={handleCancel} fullWidth variant="outlined">
             Cancel
           </Button>
           <Button onClick={handleFilter} fullWidth variant="contained">
