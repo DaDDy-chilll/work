@@ -145,6 +145,7 @@ const UserDetail = () => {
     //     )
     //   )}
     // </Box>
+
     <Box
       display="flex"
       width="80%"
@@ -169,6 +170,42 @@ const UserDetail = () => {
         </Typography>
       </Box>
       <Divider />
+
+      <Box
+        display="flex"
+        gap="10px"
+        sx={{ margin: '50px', mt: '10px', flexDirection: 'column' }}
+      >
+        <Typography fontWeight="bold">User ID</Typography>
+        <Typography variant="h4">{data.payload.id}</Typography>
+      </Box>
+
+      <Box
+        display="flex"
+        gap="10px"
+        sx={{ margin: '50px', mt: '10px', flexDirection: 'column' }}
+      >
+        <Typography fontWeight="bold">Name</Typography>
+        <Typography variant="h4">{data.payload.name}</Typography>
+      </Box>
+
+      <Box
+        display="flex"
+        gap="10px"
+        sx={{ margin: '50px', mt: '10px', flexDirection: 'column' }}
+      >
+        <Typography fontWeight="bold">Name</Typography>
+        <Typography variant="h4">{data.payload.name}</Typography>
+      </Box>
+
+      <Box
+        display="flex"
+        gap="10px"
+        sx={{ margin: '50px', mt: '10px', flexDirection: 'column' }}
+      >
+        <Typography fontWeight="bold">Name</Typography>
+        <Typography variant="h4">{data.payload.name}</Typography>
+      </Box>
 
       <Box
         display="flex"
