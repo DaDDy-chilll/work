@@ -9,7 +9,7 @@ const CustomChip = ({ icon, onClick, department }) => {
           label={department.name}
           color="primary"
           variant="outlined"
-          onDelete={() => onClick(department.id)}
+          onDelete={() => onClick(department)}
           deleteIcon={icon}
         />
       ) : (

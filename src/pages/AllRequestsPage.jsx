@@ -8,25 +8,29 @@ import { useState } from 'react';
 import Navbar from '../components/Navbar';
 import SearchBox from '../components/shared/SearchBox';
 import DateRangeFilter from '../components/shared/DateRangeFilter';
-import { useDateRangeFilter, useDepartmentFilter } from '../hooks';
+import { useAuth, useDateRangeFilter, useDepartmentFilter } from '../hooks';
 import { transformDate } from '../helpers';
 import DepartmentFilter from '../components/shared/DepartmentFilter';
 import CustomChip from '../components/shared/CustomChip';
 import { Clear } from '@mui/icons-material';
 
 const AllRequestsPage = () => {
+  const { user } = useAuth();
+
   const [page, setPage] = useState(1);
 
   // DEPARTMENT FILTER
   const {
     filteredDepartments,
     isOpen,
+    onOpen,
+    onClose,
     departments,
     search,
     searchedDepartments,
     handleSearch,
     handleFilter,
-    handleCancel,
+    handleClearAll,
     handleChange,
     handleDelete,
   } = useDepartmentFilter();
@@ -56,17 +60,20 @@ const AllRequestsPage = () => {
       <Box p={3}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
           <SearchBox setSearch={setSearchValue} placeholder="Search subject" />
-          <DepartmentFilter
-            departments={departments}
-            filteredDepartments={filteredDepartments}
-            search={search}
-            searchedDepartments={searchedDepartments}
-            isOpen={isOpen}
-            handleSearch={handleSearch}
-            handleChange={handleChange}
-            handleCancel={handleCancel}
-            handleFilter={handleFilter}
-          />
+          {user?.department?.type === 'Authorized' && (
+            <DepartmentFilter
+              departments={departments}
+              filteredDepartments={filteredDepartments}
+              search={search}
+              searchedDepartments={searchedDepartments}
+              isOpen={isOpen}
+              onOpen={onOpen}
+              onClose={onClose}
+              handleSearch={handleSearch}
+              handleChange={handleChange}
+              handleFilter={handleFilter}
+            />
+          )}
           <DateRangeFilter
             date={date}
             openDate={openDate}
@@ -85,7 +92,7 @@ const AllRequestsPage = () => {
             />
           ))}
           {filteredDepartments.length !== 0 && (
-            <CustomChip onClick={() => handleChange({ name: 'clearAll' })} />
+            <CustomChip onClick={handleClearAll} />
           )}
         </Box>
         {isFetching ? (

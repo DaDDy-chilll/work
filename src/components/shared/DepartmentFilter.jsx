@@ -9,19 +9,20 @@ const calculateCount = (departments) => {
 
 const DepartmentFilter = ({
   isOpen,
+  onOpen,
+  onClose,
   departments,
   search,
   searchedDepartments,
   handleSearch,
   handleFilter,
-  handleCancel,
   handleChange,
 }) => {
   return (
     <div className="filter_container">
       <div
         className={`filter_select_btn ${isOpen && 'open'}`}
-        onClick={handleCancel}
+        onClick={isOpen ? onClose : onOpen}
       >
         <span className="filter_select_btn_text">
           {calculateCount(departments) === 0
@@ -77,7 +78,7 @@ const DepartmentFilter = ({
               </li>
             ))}
         <Box display="flex" justifyContent="center" gap={2}>
-          <Button onClick={handleCancel} fullWidth variant="outlined">
+          <Button onClick={onClose} fullWidth variant="outlined">
             Cancel
           </Button>
           <Button onClick={handleFilter} fullWidth variant="contained">
