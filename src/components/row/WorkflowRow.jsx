@@ -3,6 +3,7 @@ import { TableBody } from '@mui/material';
 import { StyledTableCell, StyledTableRow } from '../styled';
 import WorkflowRoute from '../ui/WorkflowRoute';
 import { getDepartmentsFromWorkflow } from '../../helpers';
+import LinkButton from '../ui/LinkButton';
 
 const WorkflowRow = ({ payload }) => {
   return (
@@ -16,6 +17,15 @@ const WorkflowRow = ({ payload }) => {
             <StyledTableCell>
               <WorkflowRoute
                 departments={getDepartmentsFromWorkflow(data?.reviewers)}
+              />
+            </StyledTableCell>
+            <StyledTableCell>
+              <LinkButton
+                width="100px"
+                innerText="View"
+                to={`/workflows/detail/${data._id}`}
+                variant="contained"
+                color="primary"
               />
             </StyledTableCell>
           </StyledTableRow>

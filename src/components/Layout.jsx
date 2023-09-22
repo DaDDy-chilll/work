@@ -4,7 +4,6 @@ import { ROLES } from '../constants/roles';
 import { useEffect } from 'react';
 import { Box } from '@mui/material';
 import Topbar from './Topbar';
-import Navbar from './Navbar';
 import { colors } from '../assets/theme/theme';
 
 const Layout = () => {
@@ -22,21 +21,12 @@ const Layout = () => {
   }, [user?.role]);
 
   return (
-    <div className="app_container" style={{ backgroundColor: colors.bgColor }}>
-      <div className="app_body">
-        <Topbar />
-        <Box mx="30px" sx={{ minHeight: '90vh' }}>
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <Navbar />
-          </Box>
-          <Outlet />
-        </Box>
-      </div>
-    </div>
+    <Box bgcolor={colors.bgColor}>
+      <Topbar />
+      <Box>
+        <Outlet />
+      </Box>
+    </Box>
   );
 };
 

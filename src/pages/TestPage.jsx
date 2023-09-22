@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material';
 import { colors } from '../assets/theme/theme';
 import WorkFlowForm from '../components/form/WorkFlowForm';
 
-const CreateWorkflowPage = () => {
+const TestPage = () => {
   return (
     <Box
       sx={{
@@ -22,4 +22,4 @@ const CreateWorkflowPage = () => {
   );
 };
 
-export default CreateWorkflowPage;
+export default TestPage;

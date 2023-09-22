@@ -17,13 +17,12 @@ import { useAuth } from '../../hooks/useAuth';
 
 const RemarkIcon = ({ value }) => {
   const { user } = useAuth();
-  console.log(user?.permissions);
 
-  if (value === ACTIONS.APPROVE)
+  if (value === ACTIONS.APPROVE && user?.permissions?.canApprove)
     return <CheckCircle sx={{ color: colors.darkGreen[800] }} />;
   if (value === ACTIONS.REJECT)
     return <Cancel sx={{ color: colors.red[800] }} />;
-  if (value === ACTIONS.VERIFY)
+  if (value === ACTIONS.VERIFY && user?.permissions?.canVerify)
     return <CheckCircle sx={{ color: colors.darkGreen[800] }} />;
   if (value === ACTIONS.COMMENT)
     return <Textsms sx={{ color: colors.paleBlue[800] }} />;
@@ -67,7 +66,9 @@ const RemarkForm = ({ onClose }) => {
         <form onSubmit={props.handleSubmit}>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <Box>
-              <label>Form Status</label>
+              <label>
+                Form Status <span style={{ color: colors.red[800] }}>*</span>
+              </label>
               <FormSelect
                 placeholder="Select Form Status"
                 name="action"
@@ -86,6 +87,7 @@ const RemarkForm = ({ onClose }) => {
             <RichTextEditor text={remark} setText={setRemark} />
 
             <FormActionButtons
+              onClick={onClose}
               innerText="Save"
               loading={changeStatusLoading}
               justifyContent="right"

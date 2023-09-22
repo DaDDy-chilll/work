@@ -1,10 +1,22 @@
 /* eslint-disable react/prop-types */
 import { Box, Button, CircularProgress } from '@mui/material';
 
-const FormActionButtons = ({ loading, innerText, justifyContent, width }) => {
+const FormActionButtons = ({
+  loading,
+  innerText,
+  justifyContent,
+  width,
+  onClick,
+}) => {
   return (
     <Box display="flex" justifyContent={justifyContent} gap={2} mt={2}>
-      <Button sx={{ width }} type="reset" color="primary" variant="outlined">
+      <Button
+        sx={{ width }}
+        type="reset"
+        color="primary"
+        variant="outlined"
+        onClick={onClick}
+      >
         Cancel
       </Button>
       <Button

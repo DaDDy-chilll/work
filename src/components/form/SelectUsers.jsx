@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Box, Button, CircularProgress } from '@mui/material';
 
-const SelectUsers = ({ createLoading, onClose, children }) => {
+const SelectUsers = ({ loading, onClose, children }) => {
   return (
     <Box>
       {children}
@@ -20,9 +20,9 @@ const SelectUsers = ({ createLoading, onClose, children }) => {
           type="submit"
           color="primary"
           variant="contained"
-          disabled={createLoading ? true : false}
+          disabled={loading ? true : false}
         >
-          {createLoading ? <CircularProgress size="20px" /> : 'Create'}
+          {loading ? <CircularProgress size="20px" /> : 'Create'}
         </Button>
       </Box>
     </Box>

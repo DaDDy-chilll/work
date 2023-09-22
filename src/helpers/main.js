@@ -1,5 +1,16 @@
 import { colors } from '../assets/theme/theme';
 
+export const getQueryString = (params) => {
+  const sanitizedParams = {};
+  Object.entries(params).forEach(([key, value]) => {
+    if (value) {
+      sanitizedParams[key] = value.toString();
+    }
+  });
+
+  return new URLSearchParams(sanitizedParams).toString();
+};
+
 export const changeTextColor = ({ action }) => {
   let textColor;
 

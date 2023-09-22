@@ -25,7 +25,7 @@ import { useQueryClient } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import WorkflowRoute from '../ui/WorkflowRoute';
 
-const DocumentForm = ({ oldData }) => {
+const DocumentForm = ({ oldData, onClick }) => {
   const { id } = useParams();
 
   const { data } = useGetAllWorkflows({ limit: 0 });
@@ -33,7 +33,7 @@ const DocumentForm = ({ oldData }) => {
   let workflows;
 
   if (data?.payload) {
-    workflows = data?.payload.map((workflow) => ({
+    workflows = data?.payload?.map((workflow) => ({
       ...workflow,
       departments: getDepartmentsFromWorkflow(workflow.reviewers),
     }));
@@ -129,7 +129,15 @@ const DocumentForm = ({ oldData }) => {
     >
       {(props) => (
         <form onSubmit={props.handleSubmit}>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 3,
+              px: 5,
+              py: 3,
+            }}
+          >
             <Box>
               <label>Subject</label>
               <FormTextField
@@ -157,23 +165,24 @@ const DocumentForm = ({ oldData }) => {
                   name="workflowId"
                   formProps={props}
                 >
-                  {workflows.map((item) => (
-                    <MenuItem value={item._id} key={item._id}>
-                      <WorkflowRoute
-                        name={item?.name}
-                        departments={item?.departments}
-                      />
-                    </MenuItem>
-                  ))}
+                  {workflows &&
+                    workflows?.map((item) => (
+                      <MenuItem value={item._id} key={item._id}>
+                        <WorkflowRoute
+                          name={item?.name}
+                          departments={item?.departments}
+                        />
+                      </MenuItem>
+                    ))}
                 </FormSelect>
               </Box>
             )}
 
             <RichTextEditor text={description} setText={setDescription} />
 
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+            <Box>
               <label htmlFor="name">Attachments (Optional)</label>
-              <Box>
+              <Box mt={1}>
                 <input
                   type="file"
                   id="actual-btn"
@@ -215,15 +224,22 @@ const DocumentForm = ({ oldData }) => {
                         <IconButton
                           onClick={() => handleDelete({ name: pdfFile })}
                         >
-                          <Cancel fontSize="large" />
+                          <Cancel
+                            sx={{ color: colors.grey[800] }}
+                            fontSize="large"
+                          />
                         </IconButton>
                       </div>
                     </div>
                   ))}
               </Box>
             </Box>
-
+          </Box>
+          <Box
+            sx={{ borderTop: `1px solid ${colors.grey[400]}`, pb: 3, px: 5 }}
+          >
             <FormActionButtons
+              onClick={onClick}
               innerText={oldData ? 'Update' : 'Submit'}
               loading={oldData ? editLoading : createLoading}
               justifyContent="right"

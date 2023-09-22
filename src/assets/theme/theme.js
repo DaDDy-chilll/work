@@ -136,7 +136,7 @@ export const theme = createTheme({
       contrastText: colors.white[100],
     },
     background: {
-      default: colors.white[100],
+      default: colors.bgColor,
     },
   },
 

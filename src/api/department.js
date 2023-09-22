@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from 'react-query';
 import { fetcher } from '../lib/axios';
+import { getQueryString } from '../helpers';
 
 const createDepartment = async (data) => {
   return fetcher.post('/departments', data).then((res) => {
@@ -13,19 +14,17 @@ export const useCreateDepartment = () => {
   });
 };
 
-export const getAllDepartments = async (page) => {
-    return fetcher
-        .get(`/departments?page=${page}&limit=10`)
-        .then((res) => {
-            return res.data;
-        });
-}
+export const getAllDepartments = async (params) => {
+  return fetcher.get(`/departments?${getQueryString(params)}`).then((res) => {
+    return res.data;
+  });
+};
 
-export const useGetAllDepartments = (page) => {
-    return useQuery(['/departments', page], () => getAllDepartments(page), {
+export const useGetAllDepartments = (params) => {
+  return useQuery(['/departments', params], () => getAllDepartments(params), {
     // keepPreviousData: true
-  })
-}
+  });
+};
 
 const fetchAllDepartments = async (params) => {
   const sanitizedParams = {};
