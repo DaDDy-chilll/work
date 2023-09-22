@@ -19,6 +19,7 @@ import DocumentDetailPage from './pages/DocumentDetailPage';
 import EditRequestPage from './pages/EditRequestPage';
 import CreateRequestPage from './pages/CreateRequestPage';
 import WorkflowDetailPage from './pages/WorkflowDetailPage';
+import UserDetail from './pages/UserDetailsPage';
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
               {/* FOR SUPERADMIN */}
               <Route path="departments" element={<DepartmentsPage />} />
               <Route path="users" element={<UsersPage />} />
+              <Route path="users/:id" element={<UserDetail />} />
               <Route path="workflows" element={<WorkFlowsPage />} />
               <Route path="workflows/create" element={<CreateWorkflowPage />} />
               <Route
