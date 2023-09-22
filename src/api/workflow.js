@@ -17,6 +17,19 @@ export const useGetAllWorkflows = ({ page = 1, limit = 0 }) => {
   );
 };
 
+const getWorkflowDetail = async (id) => {
+  return fetcher.get(`/reviewer-groups/${id}`).then((res) => {
+    return res.data;
+  });
+};
+
+export const useGetWorkflowDetail = (id) => {
+  return useQuery({
+    queryKey: ['workflow', id],
+    queryFn: () => getWorkflowDetail(id),
+  });
+};
+
 const createWorkflow = async (data) => {
   return fetcher.post('/reviewer-groups', data).then((res) => {
     return res.data;

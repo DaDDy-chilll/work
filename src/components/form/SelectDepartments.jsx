@@ -38,7 +38,12 @@ const SelectDepartments = ({ children, onOpen, formProps }) => {
           variant="outlined"
           color="primary"
         />
-        <ModalButton color="primary" innerText="Continue" onOpen={onOpen} />
+        <ModalButton
+          width="200px"
+          color="primary"
+          innerText="Continue"
+          onOpen={onOpen}
+        />
       </Box>
     </>
   );

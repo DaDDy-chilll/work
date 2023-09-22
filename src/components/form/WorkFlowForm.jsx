@@ -14,6 +14,8 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useCreateWorkflow } from '../../api';
 import { useQueryClient } from 'react-query';
+import { Box, CircularProgress } from '@mui/material';
+import DepartmentMemberLists from './DepartmentMemberLists';
 
 const WorkFlowForm = () => {
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -115,6 +117,27 @@ const WorkFlowForm = () => {
     fetchData();
   }, [selectedDepartments]);
 
+  let result;
+
+  if (!fetchUserLoading) {
+    if (users) {
+      let depts = [];
+      users.forEach((p) => {
+        depts.push(p.department.name);
+      });
+
+      depts = [...new Set([...depts])];
+
+      result = depts.map((dpt) => {
+        const filteredUsers = users.filter((p) => p.department.name === dpt);
+        return {
+          name: dpt,
+          users: filteredUsers,
+        };
+      });
+    }
+  }
+
   // SELECT USER
   const handleSelectChange = ({
     userId,
@@ -187,10 +210,23 @@ const WorkFlowForm = () => {
               <DepartmentLists
                 departments={departments}
                 handleSelectChange={handleSelectChange}
-                isLoading={fetchUserLoading}
-                payloads={users}
                 selectedUsers={selectedUsers}
-              />
+              >
+                {fetchUserLoading ? (
+                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <CircularProgress />
+                  </Box>
+                ) : (
+                  result &&
+                  result.map((department, i) => (
+                    <DepartmentMemberLists
+                      handleSelectChange={handleSelectChange}
+                      key={i}
+                      department={department}
+                    />
+                  ))
+                )}
+              </DepartmentLists>
             </SelectUsers>
           ) : (
             <SelectDepartments onOpen={onOpen} formProps={props}>

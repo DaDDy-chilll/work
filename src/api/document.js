@@ -1,14 +1,15 @@
 import { useMutation, useQuery } from 'react-query';
 import { fetcher } from '../lib/axios';
+import { getQueryString } from '../helpers';
 
-export const getAllRequests = async (page) => {
-  return fetcher.get(`/documents?page=${page}&limit=10`).then((res) => {
+export const getAllRequests = async (params) => {
+  return fetcher.get(`/documents?${getQueryString(params)}`).then((res) => {
     return res.data;
   });
 };
 
-export const useGetAllRequests = (page) => {
-  return useQuery(['/all', page], () => getAllRequests(page), {
+export const useGetAllRequests = (params) => {
+  return useQuery(['/all', params], () => getAllRequests(params), {
     // keepPreviousData: true
   });
 };

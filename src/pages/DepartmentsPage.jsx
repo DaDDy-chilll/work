@@ -1,6 +1,5 @@
 import { Box, CircularProgress, Pagination } from '@mui/material';
 import { useDisclosure } from '../hooks/useDisclosure';
-import ModalButton from '../components/ui/ModalButton';
 import Modal from '../components/ui/Modal';
 import DataTable from '../components/ui/DataTable';
 import { colors } from '../assets/theme/theme';
@@ -11,13 +10,17 @@ import DepartmentForm from '../components/form/DepartmentForm';
 import { useState } from 'react';
 import { AddOutlined } from '@mui/icons-material';
 import Navbar from '../components/Navbar';
+import ModalButton from '../components/ui/ModalButton';
 
 const DepartmentsPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [page, setPage] = useState(1);
 
-  const { isError, error, data, isFetching } = useGetAllDepartments(page);
+  const { isError, error, data, isFetching } = useGetAllDepartments({
+    page,
+    limit: 10,
+  });
 
   if (isError) return <p>Error: {error.message}</p>;
 
@@ -26,6 +29,7 @@ const DepartmentsPage = () => {
       <Navbar />
       <Box p={3}>
         <ModalButton
+          width="220px"
           color="primary"
           innerText="Create New Department"
           onOpen={onOpen}
