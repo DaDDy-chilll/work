@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 // import {
 //   Box,
 //   Button,
@@ -18,22 +17,17 @@ import {
   Typography,
 } from '@mui/material';
 import { ToastContainer } from 'react-toastify';
-import login_image from '../assets/images/login_image.png';
 import { Formik } from 'formik';
 import '../css/Login.css';
-// import '../css/App.css';
-import ParamiLogin from '../assets/images/ParamiLogin.jpg';
 import FormTextField from '../components/shared/FormTextField';
-
-// import { colors } from '../assets/theme/theme';
-// import { Visibility, VisibilityOff } from '@mui/icons-material';
-// import { useForm } from 'react-hook-form';
 import { initialValues, loginSchema } from '../schema/login.schema';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useState } from 'react';
-// import { useLogin } from '../api';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+
+import parami_login_bg from '../assets/images/parami_login_bg.jpg';
+import parami_login from '../assets/images/ParamiLogin.jpg';
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -56,7 +50,7 @@ const LoginPage = () => {
     <Box>
       <ToastContainer />
       <div className="flex">
-        <img className="login_bg" src={login_image}></img>
+        <img className="login_bg" src={parami_login_bg}></img>
       </div>
 
       <Box
@@ -78,7 +72,7 @@ const LoginPage = () => {
               objectFit: 'cover',
               margin: 'auto',
             }}
-            src={ParamiLogin}
+            src={parami_login}
           ></img>
         </Box>
 
@@ -99,6 +93,7 @@ const LoginPage = () => {
             onSubmit={handleOnSubmit}
           >
             {(props) => (
+              // eslint-disable-next-line react/prop-types
               <form onSubmit={props.handleSubmit}>
                 <Box
                   sx={{
