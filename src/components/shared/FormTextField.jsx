@@ -13,10 +13,16 @@ const FormTextField = ({
       disabled={disabled}
       type={type}
       fullWidth
-      variant="filled"
+      variant="outlined"
       name={name}
       placeholder={placeholder}
-      sx={{ mt: 1 }}
+      sx={{
+        mt: 1,
+        input: {
+          color: '#9e9e9e',
+          background: '#FAFCFF',
+        },
+      }}
       onBlur={handleBlur}
       onChange={handleChange}
       value={values[name]}
