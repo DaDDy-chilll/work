@@ -17,7 +17,10 @@ const DepartmentsPage = () => {
 
   const [page, setPage] = useState(1);
 
-  const { isError, error, data, isFetching } = useGetAllDepartments(page);
+  const { isError, error, data, isFetching } = useGetAllDepartments({
+    page,
+    limit: 10,
+  });
 
   if (isError) return <p>Error: {error.message}</p>;
 

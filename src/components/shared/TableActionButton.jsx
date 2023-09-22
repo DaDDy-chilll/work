@@ -43,7 +43,6 @@ const TableActionButton = ({ userId }) => {
       canEditAmount: data?.payload?.permissions?.canEditAmount,
     };
   }
-  console.log(data);
 
   const { mutate: disableMutation, isLoading: disableLoading } =
     useDisableUser();

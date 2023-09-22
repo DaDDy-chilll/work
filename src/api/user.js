@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from 'react-query';
 import { fetcher } from '../lib/axios';
+import { getQueryString } from '../helpers';
 
 const createUser = async (data) => {
   return fetcher.post('/auth/register', data).then((res) => {
@@ -49,19 +50,17 @@ export const useDisableUser = () => {
   });
 };
 
-export const getAllUsers = async (page) => {
-  return fetcher
-    .get(`/users?page=${page}&limit=10`)
-    .then((res) => {
-      return res.data;
-    });
-}
+export const getAllUsers = async (params) => {
+  return fetcher.get(`/users?${getQueryString(params)}`).then((res) => {
+    return res.data;
+  });
+};
 
-export const useGetAllUsers = (page) => {
-  return useQuery(['/users', page], () => getAllUsers(page), {
+export const useGetAllUsers = (params) => {
+  return useQuery(['/users', params], () => getAllUsers(params), {
     // keepPreviousData: true
-  })
-}
+  });
+};
 
 const getUserDetail = async (id) => {
   return fetcher.get(`/users/${id}`).then((res) => {
