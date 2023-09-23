@@ -1,6 +1,6 @@
 import { Box, Tab, Tabs } from '@mui/material';
 import { useAuth } from '../hooks/useAuth';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import {
   InsertDriveFileOutlined,
@@ -17,10 +17,22 @@ function tabProps(index) {
   };
 }
 
+const getCurrentIndex = (path) => {
+  if (path === '/my-requests' || path === '/workflows') {
+    return 1;
+  }
+  if (path === '/inbox' || path === '/departments') {
+    return 2;
+  }
+  return 0;
+};
+
 const Navbar = () => {
   const { user } = useAuth();
 
-  const [value, setValue] = useState(0);
+  const currentPath = useLocation();
+
+  const [value, setValue] = useState(getCurrentIndex(currentPath.pathname));
 
   const handleChange = (_e, newValue) => {
     setValue(newValue);

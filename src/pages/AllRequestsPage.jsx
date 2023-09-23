@@ -59,7 +59,7 @@ const AllRequestsPage = () => {
     <Box m={3} borderRadius="1rem" bgcolor={colors.white[100]}>
       <Navbar />
       <Box p={3}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           <SearchBox setSearch={setSearchValue} placeholder="Search subject" />
           {user?.department?.type === 'Authorized' && (
             <DepartmentFilter

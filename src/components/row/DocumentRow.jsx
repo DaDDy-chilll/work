@@ -17,11 +17,11 @@ const DocumentRow = ({ payload }) => {
             <StyledTableCell>{data?.documentId}</StyledTableCell>
             <StyledTableCell>{transformDate(data?.createdAt)}</StyledTableCell>
             <StyledTableCell>
-              <div style={{ width: '200px' }}>{data?.name}</div>
+              <div style={{ width: '100px' }}>{data?.name}</div>
             </StyledTableCell>
             <StyledTableCell>
               <div
-                style={{ width: '500px' }}
+                style={{ width: '300px' }}
                 dangerouslySetInnerHTML={{ __html: data?.description }}
               />
             </StyledTableCell>

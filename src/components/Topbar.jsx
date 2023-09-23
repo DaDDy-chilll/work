@@ -10,6 +10,7 @@ import Notifications from './ui/NotificationIcon';
 import NotificationDrawer from './ui/NotificationDrawer';
 import { useNavigate } from 'react-router-dom';
 import { useGetAllNotifications } from '../api';
+import { ROLES } from '../constants';
 
 const Topbar = () => {
   const navigate = useNavigate();
@@ -50,7 +51,7 @@ const Topbar = () => {
       />
 
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-        {notifications && (
+        {user.role !== ROLES.SUPER_ADMIN && notifications && (
           <>
             <Notifications
               notifications={notifications}
