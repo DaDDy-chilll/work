@@ -3,8 +3,6 @@ import { useGetAllDepartments } from '../api';
 import { useDisclosure } from './useDisclosure';
 
 export const useDepartmentFilter = () => {
-  // const [isOpen, setIsOpen] = useState(false);
-
   const { isOpen, onClose, onOpen } = useDisclosure()
 
   // FETCH ALL DEPARTMENTS FROM API
@@ -35,6 +33,11 @@ export const useDepartmentFilter = () => {
     });
     setSearchedDepartments(searchedValue);
   };
+
+  // SEARCH CANCEL
+  const handleSearchCancel = () => {
+    setSearch('')
+  }
 
   // HANDLE CHECKBOX
   const handleChange = ({ name, checked }) => {
@@ -90,6 +93,7 @@ export const useDepartmentFilter = () => {
     search,
     searchedDepartments,
     handleSearch,
+    handleSearchCancel,
     handleFilter,
     handleClearAll,
     handleChange,

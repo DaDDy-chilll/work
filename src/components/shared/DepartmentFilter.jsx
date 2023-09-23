@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
-import { FilterAlt, Search } from '@mui/icons-material';
+import { Cancel, FilterAlt, Search } from '@mui/icons-material';
 import { Box, Button, Checkbox, FormControlLabel } from '@mui/material';
+import { colors } from '../../assets/theme/theme';
 
 const calculateCount = (departments) => {
   return departments.filter((department) => department.isChecked === true)
@@ -15,6 +16,7 @@ const DepartmentFilter = ({
   search,
   searchedDepartments,
   handleSearch,
+  handleSearchCancel,
   handleFilter,
   handleChange,
 }) => {
@@ -44,6 +46,14 @@ const DepartmentFilter = ({
             value={search}
             onChange={(e) => handleSearch(e.target.value)}
           />
+          {search !== '' && (
+            <div
+              className="filter_search_cancel_btn"
+              onClick={handleSearchCancel}
+            >
+              <Cancel sx={{ color: colors.grey[800] }} />
+            </div>
+          )}
         </div>
         <Button onClick={() => handleChange({ name: 'clearAll' })}>
           Clear All

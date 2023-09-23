@@ -29,6 +29,7 @@ const AllRequestsPage = () => {
     search,
     searchedDepartments,
     handleSearch,
+    handleSearchCancel,
     handleFilter,
     handleClearAll,
     handleChange,
@@ -72,6 +73,7 @@ const AllRequestsPage = () => {
               handleSearch={handleSearch}
               handleChange={handleChange}
               handleFilter={handleFilter}
+              handleSearchCancel={handleSearchCancel}
             />
           )}
           <DateRangeFilter

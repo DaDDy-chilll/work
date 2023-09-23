@@ -64,6 +64,7 @@ const Topbar = () => {
             alignItems: 'center',
             borderLeft: `0.2px solid ${colors.grey[500]}`,
             pl: '10px',
+            cursor: 'pointer',
           }}
           id="basic-button"
           aria-controls={isOpen ? 'basic-menu' : undefined}
