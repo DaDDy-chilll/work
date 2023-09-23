@@ -1,19 +1,17 @@
 /* eslint-disable react/prop-types */
 import { Button } from '@mui/material';
-import { Link } from 'react-router-dom';
 
-const LinkButton = ({ innerText, to, variant, color, width }) => {
+const LinkButton = ({ innerText, onClick, variant, color, width, icon }) => {
   return (
-    <Link to={to} style={{ textDecoration: 'none' }}>
-      <Button
-        className="no-underline"
-        variant={variant}
-        color={color}
-        sx={{ width }}
-      >
-        {innerText}
-      </Button>
-    </Link>
+    <Button
+      onClick={onClick}
+      className="no-underline"
+      variant={variant}
+      color={color}
+      sx={{ width }}
+    >
+      {innerText} {icon}
+    </Button>
   );
 };
 

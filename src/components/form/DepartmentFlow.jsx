@@ -8,7 +8,7 @@ import TimelineSeparator from '@mui/lab/TimelineSeparator';
 import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineDot from '@mui/lab/TimelineDot';
-import { useFetchAllDepartments } from '../../api';
+import { useGetAllDepartments } from '../../api';
 
 const ItemIcon = ({ children }) => {
   return (
@@ -78,7 +78,7 @@ const Item = ({ department }) => {
 
 const DepartmentFlow = ({ selectedDepartments, handleDepartmentChange }) => {
   const { data: departments, isLoading: departmentLoading } =
-    useFetchAllDepartments({
+    useGetAllDepartments({
       limit: 0,
     });
 

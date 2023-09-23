@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Box, CircularProgress, Typography } from '@mui/material';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useGetDocumentDetail } from '../api/document';
 import { colors } from '../assets/theme/theme';
 import { transformDate } from '../helpers';
@@ -42,11 +42,15 @@ const DocumentDetailPage = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const navigate = useNavigate();
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, m: 2 }}>
       <Typography variant="h1">View Document Request</Typography>
       {isLoading ? (
-        <CircularProgress size={48} />
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          <CircularProgress size={48} />
+        </Box>
       ) : (
         document?.payload && (
           <Box sx={{ display: 'flex', gap: 2 }}>
@@ -63,7 +67,9 @@ const DocumentDetailPage = () => {
                   display: 'flex',
                   alignItems: 'center',
                   gap: 1,
+                  cursor: 'pointer',
                 }}
+                onClick={() => navigate(-1)}
               >
                 <ArrowBack />
                 {transformDate(document?.payload?.updatedAt)}
@@ -122,8 +128,9 @@ const DocumentDetailPage = () => {
                 sx={{
                   display: 'flex',
                   justifyContent: 'right',
+                  alignItems: 'center',
                   borderTop: `1px solid ${colors.grey[400]}`,
-                  pt: 2,
+                  py: 2,
                   px: 4,
                   gap: 1,
                 }}
@@ -131,7 +138,7 @@ const DocumentDetailPage = () => {
                 <LinkButton
                   width="200px"
                   innerText="Back"
-                  to="/all"
+                  onClick={() => navigate(-1)}
                   variant="contained"
                   color="primary"
                 />
@@ -141,7 +148,7 @@ const DocumentDetailPage = () => {
                       width="200px"
                       color="info"
                       innerText="Edit"
-                      to={`/edit/${id}`}
+                      onClick={() => navigate(`/edit/${id}`)}
                       variant="contained"
                     />
                   )}

@@ -4,7 +4,7 @@ import {
   useCreateUser,
   useEditPassword,
   useEditUser,
-  useFetchAllDepartments,
+  useGetAllDepartments,
 } from '../../api';
 import FormActionButtons from '../ui/FormActionButtons';
 import { Formik } from 'formik';
@@ -23,7 +23,7 @@ import { useQueryClient } from 'react-query';
 import PasswordTextField from '../shared/PasswordTextField';
 
 const UserForm = ({ onClose, oldData, isChangePassword }) => {
-  const { data } = useFetchAllDepartments({
+  const { data } = useGetAllDepartments({
     limit: 0,
   });
 

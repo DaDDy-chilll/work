@@ -1,7 +1,6 @@
 import { Box, Tab, Tabs } from '@mui/material';
 import { useAuth } from '../hooks/useAuth';
 import { Link } from 'react-router-dom';
-import { ROLES } from '../constants/roles';
 import { useState } from 'react';
 import {
   InsertDriveFileOutlined,
@@ -9,6 +8,7 @@ import {
   MailOutline,
 } from '@mui/icons-material';
 import { colors } from '../assets/theme/theme';
+import { ROLES } from '../constants';
 
 function tabProps(index) {
   return {
@@ -61,7 +61,7 @@ const Navbar = () => {
             {...tabProps(0)}
             component={Link}
             label="All Requests"
-            to="/all"
+            to="/"
             icon={<ListAltOutlined />}
             iconPosition="start"
           />

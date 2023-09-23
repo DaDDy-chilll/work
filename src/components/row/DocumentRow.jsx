@@ -5,8 +5,10 @@ import DocumentLastActivity from '../ui/DocumentLastActivity';
 import { transformDate } from '../../helpers';
 import DocumentCase from '../ui/DocumentCase';
 import LinkButton from '../ui/LinkButton';
+import { useNavigate } from 'react-router-dom';
 
 const DocumentRow = ({ payload }) => {
+  const navigate = useNavigate();
   return (
     <TableBody>
       {payload &&
@@ -33,7 +35,7 @@ const DocumentRow = ({ payload }) => {
               <LinkButton
                 width="100px"
                 innerText="View"
-                to={`/detail/${data._id}`}
+                onClick={() => navigate(`/detail/${data._id}`)}
                 variant="contained"
                 color="primary"
               />

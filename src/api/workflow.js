@@ -1,18 +1,20 @@
 import { useMutation, useQuery } from 'react-query';
 import { fetcher } from '../lib/axios';
+import { getQueryString } from '../helpers';
 
-export const getAllWorkflows = async ({ page, limit }) => {
+export const getAllWorkflows = async (params) => {
   return fetcher
-    .get(`/reviewer-groups?page=${page}&limit=${limit}`)
+    .get(`/reviewer-groups?${getQueryString(params)}`)
     .then((res) => {
       return res.data;
     });
 };
 
-export const useGetAllWorkflows = ({ page = 1, limit = 0 }) => {
-  return useQuery(['/reviewer-groups', page], () =>
-    getAllWorkflows({ page, limit }),
-  );
+export const useGetAllWorkflows = (params) => {
+  return useQuery({
+    queryKey: ['workflows', params],
+    queryFn: () => getAllWorkflows(params)
+  });
 };
 
 const getWorkflowDetail = async (id) => {

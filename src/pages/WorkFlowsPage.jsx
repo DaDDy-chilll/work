@@ -7,11 +7,16 @@ import WorkflowRow from '../components/row/WorkflowRow';
 import LinkButton from '../components/ui/LinkButton';
 import { useState } from 'react';
 import Navbar from '../components/Navbar';
+import { useNavigate } from 'react-router-dom';
+import { AddOutlined } from '@mui/icons-material';
 
 const WorkFlowsPage = () => {
+  const navigate = useNavigate();
+
   const [page, setPage] = useState(1);
 
   const { isError, error, data, isFetching } = useGetAllWorkflows({
+    sort: '-createdAt',
     page,
     limit: 10,
   });
@@ -22,12 +27,13 @@ const WorkFlowsPage = () => {
     <Box m={3} borderRadius="1rem" bgcolor={colors.white[100]}>
       <Navbar />
       <Box p={3}>
-        <Box sx={{ display: 'flex', justifyContent: 'right', mb: '20px' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'right', mb: 1 }}>
           <LinkButton
-            width="200px"
+            icon={<AddOutlined sx={{ ml: 1 }} />}
+            width="220px"
             color="primary"
             innerText="Create New Work Flow"
-            to={'/workflows/create'}
+            onClick={() => navigate('/workflows/create')}
             variant="contained"
           />
         </Box>

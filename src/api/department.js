@@ -21,27 +21,8 @@ export const getAllDepartments = async (params) => {
 };
 
 export const useGetAllDepartments = (params) => {
-  return useQuery(['/departments', params], () => getAllDepartments(params), {
-    // keepPreviousData: true
-  });
-};
-
-const fetchAllDepartments = async (params) => {
-  const sanitizedParams = {};
-  Object.entries(params).forEach(([key, value]) => {
-    if (value !== undefined) {
-      sanitizedParams[key] = value.toString();
-    }
-  });
-
-  const queryString = new URLSearchParams(sanitizedParams).toString();
-
-  return fetcher.get(`/departments?${queryString}`).then((res) => res.data);
-};
-
-export const useFetchAllDepartments = (params) => {
   return useQuery({
-    queryFn: () => fetchAllDepartments(params),
-    queryKey: ['departments'],
+    queryKey: ['departments', params],
+    queryFn: () => getAllDepartments(params)
   });
 };

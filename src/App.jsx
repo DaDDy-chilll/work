@@ -35,7 +35,7 @@ function App() {
                 </Protected>
               }
             >
-              <Route path="all" element={<AllRequestsPage />} />
+              <Route path="" element={<AllRequestsPage />} />
               <Route path="my-requests" element={<MyRequestsPage />} />
               <Route
                 path="my-requests/create"

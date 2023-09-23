@@ -7,3 +7,11 @@
 body {
   background-color: #EDF1F7;
 }
+
+/* REMOVE TINY TEXT EDITOR WARNING */
+.tox-notification,
+.tox-notification--in,
+.tox-notification--warning {
+  display: none !important;
+  opacity: 0 !important;
+}
