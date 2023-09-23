@@ -8,7 +8,6 @@ import {
   workflowCreateSchema,
   workflowCreateValues,
 } from '../../schema/workflow.schema';
-import { useDisclosure } from '../../hooks/useDisclosure';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -17,9 +16,7 @@ import { useQueryClient } from 'react-query';
 import { Box, CircularProgress } from '@mui/material';
 import DepartmentMemberLists from './DepartmentMemberLists';
 
-const WorkFlowForm = () => {
-  const { isOpen, onClose, onOpen } = useDisclosure();
-
+const WorkFlowForm = ({ isOpen, onClose, onOpen }) => {
   const [selectedDepartments, setSelectedDepartments] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
 

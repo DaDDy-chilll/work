@@ -13,6 +13,8 @@ import './css/Login.css';
 import './css/SearchBox.css';
 import './css/DateRangeFilter.css';
 import './css/DepartmentFilter.css';
+import './css/Workflow.css';
+import './css/Document.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

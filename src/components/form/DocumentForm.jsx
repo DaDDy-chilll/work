@@ -201,7 +201,7 @@ const DocumentForm = ({ oldData, onClick }) => {
                   </label>
                 </Button>
               </Box>
-              <Box sx={{ display: 'flex', gap: 3 }}>
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3, mt: 2 }}>
                 {imageUrls &&
                   imageUrls.map((url) => (
                     <div key={url} className="attachment_container">

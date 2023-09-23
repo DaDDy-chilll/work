@@ -7,7 +7,7 @@ const DepartmentCard = ({ department, index }) => {
     <Box
       sx={{
         bgcolor: colors.white[200],
-        width: '32%',
+        width: '31%',
         borderRadius: '10px',
         p: 2,
         border: `1px solid ${colors.grey[400]}`,

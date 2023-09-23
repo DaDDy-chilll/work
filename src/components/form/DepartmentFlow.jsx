@@ -34,8 +34,6 @@ const ItemCard = ({ children, title }) => {
         borderRadius: '1rem',
         p: 2,
         border: `1px solid ${colors.grey[400]}`,
-        height: '400px',
-        overflowY: 'scroll',
       }}
     >
       <Box
@@ -94,10 +92,13 @@ const DepartmentFlow = ({ selectedDepartments, handleDepartmentChange }) => {
             </Box>
           ) : (
             <Box
+              className="department_card"
               sx={{
                 display: 'flex',
                 flexDirection: 'column',
                 gap: 3,
+                overflowY: 'scroll',
+                height: '400px',
               }}
             >
               {departments &&
@@ -121,46 +122,51 @@ const DepartmentFlow = ({ selectedDepartments, handleDepartmentChange }) => {
           )}
         </ItemCard>
         <ItemCard title="Department Order">
-          <Timeline
-            position="right"
-            sx={{
-              [`& .${timelineItemClasses.root}:before`]: {
-                flex: 0,
-                padding: 0,
-              },
-            }}
+          <Box
+            className="department_card"
+            sx={{ overflowY: 'scroll', height: '400px' }}
           >
-            {selectedDepartments.length !== 0 ? (
-              selectedDepartments.map((department, i) => (
-                <TimelineItem key={i}>
-                  <TimelineSeparator>
-                    <TimelineConnector />
-                    <TimelineDot
-                      sx={{
-                        width: '30px',
-                        height: '30px',
-                        borderRadius: '50%',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}
-                      color="primary"
-                    >
-                      {i + 1}
-                    </TimelineDot>
-                    <TimelineConnector />
-                  </TimelineSeparator>
-                  <TimelineContent sx={{ py: 3, px: 2 }}>
-                    <Item department={department} />
-                  </TimelineContent>
-                </TimelineItem>
-              ))
-            ) : (
-              <label style={{ textAlign: 'center' }}>
-                No Selected Departments
-              </label>
-            )}
-          </Timeline>
+            <Timeline
+              position="right"
+              sx={{
+                [`& .${timelineItemClasses.root}:before`]: {
+                  flex: 0,
+                  padding: 0,
+                },
+              }}
+            >
+              {selectedDepartments.length !== 0 ? (
+                selectedDepartments.map((department, i) => (
+                  <TimelineItem key={i}>
+                    <TimelineSeparator>
+                      <TimelineConnector />
+                      <TimelineDot
+                        sx={{
+                          width: '30px',
+                          height: '30px',
+                          borderRadius: '50%',
+                          display: 'flex',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}
+                        color="primary"
+                      >
+                        {i + 1}
+                      </TimelineDot>
+                      <TimelineConnector />
+                    </TimelineSeparator>
+                    <TimelineContent sx={{ py: 3, px: 2 }}>
+                      <Item department={department} />
+                    </TimelineContent>
+                  </TimelineItem>
+                ))
+              ) : (
+                <label style={{ textAlign: 'center' }}>
+                  No Selected Departments
+                </label>
+              )}
+            </Timeline>
+          </Box>
         </ItemCard>
       </Box>
     </Box>
