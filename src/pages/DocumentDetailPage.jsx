@@ -69,7 +69,7 @@ const DocumentDetailPage = () => {
                   gap: 1,
                   cursor: 'pointer',
                 }}
-                onClick={() => navigate(-1)}
+                onClick={() => navigate('/')}
               >
                 <ArrowBack />
                 {transformDate(document?.payload?.updatedAt)}
@@ -138,7 +138,7 @@ const DocumentDetailPage = () => {
                 <LinkButton
                   width="200px"
                   innerText="Back"
-                  onClick={() => navigate(-1)}
+                  onClick={() => navigate('/')}
                   variant="contained"
                   color="primary"
                 />

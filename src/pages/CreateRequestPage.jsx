@@ -32,7 +32,10 @@ const CreateRequestPage = () => {
         >
           {transformDate(Date.now())}
         </Box>
-        <DocumentForm oldData={undefined} onClick={() => navigate(-1)} />
+        <DocumentForm
+          oldData={undefined}
+          onClick={() => navigate('/my-requests')}
+        />
       </Box>
     </Box>
   );

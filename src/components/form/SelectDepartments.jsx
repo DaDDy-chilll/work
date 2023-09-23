@@ -37,7 +37,7 @@ const SelectDepartments = ({ children, onOpen, formProps }) => {
         <LinkButton
           width="200px"
           innerText="Cancel"
-          onClick={() => navigate(-1)}
+          onClick={() => navigate('/workflows')}
           variant="outlined"
           color="primary"
         />
