@@ -12,7 +12,7 @@ import { colors } from '../assets/theme/theme';
 
 // import PageTitle from '../../../components/mains/PageTitle';
 // import { colors } from '../../../utils/theme';
-// import Loading from '../../../components/mains/Loading';
+
 
 const UserDetail = () => {
   const { id } = useParams();
@@ -146,76 +146,99 @@ const UserDetail = () => {
     //   )}
     // </Box>
 
-    <Box
-      display="flex"
-      width="80%"
-      bgcolor={colors.white[100]}
-      borderRadius="20px"
-      height="800px"
-      marginTop="50px"
-      sx={{ margin: 'auto' }}
-      flexDirection="column"
-    >
-      <Box
-        sx={{
-          display: 'flex',
-          mb: 2,
-          marginLeft: '3%',
-          mt: '30px',
-          width: '80%',
-        }}
-      >
-        <Typography variant="h3" fontWeight="bold">
-          {data.payload.updatedAt.split('T')[0]}
-        </Typography>
-      </Box>
-      <Divider />
 
+    // {isLoading && (
+
+    //   <CircularProgress/>
+    // )}
+
+
+    data.payload.length !== 0 && (
       <Box
         display="flex"
-        gap="10px"
-        sx={{ margin: '50px', mt: '10px', flexDirection: 'column' }}
+        width="80%"
+        bgcolor={colors.white[100]}
+        borderRadius="20px"
+        height="800px"
+        marginTop="50px"
+        sx={{ margin: 'auto' }}
+        flexDirection="column"
       >
-        <Typography fontWeight="bold">User ID</Typography>
-        <Typography variant="h4">{data.payload.id}</Typography>
-      </Box>
 
-      <Box
-        display="flex"
-        gap="10px"
-        sx={{ margin: '50px', mt: '10px', flexDirection: 'column' }}
-      >
-        <Typography fontWeight="bold">Name</Typography>
-        <Typography variant="h4">{data.payload.name}</Typography>
-      </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            mb: 2,
+            marginLeft: '3%',
+            mt: '30px',
+            width: '80%',
+          }}
+        >
+          <Typography variant="h3" fontWeight="bold">
+            {data.payload.updatedAt.split('T')[0]}
+          </Typography>
+        </Box>
+        <Divider />
 
-      <Box
-        display="flex"
-        gap="10px"
-        sx={{ margin: '50px', mt: '10px', flexDirection: 'column' }}
-      >
-        <Typography fontWeight="bold">Name</Typography>
-        <Typography variant="h4">{data.payload.name}</Typography>
-      </Box>
+        <Box
+          display="flex"
+          sx={{ margin: '50px', mt: '20px', flexDirection: 'column' }}
+        >
+          <Typography fontWeight="bold">User ID</Typography>
+          <Typography variant="h4">{data.payload.id}</Typography>
+        </Box>
 
-      <Box
-        display="flex"
-        gap="10px"
-        sx={{ margin: '50px', mt: '10px', flexDirection: 'column' }}
-      >
-        <Typography fontWeight="bold">Name</Typography>
-        <Typography variant="h4">{data.payload.name}</Typography>
-      </Box>
+        <Box
+          display="flex"
+          sx={{ margin: '50px', mt: "-20px", flexDirection: 'column' }}
+        >
+          <Typography fontWeight="bold">Name</Typography>
+          <Typography variant="h4">{data.payload.name}</Typography>
+        </Box>
 
-      <Box
-        display="flex"
-        gap="10px"
-        sx={{ margin: '50px', mt: '10px', flexDirection: 'column' }}
-      >
-        <Typography fontWeight="bold">Name</Typography>
-        <Typography variant="h4">{data.payload.name}</Typography>
+        <Box
+          display="flex"
+          sx={{ margin: '50px', mt: '-20px', flexDirection: 'column' }}
+        >
+          <Typography fontWeight="bold">Email</Typography>
+          <Typography variant="h4">{data.payload.email}</Typography>
+        </Box>
+
+        <Box
+          display="flex"
+          sx={{ margin: '50px', mt: '-20px', flexDirection: 'column' }}
+        >
+          <Typography fontWeight="bold">Job Label</Typography>
+          <Typography variant="h4">{data.payload.jobLabel}</Typography>
+        </Box>
+
+        <Box
+          display="flex"
+          sx={{ margin: '50px', mt: '-20px', flexDirection: 'column' }}
+        >
+          <Typography fontWeight="bold">Role</Typography>
+          <Typography variant="h4">{data.payload.role}</Typography>
+        </Box>
+
+        <Box
+          display="flex"
+          sx={{ margin: '50px', mt: '-20px', flexDirection: 'column' }}
+        >
+          <Typography fontWeight="bold">Permissions</Typography>
+          <Typography variant="h4">{data.payload.jobLabel}</Typography>
+        </Box>
+
+        <Box
+          display="flex"
+          sx={{ margin: '50px', mt: '-20px', flexDirection: 'column' }}
+        >
+          <Typography fontWeight="bold">Job Label</Typography>
+          <Typography variant="h4">{data.payload.jobLabel}</Typography>
+        </Box>
+
       </Box>
-    </Box>
-  );
-};
+    )
+  )
+}
+
 export default UserDetail;
