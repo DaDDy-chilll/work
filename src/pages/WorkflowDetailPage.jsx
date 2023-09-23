@@ -3,7 +3,7 @@ import { Box, CircularProgress, Typography } from '@mui/material';
 import { colors } from '../assets/theme/theme';
 import DepartmentLists from '../components/form/DepartmentLists';
 import { useGetWorkflowDetail } from '../api/workflow';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import DepartmentMemberLists from '../components/form/DepartmentMemberLists';
 import LinkButton from '../components/ui/LinkButton';
 
@@ -102,7 +102,7 @@ const WorkflowDetailPage = () => {
           <LinkButton
             width="200px"
             innerText="Back"
-            to="/workflows"
+            onClick={() => Navigate('/workflows')}
             variant="contained"
             color="primary"
           />

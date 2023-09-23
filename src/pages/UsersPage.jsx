@@ -22,6 +22,7 @@ const UsersPage = () => {
 
   const { isError, error, data, isFetching } = useGetAllUsers({
     search: searchValue,
+    sort: '-createdAt',
     page,
     limit: 10,
   });
@@ -32,24 +33,15 @@ const UsersPage = () => {
     <Box m={3} borderRadius="1rem" bgcolor={colors.white[100]}>
       <Navbar />
       <Box p={3}>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            gap: 2,
-            mb: 2,
-          }}
-        >
-          <SearchBox
-            setSearch={setSearchValue}
-            placeholder="Search name, email"
-          />
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+          <SearchBox setSearch={setSearchValue} placeholder="Search name" />
           <ModalButton
-            width="200px"
+            mb={2}
+            width="180px"
             color="primary"
             innerText="Create New User"
             onOpen={onOpen}
-            icon={<AddOutlined sx={{ ml: '5px' }} />}
+            icon={<AddOutlined sx={{ ml: 1 }} />}
           />
         </Box>
         <>

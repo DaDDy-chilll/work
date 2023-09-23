@@ -4,7 +4,7 @@ import {
   useCreateUser,
   useEditPassword,
   useEditUser,
-  useFetchAllDepartments,
+  useGetAllDepartments,
 } from '../../api';
 import FormActionButtons from '../ui/FormActionButtons';
 import { Formik } from 'formik';
@@ -23,7 +23,7 @@ import { useQueryClient } from 'react-query';
 import PasswordTextField from '../shared/PasswordTextField';
 
 const UserForm = ({ onClose, oldData, isChangePassword }) => {
-  const { data } = useFetchAllDepartments({
+  const { data } = useGetAllDepartments({
     limit: 0,
   });
 
@@ -182,9 +182,29 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
               </Box>
             )}
             {isChangePassword ? (
-              <PasswordTextField formProps={props} />
+              <Box sx={{ display: 'flex', gap: 2 }}>
+                <PasswordTextField formProps={props} />
+                <PasswordTextField formProps={props} />
+              </Box>
             ) : (
-              !oldData && <PasswordTextField formProps={props} />
+              !oldData && (
+                <Box sx={{ display: 'flex', gap: 2 }}>
+                  <PasswordTextField
+                    formProps={props}
+                    label="Password"
+                    name="password"
+                    placeholder="Enter Password"
+                    width="50%"
+                  />
+                  <PasswordTextField
+                    formProps={props}
+                    label="Confirm Password"
+                    name="confirmPassword"
+                    placeholder="Enter Confirm Password"
+                    width="50%"
+                  />
+                </Box>
+              )
             )}
             {!isChangePassword && (
               <Box sx={{ display: 'flex', gap: 2 }}>

@@ -2,6 +2,33 @@ import { useMutation, useQuery } from 'react-query';
 import { fetcher } from '../lib/axios';
 import { getQueryString } from '../helpers';
 
+export const getAllUsers = async (params) => {
+  return fetcher.get(`/users?${getQueryString(params)}`).then((res) => {
+    return res.data;
+  });
+};
+
+export const useGetAllUsers = (params) => {
+  return useQuery({
+    queryKey: ['users', params],
+    queryFn: () => getAllUsers(params),
+  })
+};
+
+const getUserDetail = async (id) => {
+  return fetcher.get(`/users/${id}`).then((res) => {
+    return res.data;
+  });
+};
+
+export const useGetUserDetail = (id) => {
+  return useQuery({
+    queryKey: ['user', id],
+    queryFn: () => getUserDetail(id),
+  });
+};
+
+// 
 const createUser = async (data) => {
   return fetcher.post('/auth/register', data).then((res) => {
     return res.data;
@@ -47,30 +74,5 @@ const disableUser = async (id) => {
 export const useDisableUser = () => {
   return useMutation({
     mutationFn: disableUser,
-  });
-};
-
-export const getAllUsers = async (params) => {
-  return fetcher.get(`/users?${getQueryString(params)}`).then((res) => {
-    return res.data;
-  });
-};
-
-export const useGetAllUsers = (params) => {
-  return useQuery(['/users', params], () => getAllUsers(params), {
-    // keepPreviousData: true
-  });
-};
-
-const getUserDetail = async (id) => {
-  return fetcher.get(`/users/${id}`).then((res) => {
-    return res.data;
-  });
-};
-
-export const useGetUserDetail = (id) => {
-  return useQuery({
-    queryKey: ['user', id],
-    queryFn: () => getUserDetail(id),
   });
 };

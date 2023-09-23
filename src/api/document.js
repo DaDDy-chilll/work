@@ -9,34 +9,37 @@ export const getAllRequests = async (params) => {
 };
 
 export const useGetAllRequests = (params) => {
-  return useQuery(['/all', params], () => getAllRequests(params), {
-    // keepPreviousData: true
+  return useQuery({
+    queryKey: ['all', params],
+    queryFn: () => getAllRequests(params)
   });
 };
 
-export const getMyRequests = async (page) => {
-  return fetcher.get(`/documents/me?page=${page}&limit=10`).then((res) => {
+export const getMyRequests = async (params) => {
+  return fetcher.get(`/documents/me?${getQueryString(params)}`).then((res) => {
     return res.data;
   });
 };
 
-export const useGetMyRequests = (page) => {
-  return useQuery(['/all', page], () => getMyRequests(page), {
-    // keepPreviousData: true
+export const useGetMyRequests = (params) => {
+  return useQuery({
+    queryKey: ['my-requests', params],
+    queryFn: () => getMyRequests(params)
   });
 };
 
-export const getInbox = async (page) => {
+export const getInbox = async (params) => {
   return fetcher
-    .get(`/documents/to-check?page=${page}&limit=10`)
+    .get(`/documents/to-check?${getQueryString(params)}`)
     .then((res) => {
       return res.data;
     });
 };
 
-export const useGetInbox = (page) => {
-  return useQuery(['/documents/to-check', page], () => getInbox(page), {
-    // keepPreviousData: true
+export const useGetInbox = (params) => {
+  return useQuery({
+    queryKey: ['inbox', params],
+    queryFn: () => getInbox(params)
   });
 };
 

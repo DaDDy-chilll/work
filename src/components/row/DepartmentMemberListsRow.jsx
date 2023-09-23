@@ -5,7 +5,6 @@ import { colors } from '../../assets/theme/theme';
 import { Check } from '@mui/icons-material';
 
 const DepartmentMemberListsRow = ({ payload, handleSelectChange }) => {
-  console.log(payload[0].permissions);
   return (
     <TableBody>
       {payload &&

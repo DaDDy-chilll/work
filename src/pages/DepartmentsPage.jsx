@@ -18,6 +18,7 @@ const DepartmentsPage = () => {
   const [page, setPage] = useState(1);
 
   const { isError, error, data, isFetching } = useGetAllDepartments({
+    sort: '-createdAt',
     page,
     limit: 10,
   });
@@ -29,11 +30,12 @@ const DepartmentsPage = () => {
       <Navbar />
       <Box p={3}>
         <ModalButton
+          mb={1}
           width="220px"
           color="primary"
           innerText="Create New Department"
           onOpen={onOpen}
-          icon={<AddOutlined sx={{ ml: '5px' }} />}
+          icon={<AddOutlined sx={{ ml: 1 }} />}
         />
         <>
           {isFetching ? (

@@ -4,8 +4,10 @@ import { StyledTableCell, StyledTableRow } from '../styled';
 import WorkflowRoute from '../ui/WorkflowRoute';
 import { getDepartmentsFromWorkflow } from '../../helpers';
 import LinkButton from '../ui/LinkButton';
+import { useNavigate } from 'react-router-dom';
 
 const WorkflowRow = ({ payload }) => {
+  const navigate = useNavigate();
   return (
     <TableBody>
       {payload &&
@@ -23,7 +25,7 @@ const WorkflowRow = ({ payload }) => {
               <LinkButton
                 width="100px"
                 innerText="View"
-                to={`/workflows/detail/${data._id}`}
+                onClick={() => navigate(`/workflows/detail/${data._id}`)}
                 variant="contained"
                 color="primary"
               />

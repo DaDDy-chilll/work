@@ -3,8 +3,11 @@ import { Box } from '@mui/material';
 import LinkButton from '../ui/LinkButton';
 import FormTextField from '../shared/FormTextField';
 import ModalButton from '../ui/ModalButton';
+import { useNavigate } from 'react-router-dom';
 
 const SelectDepartments = ({ children, onOpen, formProps }) => {
+  const navigate = useNavigate();
+
   return (
     <>
       <Box display="flex" gap={2} flexDirection={'column'}>
@@ -34,7 +37,7 @@ const SelectDepartments = ({ children, onOpen, formProps }) => {
         <LinkButton
           width="200px"
           innerText="Cancel"
-          to="/workflows"
+          onClick={() => navigate(-1)}
           variant="outlined"
           color="primary"
         />

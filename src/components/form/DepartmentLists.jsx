@@ -11,6 +11,7 @@ const DepartmentLists = ({ departments, children }) => {
           display: 'flex',
           gap: 3,
           flexWrap: 'wrap',
+          ml: 3,
         }}
       >
         {departments &&

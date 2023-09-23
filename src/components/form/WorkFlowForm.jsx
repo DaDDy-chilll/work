@@ -8,7 +8,6 @@ import {
   workflowCreateSchema,
   workflowCreateValues,
 } from '../../schema/workflow.schema';
-import { useDisclosure } from '../../hooks/useDisclosure';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -17,9 +16,7 @@ import { useQueryClient } from 'react-query';
 import { Box, CircularProgress } from '@mui/material';
 import DepartmentMemberLists from './DepartmentMemberLists';
 
-const WorkFlowForm = () => {
-  const { isOpen, onClose, onOpen } = useDisclosure();
-
+const WorkFlowForm = ({ isOpen, onClose, onOpen }) => {
   const [selectedDepartments, setSelectedDepartments] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
 
@@ -61,18 +58,13 @@ const WorkFlowForm = () => {
   });
 
   // FETCH USERS BY DEPARTMENT ID
-  const [users, setUsers] = useState([
-    // {
-    //   _id: 1,
-    // },
-  ]);
+  const [users, setUsers] = useState([]);
   const [fetchUserLoading, setFetchUserLoading] = useState(true);
 
   useEffect(() => {
     const accessToken = localStorage.getItem('access-token');
     async function fetchData() {
       try {
-        console.log({ selectedDepartments });
         setFetchUserLoading(true);
         let members = [];
 

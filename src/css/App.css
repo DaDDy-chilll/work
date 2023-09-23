@@ -3,49 +3,34 @@
   padding: 0;
   box-sizing: border-box;
 }
-body{
+
+body {
   background-color: #EDF1F7;
 }
 
-.login_bg {
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  object-fit: fill;
-  /* background-image: url('../assets/images/login_image.png'); */
-}
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-body {
-  margin: 0;
-  font-family: 'Urbanist', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background: var(--clr-bg);
-  color: var(--clr-gray-7);
-} */
-.attachment_container {
-  width: 250px;
-  height: 300px;
-  position: relative;
+/* REMOVE TINY TEXT EDITOR WARNING */
+.tox-notification,
+.tox-notification--in,
+.tox-notification--warning {
+  display: none !important;
+  opacity: 0 !important;
 }
 
-.attachment_container img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+/* SCROLL BAR */
+*::-webkit-scrollbar {
+  width: 7px;
 }
 
-.attachment_delete_btn {
-  position: absolute;
-  top: 0;
-  right: 0;
-  display: none;
+*::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 25px;
 }
 
-.attachment_container:hover .attachment_delete_btn {
-  display: block;
+*::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 25px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #b3b3b3;
 }
