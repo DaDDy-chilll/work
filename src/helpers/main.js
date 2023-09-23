@@ -1,6 +1,7 @@
 import { colors } from '../assets/theme/theme';
 
 export const getQueryString = (params) => {
+  console.log(params);
   let departmentFilterQueryString = ""
 
   const sanitizedParams = {};
@@ -12,7 +13,7 @@ export const getQueryString = (params) => {
       }
       return
     }
-    if (value) {
+    if (value !== "" && value !== undefined && value !== null) {
       sanitizedParams[key] = value.toString();
     }
   });

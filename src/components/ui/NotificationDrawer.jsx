@@ -8,14 +8,29 @@ import {
   ListItemText,
   Typography,
 } from '@mui/material';
-import { useGetAllNotifications } from '../../api';
+import { useOpenNotification } from '../../api';
 import { getDuration, getNotiText } from '../../helpers';
 import { colors } from '../../assets/theme/theme';
+import { useQueryClient } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 
-const NotificationDrawer = ({ setNotiOpen, notiOpen }) => {
-  const { data: notifications } = useGetAllNotifications();
+const NotificationDrawer = ({ setNotiOpen, notiOpen, notifications }) => {
+  console.log({ notifications });
 
-  const handleOpen = () => {};
+  const { mutate: openNotification } = useOpenNotification();
+
+  const queryClient = useQueryClient();
+
+  const navigate = useNavigate();
+
+  const handleOpen = ({ id, documentId }) => {
+    openNotification(id, {
+      onSettled: () => {
+        queryClient.invalidateQueries(['notifications']);
+        navigate(`/detail/${documentId}`);
+      },
+    });
+  };
 
   return (
     <Drawer
@@ -55,10 +70,11 @@ const NotificationDrawer = ({ setNotiOpen, notiOpen }) => {
           <ListItem
             key={noti?._id}
             sx={{
-              bgcolor: noti?.notiOpen ? colors.white[100] : colors.bgColor,
+              bgcolor: noti?.isOpen ? colors.white[100] : colors.bgColor,
+              cursor: 'pointer',
             }}
             onClick={() =>
-              handleOpen({ _id: noti?._id, documentId: noti?.documentId })
+              handleOpen({ id: noti?._id, documentId: noti?.documentId })
             }
           >
             <ListItemText

@@ -21,7 +21,9 @@ const Topbar = () => {
 
   const [notiOpen, setNotiOpen] = useState(false);
 
-  const { data: notifications } = useGetAllNotifications();
+  const { data: notifications } = useGetAllNotifications({
+    limit: 0,
+  });
 
   const handleLogout = () => {
     logout();
@@ -54,7 +56,11 @@ const Topbar = () => {
               notifications={notifications}
               setNotiOpen={setNotiOpen}
             />
-            <NotificationDrawer setNotiOpen={setNotiOpen} notiOpen={notiOpen} />
+            <NotificationDrawer
+              setNotiOpen={setNotiOpen}
+              notiOpen={notiOpen}
+              notifications={notifications}
+            />
           </>
         )}
         <Box
