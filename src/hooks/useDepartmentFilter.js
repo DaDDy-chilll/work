@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useGetAllDepartments } from '../api';
+import { useDisclosure } from './useDisclosure';
 
 export const useDepartmentFilter = () => {
-  const [filteredDepartments, setFilteredDepartments] = useState([]);
+  const { isOpen, onClose, onOpen } = useDisclosure()
 
+  // FETCH ALL DEPARTMENTS FROM API
   const { data: departmentData } = useGetAllDepartments({
     limit: 0,
   });
+
   const [departments, setDepartments] = useState([]);
 
   useEffect(() => {
@@ -15,6 +18,7 @@ export const useDepartmentFilter = () => {
     }
   }, [departmentData]);
 
+  // SEARCH
   const [search, setSearch] = useState('');
 
   const [searchedDepartments, setSearchedDepartments] = useState([]);
@@ -30,6 +34,12 @@ export const useDepartmentFilter = () => {
     setSearchedDepartments(searchedValue);
   };
 
+  // SEARCH CANCEL
+  const handleSearchCancel = () => {
+    setSearch('')
+  }
+
+  // HANDLE CHECKBOX
   const handleChange = ({ name, checked }) => {
     if (name === 'clearAll') {
       let tempUser = departments.map((department) => {
@@ -47,27 +57,46 @@ export const useDepartmentFilter = () => {
     }
   };
 
+  // FILTER BOX OK BUTTON
+  const [filteredDepartments, setFilteredDepartments] = useState([]);
   const handleFilter = () => {
     const filteredValue = departments
       .filter((department) => department.isChecked === true)
-      .map((item) => item._id);
+      .map((item) => ({
+        id: item._id,
+        name: item.name
+      }));
     setFilteredDepartments(filteredValue);
+    onClose()
   };
 
-  const [isOpen, setIsOpen] = useState(false);
-  const handleClick = () => {
-    setIsOpen(!isOpen);
-  };
+  // DELETE CHIP
+  const handleDelete = ({ id, name }) => {
+    const filteredValue = filteredDepartments.filter(department => department.id !== id)
+    setFilteredDepartments(filteredValue)
+    handleChange({ name, checked: false, items: departments })
+  }
+
+  // (CLEAR ALL) CHIP
+  const handleClearAll = () => {
+    setFilteredDepartments([])
+    handleChange({ name: 'clearAll' })
+  }
 
   return {
     isOpen,
+    onOpen,
+    onClose,
     departments,
     filteredDepartments,
+    setFilteredDepartments,
     search,
     searchedDepartments,
     handleSearch,
+    handleSearchCancel,
     handleFilter,
-    handleClick,
+    handleClearAll,
     handleChange,
+    handleDelete
   };
 };

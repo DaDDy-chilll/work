@@ -20,31 +20,7 @@ import {
 import FormSelect from '../shared/FormSelect';
 import { toast } from 'react-toastify';
 import { useQueryClient } from 'react-query';
-
-const PasswordTextField = ({ formProps }) => {
-  return (
-    <Box sx={{ display: 'flex', gap: 2 }}>
-      <Box width="50%">
-        <label>Password</label>
-        <FormTextField
-          type="password"
-          formProps={formProps}
-          name="password"
-          placeholder="Enter Password"
-        />
-      </Box>
-      <Box width="50%">
-        <label>Confirm Password</label>
-        <FormTextField
-          type="password"
-          formProps={formProps}
-          name="confirmPassword"
-          placeholder="Confirm Password"
-        />
-      </Box>
-    </Box>
-  );
-};
+import PasswordTextField from '../shared/PasswordTextField';
 
 const UserForm = ({ onClose, oldData, isChangePassword }) => {
   const { data } = useFetchAllDepartments({

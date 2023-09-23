@@ -16,11 +16,13 @@
   background-color: #fff;
   border: 1px solid #bbbbbb;
 }
+
 .filter_select_btn .filter_select_btn_text {
   font-size: 17px;
   font-weight: 400;
   color: #333;
 }
+
 .filter_select_btn .filter_select_arrow_down {
   display: flex;
   height: 21px;
@@ -43,12 +45,14 @@
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   display: none;
 }
-.filter_select_btn.open ~ .filter_list_items {
+
+.filter_select_btn.open~.filter_list_items {
   display: block;
   position: absolute;
   z-index: 500;
   width: 100%;
 }
+
 .filter_list_items .filter_item {
   display: flex;
   align-items: center;
@@ -59,6 +63,7 @@
   padding: 0 15px;
   border-radius: 8px;
 }
+
 .filter_list_items .filter_item:hover {
   background-color: #e7edfe;
 }
@@ -69,6 +74,7 @@
   font-weight: 400;
   color: #333;
 }
+
 .filter_item .checkbox {
   display: flex;
   align-items: center;
@@ -80,6 +86,7 @@
   border: 1.5px solid #c0c0c0;
   transition: all 0.3s ease-in-out;
 }
+
 .filter_item.checked .checkbox {
   background-color: #4070f4;
   border-color: #4070f4;
@@ -89,6 +96,7 @@
 .filter_search {
   position: relative;
 }
+
 .filter_search .filter_search_icon {
   top: 50%;
   left: 1rem;
@@ -98,6 +106,7 @@
   transform: translateY(-50%);
   position: absolute;
 }
+
 .filter_search input {
   height: 2.5rem;
   width: 100%;
@@ -107,26 +116,39 @@
   padding: 0 20px 0 43px;
   border: 1px solid #b3b3b3;
 }
+
 .filter_search input:focus {
   padding-left: 42px;
   border: 2px solid #4285f4;
 }
+
 .filter_search input::placeholder {
   color: #bfbfbf;
+}
+
+/* FILTER SEARCH CANCEL BTN */
+.filter_search_cancel_btn {
+  position: absolute;
+  right: 0.5rem;
+  top: 0.4rem;
+  cursor: pointer;
 }
 
 /*  SCROLL BAR */
 .filter_list_items::-webkit-scrollbar {
   width: 7px;
 }
+
 .filter_list_items::-webkit-scrollbar-track {
   background: #f1f1f1;
   border-radius: 25px;
 }
+
 .filter_list_items::-webkit-scrollbar-thumb {
   background: #ccc;
   border-radius: 25px;
 }
+
 .filter_list_items::-webkit-scrollbar-thumb:hover {
   background: #b3b3b3;
 }

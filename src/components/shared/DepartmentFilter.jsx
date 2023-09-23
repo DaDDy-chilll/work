@@ -1,29 +1,30 @@
-import { FilterAlt, Search } from '@mui/icons-material';
+/* eslint-disable react/prop-types */
+import { Cancel, FilterAlt, Search } from '@mui/icons-material';
 import { Box, Button, Checkbox, FormControlLabel } from '@mui/material';
-import { useDepartmentFilter } from '../../hooks';
+import { colors } from '../../assets/theme/theme';
 
 const calculateCount = (departments) => {
   return departments.filter((department) => department.isChecked === true)
     .length;
 };
 
-const DepartmentFilter = () => {
-  const {
-    isOpen,
-    departments,
-    search,
-    searchedDepartments,
-    handleSearch,
-    handleFilter,
-    handleClick,
-    handleChange,
-  } = useDepartmentFilter();
-
+const DepartmentFilter = ({
+  isOpen,
+  onOpen,
+  onClose,
+  departments,
+  search,
+  searchedDepartments,
+  handleSearch,
+  handleSearchCancel,
+  handleFilter,
+  handleChange,
+}) => {
   return (
     <div className="filter_container">
       <div
         className={`filter_select_btn ${isOpen && 'open'}`}
-        onClick={handleClick}
+        onClick={isOpen ? onClose : onOpen}
       >
         <span className="filter_select_btn_text">
           {calculateCount(departments) === 0
@@ -45,6 +46,14 @@ const DepartmentFilter = () => {
             value={search}
             onChange={(e) => handleSearch(e.target.value)}
           />
+          {search !== '' && (
+            <div
+              className="filter_search_cancel_btn"
+              onClick={handleSearchCancel}
+            >
+              <Cancel sx={{ color: colors.grey[800] }} />
+            </div>
+          )}
         </div>
         <Button onClick={() => handleChange({ name: 'clearAll' })}>
           Clear All
@@ -79,7 +88,7 @@ const DepartmentFilter = () => {
               </li>
             ))}
         <Box display="flex" justifyContent="center" gap={2}>
-          <Button onClick={handleClick} fullWidth variant="outlined">
+          <Button onClick={onClose} fullWidth variant="outlined">
             Cancel
           </Button>
           <Button onClick={handleFilter} fullWidth variant="contained">

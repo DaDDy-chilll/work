@@ -1,19 +1,19 @@
 /* eslint-disable react/prop-types */
 import { Chip } from '@mui/material';
 
-const CustomChip = ({ icon, onClick }) => {
+const CustomChip = ({ icon, onClick, department }) => {
   return (
     <>
       {icon ? (
         <Chip
-          label="Deletable"
+          label={department.name}
           color="primary"
           variant="outlined"
-          onDelete={onClick}
+          onDelete={() => onClick(department)}
           deleteIcon={icon}
         />
       ) : (
-        <Chip label="Clickable" onClick={onClick} />
+        <Chip label="Clear All" color="primary" onClick={onClick} />
       )}
     </>
   );

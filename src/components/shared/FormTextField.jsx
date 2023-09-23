@@ -7,6 +7,7 @@ const FormTextField = ({
   placeholder,
   type,
   disabled,
+  inputAdornment,
 }) => {
   return (
     <TextField
@@ -28,6 +29,7 @@ const FormTextField = ({
       value={values[name]}
       error={!!touched[name] && !!errors[name]}
       helperText={touched[name] && errors[name]}
+      InputProps={inputAdornment}
     />
   );
 };
