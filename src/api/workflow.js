@@ -10,8 +10,6 @@ export const getAllWorkflows = async ({ page, limit }) => {
 };
 
 export const useGetAllWorkflows = ({ page = 1, limit = 0 }) => {
-  console.log({ page, limit });
-
   return useQuery(['/reviewer-groups', page], () =>
     getAllWorkflows({ page, limit }),
   );

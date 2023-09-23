@@ -1,8 +1,11 @@
-import { z } from 'zod';
+import * as yup from 'yup';
 
-export const loginSchema = z.object({
-  email: z
-    .string({ required_error: 'Email is required.' })
-    .isEmail({ required_error: 'Invalid email.' }),
-  password: z.string({ required_error: 'Password is rerquired.' }),
+export const loginValues = {
+  email: '',
+  password: '',
+};
+
+export const loginSchema = yup.object().shape({
+  email: yup.string().email('Please enter a valid email').required('Email is required'),
+  password: yup.string().required('Password is required'),
 });

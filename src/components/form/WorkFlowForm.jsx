@@ -61,18 +61,13 @@ const WorkFlowForm = () => {
   });
 
   // FETCH USERS BY DEPARTMENT ID
-  const [users, setUsers] = useState([
-    // {
-    //   _id: 1,
-    // },
-  ]);
+  const [users, setUsers] = useState([]);
   const [fetchUserLoading, setFetchUserLoading] = useState(true);
 
   useEffect(() => {
     const accessToken = localStorage.getItem('access-token');
     async function fetchData() {
       try {
-        console.log({ selectedDepartments });
         setFetchUserLoading(true);
         let members = [];
 

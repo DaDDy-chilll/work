@@ -1,7 +1,21 @@
-.form {
-  position: relative;
+.login_bg {
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: fill;
+}
+
+.login_form {
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+}
+
+.login_logo {
+  width: 30%;
+  object-fit: cover;
 }

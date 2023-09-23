@@ -9,6 +9,7 @@ import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import './index.css';
 import './css/App.css';
+import './css/Login.css';
 import './css/SearchBox.css';
 import './css/DateRangeFilter.css';
 import './css/DepartmentFilter.css';

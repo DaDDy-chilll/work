@@ -109,10 +109,7 @@ const AuthProvider = ({ children }) => {
 
       dispatch({ type: 'LOGGED_IN', payload: { user: data?.payload } });
 
-      console.log(data.payload);
-
       if (data?.payload?.user?.role === ROLES.SUPER_ADMIN) {
-        console.log('hello');
         return navigate('/users');
       }
 

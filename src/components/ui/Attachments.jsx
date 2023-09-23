@@ -4,8 +4,6 @@ import AttachmentDetail from './AttachmentDetail';
 import PDFImage from '../../assets/images/PDF.png';
 
 const Attachments = ({ attachments }) => {
-  console.log({ attachments });
-
   return (
     <Box sx={{ display: 'flex', gap: '30px', flexWrap: 'wrap' }}>
       {attachments.map((attachment) => (

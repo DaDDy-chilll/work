@@ -7,7 +7,6 @@ import DocumentCase from '../ui/DocumentCase';
 import LinkButton from '../ui/LinkButton';
 
 const DocumentRow = ({ payload }) => {
-  console.log({ payload });
   return (
     <TableBody>
       {payload &&
