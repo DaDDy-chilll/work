@@ -10,12 +10,13 @@ import {
   Typography,
 } from '@mui/material';
 import { useInfiniteNotifications, useOpenNotification } from '../../api';
-import { getDuration, getNotiText } from '../../helpers';
+import { getDuration } from '../../helpers';
 import { colors } from '../../assets/theme/theme';
 import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import React, { useEffect } from 'react';
+import NotificationDetail from './NotificationDetail';
 
 // eslint-disable-next-line react/display-name
 const Item = React.forwardRef(({ noti, handleOpen }, ref) => {
@@ -51,10 +52,10 @@ const Item = React.forwardRef(({ noti, handleOpen }, ref) => {
             </Box>
             <Box>
               <Typography sx={{ fontSize: '14px', fontWeight: 400, mx: 1 }}>
-                {getNotiText({
-                  from: noti?.from?.name,
-                  action: noti?.action,
-                })}
+                <NotificationDetail
+                  from={noti?.from?.name}
+                  action={noti?.action}
+                />
               </Typography>
               <Typography
                 sx={{
