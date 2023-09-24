@@ -38,7 +38,7 @@ const Topbar = () => {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        m: '20px',
+        m: 2,
         borderRadius: '10px',
         p: 1,
       }}
@@ -92,11 +92,7 @@ const Topbar = () => {
           onClick={onOpen}
           ref={anchorEl}
         >
-          <Avatar
-            sx={{ bgcolor: colors.paleBlue[800] }}
-            alt={user.name}
-            src="/static/images/avatar/1.jpg"
-          />
+          <Avatar sx={{ bgcolor: colors.paleBlue[800] }} alt={user.name} />
           <Typography
             sx={{
               fontSize: '14px',

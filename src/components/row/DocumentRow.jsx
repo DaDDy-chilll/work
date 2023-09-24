@@ -2,7 +2,7 @@
 import { TableBody } from '@mui/material';
 import { StyledTableCell, StyledTableRow } from '../styled';
 import DocumentLastActivity from '../ui/DocumentLastActivity';
-import { transformDate } from '../../helpers';
+import { removeHtmlTags, transformDate } from '../../helpers';
 import DocumentCase from '../ui/DocumentCase';
 import LinkButton from '../ui/LinkButton';
 import { useNavigate } from 'react-router-dom';
@@ -17,13 +17,18 @@ const DocumentRow = ({ payload }) => {
             <StyledTableCell>{data?.documentId}</StyledTableCell>
             <StyledTableCell>{transformDate(data?.createdAt)}</StyledTableCell>
             <StyledTableCell>
-              <div style={{ width: '100px' }}>{data?.name}</div>
+              <div style={{ width: '150px' }}>
+                {data?.name.length > 20
+                  ? data?.name.slice(0, 20) + '...'
+                  : data?.name}
+              </div>
             </StyledTableCell>
             <StyledTableCell>
-              <div
-                style={{ width: '300px' }}
-                dangerouslySetInnerHTML={{ __html: data?.description }}
-              />
+              <div style={{ width: '300px' }}>
+                {removeHtmlTags(data?.description).length > 45
+                  ? removeHtmlTags(data?.description).slice(0, 45) + '...'
+                  : removeHtmlTags(data?.description)}
+              </div>
             </StyledTableCell>
             <StyledTableCell>
               <DocumentCase documentCase={data?.isCaseClosed} />
