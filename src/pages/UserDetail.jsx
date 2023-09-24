@@ -6,7 +6,6 @@ import { toast } from 'react-toastify';
 import { Box, CircularProgress, Divider, Typography } from '@mui/material';
 import { colors } from '../assets/theme/theme';
 
-
 const UserDetail = () => {
   const { id } = useParams();
 
@@ -25,7 +24,6 @@ const UserDetail = () => {
           <CircularProgress size={56} />
         </Box>
       ) : (
-
         data.payload && (
           <Box
             display="flex"
@@ -37,15 +35,13 @@ const UserDetail = () => {
             sx={{ margin: 'auto' }}
             flexDirection="column"
           >
-
             <Box
               sx={{
                 display: 'flex',
                 mb: '10px',
                 // justifyContent: 'flex-start',
-                marginLeft: "3%",
+                marginLeft: '3%',
                 mt: '30px',
-
               }}
             >
               <Typography variant="h3" fontWeight="bold">
@@ -64,7 +60,7 @@ const UserDetail = () => {
 
             <Box
               display="flex"
-              sx={{ margin: '50px', mt: "-20px", flexDirection: 'column' }}
+              sx={{ margin: '50px', mt: '-20px', flexDirection: 'column' }}
             >
               <Typography fontWeight="bold">Name</Typography>
               <Typography variant="h4">{data.payload.name}</Typography>
@@ -120,21 +116,12 @@ const UserDetail = () => {
               <Typography variant="h5">{`Can Prepare: ${data.payload.permissions.canPrepare}`}</Typography>
               <Typography variant="h5">{`Can Verify: ${data.payload.permissions.canVerify}`}</Typography>
               <Typography variant="h5">{`Can Edit Amount: ${data.payload.permissions.canEditAmount}`}</Typography>
-
-
-
             </Box>
-
-
           </Box>
         )
-
       )}
-
     </>
-
-
-  )
-}
+  );
+};
 
 export default UserDetail;
