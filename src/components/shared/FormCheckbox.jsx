@@ -10,7 +10,13 @@ const FormCheckbox = ({
 }) => {
   return (
     <FormControlLabel
-      control={<Checkbox />}
+      control={
+        <Checkbox
+          sx={{
+            '& .MuiSvgIcon-root': { fontSize: '20px' },
+          }}
+        />
+      }
       label={label}
       checked={defaultValue ? defaultValue : values[name]}
       value={defaultValue ? defaultValue : values[name]}

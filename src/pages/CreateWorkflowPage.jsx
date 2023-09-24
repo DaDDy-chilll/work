@@ -17,7 +17,12 @@ const CreateWorkflowPage = () => {
         width: '80%',
       }}
     >
-      <Typography variant="h1">Create New Request</Typography>
+      <Typography
+        variant="h2"
+        sx={{ fontWeight: 500, color: colors.black[100] }}
+      >
+        Create New Work Flow
+      </Typography>
       <Box sx={{ position: 'relative' }}>
         <FormProgressBar isOpen={isOpen} />
         <Box bgcolor={colors.white[100]} borderRadius="1rem" py={3} px={5}>

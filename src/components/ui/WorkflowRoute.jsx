@@ -5,7 +5,7 @@ import { colors } from '../../assets/theme/theme';
 const WorkflowRoute = ({ departments, name }) => {
   const concatString = '>>';
   return (
-    <Box sx={{ display: 'flex', gap: 1 }}>
+    <Box sx={{ display: 'flex', gap: 1, fontSize: '14px', fontWeight: 500 }}>
       {departments.map((data, i) => (
         <>
           <span style={{ color: colors.paleBlue[800] }}>{data}</span>

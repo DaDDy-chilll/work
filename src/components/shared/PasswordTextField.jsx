@@ -4,13 +4,14 @@ import FormTextField from './FormTextField';
 import CustomInputAdornment from './CustomInputAdornment';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useState } from 'react';
+import CustomFormLabel from './CustomFormLabel';
 
 const PasswordTextField = ({ formProps, width, label, name, placeholder }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
     <Box width={width}>
-      <label>{label}</label>
+      <CustomFormLabel label={label} />
       <FormTextField
         type={showPassword ? 'text' : 'password'}
         formProps={formProps}

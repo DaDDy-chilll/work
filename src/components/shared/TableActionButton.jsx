@@ -82,18 +82,30 @@ const TableActionButton = ({ userId }) => {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={() => navigate(`/users/${userId}`)} disableRipple>
+        <MenuItem
+          sx={{ fontSize: '14px' }}
+          onClick={() => navigate(`/users/${userId}`)}
+          disableRipple
+        >
           View
         </MenuItem>
         {!data?.payload?.isDisabled && (
           <>
-            <MenuItem onClick={onOpen} disableRipple>
+            <MenuItem sx={{ fontSize: '14px' }} onClick={onOpen} disableRipple>
               Edit
             </MenuItem>
-            <MenuItem onClick={handleDisable} disableRipple>
+            <MenuItem
+              sx={{ fontSize: '14px' }}
+              onClick={handleDisable}
+              disableRipple
+            >
               {disableLoading ? <CircularProgress size={20} /> : 'Disable'}
             </MenuItem>
-            <MenuItem onClick={() => setIsChangePassword(true)} disableRipple>
+            <MenuItem
+              sx={{ fontSize: '14px' }}
+              onClick={() => setIsChangePassword(true)}
+              disableRipple
+            >
               Change Password
             </MenuItem>
           </>

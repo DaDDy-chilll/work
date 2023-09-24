@@ -1,6 +1,6 @@
 import { Box, CircularProgress, Pagination } from '@mui/material';
 import DataTable from '../components/ui/DataTable';
-import { colors } from '../assets/theme/theme';
+import { colors, theme } from '../assets/theme/theme';
 import { useGetAllRequests } from '../api';
 import DocumentRow from '../components/row/DocumentRow';
 import { DocumentColumn } from '../components/column/DocumentColumn';
@@ -55,12 +55,14 @@ const AllRequestsPage = () => {
 
   if (isError) return <p>Error: {error.message}</p>;
 
+  console.log(theme.palette);
+
   return (
     <Box m={3} borderRadius="1rem" bgcolor={colors.white[100]}>
       <Navbar />
       <Box p={3}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
-          <SearchBox setSearch={setSearchValue} placeholder="Search subject" />
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <SearchBox setSearch={setSearchValue} placeholder="Search Subject" />
           {user?.department?.type === 'Authorized' && (
             <DepartmentFilter
               departments={departments}

@@ -34,7 +34,7 @@ const UsersPage = () => {
       <Navbar />
       <Box p={3}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-          <SearchBox setSearch={setSearchValue} placeholder="Search name" />
+          <SearchBox setSearch={setSearchValue} placeholder="Search Name" />
           <ModalButton
             mb={2}
             width="180px"

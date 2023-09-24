@@ -7,7 +7,7 @@ const DepartmentCard = ({ department, index }) => {
     <Box
       sx={{
         bgcolor: colors.white[200],
-        width: '31%',
+        width: '32%',
         borderRadius: '10px',
         p: 2,
         border: `1px solid ${colors.grey[400]}`,
@@ -19,7 +19,7 @@ const DepartmentCard = ({ department, index }) => {
           display: 'flex',
           alignItems: 'center',
           gap: 2,
-          borderBottom: `0.2px solid ${colors.grey[500]}`,
+          borderBottom: `0.1px solid ${colors.grey[200]}`,
           mb: 2,
           pb: 2,
         }}
@@ -27,22 +27,51 @@ const DepartmentCard = ({ department, index }) => {
         <Box
           sx={{
             backgroundColor: colors.paleBlue[800],
-            py: 1,
-            px: 2,
             color: colors.white[100],
+            width: '30px',
+            height: '30px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
             borderRadius: '50%',
           }}
         >
           {index + 1}
         </Box>
-        <Typography variant="h5">{department.name}</Typography>
+        <Typography sx={{ fontSize: '14px', fontWeight: 500 }}>
+          {department.name}
+        </Typography>
       </Box>
-      {department.users.map((user, i) => (
-        <Box key={user._id} sx={{ display: 'flex', gap: 1, p: 1 }}>
-          <Typography>{i + 1}</Typography>
-          <Typography>{user.name}</Typography>
+      {department.users.length === 0 ? (
+        <Typography
+          sx={{
+            fontSize: '14px',
+            fontWeight: 400,
+            color: colors.black[300],
+            textAlign: 'center',
+          }}
+        >
+          No Selected Reviewers
+        </Typography>
+      ) : (
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+          {department.users.map((user, i) => (
+            <Box
+              sx={{
+                fontSize: '14px',
+                fontWeight: 400,
+                color: colors.black[300],
+                display: 'flex',
+                gap: 1,
+              }}
+              key={user._id}
+            >
+              <Typography>{i + 1}</Typography>
+              <Typography>{user.name}</Typography>
+            </Box>
+          ))}
         </Box>
-      ))}
+      )}
     </Box>
   );
 };

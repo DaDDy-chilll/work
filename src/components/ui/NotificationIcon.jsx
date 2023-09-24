@@ -4,14 +4,20 @@ import { Badge, IconButton } from '@mui/material';
 import { colors } from '../../assets/theme/theme';
 
 const Notifications = ({ notifications, setNotiOpen }) => {
+  const unreadNotis = notifications?.payload?.filter(
+    (noti) => noti.isOpen === false,
+  );
+
   return (
     <IconButton onClick={() => setNotiOpen(true)}>
       <Badge
-        badgeContent={notifications.total}
-        invisible={notifications.total === 0 ? true : false}
+        badgeContent={unreadNotis.length}
+        invisible={unreadNotis.length === 0 ? true : false}
         overlap="circular"
         sx={{
           '& .MuiBadge-badge': {
+            fontSize: '13px',
+            fontWeight: 500,
             color: colors.white[100],
             backgroundColor: colors.red[700],
           },

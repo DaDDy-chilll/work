@@ -6,13 +6,16 @@
 }
 
 .date_range_calendar {
+  font-size: 16px;
+  font-weight: 400;
+  color: #333333;
   padding: 0 1rem;
   height: 3rem;
   border-radius: 10px;
   border: 1px solid #bbbbbb;
   background-color: #ffffff;
   cursor: pointer;
-  width: 20rem;
+  width: 18rem;
   display: flex;
   align-items: center;
   justify-content: space-between;

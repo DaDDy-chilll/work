@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Box, CircularProgress, Typography } from '@mui/material';
+import { Box, CircularProgress, IconButton, Typography } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetDocumentDetail } from '../api/document';
 import { colors } from '../assets/theme/theme';
@@ -21,11 +21,13 @@ const Item = ({ fieldName, value }) => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        gap: '10px',
+        gap: 1,
         minWidth: '30%',
       }}
     >
-      <Typography variant="h4" fontWeight="bold">
+      <Typography
+        sx={{ fontSize: '16px', fontWeight: 'bold', color: colors.black[100] }}
+      >
         {fieldName}
       </Typography>
       {value}
@@ -46,7 +48,12 @@ const DocumentDetailPage = () => {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, m: 2 }}>
-      <Typography variant="h1">View Document Request</Typography>
+      <Typography
+        variant="h2"
+        sx={{ fontWeight: 500, color: colors.black[100] }}
+      >
+        View Document Request
+      </Typography>
       {isLoading ? (
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <CircularProgress size={48} />
@@ -57,21 +64,26 @@ const DocumentDetailPage = () => {
             <Box
               bgcolor={colors.white[100]}
               borderRadius="1rem"
-              sx={{ width: '80%' }}
+              sx={{ maxWidth: '75%', minWidth: '75%' }}
             >
               <Box
                 sx={{
                   borderBottom: `1px solid ${colors.grey[400]}`,
-                  px: 4,
-                  py: 2,
+                  p: 2,
                   display: 'flex',
                   alignItems: 'center',
                   gap: 1,
                   cursor: 'pointer',
+                  fontSize: '20px',
+                  fontWeight: 500,
+                  color: colors.black[100],
                 }}
-                onClick={() => navigate(-1)}
               >
-                <ArrowBack />
+                <IconButton onClick={() => navigate('/')}>
+                  <ArrowBack
+                    sx={{ fontSize: '22px', color: colors.black[100] }}
+                  />
+                </IconButton>
                 {transformDate(document?.payload?.updatedAt)}
               </Box>
               <Box
@@ -95,10 +107,11 @@ const DocumentDetailPage = () => {
                   sx={{
                     backgroundColor: colors.bgColor,
                     borderRadius: '1rem',
-                    p: 3,
+                    p: 2,
                   }}
                 >
                   <div
+                    style={{ fontSize: '16px' }}
                     dangerouslySetInnerHTML={{
                       __html: document?.payload?.description,
                     }}
@@ -138,7 +151,7 @@ const DocumentDetailPage = () => {
                 <LinkButton
                   width="200px"
                   innerText="Back"
-                  onClick={() => navigate(-1)}
+                  onClick={() => navigate('/')}
                   variant="contained"
                   color="primary"
                 />
@@ -173,7 +186,7 @@ const DocumentDetailPage = () => {
             <Box
               bgcolor={colors.white[100]}
               borderRadius="1rem"
-              sx={{ p: 2, width: '20%' }}
+              sx={{ p: 2, width: '25%' }}
             >
               <Box
                 sx={{
@@ -182,6 +195,9 @@ const DocumentDetailPage = () => {
                   display: 'flex',
                   alignItems: 'center',
                   gap: 1,
+                  fontSize: '18px',
+                  fontWeight: 'bold',
+                  color: colors.black[100],
                 }}
               >
                 Form Status

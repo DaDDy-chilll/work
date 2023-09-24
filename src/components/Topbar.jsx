@@ -5,11 +5,12 @@ import { useAuth, useDisclosure } from '../hooks';
 import { colors } from '../assets/theme/theme';
 
 // images
-import ParamiLogo from '../assets/images/ParamiLogo.png';
+import ParamiLogo from '../assets/images/ParamiLogo.jpg';
 import Notifications from './ui/NotificationIcon';
 import NotificationDrawer from './ui/NotificationDrawer';
 import { useNavigate } from 'react-router-dom';
 import { useGetAllNotifications } from '../api';
+import { ROLES } from '../constants';
 
 const Topbar = () => {
   const navigate = useNavigate();
@@ -21,7 +22,9 @@ const Topbar = () => {
 
   const [notiOpen, setNotiOpen] = useState(false);
 
-  const { data: notifications } = useGetAllNotifications();
+  const { data: notifications } = useGetAllNotifications({
+    limit: 0,
+  });
 
   const handleLogout = () => {
     logout();
@@ -31,7 +34,6 @@ const Topbar = () => {
   return (
     <Box
       sx={{
-        color: colors.paleBlue[800],
         backgroundColor: colors.white[100],
         display: 'flex',
         justifyContent: 'space-between',
@@ -41,20 +43,37 @@ const Topbar = () => {
         p: 1,
       }}
     >
-      <img
-        style={{ borderRight: `0.2px solid ${colors.grey[500]}` }}
-        src={ParamiLogo}
-        alt=""
-      />
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+        <img
+          style={{
+            borderRight: `0.2px solid ${colors.grey[500]}`,
+            width: '70px',
+            objectFit: 'scale-down',
+            marginLeft: '.5rem',
+            paddingRight: '.5rem',
+          }}
+          src={ParamiLogo}
+          alt=""
+        />
+        <Typography
+          sx={{ fontSize: '18px', fontWeight: 600, color: colors.black[200] }}
+        >
+          Parami Hospital
+        </Typography>
+      </Box>
 
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-        {notifications && (
+        {user.role !== ROLES.SUPER_ADMIN && notifications && (
           <>
             <Notifications
               notifications={notifications}
               setNotiOpen={setNotiOpen}
             />
-            <NotificationDrawer setNotiOpen={setNotiOpen} notiOpen={notiOpen} />
+            <NotificationDrawer
+              setNotiOpen={setNotiOpen}
+              notiOpen={notiOpen}
+              notifications={notifications}
+            />
           </>
         )}
         <Box
@@ -78,7 +97,14 @@ const Topbar = () => {
             alt={user.name}
             src="/static/images/avatar/1.jpg"
           />
-          <Typography variant="h4" mx="10px">
+          <Typography
+            sx={{
+              fontSize: '14px',
+              fontWeight: 400,
+              ml: 1,
+              color: colors.black[300],
+            }}
+          >
             {user.email}
           </Typography>
           <ArrowDropDownOutlined />
@@ -92,7 +118,9 @@ const Topbar = () => {
             'aria-labelledby': 'basic-button',
           }}
         >
-          <MenuItem onClick={handleLogout}>Logout</MenuItem>
+          <MenuItem sx={{ fontSize: '14px' }} onClick={handleLogout}>
+            Logout
+          </MenuItem>
         </Menu>
       </Box>
     </Box>

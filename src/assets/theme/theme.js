@@ -114,6 +114,13 @@ export const colors = {
   white: {
     100: '#FFFFFF',
     200: '#FAFCFF',
+    300: "#EFF3F6",
+    400: "#D9D9D9"
+  },
+  black: {
+    100: "#000000",
+    200: "#484848",
+    300: "#333333"
   },
   bgColor: '#EDF1F7',
 };
@@ -129,10 +136,13 @@ export const theme = createTheme({
     },
     success: {
       main: colors.purple[800],
-      // contrastText: colors.white[100],
     },
     info: {
       main: colors.darkBlue[800],
+      contrastText: colors.white[100],
+    },
+    warning: {
+      main: colors.bgColor,
       contrastText: colors.white[100],
     },
     background: {
@@ -141,32 +151,46 @@ export const theme = createTheme({
   },
 
   typography: {
-    fontFamily: ['Source Sans Pro', 'poppins'].join(','),
-    fontSize: 12,
+    fontFamily: ['Poppins', 'sans-serif',].join(','),
+    fontSize: "14px",
+    fontWeight: 400,
+    color: colors.black[200],
 
     h1: {
-      fontFamily: ['Source Sans Pro', 'poppins'].join(','),
-      fontSize: 25,
+      fontFamily: ['Poppins', 'sans-serif'].join(','),
+      fontSize: "30px",
+      fontWeight: 400,
+      color: colors.black[100]
     },
     h2: {
-      fontFamily: ['Source Sans Pro', 'poppins'].join(','),
-      fontSize: 20,
+      fontFamily: ['Poppins', 'sans-serif'].join(','),
+      fontSize: "26px",
+      fontWeight: 500
     },
-    h3: {
-      fontFamily: ['Source Sans Pro', 'poppins'].join(','),
-      fontSize: 17,
-    },
-    h4: {
-      fontFamily: ['Source Sans Pro', 'poppins'].join(','),
-      fontSize: 15,
-    },
-    h5: {
-      fontFamily: ['Source Sans Pro', 'poppins'].join(','),
-      fontSize: 14,
-    },
-    h6: {
-      fontFamily: ['Source Sans Pro', 'poppins'].join(','),
-      fontSize: 12,
-    },
+    // h3: {
+    //   fontFamily: ['Poppins', 'sans-serif'].join(','),
+    //   fontSize: 17,
+    // },
+    // h4: {
+    //   fontFamily: ['Poppins', 'sans-serif'].join(','),
+    //   fontSize: 15,
+    // },
+    // h5: {
+    //   fontFamily: ['Poppins', 'sans-serif'].join(','),
+    //   fontSize: 14,
+    // },
+    // h6: {
+    //   fontFamily: ['Poppins', 'sans-serif'].join(','),
+    //   fontSize: 12,
+    // },
+
+    // 
+    button: {
+      boxShadow: 0,
+      textTransform: 'capitalize',
+      fontSize: "14px",
+      fontWeight: 500,
+      borderRadius: '2rem'
+    }
   },
 });

@@ -208,8 +208,7 @@ const WorkFlowForm = ({ isOpen, onClose, onOpen }) => {
                   <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                     <CircularProgress />
                   </Box>
-                ) : (
-                  result &&
+                ) : result ? (
                   result.map((department, i) => (
                     <DepartmentMemberLists
                       handleSelectChange={handleSelectChange}
@@ -217,6 +216,10 @@ const WorkFlowForm = ({ isOpen, onClose, onOpen }) => {
                       department={department}
                     />
                   ))
+                ) : (
+                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <CircularProgress />
+                  </Box>
                 )}
               </DepartmentLists>
             </SelectUsers>

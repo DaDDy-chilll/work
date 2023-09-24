@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import Parami_Login_Bg from '../assets/images/parami_login_bg.jpg';
-import Parami_Login_Logo from '../assets/images/ParamiLoginLogo.jpg';
+import Parami_Login_Logo from '../assets/images/ParamiLogo.jpg';
 import { colors } from '../assets/theme/theme';
 import LoginForm from '../components/form/LoginForm';
 
