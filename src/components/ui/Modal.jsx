@@ -6,10 +6,10 @@ const Modal = ({ isOpen, onClose, content, title }) => {
   return (
     <Dialog open={isOpen} onClose={onClose} maxWidth={'lg'}>
       <DialogTitle
-        variant="h2"
         fontWeight="bold"
         sx={{
-          mb: '5px',
+          fontSize: '24px',
+          mb: 1,
           textTransform: 'uppercase',
           borderBottom: `1px solid ${colors.grey[400]}`,
         }}

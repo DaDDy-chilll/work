@@ -21,6 +21,7 @@ import FormSelect from '../shared/FormSelect';
 import { toast } from 'react-toastify';
 import { useQueryClient } from 'react-query';
 import PasswordTextField from '../shared/PasswordTextField';
+import CustomFormLabel from '../shared/CustomFormLabel';
 
 const UserForm = ({ onClose, oldData, isChangePassword }) => {
   const { data } = useGetAllDepartments({
@@ -161,7 +162,7 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
             {!isChangePassword && (
               <Box sx={{ display: 'flex', gap: 2 }}>
                 <Box width="50%">
-                  <label>Name</label>
+                  <CustomFormLabel label="Name" />
                   <FormTextField
                     type="text"
                     formProps={props}
@@ -170,7 +171,7 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
                   />
                 </Box>
                 <Box width="50%">
-                  <label>Email</label>
+                  <CustomFormLabel label="Email" />
                   <FormTextField
                     disabled={oldData}
                     type="email"
@@ -209,7 +210,7 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
             {!isChangePassword && (
               <Box sx={{ display: 'flex', gap: 2 }}>
                 <Box width="48%">
-                  <label>Select Department</label>
+                  <CustomFormLabel label="Select Department" />
                   <FormSelect
                     placeholder="Select Work Flow"
                     name="department"
@@ -224,7 +225,7 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
                   </FormSelect>
                 </Box>
                 <Box width="50%">
-                  <label>Job Label</label>
+                  <CustomFormLabel label="Job Label" />
                   <FormTextField
                     type="text"
                     formProps={props}

@@ -9,15 +9,21 @@ import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineDot from '@mui/lab/TimelineDot';
 import { useGetAllDepartments } from '../../api';
+import CustomFormLabel from '../shared/CustomFormLabel';
+import CustomTooltip from '../shared/CustomTooltip';
+import { ROLES } from '../../constants/auth';
 
 const ItemIcon = ({ children }) => {
   return (
     <Box
       sx={{
         backgroundColor: colors.bgColor,
-        py: '3px',
-        px: '4px',
+        width: '40px',
+        height: '40px',
         borderRadius: '50%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
       }}
     >
       {children}
@@ -32,7 +38,8 @@ const ItemCard = ({ children, title }) => {
         bgcolor: colors.white[200],
         width: '50%',
         borderRadius: '1rem',
-        p: 2,
+        py: 1,
+        px: 2,
         border: `1px solid ${colors.grey[400]}`,
       }}
     >
@@ -42,8 +49,8 @@ const ItemCard = ({ children, title }) => {
           alignItems: 'center',
           gap: 2,
           borderBottom: `0.2px solid ${colors.grey[500]}`,
-          mb: 2,
-          pb: 2,
+          mb: 1,
+          pb: 1,
         }}
       >
         <ItemIcon>
@@ -54,7 +61,11 @@ const ItemCard = ({ children, title }) => {
             }}
           />
         </ItemIcon>
-        <label>{title}</label>
+        <Typography
+          sx={{ fontSize: '16px', fontWeight: 400, color: colors.black[300] }}
+        >
+          {title}
+        </Typography>
       </Box>
       {children}
     </Box>
@@ -64,10 +75,12 @@ const ItemCard = ({ children, title }) => {
 const Item = ({ department }) => {
   return (
     <Typography
-      sx={{ textTransform: 'capitalize' }}
-      variant="h5"
-      fontWeight="bold"
-      component="span"
+      sx={{
+        textTransform: 'capitalize',
+        fontSize: '16px',
+        fontWeight: 400,
+        color: colors.black[300],
+      }}
     >
       {department.name}
     </Typography>
@@ -75,15 +88,25 @@ const Item = ({ department }) => {
 };
 
 const DepartmentFlow = ({ selectedDepartments, handleDepartmentChange }) => {
-  const { data: departments, isLoading: departmentLoading } =
-    useGetAllDepartments({
-      limit: 0,
-    });
+  const { data, isLoading: departmentLoading } = useGetAllDepartments({
+    limit: 0,
+  });
+
+  let departments;
+  if (data?.payload) {
+    departments = data?.payload?.filter(
+      (department) => department.name !== ROLES.SUPER_ADMIN,
+    );
+  }
+
+  console.log(departments);
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-      <label>Department Work Flow</label>
-
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <CustomFormLabel label="Department Work Flow" required={true} />
+        <CustomTooltip innerText="Your form will be requested as your selected member order." />
+      </Box>
       <Box sx={{ display: 'flex', gap: 5 }}>
         <ItemCard title="Department Lists">
           {departmentLoading ? (
@@ -98,11 +121,11 @@ const DepartmentFlow = ({ selectedDepartments, handleDepartmentChange }) => {
                 flexDirection: 'column',
                 gap: 3,
                 overflowY: 'scroll',
-                height: '400px',
+                height: '330px',
               }}
             >
               {departments &&
-                departments.payload.map((department) => (
+                departments?.map((department) => (
                   <Box
                     key={department._id}
                     sx={{
@@ -111,11 +134,22 @@ const DepartmentFlow = ({ selectedDepartments, handleDepartmentChange }) => {
                     }}
                   >
                     <Checkbox
+                      sx={{
+                        '& .MuiSvgIcon-root': { fontSize: '17px' },
+                      }}
                       name={department._id}
                       value={department.name}
                       onChange={handleDepartmentChange}
                     />
-                    <Typography variant="h5">{department.name}</Typography>
+                    <Typography
+                      sx={{
+                        fontSize: '16px',
+                        fontWeight: 400,
+                        color: colors.black[300],
+                      }}
+                    >
+                      {department.name}
+                    </Typography>
                   </Box>
                 ))}
             </Box>
@@ -124,7 +158,7 @@ const DepartmentFlow = ({ selectedDepartments, handleDepartmentChange }) => {
         <ItemCard title="Department Order">
           <Box
             className="department_card"
-            sx={{ overflowY: 'scroll', height: '400px' }}
+            sx={{ overflowY: 'scroll', height: '330px' }}
           >
             <Timeline
               position="right"
@@ -161,9 +195,16 @@ const DepartmentFlow = ({ selectedDepartments, handleDepartmentChange }) => {
                   </TimelineItem>
                 ))
               ) : (
-                <label style={{ textAlign: 'center' }}>
+                <Typography
+                  sx={{
+                    fontSize: '16px',
+                    fontWeight: 400,
+                    color: colors.black[300],
+                    textAlign: 'center',
+                  }}
+                >
                   No Selected Departments
-                </label>
+                </Typography>
               )}
             </Timeline>
           </Box>

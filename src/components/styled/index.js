@@ -7,15 +7,19 @@ export const StyledTableCell = styled(TableCell)(() => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: colors.paleBlue[800],
     color: colors.white[100],
+    fontSize: '16px',
+    fontWeight: 700
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
+    fontSize: "14px",
+    fontWeight: 400,
+    color: colors.black[200]
   },
 }));
 
 export const StyledTableRow = styled(TableRow)(() => ({
   '&:nth-of-type(even)': {
-    backgroundColor: colors.bgColor,
+    backgroundColor: colors.white[300],
   },
   // hide last border
   '&:last-child td, &:last-child th': {

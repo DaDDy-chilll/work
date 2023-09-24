@@ -24,11 +24,13 @@ const DateRangeFilter = ({
         <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
           {date.startDate && date.endDate && (
             <div onClick={handleRemoveDate}>
-              <Cancel sx={{ color: colors.grey[800] }} />
+              <Cancel sx={{ color: colors.grey[800], fontSize: '22px' }} />
             </div>
           )}
           <div onClick={() => setOpenDate((prev) => !prev)}>
-            <CalendarToday />
+            <CalendarToday
+              sx={{ color: colors.black[300], fontSize: '22px' }}
+            />
           </div>
         </Box>
       </div>

@@ -37,21 +37,33 @@ const Item = React.forwardRef(({ noti, handleOpen }, ref) => {
             <Box
               sx={{
                 backgroundColor: colors.paleBlue[800],
-                py: '8px',
-                px: '10px',
+                width: '2.5rem',
+                height: '2.5rem',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
                 borderRadius: '50%',
               }}
             >
-              <DescriptionOutlined sx={{ color: colors.white[100] }} />
+              <DescriptionOutlined
+                sx={{ color: colors.white[100], fontSize: '25px' }}
+              />
             </Box>
             <Box>
-              <Typography variant="h6" mx="10px">
+              <Typography sx={{ fontSize: '14px', fontWeight: 400, mx: 1 }}>
                 {getNotiText({
                   from: noti?.from?.name,
                   action: noti?.action,
                 })}
               </Typography>
-              <Typography sx={{ fontSize: '10px' }} mx="10px">
+              <Typography
+                sx={{
+                  fontSize: '12px',
+                  fontWeight: 400,
+                  mx: 1,
+                  color: colors.grey[800],
+                }}
+              >
                 {getDuration(noti?.createdAt)}
               </Typography>
             </Box>
@@ -145,11 +157,9 @@ const NotificationDrawer = ({ setNotiOpen, notiOpen }) => {
                 alignItems: 'center',
               }}
             >
-              <Typography variant="h2" style={{ color: '#000' }}>
-                Notifications
-              </Typography>
+              <Typography variant="h1">Notifications</Typography>
               <IconButton onClick={() => setNotiOpen(false)}>
-                <Close sx={{ color: colors.grey[800] }} />
+                <Close sx={{ color: colors.grey[800], fontSize: '32px' }} />
               </IconButton>
             </Box>
           }

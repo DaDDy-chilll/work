@@ -4,6 +4,7 @@ import LinkButton from '../ui/LinkButton';
 import FormTextField from '../shared/FormTextField';
 import ModalButton from '../ui/ModalButton';
 import { useNavigate } from 'react-router-dom';
+import CustomFormLabel from '../shared/CustomFormLabel';
 
 const SelectDepartments = ({ children, onOpen, formProps }) => {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ const SelectDepartments = ({ children, onOpen, formProps }) => {
       <Box display="flex" gap={2} flexDirection={'column'}>
         <Box sx={{ display: 'flex', gap: 2 }}>
           <Box width="50%">
-            <label>Work Flow Title</label>
+            <CustomFormLabel label="Work Flow Title" required={true} />
             <FormTextField
               type="text"
               formProps={formProps}
@@ -22,7 +23,7 @@ const SelectDepartments = ({ children, onOpen, formProps }) => {
             />
           </Box>
           <Box width="50%">
-            <label>Work Flow Description</label>
+            <CustomFormLabel label="Work Flow Description" required={true} />
             <FormTextField
               type="text"
               formProps={formProps}

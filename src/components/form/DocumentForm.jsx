@@ -24,6 +24,7 @@ import { toast } from 'react-toastify';
 import { useQueryClient } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import WorkflowRoute from '../ui/WorkflowRoute';
+import CustomFormLabel from '../shared/CustomFormLabel';
 
 const DocumentForm = ({ oldData, onClick }) => {
   const { id } = useParams();
@@ -139,7 +140,7 @@ const DocumentForm = ({ oldData, onClick }) => {
             }}
           >
             <Box>
-              <label>Subject</label>
+              <CustomFormLabel label="Subject" />
               <FormTextField
                 type="text"
                 formProps={props}
@@ -149,7 +150,7 @@ const DocumentForm = ({ oldData, onClick }) => {
             </Box>
             {oldData ? (
               <Box>
-                <label>Amount</label>
+                <CustomFormLabel label="Amount" />
                 <FormTextField
                   type="text"
                   formProps={props}
@@ -159,7 +160,7 @@ const DocumentForm = ({ oldData, onClick }) => {
               </Box>
             ) : (
               <Box>
-                <label>Select Work Flow</label>
+                <CustomFormLabel label="Select Work Flow" />
                 <FormSelect
                   placeholder="Select Work Flow"
                   name="workflowId"
@@ -181,7 +182,7 @@ const DocumentForm = ({ oldData, onClick }) => {
             <RichTextEditor text={description} setText={setDescription} />
 
             <Box>
-              <label htmlFor="name">Attachments (Optional)</label>
+              <CustomFormLabel label="Attachments (Optional)" />
               <Box mt={1}>
                 <input
                   type="file"
@@ -196,7 +197,7 @@ const DocumentForm = ({ oldData, onClick }) => {
                     htmlFor="actual-btn"
                     style={{ display: 'flex', alignItems: 'center' }}
                   >
-                    <CloudUpload sx={{ mr: 1 }} />
+                    <CloudUpload sx={{ mr: 1, fontSize: '22px' }} />
                     <Typography color={colors.white}>Upload File</Typography>
                   </label>
                 </Button>

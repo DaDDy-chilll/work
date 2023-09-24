@@ -12,6 +12,12 @@ const SearchBox = ({ setSearch, placeholder }) => {
     setSearch('');
   };
 
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      setSearch(event.target.value);
+    }
+  };
+
   return (
     <Box sx={{ display: 'flex' }}>
       <Box sx={{ position: 'relative' }}>
@@ -22,10 +28,11 @@ const SearchBox = ({ setSearch, placeholder }) => {
           placeholder={placeholder}
           value={value}
           onChange={(e) => setValue(e.target.value)}
+          onKeyUp={(e) => handleKeyPress(e)}
         />
         {value !== '' && (
           <div className="cancel_btn" onClick={handleCancel}>
-            <Cancel sx={{ color: colors.grey[800] }} />
+            <Cancel sx={{ color: colors.grey[800], fontSize: '22px' }} />
           </div>
         )}
       </Box>

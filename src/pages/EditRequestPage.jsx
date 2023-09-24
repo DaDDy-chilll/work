@@ -32,7 +32,12 @@ const EditRequestPage = () => {
         width: '80%',
       }}
     >
-      <Typography variant="h1">Edit Request</Typography>
+      <Typography
+        variant="h2"
+        sx={{ fontWeight: 500, color: colors.black[100] }}
+      >
+        Edit Request
+      </Typography>
       <Box bgcolor={colors.white[100]} borderRadius="1rem">
         <Box
           sx={{
@@ -42,6 +47,9 @@ const EditRequestPage = () => {
             alignItems: 'center',
             gap: 1,
             px: 5,
+            fontSize: '20px',
+            fontWeight: 500,
+            color: colors.black[100],
           }}
         >
           {transformDate(data?.payload?.createdAt)}

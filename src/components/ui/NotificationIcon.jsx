@@ -16,6 +16,8 @@ const Notifications = ({ notifications, setNotiOpen }) => {
         overlap="circular"
         sx={{
           '& .MuiBadge-badge': {
+            fontSize: '13px',
+            fontWeight: 500,
             color: colors.white[100],
             backgroundColor: colors.red[700],
           },

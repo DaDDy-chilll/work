@@ -5,15 +5,14 @@ import PDFImage from '../../assets/images/PDF.png';
 
 const Attachments = ({ attachments }) => {
   return (
-    <Box sx={{ display: 'flex', gap: '30px', flexWrap: 'wrap' }}>
+    <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mt: 1 }}>
       {attachments.map((attachment) => (
         <Box
           key={attachment.url}
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'center',
-            gap: '10px',
+            gap: 1,
             maxWidth: '10rem',
           }}
         >

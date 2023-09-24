@@ -43,11 +43,11 @@ const FormStatus = ({ reviewers, isLoading }) => {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}
-                color="primary"
+                color="warning"
               >
                 <ApartmentOutlined
                   sx={{
-                    color: colors.white[100],
+                    color: colors.paleBlue[800],
                     fontSize: '25px',
                   }}
                 />
@@ -62,7 +62,15 @@ const FormStatus = ({ reviewers, isLoading }) => {
                   mt: 2,
                 }}
               >
-                <Typography variant="h5">{department.name}</Typography>{' '}
+                <Typography
+                  sx={{
+                    fontSize: '16px',
+                    fontWeight: 'bold',
+                    color: colors.black[200],
+                  }}
+                >
+                  {department.name}
+                </Typography>{' '}
                 {department.users?.map((user) => (
                   <Box
                     key={user._id}
@@ -75,7 +83,12 @@ const FormStatus = ({ reviewers, isLoading }) => {
                     }}
                   >
                     <CheckCircle sx={{ fontSize: '25px' }} />
-                    <Typography variant="h5">
+                    <Typography
+                      sx={{
+                        fontSize: '14px',
+                        fontWeight: 500,
+                      }}
+                    >
                       {user.status} by {user.reviewer.name}
                     </Typography>
                   </Box>

@@ -11,8 +11,8 @@ const RemarkDetail = ({ remark }) => {
       <Box sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
         <Typography
           sx={{ textTransform: 'capitalize' }}
-          variant="h5"
-          fontWeight="bold"
+          fontSize="14px"
+          fontWeight={500}
           color={textColor && textColor}
           component="span"
         >
@@ -30,10 +30,15 @@ const RemarkDetail = ({ remark }) => {
           }}
         >
           <ApartmentOutlined fontSize="small" />
-          <Typography variant="h6">{remark.actor.department.name}</Typography>
+          <Typography sx={{ fontSize: '12px', fontWeight: 500 }}>
+            {remark.actor.department.name}
+          </Typography>
         </Box>
       </Box>
-      <div dangerouslySetInnerHTML={{ __html: remark.content }} />
+      <div
+        style={{ fontSize: '16px', fontWeight: 400 }}
+        dangerouslySetInnerHTML={{ __html: remark.content }}
+      />
     </Box>
   );
 };

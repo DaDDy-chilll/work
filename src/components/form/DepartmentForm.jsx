@@ -11,6 +11,7 @@ import {
   departmentCreateValues,
 } from '../../schema/department.schema';
 import FormCheckbox from '../shared/FormCheckbox';
+import CustomFormLabel from '../shared/CustomFormLabel';
 
 const DepartmentForm = ({ onClose }) => {
   const { isLoading: createLoading, mutate: createMutation } =
@@ -37,7 +38,7 @@ const DepartmentForm = ({ onClose }) => {
         <form onSubmit={props.handleSubmit}>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <Box>
-              <label>Subject</label>
+              <CustomFormLabel label="Subject" />
               <FormTextField
                 type="text"
                 formProps={props}

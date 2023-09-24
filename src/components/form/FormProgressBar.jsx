@@ -23,7 +23,7 @@ const FormProgressBar = ({ isOpen }) => {
           top: 0,
           width: '99%',
           border: `3px solid ${
-            isOpen ? colors.paleBlue[800] : colors.grey[500]
+            isOpen ? colors.paleBlue[800] : colors.white[400]
           }`,
           borderTopRightRadius: '1rem',
           borderTopLeftRadius: '1rem',
