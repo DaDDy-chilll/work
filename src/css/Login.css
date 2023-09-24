@@ -16,6 +16,6 @@
 }
 
 .login_logo {
-  width: 30%;
-  object-fit: cover;
+  width: 180px;
+  object-fit: scale-down;
 }

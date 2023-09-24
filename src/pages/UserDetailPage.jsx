@@ -126,7 +126,7 @@ const UserDetailPage = () => {
               sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                gap: 2,
+                gap: 3,
                 px: 4,
                 py: 2,
               }}
@@ -135,7 +135,8 @@ const UserDetailPage = () => {
                 sx={{
                   display: 'flex',
                   flexWrap: 'wrap',
-                  gap: 5,
+                  columnGap: 5,
+                  rowGap: 3,
                 }}
               >
                 <Item fieldName="User Id" value={user?.payload?.userId} />
@@ -150,7 +151,14 @@ const UserDetailPage = () => {
                   fieldName="Disabled"
                   value={user?.payload?.isDisabled ? 'Yes' : 'No'}
                 />
-                <Item fieldName="Role" value={user?.payload?.role} />
+                <Item
+                  fieldName="Role"
+                  value={
+                    <Typography sx={{ textTransform: 'capitalize' }}>
+                      {user?.payload?.department?.type}
+                    </Typography>
+                  }
+                />
               </Box>
               <Item
                 fieldName="Permissions"

@@ -6,11 +6,17 @@ import { DepartmentMemberListsColumn } from '../column/DepartmentMemberListsColu
 import DepartmentMemberListsRow from '../row/DepartmentMemberListsRow';
 import CustomFormLabel from '../shared/CustomFormLabel';
 
-const DepartmentMemberLists = ({ department, handleSelectChange }) => {
+const DepartmentMemberLists = ({
+  department,
+  handleSelectChange,
+  isDetail,
+}) => {
   return (
     <Box>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-        <CustomFormLabel label={`Select ${department.name}`} />
+        <CustomFormLabel
+          label={`${isDetail ? '' : 'Select'} ${department.name}`}
+        />
         <CustomTooltip innerText="Your form will be requested as your selected member order." />
       </Box>
       <DataTable
@@ -19,6 +25,7 @@ const DepartmentMemberLists = ({ department, handleSelectChange }) => {
           <DepartmentMemberListsRow
             handleSelectChange={handleSelectChange}
             payload={department?.users}
+            isDetail={isDetail}
           />
         }
       />

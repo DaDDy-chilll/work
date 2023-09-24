@@ -10,7 +10,11 @@ import { StyledTableCell, StyledTableRow } from '../styled';
 import { colors } from '../../assets/theme/theme';
 import { Check } from '@mui/icons-material';
 
-const DepartmentMemberListsRow = ({ payload, handleSelectChange }) => {
+const DepartmentMemberListsRow = ({
+  payload,
+  handleSelectChange,
+  isDetail,
+}) => {
   return (
     <TableBody>
       {payload &&
@@ -26,7 +30,7 @@ const DepartmentMemberListsRow = ({ payload, handleSelectChange }) => {
                       }}
                     />
                   }
-                  disabled={false}
+                  disabled={isDetail}
                   value={data?._id}
                   name="reviewer"
                   onChange={({ target: { value, checked } }) =>

@@ -18,7 +18,7 @@ const DepartmentCard = ({ department, index }) => {
         sx={{
           display: 'flex',
           alignItems: 'center',
-          gap: 2,
+          gap: 1,
           borderBottom: `0.1px solid ${colors.grey[200]}`,
           mb: 2,
           pb: 2,

@@ -20,7 +20,13 @@ const PasswordTextField = ({ formProps, width, label, name, placeholder }) => {
         inputAdornment={{
           endAdornment: (
             <CustomInputAdornment
-              icon={showPassword ? <Visibility /> : <VisibilityOff />}
+              icon={
+                showPassword ? (
+                  <Visibility sx={{ fontSize: '22px' }} />
+                ) : (
+                  <VisibilityOff sx={{ fontSize: '22px' }} />
+                )
+              }
               onClick={() => setShowPassword(!showPassword)}
               position={'end'}
             />
