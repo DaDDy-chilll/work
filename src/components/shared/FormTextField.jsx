@@ -9,9 +9,11 @@ const FormTextField = ({
   type,
   disabled,
   inputAdornment,
+  multiline,
 }) => {
   return (
     <TextField
+      multiline={multiline}
       disabled={disabled}
       type={type}
       fullWidth

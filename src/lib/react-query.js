@@ -13,6 +13,15 @@ export const queryClient = new QueryClient({
         return true;
       },
       refetchOnWindowFocus: false,
+      onError: (error) => {
+        if (isAxiosError(error)) {
+          const { response } = error;
+
+          toast.error(response?.data?.message ?? 'Unknown Error');
+        } else {
+          toast.error('Something went wrong.');
+        }
+      },
     },
     mutations: {
       useErrorBoundary: (error) => {
@@ -26,7 +35,7 @@ export const queryClient = new QueryClient({
         if (isAxiosError(error)) {
           const { response } = error;
 
-          toast.error(response?.data.message ?? 'Unknown Error');
+          toast.error(response?.data?.message ?? 'Unknown Error');
         } else {
           toast.error('Something went wrong.');
         }

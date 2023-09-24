@@ -146,6 +146,7 @@ const DocumentForm = ({ oldData, onClick }) => {
                 formProps={props}
                 name="name"
                 placeholder="Subject"
+                multiline={true}
               />
             </Box>
             {oldData ? (
@@ -210,8 +211,7 @@ const DocumentForm = ({ oldData, onClick }) => {
                       <div className="attachment_delete_btn">
                         <IconButton onClick={() => handleDelete({ url })}>
                           <Cancel
-                            sx={{ color: colors.white[100] }}
-                            fontSize="large"
+                            sx={{ color: colors.white[100], fontSize: '25px' }}
                           />
                         </IconButton>
                       </div>
@@ -226,8 +226,7 @@ const DocumentForm = ({ oldData, onClick }) => {
                           onClick={() => handleDelete({ name: pdfFile })}
                         >
                           <Cancel
-                            sx={{ color: colors.grey[800] }}
-                            fontSize="large"
+                            sx={{ color: colors.grey[800], fontSize: '25px' }}
                           />
                         </IconButton>
                       </div>

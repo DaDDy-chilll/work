@@ -6,6 +6,7 @@ const AttachmentDetail = ({ children, attachment }) => {
 
   return attachment.mimetype.includes('image') ? (
     <Box
+      sx={{ maxWidth: '100%', height: '180px' }}
       onClick={() =>
         handleClick({ url: attachment.url, filename: attachment.filename })
       }

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Close, DescriptionOutlined } from '@mui/icons-material';
+import { Close } from '@mui/icons-material';
 import {
   Box,
   CircularProgress,
@@ -10,7 +10,6 @@ import {
   Typography,
 } from '@mui/material';
 import { useInfiniteNotifications, useOpenNotification } from '../../api';
-import { getDuration } from '../../helpers';
 import { colors } from '../../assets/theme/theme';
 import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
@@ -33,43 +32,7 @@ const Item = React.forwardRef(({ noti, handleOpen }, ref) => {
     >
       <ListItemText
         disableTypography
-        primary={
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Box
-              sx={{
-                backgroundColor: colors.paleBlue[800],
-                width: '2.5rem',
-                height: '2.5rem',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: '50%',
-              }}
-            >
-              <DescriptionOutlined
-                sx={{ color: colors.white[100], fontSize: '25px' }}
-              />
-            </Box>
-            <Box>
-              <Typography sx={{ fontSize: '14px', fontWeight: 400, mx: 1 }}>
-                <NotificationDetail
-                  from={noti?.from?.name}
-                  action={noti?.action}
-                />
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: '12px',
-                  fontWeight: 400,
-                  mx: 1,
-                  color: colors.grey[800],
-                }}
-              >
-                {getDuration(noti?.createdAt)}
-              </Typography>
-            </Box>
-          </Box>
-        }
+        primary={<NotificationDetail noti={noti} />}
       />
     </ListItem>
   );

@@ -13,12 +13,12 @@ const Attachments = ({ attachments }) => {
             display: 'flex',
             flexDirection: 'column',
             gap: 1,
-            maxWidth: '10rem',
+            maxWidth: '150px',
           }}
         >
           <AttachmentDetail attachment={attachment}>
             <img
-              style={{ width: '145px', height: '145px', objectFit: 'cover' }}
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               src={
                 attachment?.mimetype?.includes('image')
                   ? attachment.url
@@ -27,7 +27,11 @@ const Attachments = ({ attachments }) => {
               alt={attachment.filename}
             />
           </AttachmentDetail>
-          <Typography variant="h5" fontWeight="bold">
+          <Typography
+            variant="h5"
+            fontWeight="bold"
+            sx={{ wordWrap: 'break-word' }}
+          >
             {attachment.filename}
           </Typography>
         </Box>
