@@ -12,3 +12,16 @@ export const ROLES = {
     AUTHORIZED: 'AUTHORIZED',
     BASIC: 'BASIC',
 };
+
+export const PERMISSIONS = {
+    CREATE: 'Create',
+    COMMENT: 'Comment',
+    REJECT: 'Reject',
+    ACKNOWLEDGE: 'Acknowledge',
+    REVERSE: 'Reverse',
+    APPROVE: 'Approve',
+    VERIFY: 'Verify',
+    PREPARE: 'Prepare',
+    REVISE: 'REVISE',
+    EDIT_AMOUNT: 'Edit Amount',
+};

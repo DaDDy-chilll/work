@@ -1,11 +1,15 @@
-import { Box, Tab, Tabs } from '@mui/material';
+/* eslint-disable react/prop-types */
+import { Box, Tab, Tabs, Typography } from '@mui/material';
 import { useAuth } from '../hooks/useAuth';
 import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import {
+  AccountTree,
+  ApartmentOutlined,
   InsertDriveFileOutlined,
   ListAltOutlined,
   MailOutline,
+  Person,
 } from '@mui/icons-material';
 import { colors } from '../assets/theme/theme';
 import { ROLES } from '../constants';
@@ -27,6 +31,29 @@ const getCurrentIndex = (path) => {
   return 0;
 };
 
+const Item = ({ label, icon, to }) => {
+  return (
+    <Tab
+      {...tabProps(0)}
+      component={Link}
+      label={
+        <Typography
+          sx={{
+            fontSize: '16px',
+            fontWeight: 400,
+            color: colors.black[100],
+          }}
+        >
+          {label}
+        </Typography>
+      }
+      to={to}
+      icon={icon}
+      iconPosition="start"
+    />
+  );
+};
+
 const Navbar = () => {
   const { user } = useAuth();
 
@@ -42,56 +69,38 @@ const Navbar = () => {
     <Box sx={{ borderBottom: `1px solid ${colors.grey[400]}` }}>
       {user?.role === ROLES.SUPER_ADMIN ? (
         <Tabs value={value} onChange={handleChange} aria-label="navbar-tab">
-          <Tab
-            {...tabProps(0)}
-            component={Link}
+          <Item
+            icon={<Person sx={{ fontSize: '20px' }} />}
             label="Users"
             to="/users"
-            icon={<ListAltOutlined />}
-            iconPosition="start"
           />
-          <Tab
-            {...tabProps(1)}
-            component={Link}
+          <Item
+            icon={<AccountTree sx={{ fontSize: '20px' }} />}
             label="Work Flows"
             to="/workflows"
-            icon={<InsertDriveFileOutlined />}
-            iconPosition="start"
           />
-          <Tab
-            {...tabProps(2)}
-            component={Link}
+          <Item
+            icon={<ApartmentOutlined sx={{ fontSize: '20px' }} />}
             label="Departments"
             to="/departments"
-            icon={<MailOutline />}
-            iconPosition="start"
           />
         </Tabs>
       ) : (
         <Tabs value={value} onChange={handleChange} aria-label="navbar-tab">
-          <Tab
-            {...tabProps(0)}
-            component={Link}
+          <Item
+            icon={<ListAltOutlined sx={{ fontSize: '20px' }} />}
             label="All Requests"
             to="/"
-            icon={<ListAltOutlined />}
-            iconPosition="start"
           />
-          <Tab
-            {...tabProps(1)}
-            component={Link}
+          <Item
+            icon={<InsertDriveFileOutlined sx={{ fontSize: '20px' }} />}
             label="My Requests"
             to="/my-requests"
-            icon={<InsertDriveFileOutlined />}
-            iconPosition="start"
           />
-          <Tab
-            {...tabProps(2)}
-            component={Link}
+          <Item
+            icon={<MailOutline sx={{ fontSize: '20px' }} />}
             label="Inbox"
             to="/inbox"
-            icon={<MailOutline />}
-            iconPosition="start"
           />
         </Tabs>
       )}

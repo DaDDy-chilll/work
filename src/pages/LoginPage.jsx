@@ -23,7 +23,14 @@ const LoginPage = () => {
             alt="Parami Login Logo"
           />
         </Box>
-        <Typography variant="h2" textAlign="center">
+        <Typography
+          sx={{
+            fontSize: '20px',
+            fontWeight: 'bold',
+            color: colors.black[100],
+          }}
+          textAlign="center"
+        >
           Login with your Email and Password
         </Typography>
         <LoginForm />

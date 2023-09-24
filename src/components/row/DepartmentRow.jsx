@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { TableBody } from '@mui/material';
+import { TableBody, Typography } from '@mui/material';
 import { StyledTableCell, StyledTableRow } from '../styled';
 
 const DepartmentRow = ({ payload }) => {
@@ -10,6 +10,11 @@ const DepartmentRow = ({ payload }) => {
           <StyledTableRow key={data?._id}>
             <StyledTableCell>{data?.departmentId}</StyledTableCell>
             <StyledTableCell>{data?.name}</StyledTableCell>
+            <StyledTableCell>
+              <Typography sx={{ textTransform: 'capitalize' }}>
+                {data?.type}
+              </Typography>
+            </StyledTableCell>
           </StyledTableRow>
         ))}
     </TableBody>

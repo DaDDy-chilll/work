@@ -5,6 +5,7 @@ import FormTextField from '../shared/FormTextField';
 import { loginSchema, loginValues } from '../../schema/auth.schema';
 import PasswordTextField from '../shared/PasswordTextField';
 import { useAuth } from '../../hooks/useAuth';
+import CustomFormLabel from '../shared/CustomFormLabel';
 
 const LoginForm = () => {
   const { login, isLoggingIn } = useAuth();
@@ -23,7 +24,7 @@ const LoginForm = () => {
         <form onSubmit={props.handleSubmit}>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, pb: 5 }}>
             <Box>
-              <label>Email</label>
+              <CustomFormLabel label="Email" />
               <FormTextField
                 type="text"
                 formProps={props}

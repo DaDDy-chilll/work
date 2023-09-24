@@ -103,6 +103,7 @@ const WorkFlowForm = ({ isOpen, onClose, onOpen }) => {
           });
         setFetchUserLoading(false);
       } catch (err) {
+        setFetchUserLoading(false);
         return toast.error(err.response.data.message);
       }
     }

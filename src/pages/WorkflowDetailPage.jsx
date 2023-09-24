@@ -3,7 +3,7 @@ import { Box, CircularProgress, Typography } from '@mui/material';
 import { colors } from '../assets/theme/theme';
 import DepartmentLists from '../components/form/DepartmentLists';
 import { useGetWorkflowDetail } from '../api/workflow';
-import { Navigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import DepartmentMemberLists from '../components/form/DepartmentMemberLists';
 import LinkButton from '../components/ui/LinkButton';
 
@@ -13,11 +13,13 @@ const Item = ({ fieldName, value }) => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        gap: '10px',
+        gap: 1,
         minWidth: '30%',
       }}
     >
-      <Typography variant="h4" fontWeight="bold">
+      <Typography
+        sx={{ fontSize: '16px', fontWeight: 'bold', color: colors.black[100] }}
+      >
         {fieldName}
       </Typography>
       {value}
@@ -26,6 +28,8 @@ const Item = ({ fieldName, value }) => {
 };
 
 const WorkflowDetailPage = () => {
+  const navigate = useNavigate();
+
   const { id } = useParams();
   const { data: workflow, isLoading: workflowLoading } =
     useGetWorkflowDetail(id);
@@ -62,7 +66,12 @@ const WorkflowDetailPage = () => {
         width: '80%',
       }}
     >
-      <Typography variant="h1">View Workflow Detail</Typography>
+      <Typography
+        variant="h2"
+        sx={{ fontWeight: 500, color: colors.black[100] }}
+      >
+        View Workflow Detail
+      </Typography>
       <Box
         bgcolor={colors.white[100]}
         borderRadius="1rem"
@@ -70,7 +79,7 @@ const WorkflowDetailPage = () => {
         px={5}
         sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}
       >
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Box sx={{ display: 'flex', columnGap: 5, rowGap: 3 }}>
           <Item fieldName="Workflow Title" value={workflow?.payload?.name} />
           <Item
             fieldName="Workflow Description"
@@ -85,7 +94,11 @@ const WorkflowDetailPage = () => {
           <DepartmentLists departments={payloads}>
             {payloads &&
               payloads.map((department, i) => (
-                <DepartmentMemberLists key={i} department={department} />
+                <DepartmentMemberLists
+                  key={i}
+                  department={department}
+                  isDetail={true}
+                />
               ))}
           </DepartmentLists>
         )}
@@ -102,7 +115,7 @@ const WorkflowDetailPage = () => {
           <LinkButton
             width="200px"
             innerText="Back"
-            onClick={() => Navigate('/workflows')}
+            onClick={() => navigate('/workflows')}
             variant="contained"
             color="primary"
           />
