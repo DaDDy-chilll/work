@@ -1,0 +1,17 @@
+.department_card::-webkit-scrollbar {
+    width: 7px;
+}
+
+.department_card::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 25px;
+}
+
+.department_card::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 25px;
+}
+
+.department_card::-webkit-scrollbar-thumb:hover {
+    background: #b3b3b3;
+}

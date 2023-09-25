@@ -1,0 +1,36 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #EDF1F7;
+}
+
+/* REMOVE TINY TEXT EDITOR WARNING */
+.tox-notification,
+.tox-notification--in,
+.tox-notification--warning {
+  display: none !important;
+  opacity: 0 !important;
+}
+
+/* SCROLL BAR */
+*::-webkit-scrollbar {
+  width: 7px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 25px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 25px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #b3b3b3;
+}

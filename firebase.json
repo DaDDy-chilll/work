@@ -1,8 +1,8 @@
 {
   "hosting": [
     {
-      "target": "production",
-      "public": "build",
+      "target": "development",
+      "public": "dist",
       "ignore": [
         "firebase.json",
         "**/.*",
@@ -16,8 +16,8 @@
       ]
     },
     {
-      "target": "development",
-      "public": "build",
+      "target": "production",
+      "public": "dist",
       "ignore": [
         "firebase.json",
         "**/.*",

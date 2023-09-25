@@ -8,7 +8,9 @@
         "development": [
           "parami-project-dev"
         ],
-        "production": ["parami-project"]
+        "production": [
+          "parami-project"
+        ]
       }
     }
   }
