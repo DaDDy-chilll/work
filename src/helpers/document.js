@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const transformLastActivity = (lastActivity) => {
   if (
     lastActivity === 'PREPARED' ||
@@ -28,10 +30,10 @@ export const transformDate = (createdAt) => {
   if (createdAt === '') {
     return createdAt;
   }
-  const date = new Date(createdAt);
-  const year = date.getFullYear();
-  const month = date.getMonth();
-  const day = date.getDate();
+
+  const year = moment(createdAt).utc().get('years');
+  const month = moment(createdAt).utc().get('months');
+  const day = moment(createdAt).utc().get('dates');
   return `${day} ${months[month]} ${year}`;
 };
 
@@ -39,9 +41,9 @@ export const transformTime = (createdAt) => {
   if (createdAt === '') {
     return createdAt;
   }
-  const date = new Date(createdAt);
-  let hour = date.getHours();
-  let minute = date.getMinutes();
+
+  let hour = moment(createdAt).utc().get('hours');
+  let minute = moment(createdAt).utc().get('minutes');
 
   let time = 'AM';
 

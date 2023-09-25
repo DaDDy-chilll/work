@@ -5,8 +5,6 @@ import { colors } from '../../assets/theme/theme';
 import { changeTextColor, transformDate, transformTime } from '../../helpers';
 
 const RemarkDetail = ({ remark }) => {
-  console.log(remark);
-
   const textColor = changeTextColor({ action: remark.action });
   return (
     <Box>
