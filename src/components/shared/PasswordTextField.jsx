@@ -6,12 +6,19 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useState } from 'react';
 import CustomFormLabel from './CustomFormLabel';
 
-const PasswordTextField = ({ formProps, width, label, name, placeholder }) => {
+const PasswordTextField = ({
+  formProps,
+  width,
+  label,
+  name,
+  placeholder,
+  required,
+}) => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
     <Box width={width}>
-      <CustomFormLabel label={label} />
+      <CustomFormLabel label={label} required={required} />
       <FormTextField
         type={showPassword ? 'text' : 'password'}
         formProps={formProps}

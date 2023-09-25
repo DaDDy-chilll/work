@@ -162,7 +162,7 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
             {!isChangePassword && (
               <Box sx={{ display: 'flex', gap: 2 }}>
                 <Box width="50%">
-                  <CustomFormLabel label="Name" />
+                  <CustomFormLabel label="Name" required={true} />
                   <FormTextField
                     type="text"
                     formProps={props}
@@ -171,7 +171,7 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
                   />
                 </Box>
                 <Box width="50%">
-                  <CustomFormLabel label="Email" />
+                  <CustomFormLabel label="Email" required={true} />
                   <FormTextField
                     disabled={oldData}
                     type="email"
@@ -184,13 +184,28 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
             )}
             {isChangePassword ? (
               <Box sx={{ display: 'flex', gap: 2 }}>
-                <PasswordTextField formProps={props} />
-                <PasswordTextField formProps={props} />
+                <PasswordTextField
+                  required={true}
+                  formProps={props}
+                  label="Password"
+                  name="password"
+                  placeholder="Enter Password"
+                  width="50%"
+                />
+                <PasswordTextField
+                  required={true}
+                  formProps={props}
+                  label="Confirm Password"
+                  name="confirmPassword"
+                  placeholder="Enter Confirm Password"
+                  width="50%"
+                />
               </Box>
             ) : (
               !oldData && (
                 <Box sx={{ display: 'flex', gap: 2 }}>
                   <PasswordTextField
+                    required={true}
                     formProps={props}
                     label="Password"
                     name="password"
@@ -198,6 +213,7 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
                     width="50%"
                   />
                   <PasswordTextField
+                    required={true}
                     formProps={props}
                     label="Confirm Password"
                     name="confirmPassword"
@@ -210,9 +226,9 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
             {!isChangePassword && (
               <Box sx={{ display: 'flex', gap: 2 }}>
                 <Box width="48%">
-                  <CustomFormLabel label="Select Department" />
+                  <CustomFormLabel label="Select Department" required={true} />
                   <FormSelect
-                    placeholder="Select Work Flow"
+                    placeholder="Select Department"
                     name="department"
                     formProps={props}
                   >
@@ -225,7 +241,7 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
                   </FormSelect>
                 </Box>
                 <Box width="50%">
-                  <CustomFormLabel label="Job Label" />
+                  <CustomFormLabel label="Job Label" required={true} />
                   <FormTextField
                     type="text"
                     formProps={props}
@@ -237,6 +253,7 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
             )}
             {!isChangePassword && (
               <>
+                <CustomFormLabel label="Permission" />
                 <Box
                   sx={{
                     display: 'grid',

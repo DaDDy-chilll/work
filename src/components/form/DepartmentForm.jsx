@@ -38,12 +38,12 @@ const DepartmentForm = ({ onClose }) => {
         <form onSubmit={props.handleSubmit}>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <Box>
-              <CustomFormLabel label="Subject" />
+              <CustomFormLabel label="Department Name" required={true} />
               <FormTextField
                 type="text"
                 formProps={props}
                 name="name"
-                placeholder="Subject"
+                placeholder="Enter Department Name"
               />
             </Box>
             <Box>
