@@ -2,9 +2,11 @@
 import { ApartmentOutlined } from '@mui/icons-material';
 import { Box, Typography } from '@mui/material';
 import { colors } from '../../assets/theme/theme';
-import { changeTextColor } from '../../helpers';
+import { changeTextColor, transformDate, transformTime } from '../../helpers';
 
 const RemarkDetail = ({ remark }) => {
+  console.log(remark);
+
   const textColor = changeTextColor({ action: remark.action });
   return (
     <Box>
@@ -39,6 +41,17 @@ const RemarkDetail = ({ remark }) => {
         style={{ fontSize: '16px', fontWeight: 400 }}
         dangerouslySetInnerHTML={{ __html: remark.content }}
       />
+      <Typography
+        fontSize="14px"
+        fontWeight={500}
+        component="span"
+        color={colors.darkBlue[800]}
+      >
+        {transformDate(remark?.createdAt)}{' '}
+        <span style={{ color: colors.red[800] }}>
+          {transformTime(remark?.createdAt)}
+        </span>
+      </Typography>
     </Box>
   );
 };
