@@ -62,7 +62,7 @@ const AllRequestsPage = () => {
       <Box p={3}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           <SearchBox setSearch={setSearchValue} placeholder="Search Subject" />
-          {user?.department?.type === 'Authorized' && (
+          {user?.department?.type === 'authorized' && (
             <DepartmentFilter
               departments={departments}
               filteredDepartments={filteredDepartments}
