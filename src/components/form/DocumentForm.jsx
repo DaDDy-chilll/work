@@ -55,7 +55,7 @@ const DocumentForm = ({ oldData, onClick }) => {
     let fileUrls = [];
     let pdfFiles = [];
 
-    for (let i = 0; i < inputFiles.length; i++) {
+    for (let i = 0; i < inputFiles?.length; i++) {
       const file = inputFiles[i];
       files.push(file);
       if (file.type?.includes('image')) {

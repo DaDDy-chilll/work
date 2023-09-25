@@ -11,7 +11,7 @@ export const getAllRequests = async (params) => {
 export const useGetAllRequests = (params) => {
   return useQuery({
     queryKey: ['all', params],
-    queryFn: () => getAllRequests(params)
+    queryFn: () => getAllRequests(params),
   });
 };
 
@@ -24,7 +24,7 @@ export const getMyRequests = async (params) => {
 export const useGetMyRequests = (params) => {
   return useQuery({
     queryKey: ['my-requests', params],
-    queryFn: () => getMyRequests(params)
+    queryFn: () => getMyRequests(params),
   });
 };
 
@@ -39,7 +39,7 @@ export const getInbox = async (params) => {
 export const useGetInbox = (params) => {
   return useQuery({
     queryKey: ['inbox', params],
-    queryFn: () => getInbox(params)
+    queryFn: () => getInbox(params),
   });
 };
 
@@ -65,8 +65,10 @@ const createRequest = async ({ data, attachments }) => {
     }
   });
 
-  for (let i = 0; i < attachments.length; i++) {
-    formData.append('attachments', attachments[i]);
+  if (attachments?.length !== 0) {
+    for (let i = 0; i < attachments?.length; i++) {
+      formData.append('attachments', attachments[i]);
+    }
   }
 
   return fetcher
