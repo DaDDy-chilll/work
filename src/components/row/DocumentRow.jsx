@@ -24,11 +24,15 @@ const DocumentRow = ({ payload }) => {
               </div>
             </StyledTableCell>
             <StyledTableCell>
-              <div style={{ width: '300px' }}>
-                {removeHtmlTags(data?.description).length > 45
-                  ? removeHtmlTags(data?.description).slice(0, 45) + '...'
-                  : removeHtmlTags(data?.description)}
-              </div>
+              <div
+                style={{ fontSize: '16px' }}
+                dangerouslySetInnerHTML={{
+                  __html:
+                    removeHtmlTags(data?.description).length > 45
+                      ? removeHtmlTags(data?.description).slice(0, 45) + '...'
+                      : removeHtmlTags(data?.description),
+                }}
+              />
             </StyledTableCell>
             <StyledTableCell>
               <DocumentCase documentCase={data?.isCaseClosed} />
