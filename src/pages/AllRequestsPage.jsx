@@ -9,11 +9,11 @@ import Navbar from '../components/Navbar';
 import SearchBox from '../components/shared/SearchBox';
 import DateRangeFilter from '../components/shared/DateRangeFilter';
 import { useAuth, useDateRangeFilter, useDepartmentFilter } from '../hooks';
-import { transformDate } from '../helpers';
 import DepartmentFilter from '../components/shared/DepartmentFilter';
 import CustomChip from '../components/shared/CustomChip';
 import { Clear } from '@mui/icons-material';
 import CustomPagination from '../components/shared/CustomPagination';
+import moment from 'moment';
 
 const AllRequestsPage = () => {
   const { user } = useAuth();
@@ -44,10 +44,21 @@ const AllRequestsPage = () => {
   // SEARCH
   const [searchValue, setSearchValue] = useState('');
 
+  const convertUtc = ({ startDate, endDate }) => {
+    const startTime = moment(startDate).utc().format();
+    let endTime = moment(endDate).utc().format();
+
+    if (startTime === endTime) {
+      endTime = moment(endDate).utc().add(1, 'days').format();
+    }
+
+    return { startTime, endTime };
+  };
+
   const { isError, error, data, isFetching } = useGetAllRequests({
     search: searchValue,
-    startDate: transformDate(date.startDate ? date.startDate : ''),
-    endDate: transformDate(date.endDate ? date.endDate : ''),
+    startDate: date.startDate && date.endDate ? convertUtc(date).startTime : '',
+    endDate: date.startDate && date.endDate ? convertUtc(date).endTime : '',
     departments: filteredDepartments.map((department) => department.id),
     sort: '-createdAt',
     page,
