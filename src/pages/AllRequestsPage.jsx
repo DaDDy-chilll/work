@@ -9,11 +9,11 @@ import Navbar from '../components/Navbar';
 import SearchBox from '../components/shared/SearchBox';
 import DateRangeFilter from '../components/shared/DateRangeFilter';
 import { useAuth, useDateRangeFilter, useDepartmentFilter } from '../hooks';
-import { transformDate } from '../helpers';
 import DepartmentFilter from '../components/shared/DepartmentFilter';
 import CustomChip from '../components/shared/CustomChip';
 import { Clear } from '@mui/icons-material';
 import CustomPagination from '../components/shared/CustomPagination';
+import moment from 'moment';
 
 const AllRequestsPage = () => {
   const { user } = useAuth();
@@ -38,16 +38,25 @@ const AllRequestsPage = () => {
   } = useDepartmentFilter();
 
   // DATE RANGE FILTER
-  const { date, openDate, setOpenDate, handleDateChange, handleRemoveDate } =
-    useDateRangeFilter();
+  const {
+    date,
+    openDate,
+    setOpenDate,
+    handleDateChange,
+    handleDateFilter,
+    handleRemoveDate,
+  } = useDateRangeFilter();
 
   // SEARCH
   const [searchValue, setSearchValue] = useState('');
 
+  console.log(moment(date.startDate).utc().format());
+  console.log(moment(date.endDate).utc().format());
+
   const { isError, error, data, isFetching } = useGetAllRequests({
     search: searchValue,
-    startDate: transformDate(date.startDate ? date.startDate : ''),
-    endDate: transformDate(date.endDate ? date.endDate : ''),
+    startDate: date.startDate ? moment(date.startDate).utc().format() : '',
+    endDate: date.startDate ? moment(date.endDate).utc().format() : '',
     departments: filteredDepartments.map((department) => department.id),
     sort: '-createdAt',
     page,
@@ -82,6 +91,7 @@ const AllRequestsPage = () => {
             openDate={openDate}
             setOpenDate={setOpenDate}
             handleDateChange={handleDateChange}
+            handleDateFilter={handleDateFilter}
             handleRemoveDate={handleRemoveDate}
           />
         </Box>

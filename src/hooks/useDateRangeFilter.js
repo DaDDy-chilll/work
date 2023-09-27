@@ -13,6 +13,8 @@ export const useDateRangeFilter = () => {
     setDate(ranges.selection);
   };
 
+  const handleDateFilter = () => {};
+
   const handleRemoveDate = () => {
     setDate({
       startDate: null,
@@ -21,5 +23,12 @@ export const useDateRangeFilter = () => {
     });
   };
 
-  return { date, openDate, setOpenDate, handleDateChange, handleRemoveDate };
+  return {
+    date,
+    openDate,
+    setOpenDate,
+    handleDateChange,
+    handleDateFilter,
+    handleRemoveDate,
+  };
 };

@@ -22,6 +22,8 @@ export const getQueryString = (params) => {
     }
   });
 
+  console.log({ sanitizedParams });
+
   const queryString = new URLSearchParams(sanitizedParams).toString();
 
   return queryString + departmentFilterQueryString;
