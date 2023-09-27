@@ -51,7 +51,18 @@ const RemarkForm = ({ onClose }) => {
     );
   };
 
-  const formActions = Object.values(ACTIONS).map((action) => ({
+  const { user } = useAuth();
+
+  let actions = [ACTIONS.COMMENT, ACTIONS.REJECT];
+  if (user.permissions.canApprove) {
+    actions.push(ACTIONS.APPROVE);
+  }
+
+  if (user.permissions.canVerify) {
+    actions.push(ACTIONS.VERIFY);
+  }
+
+  const formActions = Object.values(actions).map((action) => ({
     _id: action,
     value: action,
   }));
