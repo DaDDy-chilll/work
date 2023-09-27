@@ -69,7 +69,10 @@ const UserPermissions = ({ permissions }) => {
       <PermissionCheckbox label={PERMISSIONS.REJECT} defaultValue={true} />
       <PermissionCheckbox label={PERMISSIONS.ACKNOWLEDGE} defaultValue={true} />
       <PermissionCheckbox label={PERMISSIONS.REVERSE} defaultValue={true} />
-      <PermissionCheckbox label={PERMISSIONS.APPROVE} defaultValue={true} />
+      <PermissionCheckbox
+        label={PERMISSIONS.APPROVE}
+        defaultValue={permissions.canApprove}
+      />
 
       <PermissionCheckbox
         label={PERMISSIONS.VERIFY}
