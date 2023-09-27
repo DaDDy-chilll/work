@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { CalendarToday, Cancel } from '@mui/icons-material';
-import { Box, Button } from '@mui/material';
+import { Box } from '@mui/material';
 import { format } from 'date-fns';
 import { DateRangePicker } from 'react-date-range';
 import { colors } from '../../assets/theme/theme';
@@ -10,7 +10,6 @@ const DateRangeFilter = ({
   date,
   setOpenDate,
   handleDateChange,
-  handleDateFilter,
   handleRemoveDate,
 }) => {
   return (
@@ -42,9 +41,6 @@ const DateRangeFilter = ({
           onChange={handleDateChange}
         />
       )}
-      <Button variant="contained" color="primary" onClick={handleDateFilter}>
-        Filter
-      </Button>
     </div>
   );
 };

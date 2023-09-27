@@ -38,25 +38,27 @@ const AllRequestsPage = () => {
   } = useDepartmentFilter();
 
   // DATE RANGE FILTER
-  const {
-    date,
-    openDate,
-    setOpenDate,
-    handleDateChange,
-    handleDateFilter,
-    handleRemoveDate,
-  } = useDateRangeFilter();
+  const { date, openDate, setOpenDate, handleDateChange, handleRemoveDate } =
+    useDateRangeFilter();
 
   // SEARCH
   const [searchValue, setSearchValue] = useState('');
 
-  console.log(moment(date.startDate).utc().format());
-  console.log(moment(date.endDate).utc().format());
+  const convertUtc = ({ startDate, endDate }) => {
+    const startTime = moment(startDate).utc().format();
+    let endTime = moment(endDate).utc().format();
+
+    if (startTime === endTime) {
+      endTime = moment(endDate).utc().add(1, 'days').format();
+    }
+
+    return { startTime, endTime };
+  };
 
   const { isError, error, data, isFetching } = useGetAllRequests({
     search: searchValue,
-    startDate: date.startDate ? moment(date.startDate).utc().format() : '',
-    endDate: date.startDate ? moment(date.endDate).utc().format() : '',
+    startDate: date.startDate && date.endDate ? convertUtc(date).startTime : '',
+    endDate: date.startDate && date.endDate ? convertUtc(date).endTime : '',
     departments: filteredDepartments.map((department) => department.id),
     sort: '-createdAt',
     page,
@@ -91,7 +93,6 @@ const AllRequestsPage = () => {
             openDate={openDate}
             setOpenDate={setOpenDate}
             handleDateChange={handleDateChange}
-            handleDateFilter={handleDateFilter}
             handleRemoveDate={handleRemoveDate}
           />
         </Box>
