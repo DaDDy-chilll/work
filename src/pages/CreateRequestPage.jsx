@@ -3,9 +3,12 @@ import { colors } from '../assets/theme/theme';
 import { transformLocalTime } from '../helpers';
 import DocumentForm from '../components/form/DocumentForm';
 import { useNavigate } from 'react-router';
+import { usePageTitle } from '../hooks';
 
 const CreateRequestPage = () => {
   const navigate = useNavigate();
+  // eslint-disable-next-line no-unused-vars
+  const { pageTitle, setPageTitle } = usePageTitle('Create Request');
 
   return (
     <Box

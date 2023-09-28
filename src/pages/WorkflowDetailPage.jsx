@@ -6,6 +6,7 @@ import { useGetWorkflowDetail } from '../api/workflow';
 import { useNavigate, useParams } from 'react-router-dom';
 import DepartmentMemberLists from '../components/form/DepartmentMemberLists';
 import LinkButton from '../components/ui/LinkButton';
+import { usePageTitle } from '../hooks';
 
 const Item = ({ fieldName, value }) => {
   return (
@@ -28,6 +29,9 @@ const Item = ({ fieldName, value }) => {
 };
 
 const WorkflowDetailPage = () => {
+  // eslint-disable-next-line no-unused-vars
+  const { pageTitle, setPageTitle } = usePageTitle('Workflow Detail');
+
   const navigate = useNavigate();
 
   const { id } = useParams();

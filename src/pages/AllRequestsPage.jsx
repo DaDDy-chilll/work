@@ -8,7 +8,12 @@ import { useState } from 'react';
 import Navbar from '../components/Navbar';
 import SearchBox from '../components/shared/SearchBox';
 import DateRangeFilter from '../components/shared/DateRangeFilter';
-import { useAuth, useDateRangeFilter, useDepartmentFilter } from '../hooks';
+import {
+  useAuth,
+  useDateRangeFilter,
+  useDepartmentFilter,
+  usePageTitle,
+} from '../hooks';
 import DepartmentFilter from '../components/shared/DepartmentFilter';
 import CustomChip from '../components/shared/CustomChip';
 import { Clear } from '@mui/icons-material';
@@ -16,6 +21,10 @@ import CustomPagination from '../components/shared/CustomPagination';
 import moment from 'moment';
 
 const AllRequestsPage = () => {
+  // PAGE TITLE
+  // eslint-disable-next-line no-unused-vars
+  const { pageTitle, setPageTitle } = usePageTitle('All Requests');
+
   const { user } = useAuth();
 
   const [page, setPage] = useState(1);

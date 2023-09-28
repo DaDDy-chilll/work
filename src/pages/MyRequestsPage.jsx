@@ -10,8 +10,12 @@ import Navbar from '../components/Navbar';
 import { useNavigate } from 'react-router-dom';
 import { AddOutlined } from '@mui/icons-material';
 import CustomPagination from '../components/shared/CustomPagination';
+import { usePageTitle } from '../hooks';
 
 const MyRequestPage = () => {
+  // eslint-disable-next-line no-unused-vars
+  const { pageTitle, setPageTitle } = usePageTitle('My Requests');
+
   const navigate = useNavigate();
 
   const [page, setPage] = useState(1);
