@@ -2,7 +2,7 @@
 import { ApartmentOutlined } from '@mui/icons-material';
 import { Box, Typography } from '@mui/material';
 import { colors } from '../../assets/theme/theme';
-import { changeTextColor, transformDate, transformTime } from '../../helpers';
+import { changeTextColor, transformLocalTime } from '../../helpers';
 
 const RemarkDetail = ({ remark }) => {
   const textColor = changeTextColor({ action: remark.action });
@@ -45,9 +45,9 @@ const RemarkDetail = ({ remark }) => {
         component="span"
         color={colors.darkBlue[800]}
       >
-        {transformDate(remark?.createdAt)}{' '}
+        {transformLocalTime(remark?.createdAt).date}{' '}
         <span style={{ color: colors.red[800] }}>
-          {transformTime(remark?.createdAt)}
+          {transformLocalTime(remark?.createdAt).time}
         </span>
       </Typography>
     </Box>
