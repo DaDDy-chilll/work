@@ -19,13 +19,19 @@ const DepartmentForm = ({ onClose }) => {
   const queryClient = useQueryClient();
 
   const handleCreate = (values) => {
-    createMutation(values, {
-      onSuccess: () => {
-        toast.success('ok');
-        queryClient.invalidateQueries(['departments']);
-        onClose();
+    createMutation(
+      {
+        name: values.name,
+        type: values.isAuthorized ? 'authorized' : 'normal',
       },
-    });
+      {
+        onSuccess: () => {
+          toast.success('ok');
+          queryClient.invalidateQueries(['departments']);
+          onClose();
+        },
+      },
+    );
   };
 
   return (
