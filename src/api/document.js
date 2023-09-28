@@ -133,3 +133,19 @@ export const useChangeStatus = () => {
     mutationFn: changeStatus,
   });
 };
+
+const rejectDocument = async ({ data, id }) => {
+  return fetcher
+    .post(`/documents/${id}/reject`, {
+      remark: data.remark,
+    })
+    .then((res) => {
+      return res.data;
+    });
+};
+
+export const useRejectDocument = () => {
+  return useMutation({
+    mutationFn: rejectDocument,
+  });
+};
