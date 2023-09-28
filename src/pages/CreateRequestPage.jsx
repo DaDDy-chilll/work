@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import { colors } from '../assets/theme/theme';
-import { transformDate } from '../helpers';
+import { transformLocalTime } from '../helpers';
 import DocumentForm from '../components/form/DocumentForm';
 import { useNavigate } from 'react-router';
 
@@ -38,7 +38,7 @@ const CreateRequestPage = () => {
             color: colors.black[100],
           }}
         >
-          {transformDate(Date.now())}
+          {transformLocalTime(Date.now()).date}
         </Box>
         <DocumentForm
           oldData={undefined}

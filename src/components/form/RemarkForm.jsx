@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { remarkSchema, remarkValues } from '../../schema/document.schema';
 import FormSelect from '../shared/FormSelect';
 import { ACTIONS } from '../../constants/document';
-import { useChangeStatus } from '../../api/document';
+import { useChangeStatus, useRejectDocument } from '../../api/document';
 import { toast } from 'react-toastify';
 import { useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom';
@@ -36,11 +36,28 @@ const RemarkForm = ({ onClose }) => {
   const { mutate: changeStatusMutation, isLoading: changeStatusLoading } =
     useChangeStatus();
 
+  const { mutate: rejectMutation, isLoading: rejectLoading } =
+    useRejectDocument();
+
   const queryClient = useQueryClient();
 
-  const handleChangeStatus = (values) => {
+  const handleChangeStatus = ({ action }) => {
+    if (action === ACTIONS.REJECT) {
+      rejectMutation(
+        { data: { remark }, id },
+        {
+          onSuccess: () => {
+            toast.success('ok');
+            queryClient.invalidateQueries(['document', id]);
+            onClose();
+          },
+        },
+      );
+      return;
+    }
+
     changeStatusMutation(
-      { data: { ...values, remark }, id },
+      { data: { action, remark }, id },
       {
         onSuccess: () => {
           toast.success('ok');
@@ -100,7 +117,11 @@ const RemarkForm = ({ onClose }) => {
             <FormActionButtons
               onClick={onClose}
               innerText="Save"
-              loading={changeStatusLoading}
+              loading={
+                props.values.action === ACTIONS.REJECT
+                  ? rejectLoading
+                  : changeStatusLoading
+              }
               justifyContent="right"
               width="200px"
             />

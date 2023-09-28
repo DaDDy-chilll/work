@@ -3,7 +3,7 @@ import { Box, CircularProgress, IconButton, Typography } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetDocumentDetail } from '../api/document';
 import { colors } from '../assets/theme/theme';
-import { transformDate } from '../helpers';
+import { transformLocalTime } from '../helpers';
 import { ArrowBack } from '@mui/icons-material';
 import Attachments from '../components/ui/Attachments';
 import Remarks from '../components/ui/Remarks';
@@ -84,7 +84,7 @@ const DocumentDetailPage = () => {
                     sx={{ fontSize: '22px', color: colors.black[100] }}
                   />
                 </IconButton>
-                {transformDate(document?.payload?.updatedAt)}
+                {transformLocalTime(document?.payload?.updatedAt).date}
               </Box>
               <Box
                 sx={{

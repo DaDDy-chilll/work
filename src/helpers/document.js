@@ -1,5 +1,3 @@
-import moment from 'moment';
-
 export const transformLastActivity = (lastActivity) => {
   if (
     lastActivity === 'PREPARED' ||
@@ -26,24 +24,19 @@ const months = [
   'Dec',
 ];
 
-export const transformDate = (createdAt) => {
+export const transformLocalTime = (createdAt) => {
   if (createdAt === '') {
     return createdAt;
   }
 
-  const year = moment(createdAt).utc().get('years');
-  const month = moment(createdAt).utc().get('months');
-  const day = moment(createdAt).utc().get('dates');
-  return `${day} ${months[month]} ${year}`;
-};
+  const date = new Date(createdAt);
 
-export const transformTime = (createdAt) => {
-  if (createdAt === '') {
-    return createdAt;
-  }
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const day = date.getDate();
 
-  let hour = moment(createdAt).utc().get('hours');
-  let minute = moment(createdAt).utc().get('minutes');
+  let hour = date.getHours();
+  let minute = date.getMinutes();
 
   let time = 'AM';
 
@@ -60,5 +53,8 @@ export const transformTime = (createdAt) => {
     minute = `0${minute}`;
   }
 
-  return `${hour}:${minute} ${time}`;
+  return {
+    date: `${day} ${months[month]} ${year}`,
+    time: `${hour}:${minute} ${time}`,
+  };
 };

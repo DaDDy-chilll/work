@@ -15,6 +15,7 @@ import { useCreateWorkflow } from '../../api';
 import { useQueryClient } from 'react-query';
 import { Box, CircularProgress } from '@mui/material';
 import DepartmentMemberLists from './DepartmentMemberLists';
+import { useNavigate } from 'react-router-dom';
 
 const WorkFlowForm = ({ isOpen, onClose, onOpen }) => {
   const [selectedDepartments, setSelectedDepartments] = useState([]);
@@ -165,6 +166,7 @@ const WorkFlowForm = ({ isOpen, onClose, onOpen }) => {
   const { mutate: createMutation, isLoading: createLoading } =
     useCreateWorkflow();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const handleCreate = (values) => {
     const departmentOrders = selectedDepartments.map((department) => ({
@@ -185,6 +187,7 @@ const WorkFlowForm = ({ isOpen, onClose, onOpen }) => {
           toast.success('ok');
           queryClient.invalidateQueries(['workflows']);
           onClose();
+          navigate('/workflows');
         },
       },
     );
