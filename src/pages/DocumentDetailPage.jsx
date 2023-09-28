@@ -14,6 +14,7 @@ import { useDisclosure } from '../hooks/useDisclosure';
 import Modal from '../components/ui/Modal';
 import RemarkForm from '../components/form/RemarkForm';
 import ModalButton from '../components/ui/ModalButton';
+import { usePageTitle } from '../hooks';
 
 const Item = ({ fieldName, value }) => {
   return (
@@ -36,6 +37,9 @@ const Item = ({ fieldName, value }) => {
 };
 
 const DocumentDetailPage = () => {
+  // eslint-disable-next-line no-unused-vars
+  const { pageTitle, setPageTitle } = usePageTitle('Document Detail');
+
   const { id } = useParams();
 
   const { user } = useAuth();

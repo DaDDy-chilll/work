@@ -4,8 +4,12 @@ import { transformLocalTime } from '../helpers';
 import DocumentForm from '../components/form/DocumentForm';
 import { useGetDocumentDetail } from '../api';
 import { useNavigate, useParams } from 'react-router-dom';
+import { usePageTitle } from '../hooks';
 
 const EditRequestPage = () => {
+  // eslint-disable-next-line no-unused-vars
+  const { pageTitle, setPageTitle } = usePageTitle('Edit Request');
+
   const { id } = useParams();
   const navigate = useNavigate();
 

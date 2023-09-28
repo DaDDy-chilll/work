@@ -3,8 +3,12 @@ import Parami_Login_Bg from '../assets/images/parami_login_bg.jpg';
 import Parami_Login_Logo from '../assets/images/ParamiLogo.jpg';
 import { colors } from '../assets/theme/theme';
 import LoginForm from '../components/form/LoginForm';
+import { usePageTitle } from '../hooks';
 
 const LoginPage = () => {
+  // eslint-disable-next-line no-unused-vars
+  const { pageTitle, setPageTitle } = usePageTitle('Login');
+
   return (
     <Box sx={{ position: 'relative' }}>
       <img

@@ -12,8 +12,12 @@ import { AddOutlined } from '@mui/icons-material';
 import Navbar from '../components/Navbar';
 import ModalButton from '../components/ui/ModalButton';
 import CustomPagination from '../components/shared/CustomPagination';
+import { usePageTitle } from '../hooks';
 
 const DepartmentsPage = () => {
+  // eslint-disable-next-line no-unused-vars
+  const { pageTitle, setPageTitle } = usePageTitle('Departments');
+
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [page, setPage] = useState(1);
