@@ -15,7 +15,11 @@ const InboxPage = () => {
 
   const [page, setPage] = useState(1);
 
-  const { isError, error, data, isFetching } = useGetInbox(page);
+  const { isError, error, data, isFetching } = useGetInbox({
+    sort: '-createdAt',
+    page,
+    limit: 10,
+  });
 
   if (isError) return <p>Error: {error?.response?.data?.message}</p>;
 
