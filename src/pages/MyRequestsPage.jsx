@@ -20,7 +20,11 @@ const MyRequestPage = () => {
 
   const [page, setPage] = useState(1);
 
-  const { isError, error, data, isFetching } = useGetMyRequests(page);
+  const { isError, error, data, isFetching } = useGetMyRequests({
+    sort: '-createdAt',
+    page,
+    limit: 10,
+  });
 
   if (isError) return <p>Error: {error?.response?.data?.message}</p>;
 
