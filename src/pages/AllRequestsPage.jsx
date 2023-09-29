@@ -55,10 +55,10 @@ const AllRequestsPage = () => {
 
   const convertUtc = ({ startDate, endDate }) => {
     const startTime = moment(startDate).utc().format();
-    let endTime = moment(endDate).utc().format();
+    let endTime = moment(endDate).add(1, 'days').utc().format();
 
     if (startTime === endTime) {
-      endTime = moment(endDate).utc().add(1, 'days').format();
+      endTime = moment(endDate).add(1, 'days').utc().format();
     }
 
     return { startTime, endTime };
