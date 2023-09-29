@@ -1,11 +1,14 @@
 import { Box, Typography } from '@mui/material';
 import { colors } from '../assets/theme/theme';
-import { transformDate } from '../helpers';
+import { transformLocalTime } from '../helpers';
 import DocumentForm from '../components/form/DocumentForm';
 import { useNavigate } from 'react-router';
+import { usePageTitle } from '../hooks';
 
 const CreateRequestPage = () => {
   const navigate = useNavigate();
+  // eslint-disable-next-line no-unused-vars
+  const { pageTitle, setPageTitle } = usePageTitle('Create Request');
 
   return (
     <Box
@@ -38,7 +41,7 @@ const CreateRequestPage = () => {
             color: colors.black[100],
           }}
         >
-          {transformDate(Date.now())}
+          {transformLocalTime(Date.now()).date}
         </Box>
         <DocumentForm
           oldData={undefined}

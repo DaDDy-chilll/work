@@ -25,6 +25,7 @@ import { useQueryClient } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import WorkflowRoute from '../ui/WorkflowRoute';
 import CustomFormLabel from '../shared/CustomFormLabel';
+import { useAuth } from '../../hooks';
 
 const DocumentForm = ({ oldData, onClick }) => {
   const { id } = useParams();
@@ -122,6 +123,10 @@ const DocumentForm = ({ oldData, onClick }) => {
     );
   };
 
+  const { user } = useAuth();
+
+  console.log(user.permissions.canEditAmount);
+
   return (
     <Formik
       initialValues={oldData ? oldData : initialValues}
@@ -149,17 +154,7 @@ const DocumentForm = ({ oldData, onClick }) => {
                 multiline={true}
               />
             </Box>
-            {oldData ? (
-              <Box>
-                <CustomFormLabel label="Amount" />
-                <FormTextField
-                  type="text"
-                  formProps={props}
-                  name="amount"
-                  placeholder="Amount"
-                />
-              </Box>
-            ) : (
+            {!oldData ? (
               <Box>
                 <CustomFormLabel label="Select Work Flow" />
                 <FormSelect
@@ -178,6 +173,18 @@ const DocumentForm = ({ oldData, onClick }) => {
                     ))}
                 </FormSelect>
               </Box>
+            ) : (
+              user.permissions.canEditAmount && (
+                <Box>
+                  <CustomFormLabel label="Amount" />
+                  <FormTextField
+                    type="text"
+                    formProps={props}
+                    name="amount"
+                    placeholder="Amount"
+                  />
+                </Box>
+              )
             )}
 
             <RichTextEditor text={description} setText={setDescription} />

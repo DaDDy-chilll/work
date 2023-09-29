@@ -5,6 +5,7 @@ import { useGetUserDetail } from '../api/user';
 import { colors } from '../assets/theme/theme';
 import LinkButton from '../components/ui/LinkButton';
 import { PERMISSIONS } from '../constants/auth';
+import { usePageTitle } from '../hooks';
 
 const Item = ({ fieldName, value }) => {
   return (
@@ -69,7 +70,10 @@ const UserPermissions = ({ permissions }) => {
       <PermissionCheckbox label={PERMISSIONS.REJECT} defaultValue={true} />
       <PermissionCheckbox label={PERMISSIONS.ACKNOWLEDGE} defaultValue={true} />
       <PermissionCheckbox label={PERMISSIONS.REVERSE} defaultValue={true} />
-      <PermissionCheckbox label={PERMISSIONS.APPROVE} defaultValue={true} />
+      <PermissionCheckbox
+        label={PERMISSIONS.APPROVE}
+        defaultValue={permissions.canApprove}
+      />
 
       <PermissionCheckbox
         label={PERMISSIONS.VERIFY}
@@ -92,6 +96,9 @@ const UserPermissions = ({ permissions }) => {
 };
 
 const UserDetailPage = () => {
+  // eslint-disable-next-line no-unused-vars
+  const { pageTitle, setPageTitle } = usePageTitle('User Detail');
+
   const { id } = useParams();
 
   const { data: user, isLoading } = useGetUserDetail(id);

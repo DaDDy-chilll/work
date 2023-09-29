@@ -3,7 +3,7 @@ import { Box, CircularProgress, IconButton, Typography } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetDocumentDetail } from '../api/document';
 import { colors } from '../assets/theme/theme';
-import { transformDate } from '../helpers';
+import { transformLocalTime } from '../helpers';
 import { ArrowBack } from '@mui/icons-material';
 import Attachments from '../components/ui/Attachments';
 import Remarks from '../components/ui/Remarks';
@@ -14,6 +14,7 @@ import { useDisclosure } from '../hooks/useDisclosure';
 import Modal from '../components/ui/Modal';
 import RemarkForm from '../components/form/RemarkForm';
 import ModalButton from '../components/ui/ModalButton';
+import { usePageTitle } from '../hooks';
 
 const Item = ({ fieldName, value }) => {
   return (
@@ -36,6 +37,9 @@ const Item = ({ fieldName, value }) => {
 };
 
 const DocumentDetailPage = () => {
+  // eslint-disable-next-line no-unused-vars
+  const { pageTitle, setPageTitle } = usePageTitle('Document Detail');
+
   const { id } = useParams();
 
   const { user } = useAuth();
@@ -84,7 +88,7 @@ const DocumentDetailPage = () => {
                     sx={{ fontSize: '22px', color: colors.black[100] }}
                   />
                 </IconButton>
-                {transformDate(document?.payload?.updatedAt)}
+                {transformLocalTime(document?.payload?.updatedAt).date}
               </Box>
               <Box
                 sx={{
@@ -111,7 +115,7 @@ const DocumentDetailPage = () => {
                   }}
                 >
                   <div
-                    style={{ fontSize: '16px' }}
+                    style={{ fontSize: '16px', wordWrap: 'break-word' }}
                     dangerouslySetInnerHTML={{
                       __html: document?.payload?.description,
                     }}

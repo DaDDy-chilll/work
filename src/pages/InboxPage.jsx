@@ -7,8 +7,12 @@ import { DocumentColumn } from '../components/column/DocumentColumn';
 import { useState } from 'react';
 import Navbar from '../components/Navbar';
 import CustomPagination from '../components/shared/CustomPagination';
+import { usePageTitle } from '../hooks';
 
 const InboxPage = () => {
+  // eslint-disable-next-line no-unused-vars
+  const { pageTitle, setPageTitle } = usePageTitle('Inbox');
+
   const [page, setPage] = useState(1);
 
   const { isError, error, data, isFetching } = useGetInbox(page);

@@ -8,14 +8,23 @@ import { useState } from 'react';
 import Navbar from '../components/Navbar';
 import SearchBox from '../components/shared/SearchBox';
 import DateRangeFilter from '../components/shared/DateRangeFilter';
-import { useAuth, useDateRangeFilter, useDepartmentFilter } from '../hooks';
-import { transformDate } from '../helpers';
+import {
+  useAuth,
+  useDateRangeFilter,
+  useDepartmentFilter,
+  usePageTitle,
+} from '../hooks';
 import DepartmentFilter from '../components/shared/DepartmentFilter';
 import CustomChip from '../components/shared/CustomChip';
 import { Clear } from '@mui/icons-material';
 import CustomPagination from '../components/shared/CustomPagination';
+import moment from 'moment';
 
 const AllRequestsPage = () => {
+  // PAGE TITLE
+  // eslint-disable-next-line no-unused-vars
+  const { pageTitle, setPageTitle } = usePageTitle('All Requests');
+
   const { user } = useAuth();
 
   const [page, setPage] = useState(1);
@@ -44,10 +53,21 @@ const AllRequestsPage = () => {
   // SEARCH
   const [searchValue, setSearchValue] = useState('');
 
+  const convertUtc = ({ startDate, endDate }) => {
+    const startTime = moment(startDate).utc().format();
+    let endTime = moment(endDate).add(1, 'days').utc().format();
+
+    if (startTime === endTime) {
+      endTime = moment(endDate).add(1, 'days').utc().format();
+    }
+
+    return { startTime, endTime };
+  };
+
   const { isError, error, data, isFetching } = useGetAllRequests({
     search: searchValue,
-    startDate: transformDate(date.startDate ? date.startDate : ''),
-    endDate: transformDate(date.endDate ? date.endDate : ''),
+    startDate: date.startDate && date.endDate ? convertUtc(date).startTime : '',
+    endDate: date.startDate && date.endDate ? convertUtc(date).endTime : '',
     departments: filteredDepartments.map((department) => department.id),
     sort: '-createdAt',
     page,

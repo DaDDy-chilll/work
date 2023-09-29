@@ -21,5 +21,11 @@ export const useDateRangeFilter = () => {
     });
   };
 
-  return { date, openDate, setOpenDate, handleDateChange, handleRemoveDate };
+  return {
+    date,
+    openDate,
+    setOpenDate,
+    handleDateChange,
+    handleRemoveDate,
+  };
 };

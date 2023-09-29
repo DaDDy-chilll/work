@@ -13,8 +13,12 @@ import Navbar from '../components/Navbar';
 import ModalButton from '../components/ui/ModalButton';
 import SearchBox from '../components/shared/SearchBox';
 import CustomPagination from '../components/shared/CustomPagination';
+import { usePageTitle } from '../hooks';
 
 const UsersPage = () => {
+  // eslint-disable-next-line no-unused-vars
+  const { pageTitle, setPageTitle } = usePageTitle('Users');
+
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [page, setPage] = useState(1);

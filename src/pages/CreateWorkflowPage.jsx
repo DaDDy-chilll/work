@@ -3,8 +3,12 @@ import { colors } from '../assets/theme/theme';
 import WorkFlowForm from '../components/form/WorkFlowForm';
 import FormProgressBar from '../components/form/FormProgressBar';
 import { useDisclosure } from '../hooks/useDisclosure';
+import { usePageTitle } from '../hooks';
 
 const CreateWorkflowPage = () => {
+  // eslint-disable-next-line no-unused-vars
+  const { pageTitle, setPageTitle } = usePageTitle('Create Workflow');
+
   const { isOpen, onClose, onOpen } = useDisclosure();
   return (
     <Box
