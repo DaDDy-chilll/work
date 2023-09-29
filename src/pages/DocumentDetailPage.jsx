@@ -115,7 +115,7 @@ const DocumentDetailPage = () => {
                   }}
                 >
                   <div
-                    style={{ fontSize: '16px' }}
+                    style={{ fontSize: '16px', wordWrap: 'break-word' }}
                     dangerouslySetInnerHTML={{
                       __html: document?.payload?.description,
                     }}
