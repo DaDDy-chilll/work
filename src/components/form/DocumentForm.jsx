@@ -3,6 +3,7 @@ import { Formik } from 'formik';
 import { useState } from 'react';
 import {
   createSchema,
+  editAmountSchema,
   editSchema,
   initialValues,
 } from '../../schema/document.schema';
@@ -125,12 +126,16 @@ const DocumentForm = ({ oldData, onClick }) => {
 
   const { user } = useAuth();
 
-  console.log(user.permissions.canEditAmount);
-
   return (
     <Formik
       initialValues={oldData ? oldData : initialValues}
-      validationSchema={oldData ? editSchema : createSchema}
+      validationSchema={
+        user.permissions.canEditAmount && oldData
+          ? editAmountSchema
+          : oldData
+          ? editSchema
+          : createSchema
+      }
       onSubmit={oldData ? handleEdit : handleCreate}
     >
       {(props) => (

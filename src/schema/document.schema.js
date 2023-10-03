@@ -11,6 +11,10 @@ export const createSchema = yup.object().shape({
 
 export const editSchema = yup.object().shape({
   name: yup.string().required('Subject is required'),
+});
+
+export const editAmountSchema = yup.object().shape({
+  name: yup.string().required('Subject is required'),
   amount: yup.number().integer().min(0).required('Amount is required'),
 });
 
