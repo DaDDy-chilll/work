@@ -97,8 +97,10 @@ const editRequest = async ({ data, attachments, id }) => {
     }
   });
 
-  for (let i = 0; i < attachments.length; i++) {
-    formData.append('attachments', attachments[i]);
+  if (attachments?.length !== 0) {
+    for (let i = 0; i < attachments?.length; i++) {
+      formData.append('attachments', attachments[i]);
+    }
   }
 
   return fetcher
