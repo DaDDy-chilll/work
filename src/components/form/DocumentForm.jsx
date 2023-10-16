@@ -46,9 +46,9 @@ const DocumentForm = ({ oldData, onClick }) => {
     oldData ? oldData.description : '',
   );
 
-  const [files, setFiles] = useState();
-  const [pdfFiles, setPdfFiles] = useState();
-  const [imageUrls, setImageUrls] = useState();
+  const [files, setFiles] = useState([]);
+  const [pdfFiles, setPdfFiles] = useState([]);
+  const [imageUrls, setImageUrls] = useState([]);
 
   const handleFileChange = (event) => {
     const inputFiles = event.target.files;
@@ -66,9 +66,9 @@ const DocumentForm = ({ oldData, onClick }) => {
         pdfFiles.push(file.name);
       }
     }
-    setFiles(files);
-    setImageUrls(fileUrls);
-    setPdfFiles(pdfFiles);
+    setFiles((prev) => [...prev, ...files]);
+    setImageUrls((prev) => [...prev, ...fileUrls]);
+    setPdfFiles((prev) => [...prev, ...pdfFiles]);
   };
 
   const handleDelete = ({ url, name }) => {
