@@ -14,7 +14,14 @@ const AttachmentDetail = ({ children, attachment }) => {
       {children}
     </Box>
   ) : (
-    <a href={attachment.url}>{children}</a>
+    <Box
+      sx={{ maxWidth: '100%', height: '180px' }}
+      onClick={() =>
+        handleClick({ url: attachment.url, filename: attachment.filename })
+      }
+    >
+      <a href={attachment.url}>{children}</a>
+    </Box>
   );
 };
 
