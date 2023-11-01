@@ -22,6 +22,7 @@ import { toast } from 'react-toastify';
 import { useQueryClient } from 'react-query';
 import PasswordTextField from '../shared/PasswordTextField';
 import CustomFormLabel from '../shared/CustomFormLabel';
+import PasswordPolicy from '../ui/PasswordPolicy';
 
 const UserForm = ({ onClose, oldData, isChangePassword }) => {
   const { data } = useGetAllDepartments({
@@ -182,47 +183,6 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
                 </Box>
               </Box>
             )}
-            {isChangePassword ? (
-              <Box sx={{ display: 'flex', gap: 2 }}>
-                <PasswordTextField
-                  required={true}
-                  formProps={props}
-                  label="Password"
-                  name="password"
-                  placeholder="Enter Password"
-                  width="50%"
-                />
-                <PasswordTextField
-                  required={true}
-                  formProps={props}
-                  label="Confirm Password"
-                  name="confirmPassword"
-                  placeholder="Enter Confirm Password"
-                  width="50%"
-                />
-              </Box>
-            ) : (
-              !oldData && (
-                <Box sx={{ display: 'flex', gap: 2 }}>
-                  <PasswordTextField
-                    required={true}
-                    formProps={props}
-                    label="Password"
-                    name="password"
-                    placeholder="Enter Password"
-                    width="50%"
-                  />
-                  <PasswordTextField
-                    required={true}
-                    formProps={props}
-                    label="Confirm Password"
-                    name="confirmPassword"
-                    placeholder="Enter Confirm Password"
-                    width="50%"
-                  />
-                </Box>
-              )
-            )}
             {!isChangePassword && (
               <Box sx={{ display: 'flex', gap: 2 }}>
                 <Box width="48%">
@@ -341,6 +301,53 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
                   />
                 </Box>
               </>
+            )}
+            {isChangePassword ? (
+              <>
+                <Box sx={{ display: 'flex', gap: 2 }}>
+                  <PasswordTextField
+                    required={true}
+                    formProps={props}
+                    label="Password"
+                    name="password"
+                    placeholder="Enter Password"
+                    width="50%"
+                  />
+                  <PasswordTextField
+                    required={true}
+                    formProps={props}
+                    label="Confirm Password"
+                    name="confirmPassword"
+                    placeholder="Enter Confirm Password"
+                    width="50%"
+                  />
+                </Box>
+                <PasswordPolicy />
+              </>
+            ) : (
+              !oldData && (
+                <>
+                  <Box sx={{ display: 'flex', gap: 2 }}>
+                    <PasswordTextField
+                      required={true}
+                      formProps={props}
+                      label="Password"
+                      name="password"
+                      placeholder="Enter Password"
+                      width="50%"
+                    />
+                    <PasswordTextField
+                      required={true}
+                      formProps={props}
+                      label="Confirm Password"
+                      name="confirmPassword"
+                      placeholder="Enter Confirm Password"
+                      width="50%"
+                    />
+                  </Box>
+                  <PasswordPolicy />
+                </>
+              )
             )}
             <FormActionButtons
               onClick={onClose}
