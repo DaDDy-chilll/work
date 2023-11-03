@@ -1,7 +1,8 @@
 import { Box } from '@mui/material';
 
 const policies = [
-  'Password must be 8 characters long.',
+  'Password must be at least 8 characters',
+  'Password must be at most 16 characters',
   'Password must contain at least one lowercase letter. [a-z]',
   'Password must contain at least one uppercase letter. [A-Z]',
   'Password must contain at least one number. [0-9]',
