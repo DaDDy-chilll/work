@@ -118,19 +118,13 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
   };
 
   const handleEditPassword = (values) => {
-    editPasswordMutation(
-      {
-        ...values,
-        userId: oldData?.id,
+    editPasswordMutation(values, {
+      onSuccess: () => {
+        toast.success('ok');
+        queryClient.invalidateQueries(['users']);
+        onClose();
       },
-      {
-        onSuccess: () => {
-          toast.success('ok');
-          queryClient.invalidateQueries(['users']);
-          onClose();
-        },
-      },
-    );
+    });
   };
 
   return (

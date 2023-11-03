@@ -11,6 +11,8 @@ import NotificationDrawer from './ui/NotificationDrawer';
 import { useNavigate } from 'react-router-dom';
 import { useGetAllNotifications } from '../api';
 import { ROLES } from '../constants';
+import UserForm from './form/UserForm';
+import Modal from './ui/Modal';
 
 const Topbar = () => {
   const navigate = useNavigate();
@@ -29,6 +31,13 @@ const Topbar = () => {
   const handleLogout = () => {
     logout();
     navigate('/login');
+  };
+
+  const [isChangePassword, setIsChangePassword] = useState(false);
+
+  const handleFormClose = () => {
+    setIsChangePassword(false);
+    onClose();
   };
 
   return (
@@ -114,6 +123,26 @@ const Topbar = () => {
             'aria-labelledby': 'basic-button',
           }}
         >
+          <MenuItem
+            sx={{ fontSize: '14px' }}
+            onClick={() => setIsChangePassword(true)}
+          >
+            Change Password
+          </MenuItem>
+          <Box>
+            <Modal
+              title="Change Password"
+              isOpen={isChangePassword}
+              onClose={handleFormClose}
+              content={
+                <UserForm
+                  onClose={handleFormClose}
+                  oldData={undefined}
+                  isChangePassword={isChangePassword}
+                />
+              }
+            />
+          </Box>
           <MenuItem sx={{ fontSize: '14px' }} onClick={handleLogout}>
             Logout
           </MenuItem>
