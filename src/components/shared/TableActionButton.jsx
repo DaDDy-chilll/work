@@ -57,8 +57,6 @@ const TableActionButton = ({ userId }) => {
     });
   };
 
-  const [isChangePassword, setIsChangePassword] = useState(false);
-
   return (
     <div>
       <Button
@@ -101,13 +99,6 @@ const TableActionButton = ({ userId }) => {
             >
               {disableLoading ? <CircularProgress size={20} /> : 'Disable'}
             </MenuItem>
-            <MenuItem
-              sx={{ fontSize: '14px' }}
-              onClick={() => setIsChangePassword(true)}
-              disableRipple
-            >
-              Change Password
-            </MenuItem>
           </>
         )}
       </Menu>
@@ -117,18 +108,6 @@ const TableActionButton = ({ userId }) => {
           isOpen={isOpen}
           onClose={onClose}
           content={<UserForm onClose={onClose} oldData={oldData} />}
-        />
-        <Modal
-          title="Edit User Password"
-          isOpen={isChangePassword}
-          onClose={() => setIsChangePassword(false)}
-          content={
-            <UserForm
-              onClose={() => setIsChangePassword(false)}
-              oldData={oldData}
-              isChangePassword={isChangePassword}
-            />
-          }
         />
       </Box>
     </div>
