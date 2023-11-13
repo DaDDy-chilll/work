@@ -2,8 +2,12 @@
 import { Box, Typography } from '@mui/material';
 import AttachmentDetail from './AttachmentDetail';
 import PDFImage from '../../assets/images/PDF.png';
+import { useDisclosure } from '../../hooks';
+import CustomSlider from './CustomSlider';
+import Modal from './Modal';
 
 const Attachments = ({ attachments }) => {
+  const { isOpen, onClose, onOpen } = useDisclosure();
   return (
     <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mt: 1 }}>
       {attachments.map((attachment) => (
@@ -15,6 +19,7 @@ const Attachments = ({ attachments }) => {
             gap: 1,
             maxWidth: '150px',
           }}
+          onClick={onOpen}
         >
           <AttachmentDetail attachment={attachment}>
             <img
@@ -36,6 +41,12 @@ const Attachments = ({ attachments }) => {
           </Typography>
         </Box>
       ))}
+      <Modal
+        title="View Attachments"
+        isOpen={isOpen}
+        onClose={onClose}
+        content={<CustomSlider items={attachments} />}
+      />
     </Box>
   );
 };
