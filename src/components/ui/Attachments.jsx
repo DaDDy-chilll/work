@@ -1,13 +1,13 @@
 /* eslint-disable react/prop-types */
 import { Box, Typography } from '@mui/material';
-import AttachmentDetail from './AttachmentDetail';
-import PDFImage from '../../assets/images/PDF.png';
 import { useDisclosure } from '../../hooks';
 import CustomSlider from './CustomSlider';
 import Modal from './Modal';
+import AttachmentDetail from './AttachmentDetail';
 
 const Attachments = ({ attachments }) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
+
   return (
     <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mt: 1 }}>
       {attachments.map((attachment) => (
@@ -19,19 +19,8 @@ const Attachments = ({ attachments }) => {
             gap: 1,
             maxWidth: '150px',
           }}
-          onClick={onOpen}
         >
-          <AttachmentDetail attachment={attachment}>
-            <img
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-              src={
-                attachment?.mimetype?.includes('image')
-                  ? attachment.url
-                  : PDFImage
-              }
-              alt={attachment.filename}
-            />
-          </AttachmentDetail>
+          <AttachmentDetail attachment={attachment} onOpen={onOpen} />
           <Typography
             variant="h5"
             fontWeight="bold"

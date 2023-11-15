@@ -10,13 +10,35 @@
   object-fit: cover;
 }
 
+.attachment_btn_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 10%;
+  cursor: pointer;
+  position: absolute;
+  bottom: 5%;
+  opacity: 0;
+}
+
+.attachment_download_btn {
+  left: 10%;
+}
+
+.attachment_view_btn {
+  right: 10%;
+}
+
 .attachment_delete_btn {
   position: absolute;
   top: 0;
   right: 0;
-  display: none;
+  opacity: 0;
 }
 
-.attachment_container:hover .attachment_delete_btn {
-  display: block;
+.attachment_container:hover .attachment_delete_btn,
+.attachment_container:hover .attachment_btn_container {
+  opacity: 1;
 }
