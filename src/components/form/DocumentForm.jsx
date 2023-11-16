@@ -47,37 +47,37 @@ const DocumentForm = ({ oldData, onClick }) => {
   );
 
   const [files, setFiles] = useState([]);
-  const [pdfFiles, setPdfFiles] = useState([]);
-  const [imageUrls, setImageUrls] = useState([]);
+  const [attachments, setAttachments] = useState([]);
 
   const handleFileChange = (event) => {
     const inputFiles = event.target.files;
 
     let files = [];
-    let fileUrls = [];
-    let pdfFiles = [];
+    let attachments = [];
 
     for (let i = 0; i < inputFiles?.length; i++) {
       const file = inputFiles[i];
       files.push(file);
       if (file.type?.includes('image')) {
-        fileUrls.push(URL.createObjectURL(file));
+        attachments.push({
+          url: URL.createObjectURL(file),
+          name: file.name,
+        });
       } else {
-        pdfFiles.push(file.name);
+        attachments.push({
+          url: undefined,
+          name: file.name,
+        });
       }
     }
     setFiles((prev) => [...prev, ...files]);
-    setImageUrls((prev) => [...prev, ...fileUrls]);
-    setPdfFiles((prev) => [...prev, ...pdfFiles]);
+    setAttachments((prev) => [...prev, ...attachments]);
   };
 
-  const handleDelete = ({ url, name }) => {
-    if (url) {
-      setImageUrls(imageUrls.filter((imageUrl) => imageUrl !== url));
-    }
-    if (name) {
-      setPdfFiles(pdfFiles.filter((pdfFile) => pdfFile !== name));
-    }
+  const handleDelete = ({ name }) => {
+    setAttachments(
+      attachments.filter((attachment) => attachment.name !== name),
+    );
   };
 
   const { mutate: createMutation, isLoading: createLoading } =
@@ -99,8 +99,7 @@ const DocumentForm = ({ oldData, onClick }) => {
         },
         onSettled: () => {
           setFiles(undefined);
-          setPdfFiles(undefined);
-          setImageUrls(undefined);
+          setAttachments(undefined);
         },
       },
     );
@@ -117,8 +116,7 @@ const DocumentForm = ({ oldData, onClick }) => {
         },
         onSettled: () => {
           setFiles(undefined);
-          setPdfFiles(undefined);
-          setImageUrls(undefined);
+          setAttachments(undefined);
         },
       },
     );
@@ -215,33 +213,30 @@ const DocumentForm = ({ oldData, onClick }) => {
                   </label>
                 </Button>
               </Box>
-              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3, mt: 2 }}>
-                {imageUrls &&
-                  imageUrls.map((url) => (
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3, my: 2 }}>
+                {attachments &&
+                  attachments.map(({ url, name }) => (
                     <div key={url} className="attachment_container">
-                      <img src={url} alt="attachment" />
+                      <img src={url ?? PDFSampleImage} alt="attachment" />
                       <div className="attachment_delete_btn">
-                        <IconButton onClick={() => handleDelete({ url })}>
+                        <IconButton onClick={() => handleDelete({ name })}>
                           <Cancel
-                            sx={{ color: colors.white[100], fontSize: '25px' }}
+                            sx={{
+                              color: url ? colors.white[100] : colors.grey[800],
+                              fontSize: '25px',
+                            }}
                           />
                         </IconButton>
                       </div>
-                    </div>
-                  ))}
-                {pdfFiles &&
-                  pdfFiles.map((pdfFile) => (
-                    <div key={pdfFile} className="attachment_container">
-                      <img src={PDFSampleImage} alt="attachment" />
-                      <div className="attachment_delete_btn">
-                        <IconButton
-                          onClick={() => handleDelete({ name: pdfFile })}
-                        >
-                          <Cancel
-                            sx={{ color: colors.grey[800], fontSize: '25px' }}
-                          />
-                        </IconButton>
-                      </div>
+                      <Typography
+                        variant="h5"
+                        fontWeight="bold"
+                        sx={{ wordWrap: 'break-word' }}
+                        ml={1}
+                        mt={1}
+                      >
+                        {name}
+                      </Typography>
                     </div>
                   ))}
               </Box>
