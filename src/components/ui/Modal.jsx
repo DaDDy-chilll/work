@@ -4,7 +4,7 @@ import { colors } from '../../assets/theme/theme';
 
 const Modal = ({ isOpen, onClose, content, title }) => {
   return (
-    <Dialog open={isOpen} onClose={onClose} maxWidth={'lg'}>
+    <Dialog open={isOpen} onClose={onClose} maxWidth={'lg'} fullWidth>
       <DialogTitle
         fontWeight="bold"
         sx={{
