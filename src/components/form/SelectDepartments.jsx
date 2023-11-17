@@ -5,6 +5,8 @@ import FormTextField from '../shared/FormTextField';
 import ModalButton from '../ui/ModalButton';
 import { useNavigate } from 'react-router-dom';
 import CustomFormLabel from '../shared/CustomFormLabel';
+import FormRadioButton from '../shared/FormRadioButton';
+import { WORKFLOW_TYPES } from '../../constants';
 
 const SelectDepartments = ({ children, onOpen, formProps }) => {
   const navigate = useNavigate();
@@ -32,6 +34,12 @@ const SelectDepartments = ({ children, onOpen, formProps }) => {
             />
           </Box>
         </Box>
+        <CustomFormLabel label="Work Flow Type" required={true} />
+        <FormRadioButton
+          items={[...Object.values(WORKFLOW_TYPES)]}
+          name="type"
+          formProps={formProps}
+        />
         {children}
       </Box>
       <Box display="flex" justifyContent="end" gap={2} mt={2}>
