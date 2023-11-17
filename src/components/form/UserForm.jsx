@@ -55,6 +55,7 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
     canPrepare,
     canVerify,
     canEditAmount,
+    canForward,
   }) => {
     createMutation(
       {
@@ -69,6 +70,7 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
           canEditAmount,
           canVerify,
           canPrepare: canEditAmount ? true : canPrepare,
+          canForward,
         },
       },
       {
@@ -90,6 +92,7 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
     canPrepare,
     canVerify,
     canEditAmount,
+    canForward,
   }) => {
     editMutation(
       {
@@ -103,6 +106,7 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
             canEditAmount,
             canVerify,
             canPrepare: canEditAmount ? true : canPrepare,
+            canForward,
           },
         },
         id: oldData?.id,
@@ -292,6 +296,11 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
                     formProps={props}
                     label="Revise"
                     name="canEdit"
+                  />
+                  <FormCheckbox
+                    formProps={props}
+                    label="Forward Work Flow"
+                    name="canForward"
                   />
                 </Box>
               </>
