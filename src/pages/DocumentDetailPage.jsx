@@ -50,6 +50,8 @@ const DocumentDetailPage = () => {
 
   const navigate = useNavigate();
 
+  // console.log(document?.payload?.reviewers?.list);
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, m: 2 }}>
       <Typography

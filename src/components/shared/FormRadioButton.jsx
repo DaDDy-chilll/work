@@ -12,7 +12,7 @@ const FormRadioButton = ({
         <FormControlLabel
           key={item}
           value={item}
-          control={<Radio />}
+          control={<Radio size="medium" />}
           label={item}
           sx={{ textTransform: 'capitalize' }}
         />
