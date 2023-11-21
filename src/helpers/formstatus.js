@@ -1,37 +1,42 @@
-import { DOCUMENT_STATUSES } from '../constants';
+export const changeDepartmentStatus = (reviewers) => {
+  console.log({ reviewers });
 
-export const changeFormStatus = (reviewers) => {
-  let departments = [];
-  reviewers.forEach((r) => {
-    let previousIndex = r.index;
-    if (r.index - previousIndex !== 1) {
-      departments.push(r.reviewer.department.name);
-    }
-  });
-  // departments = [...new Set([...departments])];
+  const departments = groupDepartments(reviewers);
 
-  const uniqueDepartments = [...new Set([...departments])];
+  return departments
+    .map((dpt) => {
+      const filteredReviewers = reviewers.filter((r) => {
+        return r.reviewer.department._id === dpt.id;
+      });
 
-  const finishedDepartments = getDepartments({
-    departments: uniqueDepartments,
-    reviewers,
-    isFinish: true,
-  });
+      const { serializedPersons, unSerializedPersons } =
+        groupReviewers(filteredReviewers);
 
-  const unFinishedDepartments = getDepartments({
-    departments: uniqueDepartments,
-    reviewers,
-    isFinish: false,
-  });
+      const result = [];
 
-  takeDepartments({
-    reviewers,
-  });
+      if (serializedPersons.length) {
+        result.push({
+          department: dpt,
+          index: serializedPersons[0].index,
+          users: serializedPersons,
+        });
+      }
 
-  return [...finishedDepartments, ...unFinishedDepartments];
+      if (unSerializedPersons.length) {
+        result.push({
+          department: dpt,
+          index: unSerializedPersons[0]?.index,
+          users: unSerializedPersons,
+        });
+      }
+
+      return result;
+    })
+    .flat()
+    .sort((a, b) => a.index - b.index);
 };
 
-const takeDepartments = ({ reviewers }) => {
+const groupDepartments = (reviewers) => {
   let departments = [];
 
   reviewers.forEach((r) => {
@@ -48,94 +53,60 @@ const takeDepartments = ({ reviewers }) => {
     new Set(departments.map((obj) => JSON.stringify(obj))),
   ).map((str) => JSON.parse(str));
 
-  const result = departments.map((dpt) => {
-    const filteredReviewers = reviewers.filter((r) => {
-      return r.reviewer.department._id === dpt.id;
-    });
-
-    let previousvalue = undefined;
-
-    let serializedPersons = [];
-    let unSerializedPersons = [];
-
-    for (let i = 0; i < filteredReviewers.length; i++) {
-      const currentValue = filteredReviewers[i];
-      if (filteredReviewers.length === 1) {
-        unSerializedPersons.push(currentValue);
-      } else {
-        if (previousvalue) {
-          if (currentValue.index - previousvalue.index === 1) {
-            console.log('hello');
-            serializedPersons.push(previousvalue);
-            if (i === filteredReviewers.length - 1) {
-              serializedPersons.push(currentValue);
-            }
-          } else {
-            unSerializedPersons.push(previousvalue);
-          }
-        }
-      }
-
-      previousvalue = currentValue;
-    }
-
-    // let differentDepartmentPersons = filteredReviewers.filter((object1) => {
-    //   return sameDepartmentPersons.filter((object2) => {
-    //     return object1.reviewer._id !== object2.reviewer._id;
-    //   });
-    // });
-
-    return {
-      department: dpt,
-      serializedPersons,
-      unSerializedPersons,
-    };
-  });
-
-  console.log({ result });
+  return departments;
 };
 
-const getDepartments = ({ departments, reviewers, isFinish }) => {
-  return departments
-    .map((dpt) => {
-      let originalUsers;
+const groupReviewers = (reviewers) => {
+  let previousvalue = undefined;
 
-      if (isFinish) {
-        originalUsers = reviewers.filter((r) => {
-          return (
-            r.reviewer.department.name === dpt &&
-            [...Object.values(DOCUMENT_STATUSES)].includes(r.status)
-          );
-        });
-      } else {
-        originalUsers = reviewers.filter(
-          (r) =>
-            r.reviewer.department.name === dpt &&
-            ![...Object.values(DOCUMENT_STATUSES)].includes(r.status),
-        );
-      }
+  let serializedPersons = [];
+  let unSerializedPersons = [];
 
-      const users = originalUsers.map((user, i) => {
-        let status;
-        if (originalUsers.length - 1 === i) {
-          if (
-            user.status === 'PREPARED' ||
-            user.status === 'VERIFIED' ||
-            user.status === 'APPROVED'
-          ) {
-            status = 'APPROVED';
+  for (let i = 0; i < reviewers.length; i++) {
+    const currentValue = reviewers[i];
+    if (reviewers.length === 1) {
+      unSerializedPersons.push(currentValue);
+    } else {
+      if (previousvalue) {
+        if (currentValue.index - previousvalue.index === 1) {
+          serializedPersons.push(previousvalue);
+          if (i === reviewers.length - 1) {
+            serializedPersons.push(currentValue);
           }
+        } else {
+          unSerializedPersons.push(previousvalue);
         }
+      }
+    }
+    previousvalue = currentValue;
+  }
 
-        return {
-          ...user,
-          status: status ? status : user.status,
-        };
-      });
-      return {
-        name: dpt,
-        users,
-      };
-    })
-    .filter((d) => d.users.length !== 0);
+  unSerializedPersons = unSerializedPersons.filter((p) => p.length !== 0);
+  serializedPersons = serializedPersons.filter((p) => p.length !== 0);
+
+  return {
+    serializedPersons,
+    unSerializedPersons,
+  };
+};
+
+// ----------------------------------------------------
+export const changeUserStatus = (users) => {
+  return users.map((user, i) => {
+    let status;
+    if (users.length - 1 === i) {
+      if (
+        user.status === 'PREPARED' ||
+        user.status === 'VERIFIED' ||
+        user.status === 'APPROVED'
+      ) {
+        status = 'APPROVED';
+      }
+    }
+
+    return {
+      ...user,
+      status: status ? status : user.status,
+    };
+  });
 };

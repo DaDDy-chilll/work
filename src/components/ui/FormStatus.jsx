@@ -10,13 +10,13 @@ import {
 import { timelineItemClasses } from '@mui/lab/TimelineItem';
 import { Box, CircularProgress, Typography } from '@mui/material';
 import { ApartmentOutlined, CheckCircle } from '@mui/icons-material';
-import { changeFormStatus, changeTextColor } from '../../helpers';
+import { changeDepartmentStatus, changeTextColor } from '../../helpers';
 import { colors } from '../../assets/theme/theme';
 
 const FormStatus = ({ reviewers, isLoading }) => {
-  const departments = changeFormStatus(reviewers);
+  const departments = changeDepartmentStatus(reviewers);
 
-  // transformStatus(reviewers);
+  console.log({ departments });
 
   return (
     <Timeline
