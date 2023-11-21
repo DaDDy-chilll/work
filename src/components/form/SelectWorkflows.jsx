@@ -11,14 +11,16 @@ import { useGetWorkflowDetail } from '../../api';
 import WorkflowRoute from '../ui/WorkflowRoute';
 import { getDepartmentsFromWorkflow } from '../../helpers';
 
-const SelectWorkFlowModal = ({ onClose, children }) => {
+const SelectWorkFlowModal = ({ onClose, children, type }) => {
   return (
     <Box>
       {children}
-      <Typography sx={{ mt: 1 }}>
-        <span style={{ color: colors.red[800] }}>**</span> All Workflows တွင်
-        ရွေးချယ်ပြီး ထည့်သွင်းနိုင်ပါသည်။
-      </Typography>
+      {type !== 'private' && (
+        <Typography sx={{ mt: 1 }}>
+          <span style={{ color: colors.red[800] }}>**</span> All Workflows တွင်
+          ရွေးချယ်ပြီး ထည့်သွင်းနိုင်ပါသည်။
+        </Typography>
+      )}
       <Box display="flex" justifyContent="end" gap={2} mt={2}>
         <Button
           sx={{ width: '200px' }}
@@ -41,7 +43,7 @@ const SelectWorkFlowModal = ({ onClose, children }) => {
   );
 };
 
-const SelectWorkflows = ({ name, formProps }) => {
+const SelectWorkflows = ({ name, formProps, type }) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
 
   const [value, setValue] = useState(0);
@@ -61,7 +63,6 @@ const SelectWorkflows = ({ name, formProps }) => {
           justifyContent: 'center',
           alignItems: 'center',
           p: 1,
-
           cursor: 'pointer',
           borderRadius: 1,
           height: '55px',
@@ -89,13 +90,16 @@ const SelectWorkflows = ({ name, formProps }) => {
         onClose={onClose}
         title="Select Work flow"
         content={
-          <SelectWorkFlowModal onClose={onClose}>
-            <SelectWorkFlowHeader onChange={handleChange} index={value} />
-            <Box sx={{ height: '60vh', overflowY: 'auto' }}>
+          <SelectWorkFlowModal onClose={onClose} type={type}>
+            {type !== 'private' && (
+              <SelectWorkFlowHeader onChange={handleChange} index={value} />
+            )}
+            <Box sx={{ height: '55vh', overflowY: 'auto' }}>
               <SelectWorkflowBody
-                index={value}
+                index={type === 'private' ? 1 : value}
                 name={name}
                 formProps={formProps}
+                type={type}
               />
             </Box>
           </SelectWorkFlowModal>

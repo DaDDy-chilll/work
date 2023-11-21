@@ -20,14 +20,10 @@ import {
 import { colors } from '../../assets/theme/theme';
 import { useAuth } from '../../hooks/useAuth';
 import CustomFormLabel from '../shared/CustomFormLabel';
-import { useGetAllWorkflows } from '../../api';
-import { getDepartmentsFromWorkflow } from '../../helpers';
-import WorkflowRoute from '../ui/WorkflowRoute';
+import SelectWorkflows from './SelectWorkflows';
 
 const RemarkIcon = ({ value }) => {
   const { user } = useAuth();
-
-  // console.log(user.permissions);
 
   if (value === ACTIONS.APPROVE && user?.permissions?.canApprove)
     return <CheckCircle sx={{ color: colors.darkGreen[800] }} />;
@@ -45,23 +41,10 @@ const RemarkIcon = ({ value }) => {
     return <Textsms sx={{ color: colors.paleBlue[800] }} />;
 };
 
-const RemarkForm = ({ onClose }) => {
+const RemarkForm = ({ onClick }) => {
   const [remark, setRemark] = useState('');
 
   const { id } = useParams();
-
-  const { data } = useGetAllWorkflows({ limit: 0, type: 'private' });
-
-  let workflows;
-
-  if (data?.payload) {
-    workflows = data?.payload?.map((workflow) => ({
-      ...workflow,
-      departments: getDepartmentsFromWorkflow(workflow.reviewers),
-    }));
-  }
-
-  // console.log({ workflows });
 
   const { mutate: changeStatusMutation, isLoading: changeStatusLoading } =
     useChangeStatus();
@@ -79,7 +62,7 @@ const RemarkForm = ({ onClose }) => {
           onSuccess: () => {
             toast.success('ok');
             queryClient.invalidateQueries(['document', id]);
-            onClose();
+            onClick();
           },
         },
       );
@@ -92,7 +75,7 @@ const RemarkForm = ({ onClose }) => {
         onSuccess: () => {
           toast.success('ok');
           queryClient.invalidateQueries(['document', id]);
-          onClose();
+          onClick();
         },
       },
     );
@@ -126,11 +109,17 @@ const RemarkForm = ({ onClose }) => {
     >
       {(props) => (
         <form onSubmit={props.handleSubmit}>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 3,
+              px: 5,
+              py: 3,
+            }}
+          >
             <Box>
-              <label>
-                Form Status <span style={{ color: colors.red[800] }}>*</span>
-              </label>
+              <CustomFormLabel label="Form Status" required={true} />
               <FormSelect
                 placeholder="Select Form Status"
                 name="action"
@@ -145,33 +134,24 @@ const RemarkForm = ({ onClose }) => {
                 ))}
               </FormSelect>
             </Box>
-
             {props.values.action === ACTIONS.FORWARD && (
-              <Box>
-                <CustomFormLabel label="Select Work Flow" />
-                <FormSelect
-                  placeholder="Select Work Flow"
-                  name="workflowId"
-                  formProps={props}
-                >
-                  {workflows &&
-                    workflows?.map((item) => (
-                      <MenuItem value={item._id} key={item._id}>
-                        <WorkflowRoute
-                          name={item?.name}
-                          departments={item?.departments}
-                        />
-                      </MenuItem>
-                    ))}
-                </FormSelect>
-              </Box>
+              <SelectWorkflows
+                name="workflowId"
+                formProps={props}
+                type="private"
+              />
             )}
-
-            <RichTextEditor text={remark} setText={setRemark} />
-
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+              <CustomFormLabel label="Description" />
+              <RichTextEditor text={remark} setText={setRemark} />
+            </Box>
+          </Box>
+          <Box
+            sx={{ borderTop: `1px solid ${colors.grey[400]}`, pb: 3, px: 5 }}
+          >
             <FormActionButtons
-              onClick={onClose}
-              innerText="Save"
+              onClick={onClick}
+              innerText="Submit"
               loading={
                 props.values.action === ACTIONS.REJECT
                   ? rejectLoading

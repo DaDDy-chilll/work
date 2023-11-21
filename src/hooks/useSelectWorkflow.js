@@ -10,15 +10,21 @@ function transformWorkflow(data) {
   }));
 }
 
-export const useSelectWorkflow = (index) => {
+export const useSelectWorkflow = ({ index, type }) => {
   const { user, validateUser } = useAuth();
 
   const { mutate: saveWorkflowMutation } = useSaveWorkflow();
 
-  const { isError, error, data } = useGetAllWorkflows({
+  let options = {
     sort: '-createdAt',
     limit: 0,
-  });
+  };
+
+  if (type === 'private') {
+    Object.assign(options, { type });
+  }
+
+  const { isError, error, data } = useGetAllWorkflows(options);
 
   let workflows;
   let favouriteWorkflowIds = [];

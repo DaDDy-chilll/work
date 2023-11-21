@@ -24,7 +24,7 @@ const EmptyWorkflowResult = () => {
         flexDirection: 'column',
         m: 5,
         gap: 2,
-        height: '50vh',
+        height: '44vh',
       }}
     >
       <img src={EmptyWorkflowImg} style={{ height: '100%' }} />
@@ -36,7 +36,13 @@ const EmptyWorkflowResult = () => {
   );
 };
 
-const WorkflowRow = ({ item, index, favouriteWorkflowIds, saveWorkflow }) => {
+const WorkflowRow = ({
+  item,
+  index,
+  favouriteWorkflowIds,
+  saveWorkflow,
+  type,
+}) => {
   return (
     <>
       <FormControlLabel
@@ -51,7 +57,7 @@ const WorkflowRow = ({ item, index, favouriteWorkflowIds, saveWorkflow }) => {
           },
         }}
       />
-      {index === 1 && (
+      {index === 1 && type !== 'private' && (
         <IconButton sx={{ mr: 2 }} onClick={() => saveWorkflow(item._id)}>
           {favouriteWorkflowIds.includes(item._id) ? (
             <Favorite sx={{ fontSize: '20px', color: colors.paleBlue[800] }} />
@@ -70,9 +76,10 @@ const SelectWorkflowBody = ({
   index,
   name,
   formProps: { values, handleChange },
+  type,
 }) => {
   const { workflows, favouriteWorkflowIds, saveWorkflow, error, isError } =
-    useSelectWorkflow(index);
+    useSelectWorkflow({ index, type });
 
   if (isError) return <p>Error: {error?.response?.data?.message}</p>;
 
@@ -97,6 +104,7 @@ const SelectWorkflowBody = ({
                 favouriteWorkflowIds={favouriteWorkflowIds}
                 index={index}
                 saveWorkflow={saveWorkflow}
+                type={type}
               />
             </Box>
           ))
