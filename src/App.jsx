@@ -20,6 +20,7 @@ import EditRequestPage from './pages/EditRequestPage';
 import CreateRequestPage from './pages/CreateRequestPage';
 import WorkflowDetailPage from './pages/WorkflowDetailPage';
 import UserDetailPage from './pages/UserDetailPage';
+import AddRemarkPage from './pages/AddRemarkPage';
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
               <Route path="inbox" element={<InboxPage />} />
               <Route path="detail/:id" element={<DocumentDetailPage />} />
               <Route path="edit/:id" element={<EditRequestPage />} />
+              <Route path="remark/:id" element={<AddRemarkPage />} />
 
               {/* FOR SUPERADMIN */}
               <Route path="departments" element={<DepartmentsPage />} />

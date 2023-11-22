@@ -79,27 +79,28 @@ const AuthProvider = ({ children }) => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const validateUser = async () => {
-      try {
-        if (!state.user) {
-          dispatch({ type: START_VALIDATING_USER });
-        }
-
-        const { data } = await fetcher.get(`/users/me`);
-
-        if (data.payload) {
-          dispatch({ type: LOG_IN, payload: { user: data?.payload } });
-        }
-      } catch (error) {
-        if (isAxiosError(error) && error.status === 401) {
-          logout();
-          navigate('/login');
-        }
-      } finally {
-        dispatch({ type: END_VALIDATING_USER });
+  const validateUser = async () => {
+    try {
+      if (!state.user) {
+        dispatch({ type: START_VALIDATING_USER });
       }
-    };
+
+      const { data } = await fetcher.get(`/users/me`);
+
+      if (data.payload) {
+        dispatch({ type: LOG_IN, payload: { user: data?.payload } });
+      }
+    } catch (error) {
+      if (isAxiosError(error) && error.status === 401) {
+        logout();
+        navigate('/login');
+      }
+    } finally {
+      dispatch({ type: END_VALIDATING_USER });
+    }
+  };
+
+  useEffect(() => {
     validateUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigate]);
@@ -140,6 +141,7 @@ const AuthProvider = ({ children }) => {
         ...state,
         login,
         logout,
+        validateUser,
       }}
     >
       {children}

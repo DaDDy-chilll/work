@@ -10,10 +10,6 @@ import Remarks from '../components/ui/Remarks';
 import FormStatus from '../components/ui/FormStatus';
 import LinkButton from '../components/ui/LinkButton';
 import { useAuth } from '../hooks/useAuth';
-import { useDisclosure } from '../hooks/useDisclosure';
-import Modal from '../components/ui/Modal';
-import RemarkForm from '../components/form/RemarkForm';
-import ModalButton from '../components/ui/ModalButton';
 import { usePageTitle } from '../hooks';
 
 const Item = ({ fieldName, value }) => {
@@ -45,8 +41,6 @@ const DocumentDetailPage = () => {
   const { user } = useAuth();
 
   const { data: document, isLoading } = useGetDocumentDetail(id);
-
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const navigate = useNavigate();
 
@@ -171,17 +165,12 @@ const DocumentDetailPage = () => {
                   )}
                 {user?._id === document?.payload?.currentReviewer && (
                   <>
-                    <ModalButton
+                    <LinkButton
                       width="200px"
                       color="success"
-                      innerText="Add Remark"
-                      onOpen={onOpen}
-                    />
-                    <Modal
-                      isOpen={isOpen}
-                      onClose={onClose}
-                      content={<RemarkForm onClose={onClose} />}
-                      title="Add Remark"
+                      innerText="Give Decision"
+                      variant="contained"
+                      onClick={() => navigate(`/remark/${id}`)}
                     />
                   </>
                 )}
