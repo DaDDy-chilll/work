@@ -97,6 +97,9 @@ const SelectWorkflowBody = ({
                 py: 1,
                 display: 'flex',
                 justifyContent: 'space-between',
+                bgcolor: `${
+                  values[name] === item._id ? colors.paleBlue[100] : ''
+                }`,
               }}
             >
               <WorkflowRow
