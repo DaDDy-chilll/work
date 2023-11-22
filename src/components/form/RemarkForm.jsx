@@ -26,7 +26,7 @@ const RemarkIcon = ({ value }) => {
   const { user } = useAuth();
 
   if (value === ACTIONS.APPROVE && user?.permissions?.canApprove)
-    return <CheckCircle sx={{ color: colors.darkGreen[800] }} />;
+    return <CheckCircle sx={{ color: colors.paleGreen[800] }} />;
 
   if (value === ACTIONS.REJECT)
     return <Cancel sx={{ color: colors.red[800] }} />;

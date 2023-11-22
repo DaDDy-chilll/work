@@ -11,11 +11,25 @@ import { useGetWorkflowDetail } from '../../api';
 import WorkflowRoute from '../ui/WorkflowRoute';
 import { getDepartmentsFromWorkflow } from '../../helpers';
 
-const SelectWorkFlowModal = ({ onClose, children, type }) => {
+const SelectWorkFlowModal = ({ onClose, children, index, type }) => {
   return (
     <Box>
+      {type !== 'private' && index === 0 ? (
+        <Typography sx={{ mt: 1 }}>
+          <span style={{ color: colors.red[800] }}>**</span> ပေးပို့လိုသော Work
+          Flow မရှိပါက All Work Flows တွင် ရွေးချယ်ပြီး ထည့်သွင်းနိုင်ပါသည်။
+        </Typography>
+      ) : (
+        type !== 'private' && (
+          <Typography sx={{ mt: 1 }}>
+            <span style={{ color: colors.red[800] }}>**</span> နောက်တစ်ကြိမ်
+            ထပ်မံ အသုံးပြုလိုသော Work Flow များကိုသိမ်းထားပြီး My Work Flows
+            ထဲတွင် ပြန်လည်ကြည့်နိုင်ပါသည်။
+          </Typography>
+        )
+      )}
       {children}
-      {type !== 'private' && (
+      {type !== 'private' && index === 1 && (
         <Typography sx={{ mt: 1 }}>
           <span style={{ color: colors.red[800] }}>**</span> All Workflows တွင်
           ရွေးချယ်ပြီး ထည့်သွင်းနိုင်ပါသည်။
@@ -60,7 +74,7 @@ const SelectWorkflows = ({ name, formProps, type }) => {
         sx={{
           border: `1px dashed ${colors.paleBlue[800]}`,
           display: 'flex',
-          justifyContent: 'center',
+          justifyContent: `${formProps.values[name] ? 'left' : 'center'}`,
           alignItems: 'center',
           p: 1,
           cursor: 'pointer',
@@ -90,7 +104,11 @@ const SelectWorkflows = ({ name, formProps, type }) => {
         onClose={onClose}
         title="Select Work flow"
         content={
-          <SelectWorkFlowModal onClose={onClose} type={type}>
+          <SelectWorkFlowModal
+            onClose={onClose}
+            index={type === 'private' ? 1 : value}
+            type={type}
+          >
             {type !== 'private' && (
               <SelectWorkFlowHeader onChange={handleChange} index={value} />
             )}

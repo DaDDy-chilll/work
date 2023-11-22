@@ -24,7 +24,7 @@ const SelectWorkFlowHeader = ({ index, onChange }) => {
                 color: colors.black[100],
               }}
             >
-              My Workflows
+              My Work Flows
             </Typography>
           }
           icon={<FavoriteBorder sx={{ fontSize: '20px' }} />}
@@ -40,7 +40,7 @@ const SelectWorkFlowHeader = ({ index, onChange }) => {
                 color: colors.black[100],
               }}
             >
-              All Requests
+              All Work Flows
             </Typography>
           }
           icon={<AccountTree sx={{ fontSize: '20px' }} />}

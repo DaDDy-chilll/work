@@ -1,6 +1,5 @@
 import { Box, Typography } from '@mui/material';
 import { colors } from '../assets/theme/theme';
-import { transformLocalTime } from '../helpers';
 import { useNavigate } from 'react-router';
 import { usePageTitle } from '../hooks';
 import RemarkForm from '../components/form/RemarkForm';
@@ -30,21 +29,6 @@ const AddRemarkPage = () => {
         Give Decision
       </Typography>
       <Box bgcolor={colors.white[100]} borderRadius="1rem">
-        <Box
-          sx={{
-            borderBottom: `1px solid ${colors.grey[400]}`,
-            py: 2,
-            display: 'flex',
-            alignItems: 'center',
-            gap: 1,
-            px: 5,
-            fontSize: '20px',
-            fontWeight: 500,
-            color: colors.black[100],
-          }}
-        >
-          {transformLocalTime(Date.now()).date}
-        </Box>
         <RemarkForm onClick={() => navigate(`/detail/${id}`)} />
       </Box>
     </Box>
