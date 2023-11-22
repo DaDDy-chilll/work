@@ -11,7 +11,18 @@ import { useGetWorkflowDetail } from '../../api';
 import WorkflowRoute from '../ui/WorkflowRoute';
 import { getDepartmentsFromWorkflow } from '../../helpers';
 
-const SelectWorkFlowModal = ({ onClose, children, index, type }) => {
+const SelectWorkFlowModal = ({
+  onClose,
+  children,
+  index,
+  type,
+  disabled,
+  formProps,
+}) => {
+  const handleCancel = () => {
+    formProps.setFieldValue('workflowId', undefined);
+    onClose();
+  };
   return (
     <Box>
       {type !== 'private' && index === 0 ? (
@@ -40,7 +51,7 @@ const SelectWorkFlowModal = ({ onClose, children, index, type }) => {
           sx={{ width: '200px' }}
           variant="outlined"
           ccolor="primary"
-          onClick={onClose}
+          onClick={handleCancel}
         >
           Cancel
         </Button>
@@ -49,6 +60,7 @@ const SelectWorkFlowModal = ({ onClose, children, index, type }) => {
           variant="contained"
           ccolor="primary"
           onClick={onClose}
+          disabled={disabled}
         >
           Ok
         </Button>
@@ -108,6 +120,8 @@ const SelectWorkflows = ({ name, formProps, type }) => {
             onClose={onClose}
             index={type === 'private' ? 1 : value}
             type={type}
+            disabled={!formProps.values[name]}
+            formProps={formProps}
           >
             {type !== 'private' && (
               <SelectWorkFlowHeader onChange={handleChange} index={value} />
