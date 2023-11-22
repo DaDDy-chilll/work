@@ -16,8 +16,6 @@ import { colors } from '../../assets/theme/theme';
 const FormStatus = ({ reviewers, isLoading }) => {
   const departments = changeDepartmentStatus(reviewers);
 
-  console.log({ departments });
-
   return (
     <Timeline
       position="right"

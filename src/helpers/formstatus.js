@@ -1,6 +1,4 @@
 export const changeDepartmentStatus = (reviewers) => {
-  console.log({ reviewers });
-
   const departments = groupDepartments(reviewers);
 
   return departments
