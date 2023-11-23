@@ -12,3 +12,18 @@
 .swiper-slide > img {
   min-height: 500px;
 }
+
+.swiper-button-next,
+.swiper-button-prev {
+  background-color: #808080;
+  width: 35px;
+  height: 40px;
+  color: #ffffff;
+  border-radius: 0.5rem;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 25px;
+  font-weight: bold;
+}
