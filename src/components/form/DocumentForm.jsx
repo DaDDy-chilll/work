@@ -141,7 +141,11 @@ const DocumentForm = ({ oldData, onClick }) => {
               />
             </Box>
             {!oldData ? (
-              <SelectWorkflows name="workflowId" formProps={props} />
+              <SelectWorkflows
+                name="workflowId"
+                formProps={props}
+                type="normal"
+              />
             ) : (
               user.permissions.canEditAmount && (
                 <Box>
