@@ -4,9 +4,17 @@ import { useDisclosure } from '../../hooks';
 import CustomSlider from './CustomSlider';
 import Modal from './Modal';
 import AttachmentDetail from './AttachmentDetail';
+import { useState } from 'react';
 
 const Attachments = ({ attachments }) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
+
+  const [currentImageUrl, setCurrentImageUrl] = useState();
+
+  const handleClick = (url) => {
+    setCurrentImageUrl(url);
+    onOpen();
+  };
 
   return (
     <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mt: 1 }}>
@@ -20,7 +28,10 @@ const Attachments = ({ attachments }) => {
             maxWidth: '150px',
           }}
         >
-          <AttachmentDetail attachment={attachment} onOpen={onOpen} />
+          <AttachmentDetail
+            attachment={attachment}
+            onOpen={() => handleClick(attachment.url)}
+          />
           <Typography
             variant="h5"
             fontWeight="bold"
@@ -34,7 +45,9 @@ const Attachments = ({ attachments }) => {
         title="View Attachments"
         isOpen={isOpen}
         onClose={onClose}
-        content={<CustomSlider items={attachments} />}
+        content={
+          <CustomSlider items={attachments} currentImageUrl={currentImageUrl} />
+        }
       />
     </Box>
   );

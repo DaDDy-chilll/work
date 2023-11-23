@@ -11,9 +11,17 @@ import {
 import { colors } from '../../assets/theme/theme';
 import { useEffect, useRef } from 'react';
 
-const CustomSlider = ({ items }) => {
+const CustomSlider = ({ items, currentImageUrl }) => {
   const ref = useRef();
-  const images = items.filter((item) => item?.mimetype?.includes('image'));
+
+  const images = items
+    .filter((item) => item?.mimetype?.includes('image'))
+    .map((el, index) => ({
+      ...el,
+      index,
+    }));
+
+  const currentImage = images.filter((item) => item.url === currentImageUrl)[0];
 
   useEffect(() => {
     const handleWheel = (e) => {
@@ -54,6 +62,7 @@ const CustomSlider = ({ items }) => {
       keyboard={true}
       modules={[Zoom, Navigation, Pagination, Mousewheel, Keyboard]}
       className="mySwiper"
+      initialSlide={currentImage.index}
     >
       {images &&
         images.map((item) => (
