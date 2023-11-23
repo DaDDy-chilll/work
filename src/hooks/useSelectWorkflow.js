@@ -20,7 +20,7 @@ export const useSelectWorkflow = ({ index, type }) => {
     limit: 0,
   };
 
-  if (type === 'private') {
+  if (type) {
     Object.assign(options, { type });
   }
 
