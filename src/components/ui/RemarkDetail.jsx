@@ -16,7 +16,12 @@ const RemarkDetail = ({ remark }) => {
           color={textColor && textColor}
           component="span"
         >
-          {remark.action} by {remark.actor.name}
+          <span>
+            {remark.action === 'FORWARDED'
+              ? 'Forwarded and Approved'
+              : remark.action.toLowerCase()}
+          </span>{' '}
+          by {remark.actor.name}
         </Typography>
         <Box
           sx={{
