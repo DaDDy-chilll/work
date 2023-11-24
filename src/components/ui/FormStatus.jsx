@@ -89,7 +89,12 @@ const FormStatus = ({ reviewers, isLoading }) => {
                         fontWeight: 500,
                       }}
                     >
-                      {user.status} by {user.reviewer.name}
+                      <span style={{ textTransform: 'capitalize' }}>
+                        {user.status === 'FORWARDED'
+                          ? 'Forwarded and Approved'
+                          : user.status.toLowerCase()}
+                      </span>{' '}
+                      by {user.reviewer.name}
                     </Typography>
                   </Box>
                 ))}
