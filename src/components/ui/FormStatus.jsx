@@ -10,11 +10,11 @@ import {
 import { timelineItemClasses } from '@mui/lab/TimelineItem';
 import { Box, CircularProgress, Typography } from '@mui/material';
 import { ApartmentOutlined, CheckCircle } from '@mui/icons-material';
-import { changeFormStatus, changeTextColor } from '../../helpers';
+import { changeDepartmentStatus, changeTextColor } from '../../helpers';
 import { colors } from '../../assets/theme/theme';
 
 const FormStatus = ({ reviewers, isLoading }) => {
-  const departments = changeFormStatus(reviewers);
+  const departments = changeDepartmentStatus(reviewers);
 
   return (
     <Timeline
@@ -89,7 +89,12 @@ const FormStatus = ({ reviewers, isLoading }) => {
                         fontWeight: 500,
                       }}
                     >
-                      {user.status} by {user.reviewer.name}
+                      <span style={{ textTransform: 'capitalize' }}>
+                        {user.status === 'FORWARDED'
+                          ? 'Forwarded and Approved'
+                          : user.status.toLowerCase()}
+                      </span>{' '}
+                      by {user.reviewer.name}
                     </Typography>
                   </Box>
                 ))}

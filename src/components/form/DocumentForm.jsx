@@ -7,40 +7,23 @@ import {
   editSchema,
   initialValues,
 } from '../../schema/document.schema';
-import { Box, Button, IconButton, MenuItem, Typography } from '@mui/material';
+import { Box, Button, IconButton, Typography } from '@mui/material';
 import FormTextField from '../shared/FormTextField';
-import FormSelect from '../shared/FormSelect';
 import RichTextEditor from '../ui/RichTextEditor';
 import { Cancel, CloudUpload } from '@mui/icons-material';
 import FormActionButtons from '../ui/FormActionButtons';
 import { colors } from '../../assets/theme/theme';
 import PDFSampleImage from '../../assets/images/PDF.png';
-import {
-  useCreateRequest,
-  useEditRequest,
-  useGetAllWorkflows,
-} from '../../api';
-import { getDepartmentsFromWorkflow } from '../../helpers';
+import { useCreateRequest, useEditRequest } from '../../api';
 import { toast } from 'react-toastify';
 import { useQueryClient } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
-import WorkflowRoute from '../ui/WorkflowRoute';
 import CustomFormLabel from '../shared/CustomFormLabel';
 import { useAuth } from '../../hooks';
+import SelectWorkflows from './SelectWorkflows';
 
 const DocumentForm = ({ oldData, onClick }) => {
   const { id } = useParams();
-
-  const { data } = useGetAllWorkflows({ limit: 0 });
-
-  let workflows;
-
-  if (data?.payload) {
-    workflows = data?.payload?.map((workflow) => ({
-      ...workflow,
-      departments: getDepartmentsFromWorkflow(workflow.reviewers),
-    }));
-  }
 
   const [description, setDescription] = useState(
     oldData ? oldData.description : '',
@@ -158,24 +141,11 @@ const DocumentForm = ({ oldData, onClick }) => {
               />
             </Box>
             {!oldData ? (
-              <Box>
-                <CustomFormLabel label="Select Work Flow" />
-                <FormSelect
-                  placeholder="Select Work Flow"
-                  name="workflowId"
-                  formProps={props}
-                >
-                  {workflows &&
-                    workflows?.map((item) => (
-                      <MenuItem value={item._id} key={item._id}>
-                        <WorkflowRoute
-                          name={item?.name}
-                          departments={item?.departments}
-                        />
-                      </MenuItem>
-                    ))}
-                </FormSelect>
-              </Box>
+              <SelectWorkflows
+                name="workflowId"
+                formProps={props}
+                type="normal"
+              />
             ) : (
               user.permissions.canEditAmount && (
                 <Box>

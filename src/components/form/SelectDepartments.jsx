@@ -5,9 +5,18 @@ import FormTextField from '../shared/FormTextField';
 import ModalButton from '../ui/ModalButton';
 import { useNavigate } from 'react-router-dom';
 import CustomFormLabel from '../shared/CustomFormLabel';
+import { colors } from '../../assets/theme/theme';
+import { useState } from 'react';
 
 const SelectDepartments = ({ children, onOpen, formProps }) => {
   const navigate = useNavigate();
+
+  const [optionValue, setOptionValue] = useState(formProps.values.type);
+
+  const handleOptionChange = (value) => {
+    setOptionValue(value);
+    formProps.setFieldValue('type', value);
+  };
 
   return (
     <>
@@ -32,6 +41,58 @@ const SelectDepartments = ({ children, onOpen, formProps }) => {
             />
           </Box>
         </Box>
+        <CustomFormLabel label="Private Work Flow ?" required={true} />
+        <Box sx={{ display: 'flex', gap: 1 }}>
+          <Box
+            sx={{
+              bgcolor: `${
+                optionValue === 'normal' ? colors.paleBlue[800] : colors.bgColor
+              }`,
+              color: `${
+                optionValue === 'normal' ? colors.white[100] : colors.black[300]
+              }`,
+              width: '70px',
+              height: '30px',
+              borderRadius: 3,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              cursor: 'pointer',
+            }}
+            onClick={() => handleOptionChange('normal')}
+          >
+            No
+          </Box>
+          <Box
+            sx={{
+              bgcolor: `${
+                optionValue === 'private'
+                  ? colors.paleBlue[800]
+                  : colors.bgColor
+              }`,
+              color: `${
+                optionValue === 'private'
+                  ? colors.white[100]
+                  : colors.black[300]
+              }`,
+              width: '70px',
+              height: '30px',
+              borderRadius: 3,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              cursor: 'pointer',
+            }}
+            onClick={() => handleOptionChange('private')}
+          >
+            Yes
+          </Box>
+        </Box>
+        {/* <FormRadioButton
+          items={[...Object.values(WORKFLOW_TYPES)]}
+          name="type"
+          formProps={formProps}
+        /> */}
         {children}
       </Box>
       <Box display="flex" justifyContent="end" gap={2} mt={2}>

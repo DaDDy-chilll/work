@@ -24,4 +24,5 @@ export const remarkValues = {
 
 export const remarkSchema = yup.object().shape({
   action: yup.string().required('Please select form action'),
+  workflowId: yup.string().optional(),
 });

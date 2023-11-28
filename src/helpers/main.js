@@ -44,6 +44,8 @@ export const changeTextColor = ({ action }) => {
   if (action === 'REVISED') textColor = colors.darkBlue[800];
   if (action === 'ACKNOWLEDGED') textColor = colors.purple[800];
 
+  if (action === 'FORWARDED') textColor = colors.pink[800];
+
   return textColor;
 };
 
@@ -63,6 +65,8 @@ export const changeBgColor = ({ action }) => {
   if (action === 'REQUESTED_REVISION') bgColor = colors.purple[200];
   if (action === 'REVISED') bgColor = colors.darkBlue[200];
   if (action === 'ACKNOWLEDGED') bgColor = colors.purple[200];
+
+  if (action === 'FORWARDED') bgColor = colors.pink[200];
 
   return bgColor;
 };

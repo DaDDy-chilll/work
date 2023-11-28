@@ -124,6 +124,7 @@ const changeStatus = async ({ data, id }) => {
   return fetcher
     .post(`/documents/${id}/actions/${data.action}`, {
       remark: data.remark,
+      workflowId: data.workflowId,
     })
     .then((res) => {
       return res.data;

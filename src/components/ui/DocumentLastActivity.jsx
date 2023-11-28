@@ -32,8 +32,12 @@ const DocumentLastActivity = ({ lastActivity }) => {
           textAlign: 'center',
         }}
       >
-        {transformLastActivity(lastActivity?.action)} by{' '}
-        {lastActivity?.actor?.name} ({lastActivity.department?.name})
+        <span style={{ textTransform: 'capitalize' }}>
+          {transformLastActivity(lastActivity?.action) === 'FORWARDED'
+            ? 'Forwarded and Approved'
+            : transformLastActivity(lastActivity?.action).toLowerCase()}
+        </span>{' '}
+        by {lastActivity?.actor?.name} ({lastActivity.department?.name})
       </Typography>
     </Box>
   );
