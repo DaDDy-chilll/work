@@ -3,11 +3,9 @@ import { colors } from '../assets/theme/theme';
 import { useNavigate } from 'react-router';
 import { usePageTitle } from '../hooks';
 import RemarkForm from '../components/form/RemarkForm';
-import { useParams } from 'react-router-dom';
 
 const AddRemarkPage = () => {
   const navigate = useNavigate();
-  const { id } = useParams();
   // eslint-disable-next-line no-unused-vars
   const { pageTitle, setPageTitle } = usePageTitle('Add Remark Page');
 
@@ -29,7 +27,7 @@ const AddRemarkPage = () => {
         Give Decision
       </Typography>
       <Box bgcolor={colors.white[100]} borderRadius="1rem">
-        <RemarkForm onClick={() => navigate(`/detail/${id}`)} />
+        <RemarkForm onClick={() => navigate('/')} />
       </Box>
     </Box>
   );
