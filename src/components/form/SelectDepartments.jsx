@@ -88,11 +88,6 @@ const SelectDepartments = ({ children, onOpen, formProps }) => {
             Yes
           </Box>
         </Box>
-        {/* <FormRadioButton
-          items={[...Object.values(WORKFLOW_TYPES)]}
-          name="type"
-          formProps={formProps}
-        /> */}
         {children}
       </Box>
       <Box display="flex" justifyContent="end" gap={2} mt={2}>
