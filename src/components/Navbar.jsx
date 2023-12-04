@@ -25,7 +25,7 @@ const getCurrentIndex = (path) => {
   if (path === '/my-requests' || path === '/workflows') {
     return 1;
   }
-  if (path === '/inbox' || path === '/departments') {
+  if (path === '/all' || path === '/departments') {
     return 2;
   }
   return 0;
@@ -88,8 +88,8 @@ const Navbar = () => {
       ) : (
         <Tabs value={value} onChange={handleChange} aria-label="navbar-tab">
           <Item
-            icon={<ListAltOutlined sx={{ fontSize: '20px' }} />}
-            label="All Requests"
+            icon={<MailOutline sx={{ fontSize: '20px' }} />}
+            label="Inbox"
             to="/"
           />
           <Item
@@ -98,9 +98,9 @@ const Navbar = () => {
             to="/my-requests"
           />
           <Item
-            icon={<MailOutline sx={{ fontSize: '20px' }} />}
-            label="Inbox"
-            to="/inbox"
+            icon={<ListAltOutlined sx={{ fontSize: '20px' }} />}
+            label="All Requests"
+            to="/all"
           />
         </Tabs>
       )}
