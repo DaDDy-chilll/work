@@ -37,13 +37,13 @@ function App() {
                 </Protected>
               }
             >
-              <Route path="" element={<AllRequestsPage />} />
+              <Route path="" element={<InboxPage />} />
+              <Route path="all" element={<AllRequestsPage />} />
               <Route path="my-requests" element={<MyRequestsPage />} />
               <Route
                 path="my-requests/create"
                 element={<CreateRequestPage />}
               />
-              <Route path="inbox" element={<InboxPage />} />
               <Route path="detail/:id" element={<DocumentDetailPage />} />
               <Route path="edit/:id" element={<EditRequestPage />} />
               <Route path="remark/:id" element={<AddRemarkPage />} />
