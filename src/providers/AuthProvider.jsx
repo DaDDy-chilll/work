@@ -93,7 +93,8 @@ const AuthProvider = ({ children }) => {
         dispatch({ type: LOG_IN, payload: { user: data?.payload } });
       }
     } catch (error) {
-      if (isAxiosError(error) && error.status === 401) {
+      console.log({ error });
+      if (isAxiosError(error) && error.response.status === 401) {
         logout();
         navigate('/login');
       } else {

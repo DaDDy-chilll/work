@@ -9,11 +9,11 @@ export default function GlobalFallbackRender({ error }) {
         'Service unavailable. No connectivity or the server is in maintenance. Please wait for a moment.';
     }
 
-    if (error.status === 503) {
+    if (error.response.status === 503) {
       message = 'Service unavailable. Server is in maintenance';
     }
 
-    if (error.status === 401) {
+    if (error.response.status === 401) {
       message = 'You are not authorized';
     }
   }
