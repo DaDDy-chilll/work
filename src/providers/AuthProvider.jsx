@@ -96,8 +96,9 @@ const AuthProvider = ({ children }) => {
       if (isAxiosError(error) && error.status === 401) {
         logout();
         navigate('/login');
+      } else {
+        showBoundary(error);
       }
-      showBoundary(error);
     } finally {
       dispatch({ type: END_VALIDATING_USER });
     }
