@@ -21,49 +21,55 @@ import CreateRequestPage from './pages/CreateRequestPage';
 import WorkflowDetailPage from './pages/WorkflowDetailPage';
 import UserDetailPage from './pages/UserDetailPage';
 import AddRemarkPage from './pages/AddRemarkPage';
+import ErrorBoundary from './pages/ErrorBoundary';
 
 function App() {
   return (
-    <AuthProvider>
-      <ToastContainer />
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={theme}>
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <Protected>
-                  <Layout />
-                </Protected>
-              }
-            >
-              <Route path="" element={<InboxPage />} />
-              <Route path="all" element={<AllRequestsPage />} />
-              <Route path="my-requests" element={<MyRequestsPage />} />
+    <ErrorBoundary>
+      <AuthProvider>
+        <ToastContainer />
+        <QueryClientProvider client={queryClient}>
+          <ThemeProvider theme={theme}>
+            <Routes>
               <Route
-                path="my-requests/create"
-                element={<CreateRequestPage />}
-              />
-              <Route path="detail/:id" element={<DocumentDetailPage />} />
-              <Route path="edit/:id" element={<EditRequestPage />} />
-              <Route path="remark/:id" element={<AddRemarkPage />} />
+                path="/"
+                element={
+                  <Protected>
+                    <Layout />
+                  </Protected>
+                }
+              >
+                <Route path="" element={<InboxPage />} />
+                <Route path="all" element={<AllRequestsPage />} />
+                <Route path="my-requests" element={<MyRequestsPage />} />
+                <Route
+                  path="my-requests/create"
+                  element={<CreateRequestPage />}
+                />
+                <Route path="detail/:id" element={<DocumentDetailPage />} />
+                <Route path="edit/:id" element={<EditRequestPage />} />
+                <Route path="remark/:id" element={<AddRemarkPage />} />
 
-              {/* FOR SUPERADMIN */}
-              <Route path="departments" element={<DepartmentsPage />} />
-              <Route path="users" element={<UsersPage />} />
-              <Route path="users/:id" element={<UserDetailPage />} />
-              <Route path="workflows" element={<WorkFlowsPage />} />
-              <Route path="workflows/create" element={<CreateWorkflowPage />} />
-              <Route
-                path="workflows/detail/:id"
-                element={<WorkflowDetailPage />}
-              />
-            </Route>
-            <Route path="/login" element={<LoginPage />} />
-          </Routes>
-        </ThemeProvider>
-      </QueryClientProvider>
-    </AuthProvider>
+                {/* FOR SUPERADMIN */}
+                <Route path="departments" element={<DepartmentsPage />} />
+                <Route path="users" element={<UsersPage />} />
+                <Route path="users/:id" element={<UserDetailPage />} />
+                <Route path="workflows" element={<WorkFlowsPage />} />
+                <Route
+                  path="workflows/create"
+                  element={<CreateWorkflowPage />}
+                />
+                <Route
+                  path="workflows/detail/:id"
+                  element={<WorkflowDetailPage />}
+                />
+              </Route>
+              <Route path="/login" element={<LoginPage />} />
+            </Routes>
+          </ThemeProvider>
+        </QueryClientProvider>
+      </AuthProvider>
+    </ErrorBoundary>
   );
 }
 
