@@ -7,20 +7,20 @@ export const queryClient = new QueryClient({
     queries: {
       useErrorBoundary: (error) => {
         if (isAxiosError(error)) {
-          return error.status === 401 || error.status === 503;
+          return error.response.status === 401 || error.response.status === 503;
         }
 
-        return true;
+        return false;
       },
       refetchOnWindowFocus: false,
     },
     mutations: {
       useErrorBoundary: (error) => {
         if (isAxiosError(error)) {
-          return error.status === 401;
+          return error.status === 401 || error.status === 503;
         }
 
-        return true;
+        return false;
       },
       onError: (error) => {
         if (isAxiosError(error)) {
