@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { fetcher } from '../lib/axios';
 import { toast } from 'react-toastify';
 import { AUTH_ACTIONS, ROLES } from '../constants';
+import { useErrorBoundary } from 'react-error-boundary';
 const {
   START_LOG_IN,
   END_LOG_IN,
@@ -76,6 +77,7 @@ export const AuthContext = createContext({
 
 const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const { showBoundary } = useErrorBoundary();
 
   const navigate = useNavigate();
 
@@ -91,9 +93,11 @@ const AuthProvider = ({ children }) => {
         dispatch({ type: LOG_IN, payload: { user: data?.payload } });
       }
     } catch (error) {
-      if (isAxiosError(error) && error.status === 401) {
+      if (isAxiosError(error) && error.response?.status === 401) {
         logout();
         navigate('/login');
+      } else {
+        showBoundary(error);
       }
     } finally {
       dispatch({ type: END_VALIDATING_USER });
