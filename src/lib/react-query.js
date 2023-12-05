@@ -7,7 +7,6 @@ export const queryClient = new QueryClient({
     queries: {
       useErrorBoundary: (error) => {
         if (isAxiosError(error)) {
-          console.log(error.status === 401 || error.status === 503);
           return error.status === 401 || error.status === 503;
         }
 
