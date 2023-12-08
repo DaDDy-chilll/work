@@ -163,7 +163,8 @@ const DocumentDetailPage = () => {
                       variant="contained"
                     />
                   )}
-                {user?._id === document?.payload?.currentReviewer && (
+                {!document.payload.isCaseClosed &&
+                user?._id === document?.payload?.currentReviewer ? (
                   <>
                     <LinkButton
                       width="200px"
@@ -173,7 +174,7 @@ const DocumentDetailPage = () => {
                       onClick={() => navigate(`/remark/${id}`)}
                     />
                   </>
-                )}
+                ) : null}
               </Box>
             </Box>
             <Box
