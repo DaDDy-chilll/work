@@ -22,6 +22,7 @@ const Notifications = ({ notifications, setNotiOpen }) => {
             backgroundColor: colors.red[700],
           },
         }}
+        max={unreadNotis.length + 1}
       >
         <NotificationsNone
           sx={{ fontSize: '32px', color: colors.paleBlue[800] }}
