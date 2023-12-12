@@ -18,7 +18,12 @@ import React, { useEffect } from 'react';
 import NotificationDetail from './NotificationDetail';
 
 // eslint-disable-next-line react/display-name
-const Item = React.forwardRef(({ noti, handleOpen }, ref) => {
+const Item = React.forwardRef(({ noti, handleOpen, onClose }, ref) => {
+  const handleClick = () => {
+    handleOpen({ id: noti?._id, documentId: noti?.documentId });
+    onClose();
+  };
+
   const itemContent = (
     <ListItem
       key={noti?._id}
@@ -26,9 +31,7 @@ const Item = React.forwardRef(({ noti, handleOpen }, ref) => {
         bgcolor: noti?.isOpen ? colors.white[100] : colors.bgColor,
         cursor: 'pointer',
       }}
-      onClick={() =>
-        handleOpen({ id: noti?._id, documentId: noti?.documentId })
-      }
+      onClick={handleClick}
     >
       <ListItemText
         disableTypography
@@ -92,10 +95,18 @@ const NotificationDrawer = ({ setNotiOpen, notiOpen }) => {
                 key={noti._id}
                 noti={noti}
                 handleOpen={handleOpen}
+                onClose={() => setNotiOpen(false)}
               />
             );
           }
-          return <Item key={noti._id} noti={noti} handleOpen={handleOpen} />;
+          return (
+            <Item
+              key={noti._id}
+              noti={noti}
+              handleOpen={handleOpen}
+              onClose={() => setNotiOpen(false)}
+            />
+          );
         }),
     );
 
