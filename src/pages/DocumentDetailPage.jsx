@@ -153,7 +153,8 @@ const DocumentDetailPage = () => {
                   variant="contained"
                   color="primary"
                 />
-                {user?._id === document?.payload?.currentReviewer &&
+                {!document.payload.isCaseClosed &&
+                  user?._id === document?.payload?.currentReviewer &&
                   user?.permissions?.canPrepare && (
                     <LinkButton
                       width="200px"
