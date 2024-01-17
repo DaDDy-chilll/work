@@ -113,6 +113,13 @@ const AllRequestsPage = () => {
               gap: 2,
             }}
           >
+            <DateRangeFilter
+              date={date}
+              openDate={openDate}
+              setOpenDate={setOpenDate}
+              handleDateChange={handleDateChange}
+              handleRemoveDate={handleRemoveDate}
+            />
             <SearchBox
               setSearch={setSearchValue}
               placeholder="Search Subject"
@@ -132,13 +139,6 @@ const AllRequestsPage = () => {
                 handleSearchCancel={handleSearchCancel}
               />
             )}
-            <DateRangeFilter
-              date={date}
-              openDate={openDate}
-              setOpenDate={setOpenDate}
-              handleDateChange={handleDateChange}
-              handleRemoveDate={handleRemoveDate}
-            />
           </Box>
         </Box>
         <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
