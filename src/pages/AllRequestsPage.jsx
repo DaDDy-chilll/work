@@ -19,6 +19,9 @@ import CustomChip from '../components/shared/CustomChip';
 import { Clear } from '@mui/icons-material';
 import CustomPagination from '../components/shared/CustomPagination';
 import moment from 'moment';
+import CustomFilter from '../components/ui/CustomFilter';
+import { FILTER_OPTIONS } from '../constants';
+import { useCustomeFilter } from '../hooks/useCustomFilter';
 
 const AllRequestsPage = () => {
   // PAGE TITLE
@@ -28,6 +31,11 @@ const AllRequestsPage = () => {
   const { user } = useAuth();
 
   const [page, setPage] = useState(1);
+
+  // STATUS FILTER
+  const { optionValue, handleOptionChange } = useCustomeFilter({
+    initialValue: { text: 'all', value: '' },
+  });
 
   // DEPARTMENT FILTER
   const {
@@ -64,7 +72,7 @@ const AllRequestsPage = () => {
     return { startTime, endTime };
   };
 
-  const { isError, error, data, isFetching } = useGetAllRequests({
+  let query = {
     search: searchValue,
     startDate: date.startDate && date.endDate ? convertUtc(date).startTime : '',
     endDate: date.startDate && date.endDate ? convertUtc(date).endTime : '',
@@ -72,7 +80,13 @@ const AllRequestsPage = () => {
     sort: '-createdAt',
     page,
     limit: 10,
-  });
+  };
+
+  if (optionValue.key) {
+    Object.assign(query, { [optionValue.key]: optionValue.value });
+  }
+
+  const { isError, error, data, isFetching } = useGetAllRequests(query);
 
   if (isError) return <p>Error: {error?.response?.data?.message}</p>;
 
@@ -80,30 +94,52 @@ const AllRequestsPage = () => {
     <Box m={2} borderRadius="1rem" bgcolor={colors.white[100]}>
       <Navbar />
       <Box p={3}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          <SearchBox setSearch={setSearchValue} placeholder="Search Subject" />
-          {user?.department?.type === 'authorized' && (
-            <DepartmentFilter
-              departments={departments}
-              filteredDepartments={filteredDepartments}
-              search={search}
-              searchedDepartments={searchedDepartments}
-              isOpen={isOpen}
-              onOpen={onOpen}
-              onClose={onClose}
-              handleSearch={handleSearch}
-              handleChange={handleChange}
-              handleFilter={handleFilter}
-              handleSearchCancel={handleSearchCancel}
-            />
-          )}
-          <DateRangeFilter
-            date={date}
-            openDate={openDate}
-            setOpenDate={setOpenDate}
-            handleDateChange={handleDateChange}
-            handleRemoveDate={handleRemoveDate}
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
+          <CustomFilter
+            items={FILTER_OPTIONS.ALL_REQUESTS}
+            optionValue={optionValue}
+            handleOptionChange={handleOptionChange}
           />
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 2,
+            }}
+          >
+            <SearchBox
+              setSearch={setSearchValue}
+              placeholder="Search Subject"
+            />
+            {user?.department?.type === 'authorized' && (
+              <DepartmentFilter
+                departments={departments}
+                filteredDepartments={filteredDepartments}
+                search={search}
+                searchedDepartments={searchedDepartments}
+                isOpen={isOpen}
+                onOpen={onOpen}
+                onClose={onClose}
+                handleSearch={handleSearch}
+                handleChange={handleChange}
+                handleFilter={handleFilter}
+                handleSearchCancel={handleSearchCancel}
+              />
+            )}
+            <DateRangeFilter
+              date={date}
+              openDate={openDate}
+              setOpenDate={setOpenDate}
+              handleDateChange={handleDateChange}
+              handleRemoveDate={handleRemoveDate}
+            />
+          </Box>
         </Box>
         <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
           {filteredDepartments.map((department) => (
