@@ -10,6 +10,7 @@ import SearchBox from '../components/shared/SearchBox';
 import DateRangeFilter from '../components/shared/DateRangeFilter';
 import {
   useAuth,
+  useCustomeFilter,
   useDateRangeFilter,
   useDepartmentFilter,
   usePageTitle,
@@ -21,7 +22,6 @@ import CustomPagination from '../components/shared/CustomPagination';
 import moment from 'moment';
 import CustomFilter from '../components/ui/CustomFilter';
 import { FILTER_OPTIONS } from '../constants';
-import { useCustomeFilter } from '../hooks/useCustomFilter';
 
 const AllRequestsPage = () => {
   // PAGE TITLE
