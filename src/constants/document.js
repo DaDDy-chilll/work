@@ -24,3 +24,37 @@ export const DOCUMENT_STATUSES = {
   COMMENTED: 'COMMENTED',
   FORWARDED: 'FORWARDED',
 };
+
+export const FILTER_OPTIONS = {
+  ALL_REQUESTS: [
+    {
+      text: 'All',
+      value: '',
+    },
+    {
+      text: 'Open',
+      value: 'open',
+      key: 'caseStatus',
+    },
+    {
+      text: 'Close',
+      value: 'closed',
+      key: 'caseStatus',
+    },
+    {
+      text: 'Rejected',
+      value: DOCUMENT_STATUSES.REJECTED,
+      key: 'status',
+    },
+  ],
+  INBOX: [
+    {
+      text: 'To Check',
+      value: 'open',
+    },
+    {
+      text: 'All',
+      value: '',
+    },
+  ],
+};
