@@ -14,6 +14,7 @@ export const userCreateValues = {
   canVerify: false,
   canEditAmount: false,
   canForward: false,
+  canMention: false,
 };
 
 export const userCreateSchema = yup.object().shape({
@@ -48,6 +49,7 @@ export const userCreateSchema = yup.object().shape({
   canVerify: yup.boolean(),
   canEditAmount: yup.boolean(),
   canForward: yup.boolean(),
+  canMention: yup.boolean(),
 });
 
 export const userEditSchema = yup.object().shape({
@@ -61,6 +63,7 @@ export const userEditSchema = yup.object().shape({
   canVerify: yup.boolean(),
   canEditAmount: yup.boolean(),
   canForward: yup.boolean(),
+  canMention: yup.boolean(),
 });
 
 export const changePasswordValues = {

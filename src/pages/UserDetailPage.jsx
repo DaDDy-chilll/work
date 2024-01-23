@@ -91,6 +91,14 @@ const UserPermissions = ({ permissions }) => {
         label={PERMISSIONS.REVISE}
         defaultValue={permissions.canEdit}
       />
+      <PermissionCheckbox
+        label={PERMISSIONS.FORWARD}
+        defaultValue={permissions.canForward}
+      />
+      <PermissionCheckbox
+        label={PERMISSIONS.MENTION}
+        defaultValue={permissions.canMention}
+      />
     </Box>
   );
 };
