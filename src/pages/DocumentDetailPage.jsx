@@ -44,6 +44,8 @@ const DocumentDetailPage = () => {
 
   const navigate = useNavigate();
 
+  console.log({ document });
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, m: 2 }}>
       <Typography
@@ -175,6 +177,16 @@ const DocumentDetailPage = () => {
                     />
                   </>
                 ) : null}
+                {document?.payload?.isCaseClosed &&
+                  user?.permissions?.canMention && (
+                    <LinkButton
+                      width="200px"
+                      color="success"
+                      innerText="Mention"
+                      onClick={() => navigate(`/mention/${id}`)}
+                      variant="contained"
+                    />
+                  )}
               </Box>
             </Box>
             <Box

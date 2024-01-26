@@ -152,3 +152,15 @@ export const useRejectDocument = () => {
     mutationFn: rejectDocument,
   });
 };
+
+const mentionDocument = async ({ data, id }) => {
+  return fetcher.post(`/documents/${id}/mention`, data).then((res) => {
+    return res.data;
+  });
+};
+
+export const useMentionDocument = () => {
+  return useMutation({
+    mutationFn: mentionDocument,
+  });
+};
