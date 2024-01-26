@@ -22,7 +22,7 @@ const InboxPage = () => {
   const [page, setPage] = useState(1);
 
   const { isError, error, data, isFetching } = useGetInbox({
-    sort: '-createdAt',
+    sort: 'createdAt',
     page,
     limit: 10,
     caseStatus: optionValue.value,
