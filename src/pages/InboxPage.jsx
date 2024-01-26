@@ -25,7 +25,7 @@ const InboxPage = () => {
     sort: 'createdAt',
     page,
     limit: 10,
-    caseStatus: optionValue.value,
+    [optionValue.key]: optionValue.value,
   });
 
   if (isError) return <p>Error: {error?.response?.data?.message}</p>;

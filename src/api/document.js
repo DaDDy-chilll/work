@@ -28,6 +28,14 @@ export const useGetMyRequests = (params) => {
   });
 };
 
+export const getMentionedRequests = async (params) => {
+  return fetcher
+    .get(`/documents/mention?${getQueryString(params)}`)
+    .then((res) => {
+      return res.data;
+    });
+};
+
 export const getInbox = async (params) => {
   return fetcher
     .get(`/documents/to-check?${getQueryString(params)}`)
@@ -39,7 +47,13 @@ export const getInbox = async (params) => {
 export const useGetInbox = (params) => {
   return useQuery({
     queryKey: ['inbox', params],
-    queryFn: () => getInbox(params),
+    queryFn: () => {
+      if (params.mentioned) {
+        delete params.mentioned;
+        return getMentionedRequests(params);
+      }
+      return getInbox(params);
+    },
   });
 };
 
