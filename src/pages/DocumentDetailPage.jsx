@@ -59,12 +59,12 @@ const DocumentDetailPage = () => {
         </Box>
       ) : (
         document?.payload && (
-          <Box sx={{ display: 'flex', gap: 2 }}>
+          <Box sx={{ display: 'flex', gap: 1 }}>
             <Box
               sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                gap: 2,
+                gap: 1,
                 maxWidth: '75%',
                 minWidth: '75%',
               }}

@@ -31,7 +31,7 @@ const FormStatus = ({ reviewers, isLoading }) => {
         <CircularProgress size={48} />
       ) : (
         departments &&
-        departments.map((department, i) => (
+        departments.map((item, i) => (
           <TimelineItem key={i}>
             <TimelineSeparator>
               <TimelineConnector />
@@ -70,9 +70,9 @@ const FormStatus = ({ reviewers, isLoading }) => {
                     color: colors.black[200],
                   }}
                 >
-                  {department.name}
+                  {item.department.name}
                 </Typography>{' '}
-                {department.users?.map((user) => (
+                {item.users?.map((user) => (
                   <Box
                     key={user._id}
                     sx={{

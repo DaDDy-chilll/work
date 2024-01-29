@@ -19,65 +19,71 @@ const MentionDetailCard = () => {
   }
 
   return (
-    <Box bgcolor={colors.white[100]} borderRadius="1rem">
-      <Typography
-        sx={{
-          borderBottom: `1px solid ${colors.grey[400]}`,
-          py: 2,
-          px: 4,
-          display: 'flex',
-          alignItems: 'center',
-          gap: 1,
-          cursor: 'pointer',
-          fontSize: '20px',
-          fontWeight: 600,
-          color: colors.black[100],
-        }}
-      >
-        Mention Info Detail
-      </Typography>
-      {isLoading ? (
-        <CircularProgress size={48} />
-      ) : (
-        mentions &&
-        mentions?.map((item, i) => (
-          <Box
-            key={item._id}
+    <>
+      {mentions && mentions?.length ? (
+        <Box bgcolor={colors.white[100]} borderRadius="1rem">
+          <Typography
             sx={{
-              borderBottom: `1px solid ${
-                mentions.length - 1 !== i && colors.grey[400]
-              }`,
+              borderBottom: `1px solid ${colors.grey[400]}`,
               py: 2,
               px: 4,
               display: 'flex',
-              flexDirection: 'column',
+              alignItems: 'center',
               gap: 1,
               cursor: 'pointer',
+              fontSize: '20px',
+              fontWeight: 600,
+              color: colors.black[100],
             }}
           >
-            <div
-              style={{
-                fontSize: '16px',
-                wordWrap: 'break-word',
-                fontWeight: 500,
-                color: colors.black[100],
-              }}
-              dangerouslySetInnerHTML={{
-                __html: item?.remark,
-              }}
-            />
-            <Box sx={{ fontSize: '14px', display: 'flex', gap: 1 }}>
-              <span style={{ color: colors.darkBlue[800] }}>
-                {transformLocalTime(item?.createdAt).date}
-              </span>
-              <span style={{ color: colors.red[800] }}>
-                {transformLocalTime(item?.createdAt).time}
-              </span>
-            </Box>
-          </Box>
-        ))
+            Mention Info Detail
+          </Typography>
+          {isLoading ? (
+            <CircularProgress size={48} />
+          ) : (
+            mentions &&
+            mentions?.map((item, i) => (
+              <Box
+                key={item._id}
+                sx={{
+                  borderBottom: `1px solid ${
+                    mentions.length - 1 !== i && colors.grey[400]
+                  }`,
+                  py: 2,
+                  px: 4,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 1,
+                  cursor: 'pointer',
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: '16px',
+                    wordWrap: 'break-word',
+                    fontWeight: 500,
+                    color: colors.black[100],
+                  }}
+                  dangerouslySetInnerHTML={{
+                    __html: item?.remark,
+                  }}
+                />
+                <Box sx={{ fontSize: '14px', display: 'flex', gap: 1 }}>
+                  <span style={{ color: colors.darkBlue[800] }}>
+                    {transformLocalTime(item?.createdAt).date}
+                  </span>
+                  <span style={{ color: colors.red[800] }}>
+                    {transformLocalTime(item?.createdAt).time}
+                  </span>
+                </Box>
+              </Box>
+            ))
+          )}
+        </Box>
+      ) : (
+        <></>
       )}
-    </Box>
+    </>
   );
 };
 
