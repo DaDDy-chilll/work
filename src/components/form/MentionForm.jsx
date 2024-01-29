@@ -39,7 +39,6 @@ const MentionForm = ({ onClick }) => {
   const queryClient = useQueryClient();
 
   const handleFormSubmit = (data) => {
-    console.log({ data });
     const reviewers = data.reviewers.map((item) => item.id);
     mentionDocumentMutation(
       { id, data: { ...data, reviewers, remark } },
