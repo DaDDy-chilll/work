@@ -12,6 +12,14 @@ const MentionDetailCard = () => {
 
   const { user } = useAuth();
 
+  let mentions;
+
+  if (data?.payload) {
+    mentions = data?.payload?.filter(
+      (item) => item.reviewers.includes(user._id) || item.actor === user._id,
+    );
+  }
+
   return (
     <Box bgcolor={colors.white[100]} borderRadius="1rem">
       <Typography
@@ -33,49 +41,42 @@ const MentionDetailCard = () => {
       {isLoading ? (
         <CircularProgress size={48} />
       ) : (
-        data?.payload?.map((item, i) => {
-          const lastIndex = data?.payload?.length - 1;
-          return (
-            <Box
-              key={item._id}
-              sx={{
-                borderBottom: `1px solid ${
-                  lastIndex !== i && colors.grey[400]
-                }`,
-                py: 2,
-                px: 4,
-                display: `${
-                  item.reviewers.includes(user._id) || item.actor === user._id
-                    ? 'flex'
-                    : 'none'
-                }`,
-                flexDirection: 'column',
-                gap: 1,
-                cursor: 'pointer',
+        mentions?.map((item, i) => (
+          <Box
+            key={item._id}
+            sx={{
+              borderBottom: `1px solid ${
+                mentions.length !== i && colors.grey[400]
+              }`,
+              py: 2,
+              px: 4,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 1,
+              cursor: 'pointer',
+            }}
+          >
+            <div
+              style={{
+                fontSize: '16px',
+                wordWrap: 'break-word',
+                fontWeight: 500,
+                color: colors.black[100],
               }}
-            >
-              <div
-                style={{
-                  fontSize: '16px',
-                  wordWrap: 'break-word',
-                  fontWeight: 500,
-                  color: colors.black[100],
-                }}
-                dangerouslySetInnerHTML={{
-                  __html: item?.remark,
-                }}
-              />
-              <Box sx={{ fontSize: '14px', display: 'flex', gap: 1 }}>
-                <span style={{ color: colors.darkBlue[800] }}>
-                  {transformLocalTime(item?.createdAt).date}
-                </span>
-                <span style={{ color: colors.red[800] }}>
-                  {transformLocalTime(item?.createdAt).time}
-                </span>
-              </Box>
+              dangerouslySetInnerHTML={{
+                __html: item?.remark,
+              }}
+            />
+            <Box sx={{ fontSize: '14px', display: 'flex', gap: 1 }}>
+              <span style={{ color: colors.darkBlue[800] }}>
+                {transformLocalTime(item?.createdAt).date}
+              </span>
+              <span style={{ color: colors.red[800] }}>
+                {transformLocalTime(item?.createdAt).time}
+              </span>
             </Box>
-          );
-        })
+          </Box>
+        ))
       )}
     </Box>
   );
