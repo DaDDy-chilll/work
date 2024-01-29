@@ -11,6 +11,7 @@ import FormStatus from '../components/ui/FormStatus';
 import LinkButton from '../components/ui/LinkButton';
 import { useAuth } from '../hooks/useAuth';
 import { usePageTitle } from '../hooks';
+import MentionDetailCard from '../components/ui/MentionDetailCard';
 
 const Item = ({ fieldName, value }) => {
   return (
@@ -58,124 +59,145 @@ const DocumentDetailPage = () => {
         </Box>
       ) : (
         document?.payload && (
-          <Box sx={{ display: 'flex', gap: 2 }}>
+          <Box sx={{ display: 'flex', gap: 1 }}>
             <Box
-              bgcolor={colors.white[100]}
-              borderRadius="1rem"
-              sx={{ maxWidth: '75%', minWidth: '75%' }}
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 1,
+                maxWidth: '75%',
+                minWidth: '75%',
+              }}
             >
-              <Box
-                sx={{
-                  borderBottom: `1px solid ${colors.grey[400]}`,
-                  p: 2,
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 1,
-                  cursor: 'pointer',
-                  fontSize: '20px',
-                  fontWeight: 500,
-                  color: colors.black[100],
-                }}
-              >
-                <IconButton onClick={() => navigate('/')}>
-                  <ArrowBack
-                    sx={{ fontSize: '22px', color: colors.black[100] }}
-                  />
-                </IconButton>
-                {transformLocalTime(document?.payload?.updatedAt).date}
-              </Box>
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: 2,
-                  px: 4,
-                  py: 2,
-                }}
-              >
-                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <Item
-                    fieldName="Document Id"
-                    value={document?.payload?.documentId}
-                  />
-                  <Item fieldName="Subject" value={document?.payload?.name} />
-                  <Item fieldName="Amount" value={document?.payload?.amount} />
+              <MentionDetailCard />
+              <Box bgcolor={colors.white[100]} borderRadius="1rem">
+                <Box
+                  sx={{
+                    borderBottom: `1px solid ${colors.grey[400]}`,
+                    p: 2,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 1,
+                    cursor: 'pointer',
+                    fontSize: '20px',
+                    fontWeight: 500,
+                    color: colors.black[100],
+                  }}
+                >
+                  <IconButton onClick={() => navigate('/')}>
+                    <ArrowBack
+                      sx={{ fontSize: '22px', color: colors.black[100] }}
+                    />
+                  </IconButton>
+                  {transformLocalTime(document?.payload?.updatedAt).date}
                 </Box>
                 <Box
                   sx={{
-                    backgroundColor: colors.bgColor,
-                    borderRadius: '1rem',
-                    p: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 2,
+                    px: 4,
+                    py: 2,
                   }}
                 >
-                  <div
-                    style={{ fontSize: '16px', wordWrap: 'break-word' }}
-                    dangerouslySetInnerHTML={{
-                      __html: document?.payload?.description,
-                    }}
-                  />
-                </Box>
-                {/* ATTACHMENTS */}
-                <Box>
-                  {document?.payload?.attachments && (
+                  <Box
+                    sx={{ display: 'flex', justifyContent: 'space-between' }}
+                  >
                     <Item
-                      fieldName="Attachments (Optional)"
-                      value={
-                        <Attachments
-                          attachments={document?.payload?.attachments}
-                        />
-                      }
+                      fieldName="Document Id"
+                      value={document?.payload?.documentId}
                     />
-                  )}
+                    <Item fieldName="Subject" value={document?.payload?.name} />
+                    <Item
+                      fieldName="Amount"
+                      value={document?.payload?.amount}
+                    />
+                  </Box>
+                  <Box
+                    sx={{
+                      backgroundColor: colors.bgColor,
+                      borderRadius: '1rem',
+                      p: 2,
+                    }}
+                  >
+                    <div
+                      style={{ fontSize: '16px', wordWrap: 'break-word' }}
+                      dangerouslySetInnerHTML={{
+                        __html: document?.payload?.description,
+                      }}
+                    />
+                  </Box>
+                  {/* ATTACHMENTS */}
+                  <Box>
+                    {document?.payload?.attachments && (
+                      <Item
+                        fieldName="Attachments (Optional)"
+                        value={
+                          <Attachments
+                            attachments={document?.payload?.attachments}
+                          />
+                        }
+                      />
+                    )}
+                  </Box>
+                  {/* REMARKS */}
+                  <Box>
+                    {document?.payload?.attachments && (
+                      <Item fieldName="Other Remarks" value={<Remarks />} />
+                    )}
+                  </Box>
                 </Box>
-                {/* REMARKS */}
-                <Box>
-                  {document?.payload?.attachments && (
-                    <Item fieldName="Other Remarks" value={<Remarks />} />
-                  )}
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'right',
+                    alignItems: 'center',
+                    borderTop: `1px solid ${colors.grey[400]}`,
+                    py: 2,
+                    px: 4,
+                    gap: 1,
+                  }}
+                >
+                  <LinkButton
+                    width="200px"
+                    innerText="Back"
+                    onClick={() => navigate('/')}
+                    variant="contained"
+                    color="primary"
+                  />
+                  {user?._id === document?.payload?.currentReviewer &&
+                    user?.permissions?.canPrepare && (
+                      <LinkButton
+                        width="200px"
+                        color="info"
+                        innerText="Edit"
+                        onClick={() => navigate(`/edit/${id}`)}
+                        variant="contained"
+                      />
+                    )}
+                  {!document.payload.isCaseClosed &&
+                  user?._id === document?.payload?.currentReviewer ? (
+                    <>
+                      <LinkButton
+                        width="200px"
+                        color="success"
+                        innerText="Give Decision"
+                        variant="contained"
+                        onClick={() => navigate(`/remark/${id}`)}
+                      />
+                    </>
+                  ) : null}
+                  {document?.payload?.isCaseClosed &&
+                    user?.permissions?.canMention && (
+                      <LinkButton
+                        width="200px"
+                        color="success"
+                        innerText="Mention"
+                        onClick={() => navigate(`/mention/${id}`)}
+                        variant="contained"
+                      />
+                    )}
                 </Box>
-              </Box>
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'right',
-                  alignItems: 'center',
-                  borderTop: `1px solid ${colors.grey[400]}`,
-                  py: 2,
-                  px: 4,
-                  gap: 1,
-                }}
-              >
-                <LinkButton
-                  width="200px"
-                  innerText="Back"
-                  onClick={() => navigate('/')}
-                  variant="contained"
-                  color="primary"
-                />
-                {!document.payload.isCaseClosed &&
-                  user?._id === document?.payload?.currentReviewer &&
-                  user?.permissions?.canPrepare && (
-                    <LinkButton
-                      width="200px"
-                      color="info"
-                      innerText="Edit"
-                      onClick={() => navigate(`/edit/${id}`)}
-                      variant="contained"
-                    />
-                  )}
-                {!document.payload.isCaseClosed &&
-                user?._id === document?.payload?.currentReviewer ? (
-                  <>
-                    <LinkButton
-                      width="200px"
-                      color="success"
-                      innerText="Give Decision"
-                      variant="contained"
-                      onClick={() => navigate(`/remark/${id}`)}
-                    />
-                  </>
-                ) : null}
               </Box>
             </Box>
             <Box

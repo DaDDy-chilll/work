@@ -22,6 +22,7 @@ import WorkflowDetailPage from './pages/WorkflowDetailPage';
 import UserDetailPage from './pages/UserDetailPage';
 import AddRemarkPage from './pages/AddRemarkPage';
 import ErrorBoundary from './pages/ErrorBoundary';
+import AddMentionPage from './pages/AddMentionPage';
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
                 <Route path="detail/:id" element={<DocumentDetailPage />} />
                 <Route path="edit/:id" element={<EditRequestPage />} />
                 <Route path="remark/:id" element={<AddRemarkPage />} />
+                <Route path="mention/:id" element={<AddMentionPage />} />
 
                 {/* FOR SUPERADMIN */}
                 <Route path="departments" element={<DepartmentsPage />} />

@@ -77,7 +77,7 @@ const AllRequestsPage = () => {
     startDate: date.startDate && date.endDate ? convertUtc(date).startTime : '',
     endDate: date.startDate && date.endDate ? convertUtc(date).endTime : '',
     departments: filteredDepartments.map((department) => department.id),
-    sort: '-createdAt',
+    sort: 'createdAt',
     page,
     limit: 10,
   };
