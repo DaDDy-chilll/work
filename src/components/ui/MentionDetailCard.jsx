@@ -2,7 +2,7 @@ import { Box, CircularProgress, Typography } from '@mui/material';
 import { colors } from '../../assets/theme/theme';
 import { useParams } from 'react-router-dom';
 import { useGetAllMentions } from '../../api';
-import { transformLocalTime } from '../../helpers';
+import { filterMentions, transformLocalTime } from '../../helpers';
 import { useAuth } from '../../hooks';
 
 const MentionDetailCard = () => {
@@ -15,9 +15,7 @@ const MentionDetailCard = () => {
   let mentions;
 
   if (data?.payload) {
-    mentions = data?.payload?.filter(
-      (item) => item.reviewers.includes(user._id) || item.actor === user._id,
-    );
+    mentions = filterMentions({ data: data?.payload, user });
   }
 
   return (
@@ -41,12 +39,13 @@ const MentionDetailCard = () => {
       {isLoading ? (
         <CircularProgress size={48} />
       ) : (
+        mentions &&
         mentions?.map((item, i) => (
           <Box
             key={item._id}
             sx={{
               borderBottom: `1px solid ${
-                mentions.length !== i && colors.grey[400]
+                mentions.length - 1 !== i && colors.grey[400]
               }`,
               py: 2,
               px: 4,

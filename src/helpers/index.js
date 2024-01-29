@@ -4,3 +4,4 @@ export * from './document';
 export * from './remark';
 export * from './main';
 export * from './formstatus';
+export * from './mention';

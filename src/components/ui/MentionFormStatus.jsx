@@ -1,38 +1,39 @@
-/* eslint-disable react/prop-types */
+import { Textsms } from '@mui/icons-material';
 import {
-  Timeline,
   TimelineConnector,
   TimelineContent,
   TimelineDot,
   TimelineItem,
   TimelineSeparator,
 } from '@mui/lab';
-import { timelineItemClasses } from '@mui/lab/TimelineItem';
-import { Box, CircularProgress, Typography } from '@mui/material';
-import { ApartmentOutlined, CheckCircle } from '@mui/icons-material';
-import { changeDepartmentStatus, changeTextColor } from '../../helpers';
 import { colors } from '../../assets/theme/theme';
-import MentionFormStatus from './MentionFormStatus';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import { useParams } from 'react-router-dom';
+import { useGetAllMentions } from '../../api';
+import { useAuth } from '../../hooks';
+import { filterMentions } from '../../helpers';
 
-const FormStatus = ({ reviewers, isLoading }) => {
-  const departments = changeDepartmentStatus(reviewers);
+const MentionFormStatus = () => {
+  const { id } = useParams();
+
+  const { data, isLoading } = useGetAllMentions(id);
+
+  const { user } = useAuth();
+
+  let mentions;
+
+  if (data?.payload) {
+    mentions = filterMentions({ data: data?.payload, user });
+  }
 
   return (
-    <Timeline
-      position="right"
-      sx={{
-        [`& .${timelineItemClasses.root}:before`]: {
-          flex: 0,
-          padding: 0,
-        },
-      }}
-    >
+    <>
       {isLoading ? (
         <CircularProgress size={48} />
       ) : (
-        departments &&
-        departments.map((department, i) => (
-          <TimelineItem key={i}>
+        mentions &&
+        mentions?.map((item) => (
+          <TimelineItem key={item._id}>
             <TimelineSeparator>
               <TimelineConnector />
               <TimelineDot
@@ -46,11 +47,8 @@ const FormStatus = ({ reviewers, isLoading }) => {
                 }}
                 color="warning"
               >
-                <ApartmentOutlined
-                  sx={{
-                    color: colors.paleBlue[800],
-                    fontSize: '25px',
-                  }}
+                <Textsms
+                  sx={{ color: colors.paleBlue[800], fontSize: '23px' }}
                 />
               </TimelineDot>
               <TimelineConnector />
@@ -70,32 +68,26 @@ const FormStatus = ({ reviewers, isLoading }) => {
                     color: colors.black[200],
                   }}
                 >
-                  {department.name}
-                </Typography>{' '}
-                {department.users?.map((user) => (
+                  {item.actor.name} Mention
+                </Typography>
+                {item.reviewers.map((person) => (
                   <Box
-                    key={user._id}
+                    key={person._id}
                     sx={{
                       display: 'flex',
                       alignItems: 'center',
                       gap: 1,
                       mt: 1,
-                      color: changeTextColor({ action: user.status }),
+                      color: colors.paleBlue[800],
                     }}
                   >
-                    <CheckCircle sx={{ fontSize: '25px' }} />
                     <Typography
                       sx={{
                         fontSize: '14px',
                         fontWeight: 500,
                       }}
                     >
-                      <span style={{ textTransform: 'capitalize' }}>
-                        {user.status === 'FORWARDED'
-                          ? 'Forwarded and Approved'
-                          : user.status.toLowerCase()}
-                      </span>{' '}
-                      by {user.reviewer.name}
+                      {person.name} ({person.userId})
                     </Typography>
                   </Box>
                 ))}
@@ -104,9 +96,8 @@ const FormStatus = ({ reviewers, isLoading }) => {
           </TimelineItem>
         ))
       )}
-      <MentionFormStatus />
-    </Timeline>
+    </>
   );
 };
 
-export default FormStatus;
+export default MentionFormStatus;
