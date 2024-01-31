@@ -1,9 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Box, CircularProgress, MenuItem } from '@mui/material';
 import { Formik } from 'formik';
-import RichTextEditor from '../ui/RichTextEditor';
 import FormActionButtons from '../ui/FormActionButtons';
-import { useState } from 'react';
 import { initialMentionValues, mentionSchema } from '../../schema';
 import FormSelect from '../shared/FormSelect';
 import { useMentionDocument } from '../../api/document';
@@ -14,6 +12,7 @@ import MultipleSelectWithCheckbox from '../shared/MultipleSelectWithCheckbox';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useQueryClient } from 'react-query';
+import FormTextField from '../shared/FormTextField';
 
 const SelectReviewers = ({ department, setFieldValue }) => {
   const { data } = useGetAllUsers({ limit: 0, department });
@@ -27,8 +26,6 @@ const SelectReviewers = ({ department, setFieldValue }) => {
 };
 
 const MentionForm = ({ onClick }) => {
-  const [remark, setRemark] = useState('');
-
   const { id } = useParams();
 
   const { data: departments } = useGetAllDepartments({ limit: 0 });
@@ -41,7 +38,7 @@ const MentionForm = ({ onClick }) => {
   const handleFormSubmit = (data) => {
     const reviewers = data.reviewers.map((item) => item.id);
     mentionDocumentMutation(
-      { id, data: { ...data, reviewers, remark } },
+      { id, data: { ...data, reviewers } },
       {
         onSuccess: () => {
           toast.success('ok');
@@ -95,7 +92,15 @@ const MentionForm = ({ onClick }) => {
             )}
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
               <CustomFormLabel label="Description" />
-              <RichTextEditor text={remark} setText={setRemark} />
+              <FormTextField
+                type="text"
+                formProps={props}
+                name="remark"
+                placeholder="Description"
+                multiline={true}
+                minRows={10}
+              />
+              {/* <RichTextEditor text={remark} setText={setRemark} /> */}
             </Box>
           </Box>
           <Box

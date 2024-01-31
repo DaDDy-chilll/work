@@ -32,6 +32,7 @@ export const remarkSchema = yup.object().shape({
 export const initialMentionValues = {
   department: '',
   reviewers: [],
+  remark: '',
 };
 
 const reviewerSchema = yup.object().shape({
@@ -45,4 +46,5 @@ export const mentionSchema = yup.object().shape({
     .array()
     .of(reviewerSchema)
     .min(1, 'Please select at least one reviewer'),
+  remark: yup.string().required('Description is required'),
 });
