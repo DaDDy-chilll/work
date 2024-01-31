@@ -10,9 +10,11 @@ const FormTextField = ({
   disabled,
   inputAdornment,
   multiline,
+  minRows = 0,
 }) => {
   return (
     <TextField
+      minRows={minRows}
       multiline={multiline}
       disabled={disabled}
       type={type}
