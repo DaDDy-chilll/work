@@ -24,4 +24,6 @@ export const PERMISSIONS = {
   PREPARE: 'Prepare',
   REVISE: 'Revise',
   EDIT_AMOUNT: 'Edit Amount',
+  FORWARD: 'Forward',
+  MENTION: 'Mention',
 };

@@ -51,10 +51,17 @@ export const FILTER_OPTIONS = {
     {
       text: 'To Check',
       value: 'open',
+      key: 'caseStatus',
     },
     {
       text: 'All',
       value: '',
+      key: 'caseStatus',
+    },
+    {
+      text: 'Mention',
+      value: true,
+      key: 'mentioned',
     },
   ],
 };

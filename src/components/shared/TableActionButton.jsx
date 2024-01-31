@@ -42,6 +42,7 @@ const TableActionButton = ({ userId }) => {
       canEdit: data?.payload?.permissions?.canEdit,
       canEditAmount: data?.payload?.permissions?.canEditAmount,
       canForward: data?.payload?.permissions?.canForward,
+      canMention: data?.payload?.permissions?.canMention,
     };
   }
 

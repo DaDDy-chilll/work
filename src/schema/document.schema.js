@@ -28,3 +28,23 @@ export const remarkSchema = yup.object().shape({
   action: yup.string().required('Please select form action'),
   workflowId: yup.string().optional(),
 });
+
+export const initialMentionValues = {
+  department: '',
+  reviewers: [],
+  remark: '',
+};
+
+const reviewerSchema = yup.object().shape({
+  name: yup.string().required('Name is required'),
+  id: yup.string().required('Id is required'),
+});
+
+export const mentionSchema = yup.object().shape({
+  department: yup.string().required('Please select department'),
+  reviewers: yup
+    .array()
+    .of(reviewerSchema)
+    .min(1, 'Please select at least one reviewer'),
+  remark: yup.string().required('Description is required'),
+});
