@@ -2,6 +2,7 @@ import * as yup from 'yup';
 
 export const initialValues = {
   name: '',
+  description: '',
 };
 
 export const createSchema = yup.object().shape({
@@ -20,6 +21,7 @@ export const editAmountSchema = yup.object().shape({
 
 export const remarkValues = {
   action: '',
+  remark: '',
 };
 
 export const remarkSchema = yup.object().shape({

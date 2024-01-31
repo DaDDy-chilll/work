@@ -9,7 +9,6 @@ import {
 } from '../../schema/document.schema';
 import { Box, Button, IconButton, Typography } from '@mui/material';
 import FormTextField from '../shared/FormTextField';
-import RichTextEditor from '../ui/RichTextEditor';
 import { Cancel, CloudUpload } from '@mui/icons-material';
 import FormActionButtons from '../ui/FormActionButtons';
 import { colors } from '../../assets/theme/theme';
@@ -24,10 +23,6 @@ import SelectWorkflows from './SelectWorkflows';
 
 const DocumentForm = ({ oldData, onClick }) => {
   const { id } = useParams();
-
-  const [description, setDescription] = useState(
-    oldData ? oldData.description : '',
-  );
 
   const [files, setFiles] = useState([]);
   const [attachments, setAttachments] = useState([]);
@@ -73,7 +68,7 @@ const DocumentForm = ({ oldData, onClick }) => {
 
   const handleCreate = (values) => {
     createMutation(
-      { data: { ...values, description }, attachments: files },
+      { data: values, attachments: files },
       {
         onSuccess: () => {
           toast.success('ok');
@@ -90,7 +85,7 @@ const DocumentForm = ({ oldData, onClick }) => {
 
   const handleEdit = (values) => {
     editMutation(
-      { data: { ...values, description }, attachments: files, id },
+      { data: values, attachments: files, id },
       {
         onSuccess: () => {
           toast.success('ok');
@@ -160,7 +155,19 @@ const DocumentForm = ({ oldData, onClick }) => {
               )
             )}
 
-            <RichTextEditor text={description} setText={setDescription} />
+            <Box>
+              <CustomFormLabel label="Description" />
+              <FormTextField
+                type="text"
+                formProps={props}
+                name="description"
+                placeholder="Description"
+                multiline={true}
+                minRows={10}
+              />
+            </Box>
+
+            {/* <RichTextEditor text={description} setText={setDescription} /> */}
 
             <Box>
               <CustomFormLabel label="Attachments (Optional)" />

@@ -1,9 +1,7 @@
 /* eslint-disable react/prop-types */
 import { Box, MenuItem } from '@mui/material';
 import { Formik } from 'formik';
-import RichTextEditor from '../ui/RichTextEditor';
 import FormActionButtons from '../ui/FormActionButtons';
-import { useState } from 'react';
 import { remarkSchema, remarkValues } from '../../schema/document.schema';
 import FormSelect from '../shared/FormSelect';
 import { ACTIONS } from '../../constants/document';
@@ -21,6 +19,7 @@ import { colors } from '../../assets/theme/theme';
 import { useAuth } from '../../hooks/useAuth';
 import CustomFormLabel from '../shared/CustomFormLabel';
 import SelectWorkflows from './SelectWorkflows';
+import FormTextField from '../shared/FormTextField';
 
 const RemarkIcon = ({ value }) => {
   const { user } = useAuth();
@@ -42,8 +41,6 @@ const RemarkIcon = ({ value }) => {
 };
 
 const RemarkForm = ({ onClick }) => {
-  const [remark, setRemark] = useState('');
-
   const { id } = useParams();
 
   const { mutate: changeStatusMutation, isLoading: changeStatusLoading } =
@@ -54,7 +51,7 @@ const RemarkForm = ({ onClick }) => {
 
   const queryClient = useQueryClient();
 
-  const handleChangeStatus = ({ action, workflowId }) => {
+  const handleChangeStatus = ({ action, workflowId, remark }) => {
     if (action === ACTIONS.REJECT) {
       rejectMutation(
         { data: { remark }, id },
@@ -143,7 +140,15 @@ const RemarkForm = ({ onClick }) => {
             )}
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
               <CustomFormLabel label="Description" />
-              <RichTextEditor text={remark} setText={setRemark} />
+              <FormTextField
+                type="text"
+                formProps={props}
+                name="remark"
+                placeholder="Description"
+                multiline={true}
+                minRows={10}
+              />
+              {/* <RichTextEditor text={remark} setText={setRemark} /> */}
             </Box>
           </Box>
           <Box
