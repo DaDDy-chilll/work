@@ -26,4 +26,6 @@ export const PERMISSIONS = {
   EDIT_AMOUNT: 'Edit Amount',
   FORWARD: 'Forward',
   MENTION: 'Mention',
+  NORMAL_RETURN: 'Normal Return',
+  ADVANCE_RETURN: 'Advance Return',
 };
