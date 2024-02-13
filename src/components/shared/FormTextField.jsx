@@ -11,6 +11,7 @@ const FormTextField = ({
   inputAdornment,
   multiline,
   minRows = 0,
+  value,
 }) => {
   return (
     <TextField
@@ -29,7 +30,7 @@ const FormTextField = ({
       }}
       onBlur={handleBlur}
       onChange={handleChange}
-      value={values[name]}
+      value={value ?? values[name]}
       error={!!touched[name] && !!errors[name]}
       helperText={touched[name] && errors[name]}
       InputProps={inputAdornment}

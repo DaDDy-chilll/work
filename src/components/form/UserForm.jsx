@@ -57,6 +57,8 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
     canEditAmount,
     canForward,
     canMention,
+    canNormalReturn,
+    canAdvanceReturn,
   }) => {
     createMutation(
       {
@@ -73,6 +75,8 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
           canPrepare: canEditAmount ? true : canPrepare,
           canForward,
           canMention,
+          canNormalReturn,
+          canAdvanceReturn,
         },
       },
       {
@@ -96,6 +100,8 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
     canEditAmount,
     canForward,
     canMention,
+    canNormalReturn,
+    canAdvanceReturn,
   }) => {
     editMutation(
       {
@@ -111,6 +117,8 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
             canPrepare: canEditAmount ? true : canPrepare,
             canForward,
             canMention,
+            canNormalReturn,
+            canAdvanceReturn,
           },
         },
         id: oldData?.id,
@@ -310,6 +318,24 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
                     formProps={props}
                     label="Mention"
                     name="canMention"
+                  />
+                </Box>
+                <Box
+                  sx={{
+                    display: 'grid',
+                    gap: 2,
+                    gridTemplateColumns: 'repeat(4, 22%)',
+                  }}
+                >
+                  <FormCheckbox
+                    formProps={props}
+                    label="Normal Return"
+                    name="canNormalReturn"
+                  />
+                  <FormCheckbox
+                    formProps={props}
+                    label="Advance Return"
+                    name="canAdvanceReturn"
                   />
                 </Box>
               </>

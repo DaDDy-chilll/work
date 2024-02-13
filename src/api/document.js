@@ -178,3 +178,15 @@ export const useMentionDocument = () => {
     mutationFn: mentionDocument,
   });
 };
+
+const returnDocument = async ({ data, id }) => {
+  return fetcher.post(`/documents/${id}/actions/return`, data).then((res) => {
+    return res.data;
+  });
+};
+
+export const useReturnDocument = () => {
+  return useMutation({
+    mutationFn: returnDocument,
+  });
+};
