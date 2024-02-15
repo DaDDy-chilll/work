@@ -99,6 +99,14 @@ const UserPermissions = ({ permissions }) => {
         label={PERMISSIONS.MENTION}
         defaultValue={permissions.canMention}
       />
+      <PermissionCheckbox
+        label={PERMISSIONS.NORMAL_RETURN}
+        defaultValue={permissions.canNormalReturn}
+      />
+      <PermissionCheckbox
+        label={PERMISSIONS.ADVANCE_RETURN}
+        defaultValue={permissions.canAdvanceReturn}
+      />
     </Box>
   );
 };

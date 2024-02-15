@@ -9,6 +9,7 @@ export const ACTIONS = {
   VERIFY: 'verify',
   COMMENT: 'comment',
   FORWARD: 'forward',
+  RETURN: 'return',
 };
 
 export const DOCUMENT_STATUSES = {

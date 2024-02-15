@@ -8,18 +8,11 @@ import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineDot from '@mui/lab/TimelineDot';
 import RemarkDetail from './RemarkDetail';
-import { transformRemarks } from '../../helpers';
 
 const Remarks = () => {
   const { id } = useParams();
 
   const { data, isLoading } = useGetAllRemarks(id);
-
-  let remarks;
-
-  if (data?.payload) {
-    remarks = transformRemarks(data?.payload);
-  }
 
   return (
     <Timeline
@@ -34,8 +27,8 @@ const Remarks = () => {
       {isLoading ? (
         <CircularProgress size={48} />
       ) : (
-        remarks &&
-        remarks.map((remark, i) => (
+        data?.payload &&
+        data?.payload.map((remark, i) => (
           <TimelineItem key={i}>
             <TimelineSeparator>
               <TimelineConnector />
