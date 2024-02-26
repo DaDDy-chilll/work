@@ -20,6 +20,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import CustomFormLabel from '../shared/CustomFormLabel';
 import { useAuth } from '../../hooks';
 import SelectWorkflows from './SelectWorkflows';
+import CustomTextEditor from '../shared/CustomTextEditor';
 
 const DocumentForm = ({ oldData, onClick }) => {
   const { id } = useParams();
@@ -155,19 +156,12 @@ const DocumentForm = ({ oldData, onClick }) => {
               )
             )}
 
-            <Box>
-              <CustomFormLabel label="Description" />
-              <FormTextField
-                type="text"
-                formProps={props}
-                name="description"
-                placeholder="Description"
-                multiline={true}
-                minRows={10}
-              />
-            </Box>
-
-            {/* <RichTextEditor text={description} setText={setDescription} /> */}
+            <CustomTextEditor
+              disabled={false}
+              fieldName="description"
+              setValue={props.setFieldValue}
+              value={oldData?.description ?? ''}
+            />
 
             <Box>
               <CustomFormLabel label="Attachments (Optional)" />
