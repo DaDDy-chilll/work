@@ -26,6 +26,7 @@ import { useAuth } from '../../hooks/useAuth';
 import CustomFormLabel from '../shared/CustomFormLabel';
 import SelectWorkflows from './SelectWorkflows';
 import FormTextField from '../shared/FormTextField';
+import CustomTextEditor from '../shared/CustomTextEditor';
 
 const RemarkIcon = ({ value }) => {
   const { user } = useAuth();
@@ -233,15 +234,12 @@ const RemarkForm = ({ onClick }) => {
             )}
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
               <CustomFormLabel label="Description" />
-              <FormTextField
-                type="text"
-                formProps={props}
-                name="remark"
-                placeholder="Description"
-                multiline={true}
-                minRows={10}
+              <CustomTextEditor
+                disabled={false}
+                fieldName="remark"
+                setValue={props.setFieldValue}
+                value=""
               />
-              {/* <RichTextEditor text={remark} setText={setRemark} /> */}
             </Box>
           </Box>
           <Box
