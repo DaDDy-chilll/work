@@ -42,3 +42,12 @@
 .attachment_container:hover .attachment_btn_container {
   opacity: 1;
 }
+
+.editor {
+  padding: 0rem 0.5rem 6rem;
+  border: 1px solid #cccccc;
+}
+
+.editor-toolbar {
+  border: 1px solid #cccccc;
+}

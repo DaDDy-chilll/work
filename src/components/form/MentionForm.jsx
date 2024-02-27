@@ -12,7 +12,7 @@ import MultipleSelectWithCheckbox from '../shared/MultipleSelectWithCheckbox';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useQueryClient } from 'react-query';
-import FormTextField from '../shared/FormTextField';
+import CustomTextEditor from '../shared/CustomTextEditor';
 
 const SelectReviewers = ({ department, setFieldValue }) => {
   const { data } = useGetAllUsers({ limit: 0, department });
@@ -92,15 +92,12 @@ const MentionForm = ({ onClick }) => {
             )}
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
               <CustomFormLabel label="Description" />
-              <FormTextField
-                type="text"
-                formProps={props}
-                name="remark"
-                placeholder="Description"
-                multiline={true}
-                minRows={10}
+              <CustomTextEditor
+                disabled={false}
+                fieldName="remark"
+                setValue={props.setFieldValue}
+                value=""
               />
-              {/* <RichTextEditor text={remark} setText={setRemark} /> */}
             </Box>
           </Box>
           <Box
