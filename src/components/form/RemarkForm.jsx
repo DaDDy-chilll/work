@@ -27,6 +27,8 @@ import CustomFormLabel from '../shared/CustomFormLabel';
 import SelectWorkflows from './SelectWorkflows';
 import FormTextField from '../shared/FormTextField';
 import CustomTextEditor from '../shared/CustomTextEditor';
+import { AttachmentInput } from '../ui/AttachmentInput';
+import { useState } from 'react';
 
 const RemarkIcon = ({ value }) => {
   const { user } = useAuth();
@@ -55,6 +57,8 @@ const RemarkIcon = ({ value }) => {
 
 const RemarkForm = ({ onClick }) => {
   const { id } = useParams();
+
+  const [files, setFiles] = useState([]);
 
   const { user: actor } = useAuth();
 
@@ -92,7 +96,7 @@ const RemarkForm = ({ onClick }) => {
   const handleChangeStatus = ({ action, workflowId, remark, userId }) => {
     if (action === ACTIONS.REJECT) {
       rejectMutation(
-        { data: { remark }, id },
+        { data: { remark }, id, attachments: files },
         {
           onSuccess: () => {
             toast.success('ok');
@@ -113,6 +117,7 @@ const RemarkForm = ({ onClick }) => {
             userId: canAdvanceReturn ? userId : reviewers[0]?.reviewer._id,
           },
           id,
+          attachments: files,
         },
         {
           onSuccess: () => {
@@ -126,7 +131,7 @@ const RemarkForm = ({ onClick }) => {
     }
 
     changeStatusMutation(
-      { data: { action, remark, workflowId }, id },
+      { data: { action, remark, workflowId }, id, attachments: files },
       {
         onSuccess: () => {
           toast.success('ok');
@@ -241,6 +246,7 @@ const RemarkForm = ({ onClick }) => {
                 value=""
               />
             </Box>
+            <AttachmentInput setFiles={setFiles} />
           </Box>
           <Box
             sx={{ borderTop: `1px solid ${colors.grey[400]}`, pb: 3, px: 5 }}
