@@ -134,11 +134,26 @@ export const useEditRequest = () => {
   });
 };
 
-const changeStatus = async ({ data, id }) => {
+const changeStatus = async ({ data, id, attachments }) => {
+  const formData = new FormData();
+
+  Object.entries(data).forEach(([key, value]) => {
+    if (value) {
+      formData.append(key, value);
+    }
+  });
+
+  if (attachments?.length !== 0) {
+    for (let i = 0; i < attachments?.length; i++) {
+      formData.append('attachments', attachments[i]);
+    }
+  }
+
   return fetcher
-    .post(`/documents/${id}/actions/${data.action}`, {
-      remark: data.remark,
-      workflowId: data.workflowId,
+    .post(`/documents/${id}/actions/${data.action}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     })
     .then((res) => {
       return res.data;
@@ -151,10 +166,26 @@ export const useChangeStatus = () => {
   });
 };
 
-const rejectDocument = async ({ data, id }) => {
+const rejectDocument = async ({ data, id, attachments }) => {
+  const formData = new FormData();
+
+  Object.entries(data).forEach(([key, value]) => {
+    if (value) {
+      formData.append(key, value);
+    }
+  });
+
+  if (attachments?.length !== 0) {
+    for (let i = 0; i < attachments?.length; i++) {
+      formData.append('attachments', attachments[i]);
+    }
+  }
+
   return fetcher
-    .post(`/documents/${id}/reject`, {
-      remark: data.remark,
+    .post(`/documents/${id}/reject`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     })
     .then((res) => {
       return res.data;
@@ -179,10 +210,30 @@ export const useMentionDocument = () => {
   });
 };
 
-const returnDocument = async ({ data, id }) => {
-  return fetcher.post(`/documents/${id}/actions/return`, data).then((res) => {
-    return res.data;
+const returnDocument = async ({ data, id, attachments }) => {
+  const formData = new FormData();
+
+  Object.entries(data).forEach(([key, value]) => {
+    if (value) {
+      formData.append(key, value);
+    }
   });
+
+  if (attachments?.length !== 0) {
+    for (let i = 0; i < attachments?.length; i++) {
+      formData.append('attachments', attachments[i]);
+    }
+  }
+
+  return fetcher
+    .post(`/documents/${id}/actions/return`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    .then((res) => {
+      return res.data;
+    });
 };
 
 export const useReturnDocument = () => {
