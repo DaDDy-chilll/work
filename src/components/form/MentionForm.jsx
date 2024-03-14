@@ -103,7 +103,7 @@ const MentionForm = ({ onClick }) => {
                 value=""
               />
             </Box>
-            <AttachmentInput setFiles={setFiles} />
+            <AttachmentInput setFiles={setFiles} files={files} />
           </Box>
           <Box
             sx={{ borderTop: `1px solid ${colors.grey[400]}`, pb: 3, px: 5 }}
