@@ -13,7 +13,7 @@ import CustomFilter from '../components/ui/CustomFilter';
 
 const InboxPage = () => {
   const { optionValue, handleOptionChange } = useCustomeFilter({
-    initialValue: { text: 'To Check', value: 'open' },
+    initialValue: FILTER_OPTIONS.INBOX[0],
   });
 
   // eslint-disable-next-line no-unused-vars
