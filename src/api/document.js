@@ -198,10 +198,36 @@ export const useRejectDocument = () => {
   });
 };
 
-const mentionDocument = async ({ data, id }) => {
-  return fetcher.post(`/documents/${id}/mention`, data).then((res) => {
-    return res.data;
+const mentionDocument = async ({ data, id, attachments }) => {
+  const formData = new FormData();
+
+  Object.entries(data).forEach(([key, value]) => {
+    if (value) {
+      if (Array.isArray(value)) {
+        for (var i = 0; i < value.length; i++) {
+          formData.append(`${key}[]`, value[i]);
+        }
+      } else {
+        formData.append(key, value);
+      }
+    }
   });
+
+  if (attachments?.length !== 0) {
+    for (let i = 0; i < attachments?.length; i++) {
+      formData.append('attachments', attachments[i]);
+    }
+  }
+
+  return fetcher
+    .post(`/documents/${id}/mention`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    .then((res) => {
+      return res.data;
+    });
 };
 
 export const useMentionDocument = () => {

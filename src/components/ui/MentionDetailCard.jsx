@@ -1,9 +1,110 @@
-import { Box, CircularProgress, Typography } from '@mui/material';
+/* eslint-disable react/prop-types */
+import { Box, Chip, CircularProgress, Typography } from '@mui/material';
 import { colors } from '../../assets/theme/theme';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useGetAllMentions } from '../../api';
 import { filterMentions, transformLocalTime } from '../../helpers';
-import { useAuth } from '../../hooks';
+import { useAuth, useDisclosure } from '../../hooks';
+import { AttachFile } from '@mui/icons-material';
+import Modal from './Modal';
+import CustomSlider from './CustomSlider';
+import { useState } from 'react';
+
+const LinkButton = ({ attachment, action, children }) => {
+  return (
+    <Link
+      to={`${import.meta.env.VITE_API_URL}/documents/file/${
+        attachment.key
+      }/${action}`}
+      target="_blank"
+    >
+      {children}
+    </Link>
+  );
+};
+
+const MentionDetail = ({ item }) => {
+  const [currentImageUrl, setCurrentImageUrl] = useState();
+  const { isOpen, onClose, onOpen } = useDisclosure();
+
+  const handleClick = (url) => {
+    setCurrentImageUrl(url);
+    onOpen();
+  };
+
+  return (
+    <>
+      <div
+        style={{
+          fontSize: '16px',
+          wordWrap: 'break-word',
+          fontWeight: 500,
+          color: colors.black[100],
+        }}
+        dangerouslySetInnerHTML={{
+          __html: item?.remark,
+        }}
+      />
+      <Box sx={{ fontSize: '14px', display: 'flex', gap: 1 }}>
+        <span style={{ color: colors.darkBlue[800] }}>
+          {transformLocalTime(item?.createdAt).date}
+        </span>
+        <span style={{ color: colors.red[800] }}>
+          {transformLocalTime(item?.createdAt).time}
+        </span>
+      </Box>
+      <Box sx={{ display: 'flex', gap: 1 }}>
+        {item?.attachments?.map((attachment) => (
+          <div key={attachment._id}>
+            {attachment?.mimetype?.includes('image') ? (
+              <Chip
+                label={attachment.filename}
+                variant="outlined"
+                color="primary"
+                icon={<AttachFile sx={{ transform: 'rotate(45deg)' }} />}
+                onClick={() => handleClick(attachment.url)}
+                size="small"
+                sx={{
+                  padding: 1,
+                  '& .MuiChip-label': {
+                    fontSize: '14px',
+                  },
+                }}
+              />
+            ) : (
+              <LinkButton attachment={attachment} action="view">
+                <Chip
+                  label={attachment.filename}
+                  variant="outlined"
+                  color="primary"
+                  icon={<AttachFile sx={{ transform: 'rotate(45deg)' }} />}
+                  size="small"
+                  sx={{
+                    padding: 1,
+                    '& .MuiChip-label': {
+                      fontSize: '14px',
+                    },
+                  }}
+                />
+              </LinkButton>
+            )}
+          </div>
+        ))}
+      </Box>
+      <Modal
+        title="View Attachments"
+        isOpen={isOpen}
+        onClose={onClose}
+        content={
+          <CustomSlider
+            items={item?.attachments}
+            currentImageUrl={currentImageUrl}
+          />
+        }
+      />
+    </>
+  );
+};
 
 const MentionDetailCard = () => {
   const { id } = useParams();
@@ -57,25 +158,7 @@ const MentionDetailCard = () => {
                   cursor: 'pointer',
                 }}
               >
-                <div
-                  style={{
-                    fontSize: '16px',
-                    wordWrap: 'break-word',
-                    fontWeight: 500,
-                    color: colors.black[100],
-                  }}
-                  dangerouslySetInnerHTML={{
-                    __html: item?.remark,
-                  }}
-                />
-                <Box sx={{ fontSize: '14px', display: 'flex', gap: 1 }}>
-                  <span style={{ color: colors.darkBlue[800] }}>
-                    {transformLocalTime(item?.createdAt).date}
-                  </span>
-                  <span style={{ color: colors.red[800] }}>
-                    {transformLocalTime(item?.createdAt).time}
-                  </span>
-                </Box>
+                <MentionDetail item={item} />
               </Box>
             ))
           )}
