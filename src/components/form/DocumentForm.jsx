@@ -54,6 +54,7 @@ const DocumentForm = ({ oldData, onClick }) => {
   };
 
   const handleDelete = ({ name }) => {
+    setFiles(files.filter((file) => file.name !== name));
     setAttachments(
       attachments.filter((attachment) => attachment.name !== name),
     );

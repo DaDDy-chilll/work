@@ -6,7 +6,7 @@ import { colors } from '../../assets/theme/theme';
 import { useState } from 'react';
 import PDFSampleImage from '../../assets/images/PDF.png';
 
-export const AttachmentInput = ({ setFiles }) => {
+export const AttachmentInput = ({ setFiles, files }) => {
   const [attachments, setAttachments] = useState([]);
 
   const handleFileChange = (event) => {
@@ -35,6 +35,7 @@ export const AttachmentInput = ({ setFiles }) => {
   };
 
   const handleDelete = ({ name }) => {
+    setFiles(files.filter((file) => file.name !== name));
     setAttachments(
       attachments.filter((attachment) => attachment.name !== name),
     );
