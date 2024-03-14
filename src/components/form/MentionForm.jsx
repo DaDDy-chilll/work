@@ -13,6 +13,8 @@ import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useQueryClient } from 'react-query';
 import CustomTextEditor from '../shared/CustomTextEditor';
+import { AttachmentInput } from '../ui/AttachmentInput';
+import { useState } from 'react';
 
 const SelectReviewers = ({ department, setFieldValue }) => {
   const { data } = useGetAllUsers({ limit: 0, department });
@@ -30,6 +32,8 @@ const MentionForm = ({ onClick }) => {
 
   const { data: departments } = useGetAllDepartments({ limit: 0 });
 
+  const [files, setFiles] = useState([]);
+
   const { isLoading: mentionDocumentLoading, mutate: mentionDocumentMutation } =
     useMentionDocument();
 
@@ -38,7 +42,7 @@ const MentionForm = ({ onClick }) => {
   const handleFormSubmit = (data) => {
     const reviewers = data.reviewers.map((item) => item.id);
     mentionDocumentMutation(
-      { id, data: { ...data, reviewers } },
+      { id, data: { ...data, reviewers }, attachments: files },
       {
         onSuccess: () => {
           toast.success('ok');
@@ -99,6 +103,7 @@ const MentionForm = ({ onClick }) => {
                 value=""
               />
             </Box>
+            <AttachmentInput setFiles={setFiles} />
           </Box>
           <Box
             sx={{ borderTop: `1px solid ${colors.grey[400]}`, pb: 3, px: 5 }}

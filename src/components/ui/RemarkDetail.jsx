@@ -29,7 +29,6 @@ const RemarkDetail = ({ remark }) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
 
   const handleClick = (url) => {
-    console.log({ url });
     setCurrentImageUrl(url);
     onOpen();
   };
