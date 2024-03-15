@@ -86,6 +86,9 @@ const DocumentForm = ({ oldData, onClick }) => {
   };
 
   const handleEdit = (values) => {
+    if (!user.permissions.canEditAmount) {
+      delete values.amount;
+    }
     editMutation(
       { data: values, attachments: files, id },
       {
