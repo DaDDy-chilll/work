@@ -137,14 +137,13 @@ const DocumentForm = ({ oldData, onClick }) => {
                 multiline={true}
               />
             </Box>
-            {!oldData ? (
-              <SelectWorkflows
-                name="workflowId"
-                formProps={props}
-                type="normal"
-              />
-            ) : (
-              user.permissions.canEditAmount && (
+            {!oldData && (
+              <>
+                <SelectWorkflows
+                  name="workflowId"
+                  formProps={props}
+                  type="normal"
+                />
                 <Box>
                   <CustomFormLabel label="Amount" />
                   <FormTextField
@@ -154,7 +153,19 @@ const DocumentForm = ({ oldData, onClick }) => {
                     placeholder="Amount"
                   />
                 </Box>
-              )
+              </>
+            )}
+
+            {oldData && user.permissions.canEditAmount && (
+              <Box>
+                <CustomFormLabel label="Amount" />
+                <FormTextField
+                  type="text"
+                  formProps={props}
+                  name="amount"
+                  placeholder="Amount"
+                />
+              </Box>
             )}
 
             <CustomTextEditor
