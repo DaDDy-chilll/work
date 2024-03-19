@@ -8,6 +8,7 @@ export const initialValues = {
 export const createSchema = yup.object().shape({
   name: yup.string().required('Subject is required'),
   workflowId: yup.string().required('Workflow is required.'),
+  amount: yup.number().integer(),
 });
 
 export const editSchema = yup.object().shape({
