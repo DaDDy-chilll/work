@@ -6,11 +6,12 @@ import PDFImage from '../../assets/images/PDF.png';
 import { Link } from 'react-router-dom';
 
 const DownloadButton = ({ attachment, action, children }) => {
+  const isPdfFile = attachment?.mimetype?.includes('pdf');
   return (
     <Link
-      to={`${import.meta.env.VITE_API_URL}/documents/file/${
-        attachment.key
-      }/${action}`}
+      to={`${import.meta.env.VITE_API_URL}/documents/file/${attachment.key}/${
+        isPdfFile ? action : 'download'
+      }`}
       target="_blank"
     >
       <div
