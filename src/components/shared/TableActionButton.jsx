@@ -101,7 +101,7 @@ const TableActionButton = ({ userId }) => {
               onClick={handleDisable}
               disableRipple
             >
-              {disableLoading ? <CircularProgress size={20} /> : 'Disable'}
+              {disableLoading ? <CircularProgress size={20} /> : 'Delete'}
             </MenuItem>
           </>
         )}
