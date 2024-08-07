@@ -25,6 +25,8 @@ const TableActionButton = ({ userId }) => {
 
   const { isOpen, onClose, onOpen } = useDisclosure();
 
+  const [isChangePassword, setIsChangePassword] = useState(false);
+
   const { data } = useGetUserDetail(userId);
   let oldData;
 
@@ -93,7 +95,14 @@ const TableActionButton = ({ userId }) => {
         </MenuItem>
         {!data?.payload?.isDisabled && (
           <>
-            <MenuItem sx={{ fontSize: '14px' }} onClick={onOpen} disableRipple>
+            <MenuItem
+              sx={{ fontSize: '14px' }}
+              onClick={() => {
+                setIsChangePassword(false);
+                onOpen();
+              }}
+              disableRipple
+            >
               Edit
             </MenuItem>
             <MenuItem
@@ -103,15 +112,31 @@ const TableActionButton = ({ userId }) => {
             >
               {disableLoading ? <CircularProgress size={20} /> : 'Disable'}
             </MenuItem>
+            <MenuItem
+              sx={{ fontSize: '14px' }}
+              onClick={() => {
+                setIsChangePassword(true);
+                onOpen();
+              }}
+              disableRipple
+            >
+              Change Password
+            </MenuItem>
           </>
         )}
       </Menu>
       <Box>
         <Modal
-          title="Edit User"
+          title={isChangePassword ? 'Change Password' : 'Edit User'}
           isOpen={isOpen}
           onClose={onClose}
-          content={<UserForm onClose={onClose} oldData={oldData} />}
+          content={
+            <UserForm
+              onClose={onClose}
+              oldData={oldData}
+              isChangePassword={isChangePassword}
+            />
+          }
         />
       </Box>
     </div>

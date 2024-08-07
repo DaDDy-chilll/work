@@ -4,6 +4,7 @@ import {
   useCreateUser,
   useEditPassword,
   useEditUser,
+  useEditUserPassword,
   useGetAllDepartments,
 } from '../../api';
 import FormActionButtons from '../ui/FormActionButtons';
@@ -31,6 +32,10 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
 
   const { mutate: createMutation, isLoading: createLoading } = useCreateUser();
   const { mutate: editMutation, isLoading: editLoading } = useEditUser();
+  const {
+    mutate: editUserPasswordMutation,
+    isLoading: editUserPasswordLoading,
+  } = useEditUserPassword();
   const { mutate: editPasswordMutation, isLoading: editPasswordLoading } =
     useEditPassword();
 
@@ -134,13 +139,26 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
   };
 
   const handleEditPassword = (values) => {
-    editPasswordMutation(values, {
-      onSuccess: () => {
-        toast.success('ok');
-        queryClient.invalidateQueries(['users']);
-        onClose();
-      },
-    });
+    if (oldData?.id) {
+      editUserPasswordMutation(
+        { id: oldData?.id, ...values },
+        {
+          onSuccess: () => {
+            toast.success('ok');
+            queryClient.invalidateQueries(['users']);
+            onClose();
+          },
+        },
+      );
+    } else {
+      editPasswordMutation(values, {
+        onSuccess: () => {
+          toast.success('ok');
+          queryClient.invalidateQueries(['users']);
+          onClose();
+        },
+      });
+    }
   };
 
   return (
@@ -391,7 +409,9 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
               onClick={onClose}
               innerText={oldData ? 'Update' : 'Save'}
               loading={
-                isChangePassword
+                oldData && isChangePassword
+                  ? editUserPasswordLoading
+                  : isChangePassword
                   ? editPasswordLoading
                   : oldData
                   ? editLoading
