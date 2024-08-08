@@ -25,7 +25,7 @@ export default function Navbar() {
       icon: <UserIcon />,
       label: 'Users',
       to: '/users',
-      role: ROLES.SUPER_ADMIN,
+      roles: [ROLES.SUPER_ADMIN],
       count: users?.total,
       index: 0,
     },
@@ -33,35 +33,35 @@ export default function Navbar() {
       icon: <WorkFlowIcon />,
       label: 'Work Flows',
       to: '/workflows',
-      role: ROLES.SUPER_ADMIN,
+      roles: [ROLES.SUPER_ADMIN],
       index: 1,
     },
     {
       icon: <DepartmentIcon />,
       label: 'Departments',
       to: '/departments',
-      role: ROLES.SUPER_ADMIN,
+      roles: [ROLES.SUPER_ADMIN],
       index: 2,
     },
     {
       icon: <InboxIcon />,
       label: 'Inbox',
       to: '/',
-      role: ROLES.BASIC,
+      roles: [ROLES.AUTHORIZED, ROLES.BASIC],
       index: 0,
     },
     {
       icon: <MyRequestsIcon />,
       label: 'My Requests',
       to: '/my-requests',
-      role: ROLES.BASIC,
+      roles: [ROLES.AUTHORIZED, ROLES.BASIC],
       index: 1,
     },
     {
       icon: <AllRequestsIcon />,
       label: 'All Requests',
       to: '/all',
-      role: ROLES.BASIC,
+      roles: [ROLES.AUTHORIZED, ROLES.BASIC],
       index: 2,
     },
   ];
@@ -77,7 +77,7 @@ export default function Navbar() {
         aria-label="navbar-tab"
       >
         {navItems
-          .filter((value) => value.role === user?.role)
+          .filter((value) => value.roles.includes(user?.role))
           .map((item) => (
             <Badge
               key={item.to}
