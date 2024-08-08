@@ -1,111 +1,119 @@
-/* eslint-disable react/prop-types */
-import { Box, Tab, Tabs, Typography } from '@mui/material';
+import { Badge, Box, Tab, Tabs, Typography } from '@mui/material';
 import { useAuth } from '../hooks/useAuth';
 import { Link, useLocation } from 'react-router-dom';
-import { useState } from 'react';
 import {
-  AccountTree,
-  ApartmentOutlined,
-  InsertDriveFileOutlined,
-  ListAltOutlined,
-  MailOutline,
-  Person,
+  AccountTree as WorkFlowIcon,
+  ApartmentOutlined as DepartmentIcon,
+  InsertDriveFileOutlined as AllRequestsIcon,
+  ListAltOutlined as MyRequestsIcon,
+  MailOutline as InboxIcon,
+  Person as UserIcon,
 } from '@mui/icons-material';
 import { colors } from '../assets/theme/theme';
 import { ROLES } from '../constants';
+import { useGetAllUsers } from '../api';
 
-function tabProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
+export default function Navbar() {
+  const { data: users } = useGetAllUsers({ limit: 0 });
 
-const getCurrentIndex = (path) => {
-  if (path === '/my-requests' || path === '/workflows') {
-    return 1;
-  }
-  if (path === '/all' || path === '/departments') {
-    return 2;
-  }
-  return 0;
-};
-
-const Item = ({ label, icon, to }) => {
-  return (
-    <Tab
-      {...tabProps(0)}
-      component={Link}
-      label={
-        <Typography
-          sx={{
-            fontSize: '16px',
-            fontWeight: 400,
-            color: colors.black[100],
-          }}
-        >
-          {label}
-        </Typography>
-      }
-      to={to}
-      icon={icon}
-      iconPosition="start"
-    />
-  );
-};
-
-const Navbar = () => {
   const { user } = useAuth();
 
   const currentPath = useLocation();
 
-  const [value, setValue] = useState(getCurrentIndex(currentPath.pathname));
+  const navItems = [
+    {
+      icon: <UserIcon />,
+      label: 'Users',
+      to: '/users',
+      role: ROLES.SUPER_ADMIN,
+      count: users?.total,
+      index: 0,
+    },
+    {
+      icon: <WorkFlowIcon />,
+      label: 'Work Flows',
+      to: '/workflows',
+      role: ROLES.SUPER_ADMIN,
+      index: 1,
+    },
+    {
+      icon: <DepartmentIcon />,
+      label: 'Departments',
+      to: '/departments',
+      role: ROLES.SUPER_ADMIN,
+      index: 2,
+    },
+    {
+      icon: <InboxIcon />,
+      label: 'Inbox',
+      to: '/',
+      role: ROLES.BASIC,
+      index: 0,
+    },
+    {
+      icon: <MyRequestsIcon />,
+      label: 'My Requests',
+      to: '/my-requests',
+      role: ROLES.BASIC,
+      index: 1,
+    },
+    {
+      icon: <AllRequestsIcon />,
+      label: 'All Requests',
+      to: '/all',
+      role: ROLES.BASIC,
+      index: 2,
+    },
+  ];
 
-  const handleChange = (_e, newValue) => {
-    setValue(newValue);
+  const getCurrentIndex = (path) => {
+    return navItems.filter((item) => item.to === path)[0].index;
   };
 
   return (
     <Box sx={{ borderBottom: `1px solid ${colors.grey[400]}` }}>
-      {user?.role === ROLES.SUPER_ADMIN ? (
-        <Tabs value={value} onChange={handleChange} aria-label="navbar-tab">
-          <Item
-            icon={<Person sx={{ fontSize: '20px' }} />}
-            label="Users"
-            to="/users"
-          />
-          <Item
-            icon={<AccountTree sx={{ fontSize: '20px' }} />}
-            label="Work Flows"
-            to="/workflows"
-          />
-          <Item
-            icon={<ApartmentOutlined sx={{ fontSize: '20px' }} />}
-            label="Departments"
-            to="/departments"
-          />
-        </Tabs>
-      ) : (
-        <Tabs value={value} onChange={handleChange} aria-label="navbar-tab">
-          <Item
-            icon={<MailOutline sx={{ fontSize: '20px' }} />}
-            label="Inbox"
-            to="/"
-          />
-          <Item
-            icon={<InsertDriveFileOutlined sx={{ fontSize: '20px' }} />}
-            label="My Requests"
-            to="/my-requests"
-          />
-          <Item
-            icon={<ListAltOutlined sx={{ fontSize: '20px' }} />}
-            label="All Requests"
-            to="/all"
-          />
-        </Tabs>
-      )}
+      <Tabs
+        value={getCurrentIndex(currentPath.pathname)}
+        aria-label="navbar-tab"
+      >
+        {navItems
+          .filter((value) => value.role === user?.role)
+          .map((item) => (
+            <Badge
+              key={item.to}
+              badgeContent={item?.count}
+              invisible={false}
+              overlap="circular"
+              sx={{
+                '& .MuiBadge-badge': {
+                  fontSize: '13px',
+                  fontWeight: 500,
+                  color: colors.white[100],
+                  backgroundColor: colors.paleBlue[700],
+                },
+              }}
+              max={item?.count + 1}
+            >
+              <Tab
+                component={Link}
+                label={
+                  <Typography
+                    sx={{
+                      fontSize: '16px',
+                      fontWeight: 400,
+                      color: colors.black[100],
+                    }}
+                  >
+                    {item.label}
+                  </Typography>
+                }
+                to={item.to}
+                icon={<div style={{ fontSize: '20px' }}>{item.icon}</div>}
+                iconPosition="start"
+              />
+            </Badge>
+          ))}
+      </Tabs>
     </Box>
   );
-};
-
-export default Navbar;
+}
