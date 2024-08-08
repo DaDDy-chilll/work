@@ -12,7 +12,7 @@ export const useGetAllUsers = (params) => {
   return useQuery({
     queryKey: ['users', params],
     queryFn: () => getAllUsers(params),
-  })
+  });
 };
 
 const getUserDetail = async (id) => {
@@ -28,7 +28,7 @@ export const useGetUserDetail = (id) => {
   });
 };
 
-// 
+//
 const createUser = async (data) => {
   return fetcher.post('/auth/register', data).then((res) => {
     return res.data;
@@ -64,6 +64,14 @@ export const useEditPassword = () => {
     mutationFn: editPassword,
   });
 };
+
+const editUserPassword = async ({ id, ...data }) =>
+  fetcher.patch(`/auth/${id}/password`, data).then((res) => res.data);
+
+export const useEditUserPassword = () =>
+  useMutation({
+    mutationFn: editUserPassword,
+  });
 
 const disableUser = async (id) => {
   return fetcher.post(`/users/${id}/disable`, null).then((res) => {
