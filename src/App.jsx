@@ -23,6 +23,8 @@ import UserDetailPage from './pages/UserDetailPage';
 import AddRemarkPage from './pages/AddRemarkPage';
 import ErrorBoundary from './pages/ErrorBoundary';
 import AddMentionPage from './pages/AddMentionPage';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 function App() {
   return (
@@ -31,43 +33,45 @@ function App() {
         <ToastContainer />
         <QueryClientProvider client={queryClient}>
           <ThemeProvider theme={theme}>
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <Protected>
-                    <Layout />
-                  </Protected>
-                }
-              >
-                <Route path="" element={<InboxPage />} />
-                <Route path="all" element={<AllRequestsPage />} />
-                <Route path="my-requests" element={<MyRequestsPage />} />
+            <DndProvider backend={HTML5Backend}>
+              <Routes>
                 <Route
-                  path="my-requests/create"
-                  element={<CreateRequestPage />}
-                />
-                <Route path="detail/:id" element={<DocumentDetailPage />} />
-                <Route path="edit/:id" element={<EditRequestPage />} />
-                <Route path="remark/:id" element={<AddRemarkPage />} />
-                <Route path="mention/:id" element={<AddMentionPage />} />
+                  path="/"
+                  element={
+                    <Protected>
+                      <Layout />
+                    </Protected>
+                  }
+                >
+                  <Route path="" element={<InboxPage />} />
+                  <Route path="all" element={<AllRequestsPage />} />
+                  <Route path="my-requests" element={<MyRequestsPage />} />
+                  <Route
+                    path="my-requests/create"
+                    element={<CreateRequestPage />}
+                  />
+                  <Route path="detail/:id" element={<DocumentDetailPage />} />
+                  <Route path="edit/:id" element={<EditRequestPage />} />
+                  <Route path="remark/:id" element={<AddRemarkPage />} />
+                  <Route path="mention/:id" element={<AddMentionPage />} />
 
-                {/* FOR SUPERADMIN */}
-                <Route path="departments" element={<DepartmentsPage />} />
-                <Route path="users" element={<UsersPage />} />
-                <Route path="users/:id" element={<UserDetailPage />} />
-                <Route path="workflows" element={<WorkFlowsPage />} />
-                <Route
-                  path="workflows/create"
-                  element={<CreateWorkflowPage />}
-                />
-                <Route
-                  path="workflows/detail/:id"
-                  element={<WorkflowDetailPage />}
-                />
-              </Route>
-              <Route path="/login" element={<LoginPage />} />
-            </Routes>
+                  {/* FOR SUPERADMIN */}
+                  <Route path="departments" element={<DepartmentsPage />} />
+                  <Route path="users" element={<UsersPage />} />
+                  <Route path="users/:id" element={<UserDetailPage />} />
+                  <Route path="workflows" element={<WorkFlowsPage />} />
+                  <Route
+                    path="workflows/create"
+                    element={<CreateWorkflowPage />}
+                  />
+                  <Route
+                    path="workflows/detail/:id"
+                    element={<WorkflowDetailPage />}
+                  />
+                </Route>
+                <Route path="/login" element={<LoginPage />} />
+              </Routes>
+            </DndProvider>
           </ThemeProvider>
         </QueryClientProvider>
       </AuthProvider>

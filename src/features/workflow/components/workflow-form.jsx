@@ -23,6 +23,7 @@ export const WorkflowForm = () => {
     selectedDepartments,
     selectedUsers,
     removeUser,
+    onDragDepartment,
   } = useWorkflow();
 
   const [optionValue, setOptionValue] = useState(initialValues.type);
@@ -117,10 +118,10 @@ export const WorkflowForm = () => {
             </div>
             <WorkflowDepartmentList
               saveDepartments={saveDepartments}
-              selectedDepartments={selectedDepartments}
               onRemoveDepartment={removeDepartment}
               selectedUsers={selectedUsers}
               chosenDepartments={selectedDepartments}
+              onDragDepartment={onDragDepartment}
             />
             {selectedDepartments &&
               selectedDepartments.map((item) => (

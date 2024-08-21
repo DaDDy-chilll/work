@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 export const useWorkflow = () => {
   const [selectedDepartments, setSelectedDepartments] = useState([]);
@@ -30,6 +30,26 @@ export const useWorkflow = () => {
     setSelectedUsers((items) => [...data, ...items]);
   };
 
+  const onDragDepartment = useCallback(
+    (dragIndex, hoverIndex) => {
+      if (dragIndex !== hoverIndex) {
+        const dragItem = selectedDepartments[dragIndex];
+        const hoverItem = selectedDepartments[hoverIndex];
+
+        setSelectedDepartments((departments) => {
+          const items = [...departments];
+          items[dragIndex] = hoverItem;
+          items[hoverIndex] = dragItem;
+          return items.map((item, index) => ({
+            ...item,
+            order: index,
+          }));
+        });
+      }
+    },
+    [selectedDepartments],
+  );
+
   return {
     selectedDepartments,
     selectedUsers,
@@ -37,5 +57,6 @@ export const useWorkflow = () => {
     saveUsers,
     removeDepartment,
     removeUser,
+    onDragDepartment,
   };
 };

@@ -1,2 +1,2 @@
 export * from './workflow-department-list';
-export * from './department-card';
+export * from './draggable-department-card';

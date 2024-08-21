@@ -2,11 +2,9 @@
 import { Button, Checkbox } from '@mui/material';
 import CustomFormLabel from '../../../components/shared/CustomFormLabel';
 import { Add } from '@mui/icons-material';
-
-import { DepartmentCard } from './department-card';
 import { useDisclosure } from '../../../hooks/useDisclosure';
 import Modal from '../../../components/ui/Modal';
-import { getDepartments } from '..';
+import { DraggableDepartmentCard, getDepartments } from '..';
 import { ROLES } from '@/constants';
 import { useEffect, useState } from 'react';
 
@@ -95,27 +93,29 @@ const SelectDepartment = ({ saveDepartments, onClose, chosenDepartments }) => {
 
 export const WorkflowDepartmentList = ({
   saveDepartments,
-  selectedDepartments,
   onRemoveDepartment,
   selectedUsers,
   chosenDepartments,
+  onDragDepartment,
 }) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
 
   return (
     <div>
       <CustomFormLabel label="Department Lists" />
-      <div className="flex gap-3">
-        {selectedDepartments?.map((item) => (
-          <DepartmentCard
+      <div className="flex gap-3 flex-wrap">
+        {chosenDepartments?.map((item, index) => (
+          <DraggableDepartmentCard
             key={item._id}
+            moveItem={onDragDepartment}
+            index={index}
             item={item}
             onRemoveDepartment={onRemoveDepartment}
             selectedUsers={selectedUsers}
           />
         ))}
         <div
-          className="bg-secondary-200 w-1/3 text-primary-800 border-2 rounded-lg h-[120px] flex justify-center items-center gap-1 font-semibold cursor-pointer"
+          className="bg-secondary-200 w-[32.5%] text-primary-800 border-2 rounded-lg h-[120px] flex justify-center items-center gap-1 font-semibold cursor-pointer"
           onClick={onOpen}
         >
           <Add /> Add Department
