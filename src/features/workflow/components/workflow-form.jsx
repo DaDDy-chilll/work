@@ -24,6 +24,7 @@ export const WorkflowForm = () => {
     selectedUsers,
     removeUser,
     onDragDepartment,
+    onDragUser,
   } = useWorkflow();
 
   const [optionValue, setOptionValue] = useState(initialValues.type);
@@ -131,6 +132,7 @@ export const WorkflowForm = () => {
                   saveUsers={saveUsers}
                   chosenUsers={selectedUsers}
                   onRemoveUser={removeUser}
+                  onDragUser={onDragUser}
                 />
               ))}
             <div className="flex gap-2 justify-end">

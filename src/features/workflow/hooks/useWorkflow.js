@@ -50,6 +50,26 @@ export const useWorkflow = () => {
     [selectedDepartments],
   );
 
+  const onDragUser = useCallback(
+    (dragIndex, hoverIndex) => {
+      if (dragIndex !== hoverIndex) {
+        const dragItem = selectedUsers[dragIndex];
+        const hoverItem = selectedUsers[hoverIndex];
+
+        setSelectedUsers((users) => {
+          const items = [...users];
+          items[dragIndex] = hoverItem;
+          items[hoverIndex] = dragItem;
+          return items.map((item, index) => ({
+            ...item,
+            order: index,
+          }));
+        });
+      }
+    },
+    [selectedUsers],
+  );
+
   return {
     selectedDepartments,
     selectedUsers,
@@ -58,5 +78,6 @@ export const useWorkflow = () => {
     removeDepartment,
     removeUser,
     onDragDepartment,
+    onDragUser,
   };
 };
