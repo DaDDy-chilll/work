@@ -1,9 +1,8 @@
 import { Box, Typography } from '@mui/material';
 import { colors } from '../assets/theme/theme';
-import WorkFlowForm from '../components/form/WorkFlowForm';
-import FormProgressBar from '../components/form/FormProgressBar';
 import { useDisclosure } from '../hooks/useDisclosure';
 import { usePageTitle } from '../hooks';
+import { WorkflowForm } from '@/features/workflow';
 
 const CreateWorkflowPage = () => {
   // eslint-disable-next-line no-unused-vars
@@ -28,9 +27,8 @@ const CreateWorkflowPage = () => {
         Create New Work Flow
       </Typography>
       <Box sx={{ position: 'relative' }}>
-        <FormProgressBar isOpen={isOpen} />
         <Box bgcolor={colors.white[100]} borderRadius="1rem" py={3} px={5}>
-          <WorkFlowForm isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
+          <WorkflowForm isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
         </Box>
       </Box>
     </Box>

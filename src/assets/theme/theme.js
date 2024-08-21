@@ -114,15 +114,19 @@ export const colors = {
   white: {
     100: '#FFFFFF',
     200: '#FAFCFF',
-    300: "#EFF3F6",
-    400: "#D9D9D9"
+    300: '#EFF3F6',
+    400: '#D9D9D9',
   },
   black: {
-    100: "#000000",
-    200: "#484848",
-    300: "#333333"
+    100: '#000000',
+    200: '#484848',
+    300: '#333333',
   },
   bgColor: '#EDF1F7',
+  secondary: {
+    100: '#EDF1F7',
+    200: '#EDF1F7',
+  },
 };
 
 export const theme = createTheme({
@@ -151,21 +155,21 @@ export const theme = createTheme({
   },
 
   typography: {
-    fontFamily: ['Poppins', 'sans-serif',].join(','),
-    fontSize: "14px",
+    fontFamily: ['Poppins', 'sans-serif'].join(','),
+    fontSize: '14px',
     fontWeight: 400,
     color: colors.black[200],
 
     h1: {
       fontFamily: ['Poppins', 'sans-serif'].join(','),
-      fontSize: "30px",
+      fontSize: '30px',
       fontWeight: 400,
-      color: colors.black[100]
+      color: colors.black[100],
     },
     h2: {
       fontFamily: ['Poppins', 'sans-serif'].join(','),
-      fontSize: "26px",
-      fontWeight: 500
+      fontSize: '26px',
+      fontWeight: 500,
     },
     // h3: {
     //   fontFamily: ['Poppins', 'sans-serif'].join(','),
@@ -184,13 +188,13 @@ export const theme = createTheme({
     //   fontSize: 12,
     // },
 
-    // 
+    //
     button: {
       boxShadow: 0,
       textTransform: 'capitalize',
-      fontSize: "14px",
+      fontSize: '14px',
       fontWeight: 500,
-      borderRadius: '2rem'
-    }
+      borderRadius: '2rem',
+    },
   },
 });
