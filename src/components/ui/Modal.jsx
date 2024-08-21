@@ -2,9 +2,9 @@
 import { Dialog, DialogContent, DialogTitle } from '@mui/material';
 import { colors } from '../../assets/theme/theme';
 
-const Modal = ({ isOpen, onClose, content, title }) => {
+const Modal = ({ isOpen, onClose, content, title, maxWidth = 'lg' }) => {
   return (
-    <Dialog open={isOpen} onClose={onClose} maxWidth={'lg'} fullWidth>
+    <Dialog open={isOpen} onClose={onClose} maxWidth={maxWidth} fullWidth>
       <DialogTitle
         fontWeight="bold"
         sx={{
