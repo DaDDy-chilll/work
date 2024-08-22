@@ -27,9 +27,14 @@ export const useWorkflow = () => {
   };
 
   const saveUsers = (data) => {
-    setSelectedUsers((items) =>
-      [...items, ...data].map((item, index) => ({ ...item, order: index })),
-    );
+    setSelectedUsers((items) => {
+      const users = [...items, ...data].map((item, index) => ({
+        ...item,
+        order: index,
+      }));
+
+      return users;
+    });
   };
 
   const onDragDepartment = useCallback(
@@ -42,14 +47,42 @@ export const useWorkflow = () => {
           const items = [...departments];
           items[dragIndex] = hoverItem;
           items[hoverIndex] = dragItem;
-          return items.map((item, index) => ({
+
+          const newDepartments = items.map((item, index) => ({
             ...item,
             order: index,
           }));
+
+          const dragUsers = selectedUsers.filter(
+            (item) =>
+              item.department._id === selectedDepartments[dragIndex]._id,
+          );
+          const hoverUsers = selectedUsers.filter(
+            (item) =>
+              item.department._id === selectedDepartments[hoverIndex]._id,
+          );
+
+          const dragItemOrder = newDepartments.find(
+            (item) => item._id === dragItem._id,
+          ).order;
+          const hoverItemOrder = newDepartments.find(
+            (item) => item._id === hoverItem._id,
+          ).order;
+
+          const newUsers =
+            dragItemOrder < hoverItemOrder
+              ? [...dragUsers, ...hoverUsers]
+              : [...hoverUsers, ...dragUsers];
+
+          setSelectedUsers((items) =>
+            newUsers.filter((item) => items.some((d) => d._id === item._id)),
+          );
+
+          return newDepartments;
         });
       }
     },
-    [selectedDepartments],
+    [selectedDepartments, selectedUsers],
   );
 
   const onDragUser = useCallback(

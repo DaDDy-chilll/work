@@ -2,7 +2,12 @@
 import { Formik } from 'formik';
 import { WorkflowDepartmentList } from '@/features/department';
 import { WorkflowUserList } from '@/features/user';
-import { useCreateWorkflow, useWorkflow, workflowSchema } from '..';
+import {
+  useCreateWorkflow,
+  useUpdateWorkflow,
+  useWorkflow,
+  workflowSchema,
+} from '..';
 import CustomFormLabel from '../../../components/shared/CustomFormLabel';
 import FormTextField from '../../../components/shared/FormTextField';
 import { useMemo, useState } from 'react';
@@ -24,46 +29,72 @@ export const WorkflowForm = ({ initialValues, departments, users }) => {
 
   const [optionValue, setOptionValue] = useState(initialValues.type);
 
-  const { mutate: createWorkflow, isLoading } = useCreateWorkflow();
+  const { mutate: createWorkflow, isLoading: isCreateLoading } =
+    useCreateWorkflow();
+  const { mutate: updateWorkflow, isLoading: isEditLoading } =
+    useUpdateWorkflow();
 
-  const handleCreate = (values) => {
+  const isEdit = departments && users;
+
+  const onSubmit = (values) => {
     const departmentOrders = selectedDepartments.map((department) => ({
       department: department._id,
       index: department.order,
     }));
 
-    const reviewers = selectedUsers.map((user) => ({
+    const reviewers = selectedUsers.map((user, index) => ({
       reviewer: user._id,
       department: user.department._id,
-      index: user.index,
+      index,
     }));
 
-    createWorkflow(
-      { ...values, departmentOrders, reviewers },
-      {
-        onSuccess: () => {
-          toast.success('Workflow is created.');
-          navigate('/workflows');
+    if (isEdit) {
+      const { name, description, type } = values;
+
+      updateWorkflow(
+        {
+          name,
+          description,
+          type,
+          departmentOrders,
+          reviewers,
+          id: initialValues?._id,
         },
-      },
-    );
+        {
+          onSuccess: () => {
+            toast.success('Workflow is updated.');
+            navigate('/workflows');
+          },
+        },
+      );
+    } else {
+      createWorkflow(
+        { ...values, departmentOrders, reviewers },
+        {
+          onSuccess: () => {
+            toast.success('Workflow is created.');
+            navigate('/workflows');
+          },
+        },
+      );
+    }
   };
 
   const navigate = useNavigate();
 
   useMemo(() => {
-    if (!selectedDepartments.length) {
+    if (!selectedDepartments.length && departments) {
       saveDepartments(departments);
     }
-    if (!selectedUsers.length) {
+    if (!selectedUsers.length && users) {
       saveUsers(users);
     }
   }, [
     departments,
     saveDepartments,
     saveUsers,
-    selectedDepartments.length,
-    selectedUsers.length,
+    selectedDepartments,
+    selectedUsers,
     users,
   ]);
 
@@ -71,7 +102,7 @@ export const WorkflowForm = ({ initialValues, departments, users }) => {
     <Formik
       initialValues={initialValues}
       validationSchema={workflowSchema}
-      onSubmit={handleCreate}
+      onSubmit={onSubmit}
     >
       {(props) => {
         const handleOptionChange = (value) => {
@@ -158,9 +189,13 @@ export const WorkflowForm = ({ initialValues, departments, users }) => {
                 className="w-1/6"
                 variant="contained"
                 type="submit"
-                disabled={isLoading}
+                disabled={isEdit ? isEditLoading : isCreateLoading}
               >
-                {isLoading ? <CircularProgress size="20px" /> : 'Save'}
+                {isEditLoading || isCreateLoading ? (
+                  <CircularProgress size="20px" />
+                ) : (
+                  'Save'
+                )}
               </Button>
             </div>
           </form>

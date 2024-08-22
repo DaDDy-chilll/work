@@ -12,12 +12,24 @@ export const EditWorkflow = () => {
   let users = [];
 
   if (reviewers) {
+    let uniqueDepartments = [];
+
     reviewers.forEach((item) => {
-      users.push(item.reviewer);
-      departments.push(item.reviewer.department);
+      uniqueDepartments.push(item.reviewer.department._id);
     });
 
-    departments = departments.map((item, index) => ({ ...item, order: index }));
+    uniqueDepartments = [...new Set([...uniqueDepartments])];
+
+    console.log({ uniqueDepartments });
+
+    departments = uniqueDepartments.map((dpt, index) => {
+      const items = reviewers
+        .filter((item) => item.reviewer.department._id === dpt)
+        .map((user) => ({ ...user.reviewer, index: user.index }));
+
+      users.push(...items);
+      return { name: items[0].department.name, _id: dpt, order: index };
+    });
   }
 
   return (
