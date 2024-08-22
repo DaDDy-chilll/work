@@ -3,11 +3,9 @@ import { TableBody } from '@mui/material';
 import { StyledTableCell, StyledTableRow } from '../styled';
 import WorkflowRoute from '../ui/WorkflowRoute';
 import { getDepartmentsFromWorkflow } from '../../helpers';
-import LinkButton from '../ui/LinkButton';
-import { useNavigate } from 'react-router-dom';
+import { TableActionButton } from '@/components';
 
 const WorkflowRow = ({ payload }) => {
-  const navigate = useNavigate();
   return (
     <TableBody>
       {payload &&
@@ -21,14 +19,8 @@ const WorkflowRow = ({ payload }) => {
                 departments={getDepartmentsFromWorkflow(data?.reviewers)}
               />
             </StyledTableCell>
-            <StyledTableCell>
-              <LinkButton
-                width="100px"
-                innerText="View"
-                onClick={() => navigate(`/workflows/detail/${data._id}`)}
-                variant="contained"
-                color="primary"
-              />
+            <StyledTableCell align="center" sx={{ display: 'flex', gap: 1 }}>
+              <TableActionButton id={data?._id} />
             </StyledTableCell>
           </StyledTableRow>
         ))}

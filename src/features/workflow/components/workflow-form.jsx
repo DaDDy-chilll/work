@@ -2,20 +2,15 @@
 import { Formik } from 'formik';
 import { WorkflowDepartmentList } from '@/features/department';
 import { WorkflowUserList } from '@/features/user';
-import {
-  initialValues,
-  useCreateWorkflow,
-  useWorkflow,
-  workflowSchema,
-} from '..';
+import { useCreateWorkflow, useWorkflow, workflowSchema } from '..';
 import CustomFormLabel from '../../../components/shared/CustomFormLabel';
 import FormTextField from '../../../components/shared/FormTextField';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Button, CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-export const WorkflowForm = () => {
+export const WorkflowForm = ({ initialValues, departments, users }) => {
   const {
     saveUsers,
     saveDepartments,
@@ -55,6 +50,22 @@ export const WorkflowForm = () => {
   };
 
   const navigate = useNavigate();
+
+  useMemo(() => {
+    if (!selectedDepartments.length) {
+      saveDepartments(departments);
+    }
+    if (!selectedUsers.length) {
+      saveUsers(users);
+    }
+  }, [
+    departments,
+    saveDepartments,
+    saveUsers,
+    selectedDepartments.length,
+    selectedUsers.length,
+    users,
+  ]);
 
   return (
     <Formik

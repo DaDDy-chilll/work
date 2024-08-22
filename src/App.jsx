@@ -14,7 +14,6 @@ import MyRequestsPage from './pages/MyRequestsPage';
 import InboxPage from './pages/InboxPage';
 import DepartmentsPage from './pages/DepartmentsPage';
 import WorkFlowsPage from './pages/WorkFlowsPage';
-import CreateWorkflowPage from './pages/CreateWorkflowPage';
 import DocumentDetailPage from './pages/DocumentDetailPage';
 import EditRequestPage from './pages/EditRequestPage';
 import CreateRequestPage from './pages/CreateRequestPage';
@@ -25,6 +24,7 @@ import ErrorBoundary from './pages/ErrorBoundary';
 import AddMentionPage from './pages/AddMentionPage';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { CreateWorkflow, EditWorkflow } from '@/features/workflow';
 
 function App() {
   return (
@@ -60,12 +60,10 @@ function App() {
                   <Route path="users" element={<UsersPage />} />
                   <Route path="users/:id" element={<UserDetailPage />} />
                   <Route path="workflows" element={<WorkFlowsPage />} />
+                  <Route path="workflows/create" element={<CreateWorkflow />} />
+                  <Route path="workflows/edit/:id" element={<EditWorkflow />} />
                   <Route
-                    path="workflows/create"
-                    element={<CreateWorkflowPage />}
-                  />
-                  <Route
-                    path="workflows/detail/:id"
+                    path="workflows/:id"
                     element={<WorkflowDetailPage />}
                   />
                 </Route>
