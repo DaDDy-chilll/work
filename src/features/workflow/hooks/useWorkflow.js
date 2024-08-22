@@ -27,7 +27,9 @@ export const useWorkflow = () => {
   };
 
   const saveUsers = (data) => {
-    setSelectedUsers((items) => [...data, ...items]);
+    setSelectedUsers((items) =>
+      [...items, ...data].map((item, index) => ({ ...item, order: index })),
+    );
   };
 
   const onDragDepartment = useCallback(

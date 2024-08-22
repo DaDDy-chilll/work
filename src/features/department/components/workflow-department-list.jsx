@@ -115,7 +115,7 @@ export const WorkflowDepartmentList = ({
           />
         ))}
         <div
-          className="bg-secondary-200 w-[32.5%] text-primary-800 border-2 rounded-lg h-[120px] flex justify-center items-center gap-1 font-semibold cursor-pointer"
+          className="bg-secondary-200 w-[32.5%] text-primary-800 border-2 rounded-lg min-h-[120px] flex justify-center items-center gap-1 font-semibold cursor-pointer"
           onClick={onOpen}
         >
           <Add /> Add Department

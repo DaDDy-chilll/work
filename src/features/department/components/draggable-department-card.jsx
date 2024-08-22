@@ -52,7 +52,7 @@ export const DraggableDepartmentCard = ({
     <div
       ref={dragDropRef}
       style={{ opacity }}
-      className="bg-secondary-200 w-[32.5%] border-2 rounded-lg h-[120px] cursor-pointer p-3 flex flex-col gap-3"
+      className="bg-secondary-200 w-[32.5%] border-2 rounded-lg min-h-[120px] cursor-pointer p-3 flex flex-col gap-3"
     >
       <div className="flex justify-between items-center">
         <div className="flex gap-2">
