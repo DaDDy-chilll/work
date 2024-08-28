@@ -16,6 +16,9 @@ export const useWorkflow = () => {
         .filter((item) => item._id !== department._id)
         .map((item, index) => ({ ...item, order: index }));
     });
+    setSelectedUsers(
+      selectedUsers.filter((user) => user.department._id !== department._id),
+    );
   };
 
   const removeUser = (user) => {
