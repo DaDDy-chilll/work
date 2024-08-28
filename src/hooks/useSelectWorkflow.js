@@ -18,6 +18,7 @@ export const useSelectWorkflow = ({ index, type }) => {
   let options = {
     sort: '-createdAt',
     limit: 0,
+    isDisabled: false,
   };
 
   if (type) {
