@@ -3,17 +3,21 @@ import { TableBody } from '@mui/material';
 import { StyledTableCell, StyledTableRow } from '../styled';
 import WorkflowRoute from '../ui/WorkflowRoute';
 import { getDepartmentsFromWorkflow } from '../../helpers';
-import LinkButton from '../ui/LinkButton';
-import { useNavigate } from 'react-router-dom';
+import { TableActionButton } from '@/components';
+import { Error } from '@mui/icons-material';
 
 const WorkflowRow = ({ payload }) => {
-  const navigate = useNavigate();
   return (
     <TableBody>
       {payload &&
         payload.map((data) => (
           <StyledTableRow key={data?._id}>
-            <StyledTableCell>{data?.groupId}</StyledTableCell>
+            <StyledTableCell>
+              <div className="flex gap-1 items-center">
+                {data?.isDisabled && <Error className="text-xl text-red-500" />}
+                <span>{data?.groupId}</span>
+              </div>
+            </StyledTableCell>
             <StyledTableCell>{data?.name}</StyledTableCell>
             <StyledTableCell>{data?.description}</StyledTableCell>
             <StyledTableCell>
@@ -21,14 +25,8 @@ const WorkflowRow = ({ payload }) => {
                 departments={getDepartmentsFromWorkflow(data?.reviewers)}
               />
             </StyledTableCell>
-            <StyledTableCell>
-              <LinkButton
-                width="100px"
-                innerText="View"
-                onClick={() => navigate(`/workflows/detail/${data._id}`)}
-                variant="contained"
-                color="primary"
-              />
+            <StyledTableCell align="center" sx={{ display: 'flex', gap: 1 }}>
+              <TableActionButton id={data?._id} />
             </StyledTableCell>
           </StyledTableRow>
         ))}
