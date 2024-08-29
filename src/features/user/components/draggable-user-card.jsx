@@ -49,7 +49,10 @@ export const DraggableUserCard = ({ index, moveItem, item, onRemoveUser }) => {
           <Delete className="text-xl text-red-500 cursor-pointer" />
         </div>
         <div>
-          <p className="font-medium">{item.name}</p>
+          <p className="font-medium flex gap-1">
+            {item.name}
+            {item.isDisabled && <span className="text-red-600">(deleted)</span>}
+          </p>
           <p className="text-gray-500 text-sm">{item.jobLabel}</p>
         </div>
       </div>
