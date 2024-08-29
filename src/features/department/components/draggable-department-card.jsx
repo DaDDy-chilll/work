@@ -69,7 +69,12 @@ export const DraggableDepartmentCard = ({
       {users?.length ? (
         <ol className="list-decimal list-inside">
           {users.map((item) => (
-            <li key={item._id}>{item.name}</li>
+            <li key={item._id} className="flex gap-1">
+              {item.name}
+              {item.isDisabled && (
+                <span className="text-red-600">(deleted)</span>
+              )}
+            </li>
           ))}
         </ol>
       ) : (
