@@ -123,6 +123,10 @@ export const colors = {
     300: '#333333',
   },
   bgColor: '#EDF1F7',
+  secondary: {
+    100: '#EDF1F7',
+    200: '#EDF1F7',
+  },
 };
 
 export const theme = createTheme({
