@@ -5,7 +5,7 @@ import { useAuth, useDisclosure } from '../hooks';
 import { colors } from '../assets/theme/theme';
 
 // images
-import ParamiLogo from '../assets/images/ParamiLogo.jpg';
+import Logo from '../assets/images/Logo.jpg';
 import Notifications from './ui/NotificationIcon';
 import NotificationDrawer from './ui/NotificationDrawer';
 import { useNavigate } from 'react-router-dom';
@@ -61,13 +61,13 @@ const Topbar = () => {
             marginLeft: '.5rem',
             paddingRight: '.5rem',
           }}
-          src={ParamiLogo}
+          src={Logo}
           alt=""
         />
         <Typography
           sx={{ fontSize: '18px', fontWeight: 600, color: colors.black[200] }}
         >
-          Parami Hospital
+          DMH Office Approval System
         </Typography>
       </Box>
 
