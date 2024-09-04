@@ -2,14 +2,14 @@ import { createTheme } from '@mui/material/styles';
 
 export const colors = {
   paleBlue: {
-    100: '#E5F6FC',
-    200: '#CCECF9',
-    300: '#B2E3F6',
-    400: '#98DAF4',
-    500: '#7ED0F1',
-    600: '#65C7EE',
-    700: '#4BBDEB',
-    800: '#31B4E8', //300
+    100: '#c4e2dc',
+    200: '#b0d8d0',
+    300: '#9ccec4',
+    400: '#87c5b9',
+    500: '#72bbae',
+    600: '#5bb1a3',
+    700: '#40a898',
+    800: '#179e8d', //300
   },
   paleGreen: {
     100: '#EDF7E8',
@@ -123,10 +123,6 @@ export const colors = {
     300: '#333333',
   },
   bgColor: '#EDF1F7',
-  secondary: {
-    100: '#EDF1F7',
-    200: '#EDF1F7',
-  },
 };
 
 export const theme = createTheme({
