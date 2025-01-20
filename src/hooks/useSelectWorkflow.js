@@ -10,12 +10,13 @@ function transformWorkflow(data) {
   }));
 }
 
-export const useSelectWorkflow = ({ index, type }) => {
+export const useSelectWorkflow = ({ index, type, workflowType }) => {
   const { user, validateUser } = useAuth();
 
   const { mutate: saveWorkflowMutation } = useSaveWorkflow();
 
   let options = {
+    workflowType: workflowType,
     sort: '-createdAt',
     limit: 0,
     isDisabled: false,
@@ -24,6 +25,10 @@ export const useSelectWorkflow = ({ index, type }) => {
   if (type) {
     Object.assign(options, { type });
   }
+
+  // if (workflowType) {
+  //   Object.assign(options, { workflowType });
+  // }
 
   const { isError, error, data } = useGetAllWorkflows(options);
 
@@ -55,6 +60,7 @@ export const useSelectWorkflow = ({ index, type }) => {
       }
     }
   }
+  console.log("data",workflows,user.favouriteWorkflows);
 
   const saveWorkflow = (id) => {
     saveWorkflowMutation(id, {

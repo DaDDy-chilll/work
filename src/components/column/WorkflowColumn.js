@@ -3,4 +3,5 @@ export const WorkflowColumn = [
   'Workflow Title',
   'Workflow Description',
   'Department Route',
+  'Workflow Type',
 ];

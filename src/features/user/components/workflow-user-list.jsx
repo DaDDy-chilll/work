@@ -67,11 +67,13 @@ const SelectWorkflowUser = ({
       <div className="rounded-lg border">
         <div className="flex justify-between p-3 font-semibold">
           <div>Name & Role</div>
-          <div className="flex gap-32">
+          <div className="flex gap-20">
             <div>Approve</div>
+            <div>Authorize</div>
             <div>Verify</div>
-            <div>Prepare</div>
-            <div>Revise</div>
+            <div>Edit</div>
+            <div>Return</div>
+            <div className='mr-5'>Advance Return</div>
           </div>
         </div>
         {users &&
@@ -96,19 +98,25 @@ const SelectWorkflowUser = ({
                   <p className="text-gray-500 text-sm">{item.jobLabel}</p>
                 </div>
               </div>
-              <div className="flex gap-[163px]">
-                {item?.permissions?.canApprove && (
+              <div className="flex gap-[110px] mr-20">
+                {item?.permissions?.canApprove ? (
                   <Check className="text-2xl text-primary-800" />
-                )}
-                {item?.permissions?.canVerify && (
+                ):<span className='w-6'></span>}
+                {item?.permissions?.canAuthorize ? (
                   <Check className="text-2xl text-primary-800" />
-                )}
-                {item?.permissions?.canPrepare && (
+                ):<span className='w-6'></span>}
+                {item?.permissions?.canVerify ? (
                   <Check className="text-2xl text-primary-800" />
-                )}
-                {item?.permissions?.canEdit && (
+                ):<span className='w-6'></span>}
+                {item?.permissions?.canEdit ? (
                   <Check className="text-2xl text-primary-800" />
-                )}
+                ):<span className='w-6'></span>}
+                {item?.permissions?.canNormalReturn ? (
+                  <Check className="text-2xl text-primary-800" />
+                ):<span className='w-6'></span>}
+                {item?.permissions?.canAdvanceReturn ? (
+                  <Check className="text-2xl text-primary-800" />
+                ):<span className='w-6'></span>}
               </div>
             </div>
           ))}
@@ -144,9 +152,11 @@ const WorkflowUsers = ({
         <div>Name & Role</div>
         <div className="flex gap-32">
           <div>Approve</div>
+          <div>Authorize</div>
           <div>Verify</div>
           <div>Edit</div>
-          <div>Prepare</div>
+          <div>Return</div>
+          <div>Advance Return</div>
         </div>
       </div>
       {users.map((item, index) => (
@@ -176,7 +186,7 @@ const WorkflowUsers = ({
             chosenUsers={chosenUsers}
           />
         }
-        maxWidth="md"
+        maxWidth="lg"
       />
     </div>
   );

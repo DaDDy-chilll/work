@@ -1,7 +1,9 @@
 export const DepartmentMemberListsColumn = [
   'Name & Role',
   'Approve',
+  'Authorize',
   'Verify',
-  'Prepare',
-  'Revise',
+  'Edit',
+  'Retrun',
+  'Advance Return',
 ];

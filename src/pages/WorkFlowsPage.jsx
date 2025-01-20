@@ -11,8 +11,12 @@ import { useNavigate } from 'react-router-dom';
 import { AddOutlined } from '@mui/icons-material';
 import CustomPagination from '../components/shared/CustomPagination';
 import { usePageTitle } from '../hooks';
+import SearchBox from '../components/shared/SearchBox';
+import WorkFlowTypeFilter from '../components/ui/WorkFlowTypeFilter';
 
 const WorkFlowsPage = () => {
+  const [searchValue, setSearchValue] = useState('');
+  const [workflowType, setWorkflowType] = useState('');
   // eslint-disable-next-line no-unused-vars
   const { pageTitle, setPageTitle } = usePageTitle('Workflows');
 
@@ -21,10 +25,14 @@ const WorkFlowsPage = () => {
   const [page, setPage] = useState(1);
 
   const { isError, error, data, isFetching } = useGetAllWorkflows({
+    search: searchValue,
     sort: '-createdAt',
     page,
     limit: 10,
+    workflowType: workflowType,
   });
+
+  console.log('workflowType', workflowType);
 
   if (isError) return <p>Error: {error?.response?.data?.message}</p>;
 
@@ -32,7 +40,13 @@ const WorkFlowsPage = () => {
     <Box m={2} borderRadius="1rem" bgcolor={colors.white[100]}>
       <Navbar />
       <Box p={3}>
-        <Box sx={{ display: 'flex', justifyContent: 'right', mb: 1 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'flex-start', mb: 1 }}>
+          <SearchBox setSearch={setSearchValue} placeholder="Search Name" />
+          <Box sx={{ ml: 2 }}>
+            <WorkFlowTypeFilter setWorkflowType={setWorkflowType} />
+          </Box>
+        </Box>
           <LinkButton
             icon={<AddOutlined sx={{ ml: 1 }} />}
             width="220px"

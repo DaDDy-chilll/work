@@ -5,8 +5,10 @@ import WorkflowRoute from '../ui/WorkflowRoute';
 import { getDepartmentsFromWorkflow } from '../../helpers';
 import { TableActionButton } from '@/components';
 import { Error } from '@mui/icons-material';
-
+import { WORKFLOW_TYPES_LIST } from '@/constants';
 const WorkflowRow = ({ payload }) => {
+
+  console.log('payload',payload)
   return (
     <TableBody>
       {payload &&
@@ -24,6 +26,9 @@ const WorkflowRow = ({ payload }) => {
               <WorkflowRoute
                 departments={getDepartmentsFromWorkflow(data?.reviewers)}
               />
+            </StyledTableCell>
+            <StyledTableCell>
+              {WORKFLOW_TYPES_LIST[data?.workflowType]}
             </StyledTableCell>
             <StyledTableCell align="center" sx={{ display: 'flex', gap: 1 }}>
               <TableActionButton id={data?._id} />

@@ -14,6 +14,15 @@ import { useMemo, useState } from 'react';
 import { Button, CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import FormSelect from '../../../components/shared/FormSelect';
+import { Box, MenuItem } from '@mui/material';
+import { WORKFLOW_TYPES_LIST } from '@/constants';
+import SelectOrderWorkflows from '../../../components/form/SelectOrderWorkflows';
+
+const WORKFLOW_TYPES_LISTS = Object.keys(WORKFLOW_TYPES_LIST).map((item) => ({
+  text: WORKFLOW_TYPES_LIST[item],
+  value: item,
+}));
 
 export const WorkflowForm = ({ initialValues, departments, users }) => {
   const {
@@ -49,7 +58,7 @@ export const WorkflowForm = ({ initialValues, departments, users }) => {
     }));
 
     if (isEdit) {
-      const { name, description, type } = values;
+      const { name, description, type, workflowType } = values;
 
       updateWorkflow(
         {
@@ -59,6 +68,7 @@ export const WorkflowForm = ({ initialValues, departments, users }) => {
           departmentOrders,
           reviewers,
           id: initialValues?._id,
+          workflowType,
         },
         {
           onSuccess: () => {
@@ -68,8 +78,11 @@ export const WorkflowForm = ({ initialValues, departments, users }) => {
         },
       );
     } else {
+      const submitValues = { ...values };
+      if (submitValues.workflowType === Object.keys(WORKFLOW_TYPES_LIST)[1])
+        delete submitValues.workflowId;
       createWorkflow(
-        { ...values, departmentOrders, reviewers },
+        { ...submitValues, departmentOrders, reviewers },
         {
           onSuccess: () => {
             toast.success('Workflow is created.');
@@ -109,6 +122,8 @@ export const WorkflowForm = ({ initialValues, departments, users }) => {
           setOptionValue(value);
           props.setFieldValue('type', value);
         };
+        if (props.values.workflowType === WORKFLOW_TYPES_LIST.PURCHASE_ORDER)
+          props.unregisterField('workflowId');
         return (
           <form className="flex flex-col gap-5" onSubmit={props.handleSubmit}>
             <div className="flex gap-2">
@@ -121,19 +136,54 @@ export const WorkflowForm = ({ initialValues, departments, users }) => {
                   placeholder="Enter Work Flow Title"
                 />
               </div>
+
               <div className="w-1/2">
-                <CustomFormLabel
-                  label="Work Flow Description"
-                  required={true}
-                />
-                <FormTextField
-                  type="text"
+                <CustomFormLabel label="Work Flow Type" required={true} />
+                <FormSelect
+                  variant="outlined"
                   formProps={props}
-                  name="description"
-                  placeholder="Enter Work Flow Description"
-                />
+                  name="workflowType"
+                  value={props.values.workflowType || 'default'}
+                >
+                  <MenuItem value="default" disabled>
+                    <Box textTransform={'capitalize'}>
+                      Select Work Flow Type
+                    </Box>
+                  </MenuItem>
+                  {WORKFLOW_TYPES_LISTS.map((item) => (
+                    <MenuItem value={item.value} key={item.value}>
+                      <Box textTransform={'capitalize'}>{item.text}</Box>
+                    </MenuItem>
+                  ))}
+                </FormSelect>
               </div>
             </div>
+            {Object.keys(WORKFLOW_TYPES_LIST)[0] ===
+              props.values.workflowType && (
+              <SelectOrderWorkflows
+                name="workflowOrderId"
+                formProps={props}
+                type="normal"
+                workflowType={
+                  Object.keys(WORKFLOW_TYPES_LIST)[0] ===
+                  props.values.workflowType
+                    ? Object.keys(WORKFLOW_TYPES_LIST)[1]
+                    : ''
+                }
+              />
+            )}
+            <div className="w-full">
+              <CustomFormLabel label="Work Flow Description" required={true} />
+              <FormTextField
+                type="text"
+                formProps={props}
+                name="description"
+                placeholder="Enter Work Flow Description"
+                multiline={true}
+                minRows={4}
+              />
+            </div>
+
             <div className="flex flex-col gap-1">
               <CustomFormLabel label="Private Work Flow ?" required={true} />
               <div className="flex gap-1">

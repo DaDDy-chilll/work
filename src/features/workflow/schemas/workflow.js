@@ -1,6 +1,5 @@
 import * as yup from 'yup';
 import { workflowTypes } from '..';
-
 export const workflowSchema = yup.object().shape({
   name: yup.string().required('Work Flow title is required'),
   description: yup.string().required('Work Flow description is required'),
@@ -8,4 +7,8 @@ export const workflowSchema = yup.object().shape({
     .string()
     .default('normal')
     .oneOf([...Object.values(workflowTypes)], 'Invalid Work Flow Type.'),
+  workflowType: yup
+    .string()
+    .not(['default'], 'Work Flow Type is required')
+    .required('Work Flow Type is required'),
 });

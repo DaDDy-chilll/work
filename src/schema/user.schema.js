@@ -7,7 +7,7 @@ export const userCreateValues = {
   confirmPassword: '',
   jobLabel: '',
   department: '',
-
+  canAuthorize: false,
   canApprove: false,
   canEdit: false,
   canPrepare: false,
@@ -45,6 +45,7 @@ export const userCreateSchema = yup.object().shape({
   jobLabel: yup.string().required('Job Label is required'),
   department: yup.string().required('Choose one of them'),
 
+  canAuthorize: yup.boolean(),
   canApprove: yup.boolean(),
   canEdit: yup.boolean(),
   canPrepare: yup.boolean(),
@@ -60,8 +61,9 @@ export const userEditSchema = yup.object().shape({
   name: yup.string().required('Name is required'),
   jobLabel: yup.string().required('Job Label is required'),
   department: yup.string().required('Choose one of them'),
-
+  
   canApprove: yup.boolean(),
+  canAuthorize:yup.boolean(),
   canEdit: yup.boolean(),
   canPrepare: yup.boolean(),
   canVerify: yup.boolean(),

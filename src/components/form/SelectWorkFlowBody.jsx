@@ -43,6 +43,7 @@ const WorkflowRow = ({
   saveWorkflow,
   type,
 }) => {
+  console.log('workflowType', item?.departments);
   return (
     <>
       <FormControlLabel
@@ -57,7 +58,7 @@ const WorkflowRow = ({
           },
         }}
       />
-      {index === 1 && type !== 'private' && (
+      {index === 1 && type !== 'private'  && (
         <IconButton sx={{ mr: 2 }} onClick={() => saveWorkflow(item._id)}>
           {favouriteWorkflowIds.includes(item._id) ? (
             <Favorite sx={{ fontSize: '20px', color: colors.paleBlue[800] }} />
@@ -77,11 +78,14 @@ const SelectWorkflowBody = ({
   name,
   formProps: { values, handleChange },
   type,
+  workflowType,
 }) => {
   const { workflows, favouriteWorkflowIds, saveWorkflow, error, isError } =
-    useSelectWorkflow({ index, type });
+    useSelectWorkflow({ index, type, workflowType });
 
   if (isError) return <p>Error: {error?.response?.data?.message}</p>;
+
+  console.log('workflows', workflows);
 
   return (
     <RadioGroup name={name} value={values[name]} onChange={handleChange}>

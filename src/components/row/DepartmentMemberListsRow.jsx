@@ -15,6 +15,8 @@ const DepartmentMemberListsRow = ({
   handleSelectChange,
   isDetail,
 }) => {
+
+  console.log('payload',payload)
   return (
     <TableBody>
       {payload &&
@@ -65,6 +67,8 @@ const DepartmentMemberListsRow = ({
                 </Box>
               </Box>
             </StyledTableCell>
+
+            {/* Approve */}
             <StyledTableCell>
               {data?.permissions?.canApprove && (
                 <Check
@@ -75,6 +79,20 @@ const DepartmentMemberListsRow = ({
                 />
               )}
             </StyledTableCell>
+
+            {/* Authorize */}
+            <StyledTableCell>
+              {data?.permissions?.canAuthorize && (
+                <Check
+                  sx={{
+                    fontSize: '22px',
+                    color: colors.paleBlue[800],
+                  }}
+                />
+              )}
+            </StyledTableCell>
+
+            {/* Verify */}
             <StyledTableCell>
               {data?.permissions?.canVerify && (
                 <Check
@@ -85,8 +103,11 @@ const DepartmentMemberListsRow = ({
                 />
               )}
             </StyledTableCell>
+
+
+            {/* Edit */}
             <StyledTableCell>
-              {data?.permissions?.canPrepare && (
+              {data?.permissions?.canEdit && (
                 <Check
                   sx={{
                     fontSize: '22px',
@@ -95,8 +116,22 @@ const DepartmentMemberListsRow = ({
                 />
               )}
             </StyledTableCell>
+
+            {/* Normal Return */}
             <StyledTableCell>
-              {data?.permissions?.canEdit && (
+              {data?.permissions?.canNormalReturn && (
+                <Check
+                  sx={{
+                    fontSize: '22px',
+                    color: colors.paleBlue[800],
+                  }}
+                />
+              )}
+            </StyledTableCell>
+
+            {/* Advance Return */}
+            <StyledTableCell>
+              {data?.permissions?.canAdvanceReturn && (
                 <Check
                   sx={{
                     fontSize: '22px',
