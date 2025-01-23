@@ -56,18 +56,36 @@ export const DraggableUserCard = ({ index, moveItem, item, onRemoveUser }) => {
           <p className="text-gray-500 text-sm">{item.jobLabel}</p>
         </div>
       </div>
-      <div className="flex gap-[150px]">
-        {item?.permissions?.canApprove && (
+      <div className="flex gap-[148px] mr-20">
+        {item?.permissions?.canApprove ? (
           <Check className="text-2xl text-primary-800" />
+        ) : (
+          <span className='w-6'></span>
         )}
-        {item?.permissions?.canVerify && (
+        {item?.permissions?.canAuthorize ? (
           <Check className="text-2xl text-primary-800" />
+        ) : (
+          <span className='w-6'></span>
         )}
-        {item?.permissions?.canPrepare && (
+        {item?.permissions?.canVerify ? (
           <Check className="text-2xl text-primary-800" />
+        ) : (
+          <span className='w-6'></span>
         )}
-        {item?.permissions?.canEdit && (
+        {item?.permissions?.canEdit ? (
           <Check className="text-2xl text-primary-800" />
+        ) : (
+          <span className='w-6'></span>
+        )}
+        {item?.permissions?.canNormalReturn ? (
+          <Check className="text-2xl text-primary-800" />
+        ) : (
+          <span className='w-6'></span>
+        )}
+        {item?.permissions?.canAdvanceReturn ? (
+          <Check className="text-2xl text-primary-800" />
+        ) : (
+          <span className='w-6'></span>
         )}
       </div>
     </div>

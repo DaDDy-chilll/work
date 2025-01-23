@@ -19,6 +19,7 @@ export const PERMISSIONS = {
   REJECT: 'Reject',
   ACKNOWLEDGE: 'Acknowledge',
   REVERSE: 'Reverse',
+  AUTHORIZE: 'Authorize',
   APPROVE: 'Approve',
   VERIFY: 'Verify',
   PREPARE: 'Prepare',

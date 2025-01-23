@@ -141,6 +141,7 @@ const TableActionButton = ({ userId }) => {
       department: data?.payload?.department,
 
       canApprove: data?.payload?.permissions?.canApprove,
+      canAuthorize:data?.payload?.permissions?.canAuthorize,
       canVerify: data?.payload?.permissions?.canVerify,
       canPrepare: data?.payload?.permissions?.canPrepare,
       canEdit: data?.payload?.permissions?.canEdit,

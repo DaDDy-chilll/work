@@ -7,7 +7,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import DepartmentMemberLists from '../components/form/DepartmentMemberLists';
 import LinkButton from '../components/ui/LinkButton';
 import { usePageTitle } from '../hooks';
-
+import { WORKFLOW_TYPES_LIST } from '@/constants';
 const Item = ({ fieldName, value }) => {
   return (
     <Box
@@ -38,11 +38,13 @@ const WorkflowDetailPage = () => {
   const { data: workflow, isLoading: workflowLoading } =
     useGetWorkflowDetail(id);
 
+    console.log(workflow)
+
   let payloads;
 
   if (workflow) {
     let departments = [];
-    workflow?.payload?.reviewers.forEach((r) => {
+    workflow?.payload?.reviewers?.forEach((r) => {
       departments.push(r.reviewer.department.name);
     });
 
@@ -88,6 +90,10 @@ const WorkflowDetailPage = () => {
           <Item
             fieldName="Workflow Description"
             value={workflow?.payload?.description}
+          />
+            <Item
+            fieldName="Workflow Type"
+            value={WORKFLOW_TYPES_LIST[workflow?.payload?.workflowType]}
           />
         </Box>
         {workflowLoading ? (

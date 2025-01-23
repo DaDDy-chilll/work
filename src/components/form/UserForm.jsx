@@ -55,6 +55,7 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
     password,
     jobLabel,
     department,
+    canAuthorize,
     canApprove,
     canEdit,
     canPrepare,
@@ -65,6 +66,23 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
     canNormalReturn,
     canAdvanceReturn,
   }) => {
+    console.log({
+      name,
+      email,
+      password,
+      jobLabel,
+      department,
+      canAuthorize,
+      canApprove,
+      canEdit,
+      canPrepare,
+      canVerify,
+      canEditAmount,
+      canForward,
+      canMention,
+      canNormalReturn,
+      canAdvanceReturn,
+    });
     createMutation(
       {
         name,
@@ -73,6 +91,7 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
         jobLabel,
         department,
         permissions: {
+          canAuthorize,
           canApprove,
           canEdit,
           canEditAmount,
@@ -99,6 +118,7 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
     jobLabel,
     department,
     canApprove,
+    canAuthorize,
     canEdit,
     canPrepare,
     canVerify,
@@ -108,6 +128,7 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
     canNormalReturn,
     canAdvanceReturn,
   }) => {
+    console.log('authorize', canAuthorize, canApprove);
     editMutation(
       {
         data: {
@@ -116,6 +137,7 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
           department,
           permissions: {
             canApprove,
+            canAuthorize,
             canEdit,
             canEditAmount,
             canVerify,
@@ -161,6 +183,9 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
     }
   };
 
+  console.log('oldData', oldData);
+  console.log('create value', userCreateValues);
+
   return (
     <Formik
       initialValues={
@@ -185,203 +210,184 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
           : handleCreate
       }
     >
-      {(props) => (
-        <form onSubmit={props.handleSubmit}>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            {!isChangePassword && (
-              <Box sx={{ display: 'flex', gap: 2 }}>
-                <Box width="50%">
-                  <CustomFormLabel label="Name" required={true} />
-                  <FormTextField
-                    type="text"
-                    formProps={props}
-                    name="name"
-                    placeholder="Enter Name"
-                  />
-                </Box>
-                <Box width="50%">
-                  <CustomFormLabel label="Email" required={true} />
-                  <FormTextField
-                    disabled={oldData}
-                    type="email"
-                    formProps={props}
-                    name="email"
-                    placeholder="Enter Email"
-                  />
-                </Box>
-              </Box>
-            )}
-            {!isChangePassword && (
-              <Box sx={{ display: 'flex', gap: 2 }}>
-                <Box width="48%">
-                  <CustomFormLabel label="Select Department" required={true} />
-                  <FormSelect
-                    placeholder="Select Department"
-                    name="department"
-                    formProps={props}
-                  >
-                    {departments &&
-                      departments?.map((item) => (
-                        <MenuItem value={item._id} key={item._id}>
-                          {item.value}
-                        </MenuItem>
-                      ))}
-                  </FormSelect>
-                </Box>
-                <Box width="50%">
-                  <CustomFormLabel label="Job Label" required={true} />
-                  <FormTextField
-                    type="text"
-                    formProps={props}
-                    name="jobLabel"
-                    placeholder="Job Label"
-                  />
-                </Box>
-              </Box>
-            )}
-            {!isChangePassword && (
-              <>
-                <CustomFormLabel label="Permission" />
-                <Box
-                  sx={{
-                    display: 'grid',
-                    gap: 2,
-                    gridTemplateColumns: 'repeat(4, 22%)',
-                  }}
-                >
-                  <FormCheckbox
-                    formProps={props}
-                    label="Create"
-                    disabled={true}
-                    defaultValue={true}
-                  />
-                  <FormCheckbox
-                    formProps={props}
-                    label="Comment"
-                    disabled={true}
-                    defaultValue={true}
-                  />
-                  <FormCheckbox
-                    formProps={props}
-                    label="Reject"
-                    disabled={true}
-                    defaultValue={true}
-                  />
-                  <FormCheckbox
-                    formProps={props}
-                    label="Acknowledge"
-                    disabled={true}
-                    defaultValue={true}
-                  />
-                </Box>
-                <Box
-                  sx={{
-                    display: 'grid',
-                    gap: 2,
-                    gridTemplateColumns: 'repeat(4, 22%)',
-                  }}
-                >
-                  <FormCheckbox
-                    formProps={props}
-                    label="Reverse"
-                    disabled={true}
-                    defaultValue={true}
-                  />
-                  <FormCheckbox
-                    formProps={props}
-                    label="Approve"
-                    name="canApprove"
-                  />
-                  <FormCheckbox
-                    formProps={props}
-                    label="Verify"
-                    name="canVerify"
-                  />
-                  <FormCheckbox
-                    formProps={{
-                      ...props,
-                      values: {
-                        canPrepare: props.values['canEditAmount']
-                          ? true
-                          : props.values['canPrepare'],
-                      },
-                    }}
-                    label="Edit"
-                    name="canPrepare"
-                  />
-                </Box>
-                <Box
-                  sx={{
-                    display: 'grid',
-                    gap: 2,
-                    gridTemplateColumns: 'repeat(4, 22%)',
-                  }}
-                >
-                  <FormCheckbox
-                    formProps={props}
-                    label="Edit Amount"
-                    name="canEditAmount"
-                  />
-                  <FormCheckbox
-                    formProps={props}
-                    label="Revise"
-                    name="canEdit"
-                  />
-                  <FormCheckbox
-                    formProps={props}
-                    label="Forward Work Flow"
-                    name="canForward"
-                  />
-                  <FormCheckbox
-                    formProps={props}
-                    label="Mention"
-                    name="canMention"
-                  />
-                </Box>
-                <Box
-                  sx={{
-                    display: 'grid',
-                    gap: 2,
-                    gridTemplateColumns: 'repeat(4, 22%)',
-                  }}
-                >
-                  <FormCheckbox
-                    formProps={props}
-                    label="Normal Return"
-                    name="canNormalReturn"
-                  />
-                  <FormCheckbox
-                    formProps={props}
-                    label="Advance Return"
-                    name="canAdvanceReturn"
-                  />
-                </Box>
-              </>
-            )}
-            {isChangePassword ? (
-              <>
+      {(props) => {
+
+        return (
+          <form onSubmit={props.handleSubmit}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+              {!isChangePassword && (
                 <Box sx={{ display: 'flex', gap: 2 }}>
-                  <PasswordTextField
-                    required={true}
-                    formProps={props}
-                    label="Password"
-                    name="password"
-                    placeholder="Enter Password"
-                    width="50%"
-                  />
-                  <PasswordTextField
-                    required={true}
-                    formProps={props}
-                    label="Confirm Password"
-                    name="confirmPassword"
-                    placeholder="Enter Confirm Password"
-                    width="50%"
-                  />
+                  <Box width="50%">
+                    <CustomFormLabel label="Name" required={true} />
+                    <FormTextField
+                      type="text"
+                      formProps={props}
+                      name="name"
+                      placeholder="Enter Name"
+                    />
+                  </Box>
+                  <Box width="50%">
+                    <CustomFormLabel label="Email" required={true} />
+                    <FormTextField
+                      disabled={oldData}
+                      type="email"
+                      formProps={props}
+                      name="email"
+                      placeholder="Enter Email"
+                    />
+                  </Box>
                 </Box>
-                <PasswordPolicy />
-              </>
-            ) : (
-              !oldData && (
+              )}
+              {!isChangePassword && (
+                <Box sx={{ display: 'flex', gap: 2 }}>
+                  <Box width="48%">
+                    <CustomFormLabel
+                      label="Select Department"
+                      required={true}
+                    />
+                    <FormSelect
+                      placeholder="Select Department"
+                      name="department"
+                      formProps={props}
+                    >
+                      {departments &&
+                        departments?.map((item) => (
+                          <MenuItem value={item._id} key={item._id}>
+                            {item.value}
+                          </MenuItem>
+                        ))}
+                    </FormSelect>
+                  </Box>
+                  <Box width="50%">
+                    <CustomFormLabel label="Job Label" required={true} />
+                    <FormTextField
+                      type="text"
+                      formProps={props}
+                      name="jobLabel"
+                      placeholder="Job Label"
+                    />
+                  </Box>
+                </Box>
+              )}
+              {!isChangePassword && (
+                <>
+                  <CustomFormLabel label="Permission" />
+                  <Box
+                    sx={{
+                      display: 'grid',
+                      gap: 2,
+                      gridTemplateColumns: 'repeat(4, 22%)',
+                    }}
+                  >
+                    <FormCheckbox
+                      formProps={props}
+                      label="Create"
+                      disabled={true}
+                      defaultValue={true}
+                    />
+                    <FormCheckbox
+                      formProps={props}
+                      label="Comment"
+                      disabled={true}
+                      defaultValue={true}
+                    />
+                    <FormCheckbox
+                      formProps={props}
+                      label="Reject"
+                      disabled={true}
+                      defaultValue={true}
+                    />
+                    <FormCheckbox
+                      formProps={props}
+                      label="Acknowledge"
+                      disabled={true}
+                      defaultValue={true}
+                    />
+                  </Box>
+                  <Box
+                    sx={{
+                      display: 'grid',
+                      gap: 2,
+                      gridTemplateColumns: 'repeat(4, 22%)',
+                    }}
+                  >
+                    <FormCheckbox
+                      formProps={props}
+                      label="Reverse"
+                      disabled={true}
+                      defaultValue={true}
+                    />
+                    <FormCheckbox
+                      formProps={props}
+                      label="Approve"
+                      name="canApprove"
+                    />
+                    <FormCheckbox
+                      formProps={props}
+                      label="Authorize"
+                      name="canAuthorize"
+                    />
+                    <FormCheckbox
+                      formProps={props}
+                      label="Verify"
+                      name="canVerify"
+                    />
+                    <FormCheckbox
+                      formProps={{
+                        ...props,
+                        values: {
+                          canPrepare: props.values['canEditAmount']
+                            ? true
+                            : props.values['canPrepare'],
+                        },
+                      }}
+                      label="Edit"
+                      name="canPrepare"
+                    />
+
+                    <FormCheckbox
+                      formProps={props}
+                      label="Edit Amount"
+                      name="canEditAmount"
+                    />
+                    <FormCheckbox
+                      formProps={props}
+                      label="Revise"
+                      name="canEdit"
+                    />
+                    <FormCheckbox
+                      formProps={props}
+                      label="Forward Work Flow"
+                      name="canForward"
+                    />
+                  </Box>
+                  <Box
+                    sx={{
+                      display: 'grid',
+                      gap: 2,
+                      gridTemplateColumns: 'repeat(4, 22%)',
+                    }}
+                  >
+                    <FormCheckbox
+                      formProps={props}
+                      label="Mention"
+                      name="canMention"
+                    />
+
+                    <FormCheckbox
+                      formProps={props}
+                      label="Normal Return"
+                      name="canNormalReturn"
+                    />
+                    <FormCheckbox
+                      formProps={props}
+                      label="Advance Return"
+                      name="canAdvanceReturn"
+                    />
+                  </Box>
+                </>
+              )}
+              {isChangePassword ? (
                 <>
                   <Box sx={{ display: 'flex', gap: 2 }}>
                     <PasswordTextField
@@ -403,26 +409,50 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
                   </Box>
                   <PasswordPolicy />
                 </>
-              )
-            )}
-            <FormActionButtons
-              onClick={onClose}
-              innerText={oldData ? 'Update' : 'Save'}
-              loading={
-                oldData && isChangePassword
-                  ? editUserPasswordLoading
-                  : isChangePassword
-                  ? editPasswordLoading
-                  : oldData
-                  ? editLoading
-                  : createLoading
-              }
-              justifyContent="right"
-              width="200px"
-            />
-          </Box>
-        </form>
-      )}
+              ) : (
+                !oldData && (
+                  <>
+                    <Box sx={{ display: 'flex', gap: 2 }}>
+                      <PasswordTextField
+                        required={true}
+                        formProps={props}
+                        label="Password"
+                        name="password"
+                        placeholder="Enter Password"
+                        width="50%"
+                      />
+                      <PasswordTextField
+                        required={true}
+                        formProps={props}
+                        label="Confirm Password"
+                        name="confirmPassword"
+                        placeholder="Enter Confirm Password"
+                        width="50%"
+                      />
+                    </Box>
+                    <PasswordPolicy />
+                  </>
+                )
+              )}
+              <FormActionButtons
+                onClick={onClose}
+                innerText={oldData ? 'Update' : 'Save'}
+                loading={
+                  oldData && isChangePassword
+                    ? editUserPasswordLoading
+                    : isChangePassword
+                    ? editPasswordLoading
+                    : oldData
+                    ? editLoading
+                    : createLoading
+                }
+                justifyContent="right"
+                width="200px"
+              />
+            </Box>
+          </form>
+        );
+      }}
     </Formik>
   );
 };

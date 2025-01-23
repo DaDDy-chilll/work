@@ -74,6 +74,10 @@ const UserPermissions = ({ permissions }) => {
         label={PERMISSIONS.APPROVE}
         defaultValue={permissions.canApprove}
       />
+      <PermissionCheckbox
+        label={PERMISSIONS.AUTHORIZE}
+        defaultValue={permissions.canAuthorize}
+      />
 
       <PermissionCheckbox
         label={PERMISSIONS.VERIFY}
