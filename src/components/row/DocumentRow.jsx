@@ -7,14 +7,18 @@ import DocumentCase from '../ui/DocumentCase';
 import LinkButton from '../ui/LinkButton';
 import { useNavigate } from 'react-router-dom';
 
-const DocumentRow = ({ payload }) => {
+const DocumentRow = ({ payload, currentPath }) => {
   const navigate = useNavigate();
+  console.log('Current Path', currentPath);
   return (
     <TableBody>
       {payload &&
         payload.map((data) => (
           <StyledTableRow key={data?._id}>
             <StyledTableCell>{data?.documentId}</StyledTableCell>
+            {currentPath === '/purchase-order' && (
+              <StyledTableCell>{data?.documentId}</StyledTableCell>
+            )}
             <StyledTableCell>
               {transformLocalTime(data?.createdAt).date}
             </StyledTableCell>

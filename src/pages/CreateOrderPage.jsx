@@ -1,15 +1,11 @@
 import { Box, Typography } from '@mui/material';
-import { colors } from '../assets/theme/theme';
 import { transformLocalTime } from '../helpers';
 import DocumentForm from '../components/form/DocumentForm';
-import { useNavigate } from 'react-router';
-import { usePageTitle } from '../hooks';
+import { useNavigate } from 'react-router-dom';
+import { colors } from '../assets/theme/theme';
 
-const CreateRequestPage = () => {
+const CreateOrderPage = () => {
   const navigate = useNavigate();
-  // eslint-disable-next-line no-unused-vars
-  const { pageTitle, setPageTitle } = usePageTitle('Create Request');
-
   return (
     <Box
       sx={{
@@ -25,7 +21,7 @@ const CreateRequestPage = () => {
         variant="h2"
         sx={{ fontWeight: 500, color: colors.black[100] }}
       >
-        Create New Request
+        Create Purchase Order
       </Typography>
       <Box bgcolor={colors.white[100]} borderRadius="1rem">
         <Box
@@ -44,13 +40,13 @@ const CreateRequestPage = () => {
           {transformLocalTime(Date.now()).date}
         </Box>
         <DocumentForm
-          workflowType="PURCHASE_REQUEST"
+          workflowType="PURCHASE_ORDER"
           oldData={undefined}
-          onClick={() => navigate('/purchase-request')}
+          onClick={() => navigate('/purchase-order')}
         />
       </Box>
     </Box>
   );
 };
 
-export default CreateRequestPage;
+export default CreateOrderPage;

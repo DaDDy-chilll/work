@@ -175,10 +175,10 @@ export const theme = createTheme({
     //   fontFamily: ['Poppins', 'sans-serif'].join(','),
     //   fontSize: 17,
     // },
-    // h4: {
-    //   fontFamily: ['Poppins', 'sans-serif'].join(','),
-    //   fontSize: 15,
-    // },
+    h4: {
+      fontFamily: ['Poppins', 'sans-serif'].join(','),
+      fontSize: 15,
+    },
     // h5: {
     //   fontFamily: ['Poppins', 'sans-serif'].join(','),
     //   fontSize: 14,

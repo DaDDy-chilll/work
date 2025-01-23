@@ -22,9 +22,8 @@ import { useAuth } from '../../hooks';
 import SelectWorkflows from './SelectWorkflows';
 import CustomTextEditor from '../shared/CustomTextEditor';
 
-const DocumentForm = ({ oldData, onClick }) => {
+const DocumentForm = ({ workflowType, oldData, onClick }) => {
   const { id } = useParams();
-
   const [files, setFiles] = useState([]);
   const [attachments, setAttachments] = useState([]);
 
@@ -75,7 +74,7 @@ const DocumentForm = ({ oldData, onClick }) => {
         onSuccess: () => {
           toast.success('ok');
           queryClient.invalidateQueries(['documents']);
-          navigate('/my-requests');
+          navigate('/purchase-request');
         },
         onSettled: () => {
           setFiles(undefined);
@@ -142,11 +141,6 @@ const DocumentForm = ({ oldData, onClick }) => {
             </Box>
             {!oldData && (
               <>
-                <SelectWorkflows
-                  name="workflowId"
-                  formProps={props}
-                  type="normal"
-                />
                 <Box>
                   <CustomFormLabel label="Amount" />
                   <FormTextField
@@ -156,6 +150,12 @@ const DocumentForm = ({ oldData, onClick }) => {
                     placeholder="Amount"
                   />
                 </Box>
+                <SelectWorkflows
+                  workflowType={workflowType}
+                  name="workflowId"
+                  formProps={props}
+                  type="normal"
+                />
               </>
             )}
 

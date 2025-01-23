@@ -18,7 +18,7 @@ export default function Navbar() {
 
   const { user } = useAuth();
 
-  const currentPath = useLocation();
+  const currentPath = useLocation(); //an object including the 'pathname' property
 
   const navItems = [
     {
@@ -52,17 +52,24 @@ export default function Navbar() {
     },
     {
       icon: <MyRequestsIcon />,
-      label: 'My Requests',
-      to: '/my-requests',
+      label: 'Purchase Request',
+      to: '/purchase-request',
       roles: [ROLES.AUTHORIZED, ROLES.BASIC],
       index: 1,
+    },
+    {
+      icon: <MyRequestsIcon />,
+      label: 'Purchase Order',
+      to: '/purchase-order',
+      roles: [ROLES.AUTHORIZED, ROLES.BASIC],
+      index: 2,
     },
     {
       icon: <AllRequestsIcon />,
       label: 'All Requests',
       to: '/all',
       roles: [ROLES.AUTHORIZED, ROLES.BASIC],
-      index: 2,
+      index: 3,
     },
   ];
 

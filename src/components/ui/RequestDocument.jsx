@@ -1,42 +1,42 @@
 /* eslint-disable react/prop-types */
 import { Box, CircularProgress } from '@mui/material';
-import DataTable from '../components/ui/DataTable';
-import { colors } from '../assets/theme/theme';
-import { useGetMyRequests } from '../api';
-import LinkButton from '../components/ui/LinkButton';
-import DocumentRow from '../components/row/DocumentRow';
-import { DocumentColumn } from '../components/column/DocumentColumn';
-import { useState } from 'react';
-import Navbar from '../components/Navbar';
-import { useNavigate } from 'react-router-dom';
-import CustomPagination from '../components/shared/CustomPagination';
-import { useDateRangeFilter, useCustomeFilter } from '../hooks';
-import SearchBox from '../components/shared/SearchBox';
-import DateRangeFilter from '../components/shared/DateRangeFilter';
-import CustomFilter from '../components/ui/CustomFilter';
-import { FILTER_OPTIONS } from '../constants';
 
-const MyRequestPage = ({ requestType }) => {
+import { colors } from '../../assets/theme/theme';
+// import { useGetMyRequests } from '../api';
+import LinkButton from '../../components/ui/LinkButton';
+import DocumentRow from '../../components/row/DocumentRow';
+import {
+  PurchaseOrderDocumentColumn,
+  PurchaseRequestDocumentColumn,
+} from '../../components/column/DocumentColumn';
+import Navbar from '../../components/Navbar';
+import { useNavigate } from 'react-router-dom';
+// import { AddOutlined } from '@mui/icons-material';
+import CustomPagination from '../../components/shared/CustomPagination';
+import { useDateRangeFilter, useCustomeFilter } from '../../hooks';
+import SearchBox from '../../components/shared/SearchBox';
+import DateRangeFilter from '../../components/shared/DateRangeFilter';
+import CustomFilter from '../../components/ui/CustomFilter';
+import { FILTER_OPTIONS } from '../../constants';
+import DataTable from './DataTable';
+
+const RequestDocument = ({
+  resultData,
+  page,
+  changePage,
+  isFetching,
+  currentPath,
+}) => {
   const navigate = useNavigate();
   const { date, openDate, setOpenDate, handleDateChange, handleRemoveDate } =
     useDateRangeFilter();
-  const [page, setPage] = useState(1);
-
-  let initialValue = {
-    text: 'My Requests',
-    value: `my-${requestType}-request`,
-  };
 
   const { optionValue, handleOptionChange } = useCustomeFilter({
-    initialValue,
+    initialValue: {
+      text: 'My Request',
+      value: `my-${currentPath.split('/')[1]}-request`,
+    },
   });
-  const { isError, error, data, isFetching } = useGetMyRequests({
-    sort: 'createdAt',
-    page,
-    limit: 10,
-  });
-
-  if (isError) return <p>Error: {error?.response?.data?.message}</p>;
 
   return (
     <Box m={2} borderRadius="1rem" bgcolor={colors.white[100]}>
@@ -57,18 +57,18 @@ const MyRequestPage = ({ requestType }) => {
             width="220px"
             color="primary"
             innerText={
-              requestType === 'purchase-request'
+              currentPath === '/purchase-request'
                 ? 'Create purchase request'
                 : 'Create purchase order'
             }
-            onClick={() => navigate('/my-requests/create')}
+            onClick={() => navigate(`${currentPath}/create`)}
             variant="contained"
           />
         </Box>
         <Box sx={{ marginTop: 2 }}>
           <CustomFilter
             items={
-              requestType === 'purchase-request'
+              currentPath === '/purchase-request'
                 ? FILTER_OPTIONS.PURCHASE_REQUEST
                 : FILTER_OPTIONS.PURCHASE_ORDER
             }
@@ -84,15 +84,24 @@ const MyRequestPage = ({ requestType }) => {
           ) : (
             <>
               <DataTable
-                columns={DocumentColumn}
-                rows={<DocumentRow payload={data?.payload} />}
+                columns={
+                  currentPath === '/purchase-request'
+                    ? PurchaseRequestDocumentColumn
+                    : PurchaseOrderDocumentColumn
+                }
+                rows={
+                  <DocumentRow
+                    payload={resultData?.payload}
+                    currentPath={currentPath}
+                  />
+                }
                 hasAction={true}
               />
               <CustomPagination
-                count={Math.ceil(data?.total / 10)}
+                count={Math.ceil(resultData?.total / 10)}
                 page={page}
                 onChange={(_e, value) => {
-                  setPage(value);
+                  changePage(value);
                 }}
               />
             </>
@@ -103,4 +112,4 @@ const MyRequestPage = ({ requestType }) => {
   );
 };
 
-export default MyRequestPage;
+export default RequestDocument;

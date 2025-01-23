@@ -58,7 +58,7 @@ const WorkflowRow = ({
           },
         }}
       />
-      {index === 1 && type !== 'private'  && (
+      {index === 1 && type !== 'private' && (
         <IconButton sx={{ mr: 2 }} onClick={() => saveWorkflow(item._id)}>
           {favouriteWorkflowIds.includes(item._id) ? (
             <Favorite sx={{ fontSize: '20px', color: colors.paleBlue[800] }} />
@@ -74,8 +74,8 @@ const WorkflowRow = ({
 };
 
 const SelectWorkflowBody = ({
-  index,
-  name,
+  index, //0 or 1
+  name, //workflowId
   formProps: { values, handleChange },
   type,
   workflowType,

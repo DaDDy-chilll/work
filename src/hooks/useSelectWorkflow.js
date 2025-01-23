@@ -26,9 +26,9 @@ export const useSelectWorkflow = ({ index, type, workflowType }) => {
     Object.assign(options, { type });
   }
 
-  // if (workflowType) {
-  //   Object.assign(options, { workflowType });
-  // }
+  if (workflowType) {
+    Object.assign(options, { workflowType });
+  }
 
   const { isError, error, data } = useGetAllWorkflows(options);
 
@@ -60,7 +60,7 @@ export const useSelectWorkflow = ({ index, type, workflowType }) => {
       }
     }
   }
-  console.log("data",workflows,user.favouriteWorkflows);
+  console.log('data', workflows, user.favouriteWorkflows);
 
   const saveWorkflow = (id) => {
     saveWorkflowMutation(id, {

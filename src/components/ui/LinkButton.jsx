@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 
-const LinkButton = ({ innerText, onClick, variant, color, width, icon }) => {
+const LinkButton = ({ innerText, onClick, variant, color, width }) => {
   return (
     <Button
       onClick={onClick}
@@ -10,7 +10,9 @@ const LinkButton = ({ innerText, onClick, variant, color, width, icon }) => {
       color={color}
       sx={{ width }}
     >
-      {innerText} {icon}
+      <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
+        {innerText}
+      </Typography>
     </Button>
   );
 };

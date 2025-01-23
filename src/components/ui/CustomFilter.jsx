@@ -20,7 +20,7 @@ const CustomFilter = ({ items, optionValue, handleOptionChange }) => {
                 : colors.black[300]
             }`,
             border: `1px solid ${colors.paleBlue[800]}`,
-            width: '110px',
+            width: '140px',
             height: '40px',
             borderRadius: 5,
             display: 'flex',
@@ -29,7 +29,9 @@ const CustomFilter = ({ items, optionValue, handleOptionChange }) => {
             cursor: 'pointer',
             fontWeight: 'bold',
           }}
-          onClick={() => handleOptionChange(item)}
+          onClick={() => {
+            handleOptionChange(item);
+          }}
         >
           {item.text}
         </Box>

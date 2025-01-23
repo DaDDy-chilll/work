@@ -69,8 +69,9 @@ const SelectWorkFlowModal = ({
   );
 };
 
-const SelectWorkflows = ({ name, formProps, type }) => {
+const SelectWorkflows = ({ workflowType, name, formProps, type }) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
+  console.log(formProps.values[name]);
 
   const [value, setValue] = useState(0);
 
@@ -79,6 +80,7 @@ const SelectWorkflows = ({ name, formProps, type }) => {
   };
 
   const { data } = useGetWorkflowDetail(formProps.values[name]);
+  console.log('data', data);
 
   return (
     <>
@@ -132,6 +134,7 @@ const SelectWorkflows = ({ name, formProps, type }) => {
                 name={name}
                 formProps={formProps}
                 type={type}
+                workflowType={workflowType}
               />
             </Box>
           </SelectWorkFlowModal>

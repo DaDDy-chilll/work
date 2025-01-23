@@ -10,7 +10,7 @@ import UsersPage from './pages/UsersPage';
 import Protected from './components/Protected';
 import Layout from './components/Layout';
 import AllRequestsPage from './pages/AllRequestsPage';
-import MyRequestsPage from './pages/MyRequestsPage';
+// import MyRequestsPage from './pages/MyRequestsPage';
 import InboxPage from './pages/InboxPage';
 import DepartmentsPage from './pages/DepartmentsPage';
 import WorkFlowsPage from './pages/WorkFlowsPage';
@@ -25,6 +25,9 @@ import AddMentionPage from './pages/AddMentionPage';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { CreateWorkflow, EditWorkflow } from '@/features/workflow';
+import PurchaseRequestPage from './pages/PurchaseRequestPage';
+import PurchaseOrderPage from './pages/PurchaseOrderPage';
+import CreateOrderPage from './pages/CreateOrderPage';
 
 function App() {
   return (
@@ -45,10 +48,21 @@ function App() {
                 >
                   <Route path="" element={<InboxPage />} />
                   <Route path="all" element={<AllRequestsPage />} />
-                  <Route path="my-requests" element={<MyRequestsPage />} />
                   <Route
-                    path="my-requests/create"
+                    path="purchase-request"
+                    element={<PurchaseRequestPage />}
+                  />
+                  <Route
+                    path="purchase-order"
+                    element={<PurchaseOrderPage />}
+                  />
+                  <Route
+                    path="purchase-request/create"
                     element={<CreateRequestPage />}
+                  />
+                  <Route
+                    path="purchase-order/create"
+                    element={<CreateOrderPage />}
                   />
                   <Route path="detail/:id" element={<DocumentDetailPage />} />
                   <Route path="edit/:id" element={<EditRequestPage />} />

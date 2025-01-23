@@ -15,16 +15,17 @@ export const useGetAllRequests = (params) => {
   });
 };
 
-export const getMyRequests = async (params) => {
+export const getPurchaseRequests = async (params) => {
+  console.log('Querry String', getQueryString(params));
   return fetcher.get(`/documents/me?${getQueryString(params)}`).then((res) => {
     return res.data;
   });
 };
 
-export const useGetMyRequests = (params) => {
+export const useGetPurchaseRequests = (params) => {
   return useQuery({
-    queryKey: ['my-requests', params],
-    queryFn: () => getMyRequests(params),
+    queryKey: ['purchase-requests', params],
+    queryFn: () => getPurchaseRequests(params),
   });
 };
 

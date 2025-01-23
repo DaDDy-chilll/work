@@ -65,4 +65,24 @@ export const FILTER_OPTIONS = {
       key: 'mentioned',
     },
   ],
+  PURCHASE_REQUEST: [
+    {
+      text: 'My Requests',
+      value: 'my-purchase-request-request',
+    },
+    {
+      text: 'All',
+      value: '',
+    },
+  ],
+  PURCHASE_ORDER: [
+    {
+      text: 'My Requests',
+      value: 'my-purchase-order-request',
+    },
+    {
+      text: 'All',
+      value: '',
+    },
+  ],
 };
