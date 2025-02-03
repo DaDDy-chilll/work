@@ -20,7 +20,6 @@ export const EditWorkflow = () => {
 
     uniqueDepartments = [...new Set([...uniqueDepartments])];
 
-    console.log({ uniqueDepartments });
 
     departments = uniqueDepartments.map((dpt, index) => {
       const items = reviewers

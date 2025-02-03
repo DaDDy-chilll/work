@@ -6,10 +6,12 @@ import Modal from '../ui/Modal';
 import { useDisclosure } from '../../hooks';
 import SelectWorkFlowHeader from './SelectWorkFlowHeader';
 import SelectWorkflowBody from './SelectWorkFlowBody';
-import { useState } from 'react';
-import { useGetWorkflowDetail } from '../../api';
+import { useEffect, useState } from 'react';
+import { useGetOrderWorkflowDetail, useGetWorkflowDetail } from '../../api';
 import WorkflowRoute from '../ui/WorkflowRoute';
 import { getDepartmentsFromWorkflow } from '../../helpers';
+import { useSearchParams } from 'react-router-dom';
+import { WORKFLOW_TYPES_LIST } from '../../constants';
 
 const SelectWorkFlowModal = ({
   onClose,
@@ -71,7 +73,9 @@ const SelectWorkFlowModal = ({
 
 const SelectWorkflows = ({ workflowType, name, formProps, type }) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
-  console.log(formProps.values[name]);
+  const [searchParams] = useSearchParams();
+  const flowType = searchParams.get('workflowType');
+  const id = searchParams.get('id');
 
   const [value, setValue] = useState(0);
 
@@ -79,9 +83,16 @@ const SelectWorkflows = ({ workflowType, name, formProps, type }) => {
     setValue(newValue);
   };
 
-  const { data } = useGetWorkflowDetail(formProps.values[name]);
-  console.log('data', data);
-
+  const { data: orderData,isLoading } = useGetOrderWorkflowDetail(id, flowType);
+  const { data: requestData } = useGetWorkflowDetail(formProps.values[name]);
+  const data =
+    flowType === Object.keys(WORKFLOW_TYPES_LIST)[1] ? orderData : requestData;
+    useEffect(() => {
+      if (flowType === Object.keys(WORKFLOW_TYPES_LIST)[1] && orderData?.payload?._id) {
+        formProps.setFieldValue('workflowId', orderData.payload._id);
+      }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [orderData ]);
   return (
     <>
       <Box
@@ -95,7 +106,11 @@ const SelectWorkflows = ({ workflowType, name, formProps, type }) => {
           borderRadius: 1,
           height: '55px',
         }}
-        onClick={onOpen}
+        onClick={
+          flowType === Object.keys(WORKFLOW_TYPES_LIST)[1]
+            ? (e) => e.stopPropagation()
+            : onOpen
+        }
       >
         {formProps.values[name] ? (
           data?.payload?.reviewers && (
@@ -104,6 +119,19 @@ const SelectWorkflows = ({ workflowType, name, formProps, type }) => {
               departments={getDepartmentsFromWorkflow(data?.payload?.reviewers)}
             />
           )
+        ) : flowType === Object.keys(WORKFLOW_TYPES_LIST)[1] && !isLoading ? (
+          <Box
+            sx={{
+              width: '100%',
+              pointerEvents: 'none',
+            }}
+          >
+            <WorkflowRoute
+              onClick={(e) => e.stopPropagation()}
+              name={data?.payload?.name}
+              departments={getDepartmentsFromWorkflow(data?.payload?.reviewers)}
+            />
+          </Box>
         ) : (
           <>
             <Add sx={{ fontSize: '30px', color: colors.paleBlue[800] }} />

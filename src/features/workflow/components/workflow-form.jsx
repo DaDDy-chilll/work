@@ -58,18 +58,14 @@ export const WorkflowForm = ({ initialValues, departments, users }) => {
     }));
 
     if (isEdit) {
-      const { name, description, type, workflowType } = values;
+      const { name, description, type, workflowType,workflowOrderId } = values;
+      const updateValues = {name,description,type,workflowType,id:initialValues?._id,departmentOrders,reviewers}
 
+      if(workflowOrderId){
+        updateValues.workflowOrderId = workflowOrderId
+      }
       updateWorkflow(
-        {
-          name,
-          description,
-          type,
-          departmentOrders,
-          reviewers,
-          id: initialValues?._id,
-          workflowType,
-        },
+        updateValues,
         {
           onSuccess: () => {
             toast.success('Workflow is updated.');
@@ -79,6 +75,7 @@ export const WorkflowForm = ({ initialValues, departments, users }) => {
       );
     } else {
       const submitValues = { ...values };
+      console.table(submitValues)
       if (submitValues.workflowType === Object.keys(WORKFLOW_TYPES_LIST)[1])
         delete submitValues.workflowId;
       createWorkflow(

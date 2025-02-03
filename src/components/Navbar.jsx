@@ -5,7 +5,8 @@ import {
   AccountTree as WorkFlowIcon,
   ApartmentOutlined as DepartmentIcon,
   InsertDriveFileOutlined as AllRequestsIcon,
-  ListAltOutlined as MyRequestsIcon,
+  AddShoppingCartOutlined as RequestIcon,
+  ShoppingCartCheckoutOutlined as PurchaseOrderIcon,
   MailOutline as InboxIcon,
   Person as UserIcon,
 } from '@mui/icons-material';
@@ -51,14 +52,14 @@ export default function Navbar() {
       index: 0,
     },
     {
-      icon: <MyRequestsIcon />,
+      icon: <RequestIcon />,
       label: 'Purchase Request',
       to: '/purchase-request',
       roles: [ROLES.AUTHORIZED, ROLES.BASIC],
       index: 1,
     },
     {
-      icon: <MyRequestsIcon />,
+      icon: <PurchaseOrderIcon />,
       label: 'Purchase Order',
       to: '/purchase-order',
       roles: [ROLES.AUTHORIZED, ROLES.BASIC],

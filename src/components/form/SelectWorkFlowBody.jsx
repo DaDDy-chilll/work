@@ -13,7 +13,7 @@ import WorkflowRoute from '../ui/WorkflowRoute';
 import { colors } from '../../assets/theme/theme';
 import EmptyWorkflowImg from '../../assets/images/Empty_Workflow.svg';
 import { useSelectWorkflow } from '../../hooks/useSelectWorkflow';
-
+// import { WORKFLOW_TYPES_LIST } from '@/constants';
 const EmptyWorkflowResult = () => {
   return (
     <Box
@@ -43,7 +43,6 @@ const WorkflowRow = ({
   saveWorkflow,
   type,
 }) => {
-  console.log('workflowType', item?.departments);
   return (
     <>
       <FormControlLabel
@@ -82,10 +81,10 @@ const SelectWorkflowBody = ({
 }) => {
   const { workflows, favouriteWorkflowIds, saveWorkflow, error, isError } =
     useSelectWorkflow({ index, type, workflowType });
+  
 
   if (isError) return <p>Error: {error?.response?.data?.message}</p>;
 
-  console.log('workflows', workflows);
 
   return (
     <RadioGroup name={name} value={values[name]} onChange={handleChange}>
@@ -93,7 +92,8 @@ const SelectWorkflowBody = ({
         workflows.length === 0 ? (
           <EmptyWorkflowResult />
         ) : (
-          workflows?.map((item) => (
+          workflows?.filter((item) =>
+           item._id !== values._id).map((item) => (
             <Box
               key={item._id}
               sx={{

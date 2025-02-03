@@ -66,23 +66,6 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
     canNormalReturn,
     canAdvanceReturn,
   }) => {
-    console.log({
-      name,
-      email,
-      password,
-      jobLabel,
-      department,
-      canAuthorize,
-      canApprove,
-      canEdit,
-      canPrepare,
-      canVerify,
-      canEditAmount,
-      canForward,
-      canMention,
-      canNormalReturn,
-      canAdvanceReturn,
-    });
     createMutation(
       {
         name,
@@ -128,7 +111,7 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
     canNormalReturn,
     canAdvanceReturn,
   }) => {
-    console.log('authorize', canAuthorize, canApprove);
+
     editMutation(
       {
         data: {
@@ -183,8 +166,7 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
     }
   };
 
-  console.log('oldData', oldData);
-  console.log('create value', userCreateValues);
+
 
   return (
     <Formik

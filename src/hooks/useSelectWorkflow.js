@@ -60,7 +60,6 @@ export const useSelectWorkflow = ({ index, type, workflowType }) => {
       }
     }
   }
-  console.log('data', workflows, user.favouriteWorkflows);
 
   const saveWorkflow = (id) => {
     saveWorkflowMutation(id, {

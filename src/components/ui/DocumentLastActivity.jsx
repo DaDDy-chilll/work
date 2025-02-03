@@ -8,6 +8,7 @@ import {
 import { colors } from '../../assets/theme/theme';
 
 const DocumentLastActivity = ({ lastActivity }) => {
+  console.log('lastActivity',lastActivity)
   const textColor = changeTextColor({
     action: transformLastActivity(lastActivity?.action),
   });
@@ -19,7 +20,7 @@ const DocumentLastActivity = ({ lastActivity }) => {
   return (
     <Box
       sx={{
-        backgroundColor: bgColor ? bgColor : colors.grey[600],
+        backgroundColor: bgColor ? bgColor : lastActivity?.action ? colors.grey[600] : colors.paleYellow[200],
         p: 1,
         borderRadius: '50px',
       }}
@@ -32,12 +33,20 @@ const DocumentLastActivity = ({ lastActivity }) => {
           textAlign: 'center',
         }}
       >
+          {!lastActivity?.action ? (
+        <span style={{ textTransform: 'capitalize', color: colors.darkYellow[600],  borderRadius: '50px', padding: '5px 10px' }}>
+          Not Started (PO)
+        </span>
+      ) : (
+        <>
         <span style={{ textTransform: 'capitalize' }}>
           {transformLastActivity(lastActivity?.action) === 'FORWARDED'
             ? 'Forwarded and Approved'
             : transformLastActivity(lastActivity?.action).toLowerCase()}
         </span>{' '}
         by {lastActivity?.actor?.name} ({lastActivity.department?.name})
+        </>
+      )}
       </Typography>
     </Box>
   );

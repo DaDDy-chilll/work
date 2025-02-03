@@ -61,7 +61,9 @@ const SelectOrderWorkflows = ({ name, formProps, type, workflowType }) => {
   //     setValue(newValue);
   // };
 
+
   const { data } = useGetWorkflowDetail(formProps.values[name]);
+
 
   return (
     <>
@@ -110,7 +112,7 @@ const SelectOrderWorkflows = ({ name, formProps, type, workflowType }) => {
             )} */}
             <Box sx={{ height: '50vh', overflowY: 'auto' }}>
               <SelectWorkflowBody
-                index={1}
+                index={2}
                 name={name}
                 formProps={formProps}
                 workflowType={workflowType}

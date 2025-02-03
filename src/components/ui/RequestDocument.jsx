@@ -53,17 +53,17 @@ const RequestDocument = ({
               handleRemoveDate={handleRemoveDate}
             />
           </Box>
-          <LinkButton
-            width="220px"
-            color="primary"
-            innerText={
-              currentPath === '/purchase-request'
-                ? 'Create purchase request'
-                : 'Create purchase order'
-            }
-            onClick={() => navigate(`${currentPath}/create`)}
-            variant="contained"
-          />
+          {currentPath === '/purchase-request' && (
+            <LinkButton
+              width="220px"
+              color="primary"
+              innerText={
+                   'Create purchase request'
+              }
+              onClick={() => navigate(`/purchase-request/create`)}
+              variant="contained"
+            />
+          )}
         </Box>
         <Box sx={{ marginTop: 2 }}>
           <CustomFilter

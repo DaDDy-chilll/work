@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
-import { Box, CircularProgress, IconButton, Typography } from '@mui/material';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Box, Button, CircularProgress, IconButton, Typography } from '@mui/material';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useGetDocumentDetail } from '../api/document';
 import { colors } from '../assets/theme/theme';
-import { transformLocalTime } from '../helpers';
+import {  transformLocalTime } from '../helpers';
 import { ArrowBack } from '@mui/icons-material';
 import Attachments from '../components/ui/Attachments';
 import Remarks from '../components/ui/Remarks';
@@ -38,15 +38,45 @@ const DocumentDetailPage = () => {
   const { pageTitle, setPageTitle } = usePageTitle('Document Detail');
 
   const { id } = useParams();
-
+  const [searchParams] = useSearchParams();
+  const workflowType = searchParams.get('workflowType');
   const { user } = useAuth();
-
-  const { data: document, isLoading } = useGetDocumentDetail(id);
-
+  const { data: document, isLoading } = useGetDocumentDetail(id, workflowType);
   const navigate = useNavigate();
+  const orderDoc = searchParams.get('doc');
+  const orderId = searchParams.get('orderId');
+
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, m: 2 }}>
+    {orderDoc && (
+            <Box display="flex" justifyContent="start" gap={2}>
+          <Button
+            sx={{
+              borderRadius: '5vmax',
+              width: '15%',
+            }}
+            type="submit"
+            color="primary"
+            variant={ 'contained' }
+          >
+            Purchase Request
+          </Button>
+          <Button
+            sx={{
+              borderRadius: '5vmax',
+              width: '15%',
+            }}
+            type="submit"
+            color="primary"
+            variant={ 'outlined'}
+            onClick={() => navigate(`/purchase-order/create?id=${orderDoc}&workflowType=PURCHASE_ORDER&doc=${id}&orderId=${orderId}`)}
+
+          >
+            Purchase Order
+          </Button>
+        </Box>
+      )}
       <Typography
         variant="h2"
         sx={{ fontWeight: 500, color: colors.black[100] }}
@@ -173,7 +203,15 @@ const DocumentDetailPage = () => {
                         width="200px"
                         color="info"
                         innerText="Edit"
-                        onClick={() => navigate(`/edit/${id}`)}
+                        onClick={() =>
+                          navigate(
+                            `/edit/${id}${
+                              workflowType
+                                ? '?workflowType=' + workflowType
+                                : ''
+                            }`,
+                          )
+                        }
                         variant="contained"
                       />
                     )}
@@ -185,7 +223,15 @@ const DocumentDetailPage = () => {
                         color="success"
                         innerText="Give Decision"
                         variant="contained"
-                        onClick={() => navigate(`/remark/${id}`)}
+                        onClick={() =>
+                          navigate(
+                            `/remark/${id}${
+                              workflowType
+                                ? '?workflowType=' + workflowType
+                                : ''
+                            }`,
+                          )
+                        }
                       />
                     </>
                   ) : null}
@@ -195,7 +241,15 @@ const DocumentDetailPage = () => {
                         width="200px"
                         color="success"
                         innerText="Mention"
-                        onClick={() => navigate(`/mention/${id}`)}
+                        onClick={() =>
+                          navigate(
+                            `/mention/${id}${
+                              workflowType
+                                ? '?workflowType=' + workflowType
+                                : ''
+                            }`,
+                          )
+                        }
                         variant="contained"
                       />
                     )}

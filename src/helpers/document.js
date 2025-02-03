@@ -1,8 +1,10 @@
+
 export const transformLastActivity = (lastActivity) => {
   if (
     lastActivity === 'PREPARED' ||
     lastActivity === 'VERIFIED' ||
-    lastActivity === 'APPROVED'
+    lastActivity === 'APPROVED' ||
+    lastActivity === 'AUTHORIZE' 
   ) {
     return 'APPROVED';
   }
@@ -58,3 +60,4 @@ export const transformLocalTime = (createdAt) => {
     time: `${hour}:${minute} ${time}`,
   };
 };
+

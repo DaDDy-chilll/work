@@ -4,7 +4,6 @@ import { colors } from '../../assets/theme/theme';
 
 const WorkflowRoute = ({ departments, name }) => {
   const concatString = '>>';
-  console.log('departments', departments);
   return (
     <Box sx={{ display: 'flex', gap: 1, fontSize: '14px', fontWeight: 500 }}>
       {departments.map((data, i) => (

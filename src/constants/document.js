@@ -5,16 +5,19 @@ export const TYPES = {
 
 export const ACTIONS = {
   APPROVE: 'approve',
+  AUTHORIZE:'authorize',
   REJECT: 'reject',
   VERIFY: 'verify',
   COMMENT: 'comment',
   FORWARD: 'forward',
   RETURN: 'return',
+  ADVANCE_RETURN: 'advance return',
 };
 
 export const DOCUMENT_STATUSES = {
   VERIFIED: 'VERIFIED',
   APPROVED: 'APPROVED',
+  AUTHORIZE:'AUTHORIZE',
   REJECTED: 'REJECTED',
   ACKNOWLEDGED: 'ACKNOWLEDGED',
   PREPARED: 'PREPARED',

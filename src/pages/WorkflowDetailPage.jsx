@@ -38,7 +38,6 @@ const WorkflowDetailPage = () => {
   const { data: workflow, isLoading: workflowLoading } =
     useGetWorkflowDetail(id);
 
-    console.log(workflow)
 
   let payloads;
 

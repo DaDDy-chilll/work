@@ -16,7 +16,6 @@ export const useGetAllRequests = (params) => {
 };
 
 export const getPurchaseRequests = async (params) => {
-  console.log('Querry String', getQueryString(params));
   return fetcher.get(`/documents/me?${getQueryString(params)}`).then((res) => {
     return res.data;
   });
@@ -25,6 +24,14 @@ export const getPurchaseRequests = async (params) => {
 export const useGetPurchaseRequests = (params) => {
   return useQuery({
     queryKey: ['purchase-requests', params],
+    queryFn: () => getPurchaseRequests(params),
+  });
+};
+
+
+export const useGetPurchaseOrders = (params) => {
+  return useQuery({
+    queryKey: ['purchase-orders', params],
     queryFn: () => getPurchaseRequests(params),
   });
 };
@@ -46,6 +53,7 @@ export const getInbox = async (params) => {
 };
 
 export const useGetInbox = (params) => {
+  console.log('params',params)
   return useQuery({
     queryKey: ['inbox', params],
     queryFn: () => {
@@ -58,16 +66,16 @@ export const useGetInbox = (params) => {
   });
 };
 
-const getDocumentDetail = async (id) => {
-  return fetcher.get(`/documents/${id}`).then((res) => {
+const getDocumentDetail = async (id,workflowType) => {
+  return fetcher.get(`/documents/${id}?workflowType=${workflowType}`).then((res) => {
     return res.data;
   });
 };
 
-export const useGetDocumentDetail = (id) => {
+export const useGetDocumentDetail = (id,workflowType) => {
   return useQuery({
-    queryKey: ['document', id],
-    queryFn: () => getDocumentDetail(id),
+    queryKey: ['document', id,workflowType],
+    queryFn: () => getDocumentDetail(id,workflowType)
   });
 };
 
@@ -266,5 +274,27 @@ const returnDocument = async ({ data, id, attachments }) => {
 export const useReturnDocument = () => {
   return useMutation({
     mutationFn: returnDocument,
+  });
+};
+
+const acknowledgeDocument = async ({ data, id, revisionId }) => {
+  const formData = new FormData();
+
+  Object.entries(data).forEach(([key, value]) => {
+    if (value) {
+      formData.append(key, value);
+    }
+  });
+
+  return fetcher
+    .post(`/documents/${id}/revisions/${revisionId}`, formData)
+    .then((res) => {
+      return res.data;
+    });
+};
+
+export const useAcknowledgeDocument = () => {
+  return useMutation({
+    mutationFn: acknowledgeDocument,
   });
 };

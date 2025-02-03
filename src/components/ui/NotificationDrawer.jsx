@@ -20,7 +20,7 @@ import NotificationDetail from './NotificationDetail';
 // eslint-disable-next-line react/display-name
 const Item = React.forwardRef(({ noti, handleOpen, onClose }, ref) => {
   const handleClick = () => {
-    handleOpen({ id: noti?._id, documentId: noti?.documentId });
+    handleOpen({ id: noti?._id, documentId: noti?.documentId,workflowType:noti?.workflowType });
     onClose();
   };
 
@@ -71,13 +71,13 @@ const NotificationDrawer = ({ setNotiOpen, notiOpen }) => {
   const queryClient = useQueryClient();
 
   const navigate = useNavigate();
-
-  const handleOpen = ({ id, documentId }) => {
+  
+  const handleOpen = ({ id, documentId,workflowType }) => {
     openNotification(id, {
       onSettled: () => {
         setNotiOpen(false);
         queryClient.invalidateQueries(['notifications']);
-        navigate(`/detail/${documentId}`);
+        navigate(workflowType === 'PURCHASE_ORDER' ? `/detail/${documentId}?workflowType=PURCHASE_ORDER` : `/detail/${documentId}`);
       },
     });
   };

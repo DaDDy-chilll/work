@@ -23,10 +23,23 @@ const getWorkflowDetail = async (id) => {
   });
 };
 
+const getOrderWorkflowDetail = async (id) => {
+  return fetcher.get(`/reviewer-groups/${id}?workflowType=PURCHASE_ORDER`).then((res) => {
+    return res.data;
+  });
+};
+
 export const useGetWorkflowDetail = (id) => {
   return useQuery({
     queryKey: ['workflow', id],
     queryFn: () => getWorkflowDetail(id),
+  });
+};
+
+export const useGetOrderWorkflowDetail = (id) => {
+  return useQuery({
+    queryKey: ['order-workflow', id],
+    queryFn: () => getOrderWorkflowDetail(id),
   });
 };
 

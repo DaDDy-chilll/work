@@ -16,14 +16,17 @@ import PDFSampleImage from '../../assets/images/PDF.png';
 import { useCreateRequest, useEditRequest } from '../../api';
 import { toast } from 'react-toastify';
 import { useQueryClient } from 'react-query';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import CustomFormLabel from '../shared/CustomFormLabel';
 import { useAuth } from '../../hooks';
 import SelectWorkflows from './SelectWorkflows';
 import CustomTextEditor from '../shared/CustomTextEditor';
+import { WORKFLOW_TYPES_LIST } from '../../constants';
 
-const DocumentForm = ({ workflowType, oldData, onClick }) => {
+const DocumentForm = ({ workflowType, oldData, onClick, originalDocumentId,orderId }) => {
   const { id } = useParams();
+  const location = useLocation();
+
   const [files, setFiles] = useState([]);
   const [attachments, setAttachments] = useState([]);
 
@@ -68,6 +71,11 @@ const DocumentForm = ({ workflowType, oldData, onClick }) => {
   const navigate = useNavigate();
 
   const handleCreate = (values) => {
+    console.log('orderId',orderId)
+    if(location.pathname.includes('purchase-order')){
+      values = {...values,createdBy:Object.keys(WORKFLOW_TYPES_LIST)[1],originalDocumentId,orderId}
+    }
+    console.log('values',values)
     createMutation(
       { data: values, attachments: files },
       {
@@ -85,6 +93,7 @@ const DocumentForm = ({ workflowType, oldData, onClick }) => {
   };
 
   const handleEdit = (values) => {
+    console.log('values',values)
     if (!user.permissions.canEditAmount) {
       delete values.amount;
     }
@@ -118,7 +127,11 @@ const DocumentForm = ({ workflowType, oldData, onClick }) => {
       }
       onSubmit={oldData ? handleEdit : handleCreate}
     >
-      {(props) => (
+      {(props) => 
+     {
+      console.log('form props',props)
+      
+       return(
         <form onSubmit={props.handleSubmit}>
           <Box
             sx={{
@@ -241,6 +254,8 @@ const DocumentForm = ({ workflowType, oldData, onClick }) => {
           </Box>
         </form>
       )}
+      
+      }
     </Formik>
   );
 };

@@ -13,13 +13,14 @@ import {
 } from '../../api/document';
 import { toast } from 'react-toastify';
 import { useQueryClient } from 'react-query';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import {
   AssistantDirection,
   Cancel,
   CheckCircle,
   KeyboardReturn,
   Textsms,
+  VerifiedUser,
 } from '@mui/icons-material';
 import { colors } from '../../assets/theme/theme';
 import { useAuth } from '../../hooks/useAuth';
@@ -35,6 +36,9 @@ const RemarkIcon = ({ value }) => {
 
   if (value === ACTIONS.APPROVE && user?.permissions?.canApprove)
     return <CheckCircle sx={{ color: colors.paleGreen[800] }} />;
+
+  if (value === ACTIONS.AUTHORIZE && user?.permissions?.canAuthorize)
+    return <VerifiedUser sx={{ color: colors.darkGreen[700] }} />;
 
   if (value === ACTIONS.REJECT)
     return <Cancel sx={{ color: colors.red[800] }} />;
@@ -53,35 +57,41 @@ const RemarkIcon = ({ value }) => {
 
   if (value === ACTIONS.COMMENT)
     return <Textsms sx={{ color: colors.paleBlue[800] }} />;
+
+    if (value === ACTIONS.ADVANCE_RETURN)
+    return <KeyboardReturn sx={{ color: colors.red[800] }} />;
 };
 
 const RemarkForm = ({ onClick }) => {
   const { id } = useParams();
-
+  const [searchParams] = useSearchParams();
+  const workflowType = searchParams.get('workflowType');
   const [files, setFiles] = useState([]);
 
   const { user: actor } = useAuth();
 
   let reviewers;
-
-  const { data: document } = useGetDocumentDetail(id);
+  let advanceReviewers;
+  const { data: document } = useGetDocumentDetail(id,workflowType);
 
   if (document?.payload) {
-    reviewers = document?.payload.reviewers.list;
-
-    const currentStage = reviewers.filter(
+    const allReviewers = document?.payload.reviewers.list;
+    console.log('allReviewers',allReviewers)
+    const currentStage = allReviewers.filter(
       (item) => item.reviewer._id.toString() === actor._id.toString(),
     )[0];
 
     if (actor?.permissions?.canNormalReturn) {
-      reviewers = reviewers.filter(
+      reviewers = allReviewers.filter(
         (item) => item.index === currentStage.index - 1,
       );
-    } else {
-      reviewers = reviewers.filter((item) => item.index < currentStage.index);
+    }
+     if(actor?.permissions?.canAdvanceReturn){
+      
+      advanceReviewers = allReviewers.filter((item) => item.index < currentStage.index);
     }
   }
-
+  console.log('advanceReviewers',advanceReviewers,reviewers)
   const { mutate: changeStatusMutation, isLoading: changeStatusLoading } =
     useChangeStatus();
 
@@ -91,12 +101,17 @@ const RemarkForm = ({ onClick }) => {
   const { mutate: returnMutation, isLoading: returnLoading } =
     useReturnDocument();
 
+  // const { mutate: acknowledgeMutation, isLoading: acknowledgeLoading } =
+  //   useAcknowledgeDocument();
+
   const queryClient = useQueryClient();
 
   const handleChangeStatus = ({ action, workflowId, remark, userId }) => {
+   console.log('workflowType',{ action, workflowId, remark, userId })
     if (action === ACTIONS.REJECT) {
+      console.log('reject',workflowType)
       rejectMutation(
-        { data: { remark }, id, attachments: files },
+        { data: { remark,workflowType }, id, attachments: files },
         {
           onSuccess: () => {
             toast.success('ok');
@@ -109,12 +124,13 @@ const RemarkForm = ({ onClick }) => {
     }
 
     if (action === ACTIONS.RETURN) {
-      const canAdvanceReturn = user?.permissions?.canAdvanceReturn;
+  
       returnMutation(
         {
           data: {
             remark,
-            userId: canAdvanceReturn ? userId : reviewers[0]?.reviewer._id,
+            workflowType,
+            userId: action === ACTIONS.RETURN ? reviewers[0]?.reviewer._id : userId,
           },
           id,
           attachments: files,
@@ -130,8 +146,29 @@ const RemarkForm = ({ onClick }) => {
       return;
     }
 
+    if (action === ACTIONS.ADVANCE_RETURN) {
+      returnMutation(
+        {
+          data: {
+            remark,
+            workflowType,
+            userId: userId,
+          },
+          id,
+          attachments: files,
+        },
+        {
+          onSuccess: () => {
+            toast.success('ok');
+            queryClient.invalidateQueries(['document', id]);
+            onClick();
+          },
+        },
+      );
+      return;
+    }
     changeStatusMutation(
-      { data: { action, remark, workflowId }, id, attachments: files },
+      { data: { action, remark, workflowId,workflowType }, id, attachments: files },
       {
         onSuccess: () => {
           toast.success('ok');
@@ -144,22 +181,18 @@ const RemarkForm = ({ onClick }) => {
 
   const { user } = useAuth();
 
-  let actions = [ACTIONS.COMMENT, ACTIONS.REJECT];
-  if (user.permissions.canApprove) {
-    actions.push(ACTIONS.APPROVE);
-  }
-
-  if (user.permissions.canVerify) {
-    actions.push(ACTIONS.VERIFY);
-  }
-
-  if (user.permissions.canForward) {
-    actions.push(ACTIONS.FORWARD);
-  }
-
-  if (user.permissions.canNormalReturn || user.permissions.canAdvanceReturn) {
+  // let actions = [ACTIONS.COMMENT, ACTIONS.REJECT];
+  let actions = [];
+  if (user.permissions.canApprove) actions.push(ACTIONS.APPROVE);
+  if (user.permissions.canAuthorize) actions.push(ACTIONS.AUTHORIZE);
+  actions.push(ACTIONS.COMMENT)
+  actions.push(ACTIONS.REJECT)
+  // if (user.permissions.canVerify) actions.push(ACTIONS.VERIFY);
+  // if (user.permissions.canForward) actions.push(ACTIONS.FORWARD);
+  if (user.permissions.canNormalReturn )
     actions.push(ACTIONS.RETURN);
-  }
+  if(user.permissions.canAdvanceReturn)
+    actions.push(ACTIONS.ADVANCE_RETURN)
 
   const formActions = Object.values(actions).map((action) => ({
     _id: action,
@@ -209,7 +242,7 @@ const RemarkForm = ({ onClick }) => {
             {props.values.action === ACTIONS.RETURN && (
               <Box>
                 <CustomFormLabel label="Reviewer" required={true} />
-                {actor?.permissions?.canNormalReturn ? (
+                {actor?.permissions?.canNormalReturn && (
                   <FormTextField
                     disabled={true}
                     type="text"
@@ -218,23 +251,31 @@ const RemarkForm = ({ onClick }) => {
                     placeholder=""
                     value={`${reviewers[0]?.reviewer.name} (${reviewers[0]?.reviewer.department.name})`}
                   />
-                ) : (
+                ) }
+              </Box>
+            )}
+            {props.values.action === ACTIONS.ADVANCE_RETURN && (
+              <Box>
+                <CustomFormLabel label="Reviewer" required={true} />
+                {actor?.permissions?.canAdvanceReturn && (
                   <FormSelect
                     placeholder="Select Reviewer"
                     name="userId"
                     formProps={props}
                   >
-                    {reviewers &&
-                      reviewers?.map((item) => (
+                    {advanceReviewers &&
+                      advanceReviewers?.map((item) => {
+                        console.log('item',item)
+                        return(
                         <MenuItem
                           value={item.reviewer._id}
                           key={item.reviewer._id}
                         >
                           {item.reviewer.name} ({item.reviewer.department.name})
                         </MenuItem>
-                      ))}
+                      )})}
                   </FormSelect>
-                )}
+                ) }
               </Box>
             )}
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>

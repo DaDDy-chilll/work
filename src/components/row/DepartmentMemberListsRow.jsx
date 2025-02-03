@@ -16,7 +16,6 @@ const DepartmentMemberListsRow = ({
   isDetail,
 }) => {
 
-  console.log('payload',payload)
   return (
     <TableBody>
       {payload &&

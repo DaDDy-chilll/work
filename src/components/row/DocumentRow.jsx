@@ -6,10 +6,24 @@ import { removeHtmlTags, transformLocalTime } from '../../helpers';
 import DocumentCase from '../ui/DocumentCase';
 import LinkButton from '../ui/LinkButton';
 import { useNavigate } from 'react-router-dom';
+import { colors } from '../../assets/theme/theme';
 
 const DocumentRow = ({ payload, currentPath }) => {
   const navigate = useNavigate();
-  console.log('Current Path', currentPath);
+
+  console.log(
+    'payload',
+    payload,
+    currentPath !== '/purchase-order',
+    payload[1]?.lastStep?.action,
+  );
+  console.log(
+    'payload',
+    payload,
+    currentPath !== '/purchase-order',
+    payload[0]?.lastStep?.action,
+  );
+  console.log('payload',payload,currentPath)
   return (
     <TableBody>
       {payload &&
@@ -17,7 +31,19 @@ const DocumentRow = ({ payload, currentPath }) => {
           <StyledTableRow key={data?._id}>
             <StyledTableCell>{data?.documentId}</StyledTableCell>
             {currentPath === '/purchase-order' && (
-              <StyledTableCell>{data?.documentId}</StyledTableCell>
+              <StyledTableCell
+                sx={{
+                  cursor: 'pointer',
+                  '&': {
+                    color: `${colors.paleBlue[800]} !important`,
+                  },
+                }}
+                onClick={() =>
+                  navigate(`/detail/${data?.documentRequestId?.id}`)
+                }
+              >
+                {data?.documentRequestId?.documentId}
+              </StyledTableCell>
             )}
             <StyledTableCell>
               {transformLocalTime(data?.createdAt).date}
@@ -48,13 +74,22 @@ const DocumentRow = ({ payload, currentPath }) => {
               <DocumentCase documentCase={data?.isCaseClosed} />
             </StyledTableCell>
             <StyledTableCell>
-              <DocumentLastActivity lastActivity={data.lastActivity} />
+              <DocumentLastActivity
+                lastActivity={data.lastStep ? data.lastStep : data.lastActivity}
+              />
             </StyledTableCell>
             <StyledTableCell>
               <LinkButton
                 width="100px"
                 innerText="View"
-                onClick={() => navigate(`/detail/${data._id}`)}
+                onClick={() =>
+                  navigate(
+                    (currentPath === '/purchase-order' || !currentPath) &&
+                      data?.lastStep?.action === false
+                      ? `/purchase-order/create?id=${data?.orderWorkflow}&workflowType=PURCHASE_ORDER&doc=${data?.originalDocument}&orderId=${data?._id}`
+                      : data?.lastStep === null ? `/detail/${data._id}?workflowType=PURCHASE_ORDER` : `/detail/${data._id}`,
+                  )
+                }
                 variant="contained"
                 color="primary"
               />
