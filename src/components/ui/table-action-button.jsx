@@ -4,7 +4,7 @@ import { Button, Menu, MenuItem } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export const TableActionButton = ({ id }) => {
+export const TableActionButton = ({ id, orderId }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const open = Boolean(anchorEl);
@@ -44,14 +44,14 @@ export const TableActionButton = ({ id }) => {
       >
         <MenuItem
           sx={{ fontSize: '14px' }}
-          onClick={() => navigate(`/workflows/${id}`)}
+          onClick={() => navigate(`/workflows/${id}${orderId ? `?orderId=${orderId}` : ''}`)}
           disableRipple
         >
           View
         </MenuItem>
         <MenuItem
           sx={{ fontSize: '14px' }}
-          onClick={() => navigate(`/workflows/edit/${id}`)}
+          onClick={() => navigate(`/workflows/edit/${id}${orderId ? `?orderId=${orderId}` : ''}`)}
           disableRipple
         >
           Edit

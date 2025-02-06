@@ -49,6 +49,7 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
     }));
   }
 
+
   const handleCreate = ({
     name,
     email,
@@ -174,7 +175,10 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
         isChangePassword
           ? changePasswordValues
           : oldData
-          ? oldData
+          ? {
+              ...oldData,
+              department: oldData.department?._id || oldData.department 
+            }
           : userCreateValues
       }
       validationSchema={
@@ -193,7 +197,6 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
       }
     >
       {(props) => {
-
         return (
           <form onSubmit={props.handleSubmit}>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>

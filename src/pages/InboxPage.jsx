@@ -28,6 +28,14 @@ const InboxPage = () => {
     [optionValue.key]: optionValue.value,
   });
 
+  console.log('data mentioned --------',data)
+  console.log('data mentioned --------',{
+    sort: 'createdAt',
+    page,
+    limit: 10,
+    [optionValue.key]: optionValue.value,
+  })
+
 
   
 
@@ -41,6 +49,9 @@ const InboxPage = () => {
           items={FILTER_OPTIONS.INBOX}
           optionValue={optionValue}
           handleOptionChange={handleOptionChange}
+          sx={{
+            mb: 2,
+          }}
         />
         {isFetching ? (
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>

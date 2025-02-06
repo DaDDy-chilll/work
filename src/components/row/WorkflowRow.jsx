@@ -7,7 +7,7 @@ import { TableActionButton } from '@/components';
 import { Error } from '@mui/icons-material';
 import { WORKFLOW_TYPES_LIST } from '@/constants';
 const WorkflowRow = ({ payload }) => {
-
+console.log(payload)
   return (
     <TableBody>
       {payload &&
@@ -30,7 +30,7 @@ const WorkflowRow = ({ payload }) => {
               {WORKFLOW_TYPES_LIST[data?.workflowType]}
             </StyledTableCell>
             <StyledTableCell align="center" sx={{ display: 'flex', gap: 1 }}>
-              <TableActionButton id={data?._id} />
+              <TableActionButton id={data?._id} orderId={data?.workflowOrderId || ''} />
             </StyledTableCell>
           </StyledTableRow>
         ))}

@@ -11,6 +11,7 @@ export const EditWorkflow = () => {
   let departments = [];
   let users = [];
 
+
   if (reviewers) {
     let uniqueDepartments = [];
 
@@ -37,7 +38,7 @@ export const EditWorkflow = () => {
       <div className="bg-white rounded-lg py-7 px-10">
         {data?.payload && (
           <WorkflowForm
-            initialValues={data?.payload}
+            initialValues={{...data?.payload,workflowOrderId:data?.payload._id}}
             id={id}
             departments={departments}
             users={users}

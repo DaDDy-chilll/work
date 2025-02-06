@@ -7,13 +7,40 @@ const FormSelect = ({
   name,
   variant = 'filled',
   formProps: { values, touched, errors, handleBlur, handleChange },
-
+  defaultValue,
+  defaultValuesx,
+  choiseValue,
 }) => {
+
+  console.log("choiseValue",choiseValue)
   return (
-    <FormControl variant={variant} fullWidth  sx={variant === 'filled' ? { mt: 1 } : {}} error={!!touched[name] && !!errors[name]}>
+    <FormControl
+      variant={variant}
+      fullWidth
+      sx={[{ position: 'relative' }, variant === 'filled' ? { mt: 1 } : {}]}
+      error={!!touched[name] && !!errors[name]}
+      defaultValue={defaultValue}
+    >
       {placeholder && <InputLabel>{placeholder}</InputLabel>}
+      {defaultValue && (
+        <InputLabel
+          shrink={false}
+          sx={[
+            defaultValuesx , {
+            position: 'absolute',
+            top: '0',
+            bottom: '10%',
+            transform: 'translate(-10%, 0% , -10% , 0%)',
+            pointerEvents: 'none'
+          }]
+          }
+          
+        >
+          {defaultValue}
+        </InputLabel>
+      )}
       <Select
-        value={values[name]}
+        value={choiseValue || values[name]}
         name={name}
         error={!!touched[name] && !!errors[name]}
         helpertext={touched[name] && errors[name]}
@@ -22,7 +49,9 @@ const FormSelect = ({
       >
         {children}
       </Select>
-      {touched[name] && errors[name] && <FormHelperText>{errors[name]}</FormHelperText>}
+      {touched[name] && errors[name] && (
+        <FormHelperText>{errors[name]}</FormHelperText>
+      )}
     </FormControl>
   );
 };

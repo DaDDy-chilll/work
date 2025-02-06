@@ -17,22 +17,26 @@ export const useGetAllWorkflows = (params) => {
   });
 };
 
-const getWorkflowDetail = async (id) => {
-  return fetcher.get(`/reviewer-groups/${id}`).then((res) => {
-    return res.data;
-  });
+const getWorkflowDetail = async (id, workflowType) => {
+  return fetcher
+    .get(`/reviewer-groups/${id}?workflowType=${workflowType}`)
+    .then((res) => {
+      return res.data;
+    });
 };
 
 const getOrderWorkflowDetail = async (id) => {
-  return fetcher.get(`/reviewer-groups/${id}?workflowType=PURCHASE_ORDER`).then((res) => {
-    return res.data;
-  });
+  return fetcher
+    .get(`/reviewer-groups/${id}?workflowType=PURCHASE_ORDER`)
+    .then((res) => {
+      return res.data;
+    });
 };
 
-export const useGetWorkflowDetail = (id) => {
+export const useGetWorkflowDetail = (id, workflowType) => {
   return useQuery({
     queryKey: ['workflow', id],
-    queryFn: () => getWorkflowDetail(id),
+    queryFn: () => getWorkflowDetail(id, workflowType),
   });
 };
 

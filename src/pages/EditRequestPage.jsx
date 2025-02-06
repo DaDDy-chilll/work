@@ -3,17 +3,18 @@ import { colors } from '../assets/theme/theme';
 import { transformLocalTime } from '../helpers';
 import DocumentForm from '../components/form/DocumentForm';
 import { useGetDocumentDetail } from '../api';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { usePageTitle } from '../hooks';
 
 const EditRequestPage = () => {
   // eslint-disable-next-line no-unused-vars
   const { pageTitle, setPageTitle } = usePageTitle('Edit Request');
-
+  const [searchParams] = useSearchParams();
+  const workflowType = searchParams.get('workflowType');
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const { data } = useGetDocumentDetail(id);
+  const { data } = useGetDocumentDetail(id,workflowType);
 
   let oldData;
 
@@ -60,7 +61,8 @@ const EditRequestPage = () => {
         </Box>
         <DocumentForm
           oldData={oldData}
-          onClick={() => navigate(`/detail/${id}`)}
+          onClick={() => navigate(`/detail/${id}${workflowType ? `?workflowType=${workflowType}` : ''}`)}
+          workflowType={workflowType}
         />
       </Box>
     </Box>

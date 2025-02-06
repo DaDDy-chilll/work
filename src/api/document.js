@@ -53,7 +53,6 @@ export const getInbox = async (params) => {
 };
 
 export const useGetInbox = (params) => {
-  console.log('params',params)
   return useQuery({
     queryKey: ['inbox', params],
     queryFn: () => {
@@ -227,7 +226,7 @@ const mentionDocument = async ({ data, id, attachments }) => {
       formData.append('attachments', attachments[i]);
     }
   }
-
+console.log('mentioning document',formData,id)
   return fetcher
     .post(`/documents/${id}/mention`, formData, {
       headers: {

@@ -3,12 +3,14 @@ import { Box, CircularProgress, Typography } from '@mui/material';
 import { colors } from '../assets/theme/theme';
 import DepartmentLists from '../components/form/DepartmentLists';
 import { useGetWorkflowDetail } from '../api/workflow';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import DepartmentMemberLists from '../components/form/DepartmentMemberLists';
 import LinkButton from '../components/ui/LinkButton';
 import { usePageTitle } from '../hooks';
 import { WORKFLOW_TYPES_LIST } from '@/constants';
-const Item = ({ fieldName, value }) => {
+import WorkflowRoute from '../components/ui/WorkflowRoute';
+import { getDepartmentsFromWorkflow } from '../helpers';
+const Item = ({ fieldName, value, sx, onClick }) => {
   return (
     <Box
       sx={{
@@ -18,12 +20,15 @@ const Item = ({ fieldName, value }) => {
         minWidth: '30%',
       }}
     >
-      <Typography
-        sx={{ fontSize: '16px', fontWeight: 'bold', color: colors.black[100] }}
-      >
+      <Typography sx={{ fontSize: '16px', fontWeight: 'bold' }}>
         {fieldName}
       </Typography>
-      {value}
+      <Typography
+        sx={{ ...sx, cursor: onClick ? 'pointer' : 'default' }}
+        onClick={onClick}
+      >
+        {value}
+      </Typography>
     </Box>
   );
 };
@@ -35,9 +40,13 @@ const WorkflowDetailPage = () => {
   const navigate = useNavigate();
 
   const { id } = useParams();
-  const { data: workflow, isLoading: workflowLoading } =
-    useGetWorkflowDetail(id);
-
+  const [searchParams] = useSearchParams();
+  const orderId = searchParams.get('orderId');
+  const workflowType = orderId ? 'PURCHASE_ORDER' : 'PURCHASE_REQUEST';
+  const { data: workflow, isLoading: workflowLoading } = useGetWorkflowDetail(
+    id,
+    workflowType,
+  );
 
   let payloads;
 
@@ -59,6 +68,12 @@ const WorkflowDetailPage = () => {
       };
     });
   }
+
+  console.log('workflow', workflow);
+  console.log(
+    'workflow?.payload?.workflowOrderId',
+    workflow?.payload?.workflowOrderId,
+  );
 
   return (
     <Box
@@ -84,16 +99,52 @@ const WorkflowDetailPage = () => {
         px={5}
         sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}
       >
-        <Box sx={{ display: 'flex', columnGap: 5, rowGap: 3 }}>
-          <Item fieldName="Workflow Title" value={workflow?.payload?.name} />
-          <Item
-            fieldName="Workflow Description"
-            value={workflow?.payload?.description}
-          />
+        <Box sx={{ display: 'flex', gap: 5,justifyContent:'flex-start' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              gap: 5,
+              flexDirection: 'column',
+              justifyContent: 'flex-start',
+              marginRight:'10%'
+            }}
+          >
             <Item
+              sx={{ color: colors.black[100] }}
+              fieldName="Workflow Title"
+              value={workflow?.payload?.name}
+            />
+
+            <Item
+              sx={{ color: colors.black[100] }}
+              fieldName="Workflow Description"
+              value={workflow?.payload?.description}
+            />
+
+            <Item
+              sx={{ color: colors.black[100] }}
+              fieldName="Private Work Flow ?"
+              value={workflow?.payload?.type === 'normal' ? "No" : "Yes"}
+            />
+
+          </Box>
+
+          <Item
+            sx={{ color: colors.black[100] }}
             fieldName="Workflow Type"
             value={WORKFLOW_TYPES_LIST[workflow?.payload?.workflowType]}
           />
+           {workflow?.payload?.workflowOrderId && (
+            workflow?.payload?.reviewers && (
+              <Item fieldName="Purchase Order Work Flow" value={ <WorkflowRoute
+              name={workflow?.payload?.workflowOrderId.name}
+              departments={getDepartmentsFromWorkflow(workflow?.payload?.workflowOrderId.reviewers)}
+            />} />
+           
+          )
+          )}
+
+            
         </Box>
         {workflowLoading ? (
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>

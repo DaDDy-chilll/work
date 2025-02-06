@@ -9,7 +9,7 @@ import { colors } from '../../assets/theme/theme';
 import CustomFormLabel from '../shared/CustomFormLabel';
 import { useGetAllDepartments, useGetAllUsers } from '../../api';
 import MultipleSelectWithCheckbox from '../shared/MultipleSelectWithCheckbox';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useQueryClient } from 'react-query';
 import CustomTextEditor from '../shared/CustomTextEditor';
@@ -29,6 +29,8 @@ const SelectReviewers = ({ department, setFieldValue }) => {
 
 const MentionForm = ({ onClick }) => {
   const { id } = useParams();
+  const [searchParams] = useSearchParams();
+  const workflowType = searchParams.get('workflowType');
 
   const { data: departments } = useGetAllDepartments({ limit: 0 });
 
@@ -41,8 +43,14 @@ const MentionForm = ({ onClick }) => {
 
   const handleFormSubmit = (data) => {
     const reviewers = data.reviewers.map((item) => item.id);
+    const payload = {
+      ...data,
+      reviewers,
+      attachments: files,
+      workflowType,
+    };
     mentionDocumentMutation(
-      { id, data: { ...data, reviewers }, attachments: files },
+      { id, data: payload },
       {
         onSuccess: () => {
           toast.success('ok');

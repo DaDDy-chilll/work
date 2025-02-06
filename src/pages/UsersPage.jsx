@@ -13,24 +13,43 @@ import Navbar from '../components/Navbar';
 import ModalButton from '../components/ui/ModalButton';
 import SearchBox from '../components/shared/SearchBox';
 import CustomPagination from '../components/shared/CustomPagination';
-import { usePageTitle } from '../hooks';
+import { useDepartmentFilter, usePageTitle } from '../hooks';
+import DepartmentFilter from '../components/shared/DepartmentFilter';
 
 const UsersPage = () => {
   // eslint-disable-next-line no-unused-vars
   const { pageTitle, setPageTitle } = usePageTitle('Users');
-
+  const {
+    filteredDepartments,
+    isOpen:departmentIsOpen,
+    onOpen:departmentOnOpen,
+    onClose:departmentOnClose,
+    departments,
+    search,
+    searchedDepartments,
+    handleSearch,
+    handleSearchCancel,
+    handleFilter,
+    handleClearAll :departmentHandleClearAll,
+    handleChange,
+  } = useDepartmentFilter();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [page, setPage] = useState(1);
 
   const [searchValue, setSearchValue] = useState('');
-
-  const { isError, error, data, isFetching } = useGetAllUsers({
+  const query = {
     search: searchValue,
     sort: '-createdAt',
     page,
     limit: 10,
-  });
+    departments: filteredDepartments.map((department) => department.id),
+  }
+
+  const { isError, error, data, isFetching } = useGetAllUsers(query);
+
+
+
 
   if (isError) return <p>Error: {error?.response?.data?.message}</p>;
 
@@ -39,7 +58,24 @@ const UsersPage = () => {
       <Navbar />
       <Box p={3}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-          <SearchBox setSearch={setSearchValue} placeholder="Search Name" />
+         <Box display="flex" alignItems="center" gap={2}>
+
+         <SearchBox setSearch={setSearchValue} placeholder="Search Name" />
+          <DepartmentFilter
+                departments={departments}
+                filteredDepartments={filteredDepartments}
+                search={search}
+                searchedDepartments={searchedDepartments}
+                isOpen={departmentIsOpen}
+                onOpen={departmentOnOpen}
+                onClose={departmentOnClose}
+                handleSearch={handleSearch}
+                handleChange={handleChange}
+                handleFilter={handleFilter}
+                handleSearchCancel={handleSearchCancel}
+                handleClearAll={departmentHandleClearAll}
+              />
+         </Box>
           <ModalButton
             mb={2}
             width="180px"

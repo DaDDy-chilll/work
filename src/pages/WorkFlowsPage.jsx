@@ -41,7 +41,7 @@ const WorkFlowsPage = () => {
       <Box p={3}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
         <Box sx={{ display: 'flex', justifyContent: 'flex-start', mb: 1 }}>
-          <SearchBox setSearch={setSearchValue} placeholder="Search Name" />
+          <SearchBox setSearch={setSearchValue} placeholder="Search ID, Work Flow Title" />
           <Box sx={{ ml: 2 }}>
             <WorkFlowTypeFilter setWorkflowType={setWorkflowType} />
           </Box>

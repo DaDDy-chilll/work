@@ -24,6 +24,8 @@ const WORKFLOW_TYPES_LISTS = Object.keys(WORKFLOW_TYPES_LIST).map((item) => ({
   value: item,
 }));
 
+
+
 export const WorkflowForm = ({ initialValues, departments, users }) => {
   const {
     saveUsers,
@@ -37,6 +39,11 @@ export const WorkflowForm = ({ initialValues, departments, users }) => {
   } = useWorkflow();
 
   const [optionValue, setOptionValue] = useState(initialValues.type);
+  const [error, setError] = useState({
+    error: false,
+    message: '',
+    type: '',
+  });
 
   const { mutate: createWorkflow, isLoading: isCreateLoading } =
     useCreateWorkflow();
@@ -57,25 +64,79 @@ export const WorkflowForm = ({ initialValues, departments, users }) => {
       index,
     }));
 
-    if (isEdit) {
-      const { name, description, type, workflowType,workflowOrderId } = values;
-      const updateValues = {name,description,type,workflowType,id:initialValues?._id,departmentOrders,reviewers}
+    if (
+      values.workflowType === Object.keys(WORKFLOW_TYPES_LIST)[0] &&
+      !values.workflowOrderId
+    ) {
+      setError({
+        error: true,
+        message: 'Please select a order workflow',
+        type: 'workflowOrderId',
+      });
+      return;
+    }else{
+      setError({
+        error:false,
+        message:'',
+        type:''
+      })
+    }
 
-      if(workflowOrderId){
-        updateValues.workflowOrderId = workflowOrderId
+
+    if (departmentOrders.length === 0 ) {
+      setError({
+        error: true,
+        message: 'Please select at least one department',
+        type: 'departmentOrders',
+      });
+      return;
+    }else{
+      setError({
+        error:false,
+        message:'',
+        type:''
+      })
+    }
+
+    const allDepartmentsHaveReviewer = departmentOrders.every(dept => 
+      reviewers.some(reviewer => reviewer.department === dept.department)
+    );
+
+    if (reviewers.length === 0 || !allDepartmentsHaveReviewer) {
+      toast.error('Each department must have at least one reviewer');
+      return;
+    } else {
+      setError({
+        error: false,
+        message: '',
+        type: ''
+      });
+    }
+
+    if (isEdit) {
+      const { name, description, type, workflowType, workflowOrderId } = values;
+      const updateValues = {
+        name,
+        description,
+        type,
+        workflowType,
+        id: initialValues?._id,
+        departmentOrders,
+        reviewers,
+      };
+   
+      if (workflowOrderId) {
+        updateValues.workflowOrderId = workflowOrderId;
       }
-      updateWorkflow(
-        updateValues,
-        {
-          onSuccess: () => {
-            toast.success('Workflow is updated.');
-            navigate('/workflows');
-          },
+      updateWorkflow(updateValues, {
+        onSuccess: () => {
+          toast.success('Workflow is updated.');
+          navigate('/workflows');
         },
-      );
+      });
     } else {
       const submitValues = { ...values };
-      console.table(submitValues)
+      console.table(submitValues);
       if (submitValues.workflowType === Object.keys(WORKFLOW_TYPES_LIST)[1])
         delete submitValues.workflowId;
       createWorkflow(
@@ -88,6 +149,10 @@ export const WorkflowForm = ({ initialValues, departments, users }) => {
         },
       );
     }
+  };
+
+  const onChange = (values) => {
+    console.log('values', values);
   };
 
   const navigate = useNavigate();
@@ -108,19 +173,25 @@ export const WorkflowForm = ({ initialValues, departments, users }) => {
     users,
   ]);
 
+  console.log('error------------',error)
+
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={workflowSchema}
       onSubmit={onSubmit}
+      onChange={onChange}
     >
       {(props) => {
+
         const handleOptionChange = (value) => {
           setOptionValue(value);
           props.setFieldValue('type', value);
         };
         if (props.values.workflowType === WORKFLOW_TYPES_LIST.PURCHASE_ORDER)
           props.unregisterField('workflowId');
+        
+     
         return (
           <form className="flex flex-col gap-5" onSubmit={props.handleSubmit}>
             <div className="flex gap-2">
@@ -140,13 +211,16 @@ export const WorkflowForm = ({ initialValues, departments, users }) => {
                   variant="outlined"
                   formProps={props}
                   name="workflowType"
-                  value={props.values.workflowType || 'default'}
+                  value={props.values.workflowType ?? ''}
+                  defaultValue={!props.values.workflowType ? "Select Work Flow Type" : null}
                 >
-                  <MenuItem value="default" disabled>
-                    <Box textTransform={'capitalize'}>
-                      Select Work Flow Type
-                    </Box>
-                  </MenuItem>
+                 {/* {!props.values.workflowType && (
+                    <MenuItem value="default" disabled>
+                      <Box textTransform={'capitalize'}>
+                        Select Work Flow Type
+                      </Box>
+                    </MenuItem>
+                  )} */}
                   {WORKFLOW_TYPES_LISTS.map((item) => (
                     <MenuItem value={item.value} key={item.value}>
                       <Box textTransform={'capitalize'}>{item.text}</Box>
@@ -167,6 +241,10 @@ export const WorkflowForm = ({ initialValues, departments, users }) => {
                     ? Object.keys(WORKFLOW_TYPES_LIST)[1]
                     : ''
                 }
+                error={
+                  error.error && error.type === 'workflowOrderId' ? error : {}
+                }
+                setError={setError}
               />
             )}
             <div className="w-full">
@@ -212,6 +290,7 @@ export const WorkflowForm = ({ initialValues, departments, users }) => {
               selectedUsers={selectedUsers}
               chosenDepartments={selectedDepartments}
               onDragDepartment={onDragDepartment}
+              error={error.error && error.type === 'departmentOrders' ? error : {}}
             />
             {selectedDepartments &&
               selectedDepartments.map((item) => (
@@ -222,6 +301,7 @@ export const WorkflowForm = ({ initialValues, departments, users }) => {
                   chosenUsers={selectedUsers}
                   onRemoveUser={removeUser}
                   onDragUser={onDragUser}
+                  error={error.error && error.type === 'reviewers' ? error : {}}
                 />
               ))}
             <div className="flex gap-2 justify-end">

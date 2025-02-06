@@ -51,6 +51,7 @@ const RequestDocument = ({
               setOpenDate={setOpenDate}
               handleDateChange={handleDateChange}
               handleRemoveDate={handleRemoveDate}
+             
             />
           </Box>
           {currentPath === '/purchase-request' && (
@@ -74,6 +75,9 @@ const RequestDocument = ({
             }
             optionValue={optionValue}
             handleOptionChange={handleOptionChange}
+            sx={{
+                mb: 2,
+              }}
           />
         </Box>
         <>

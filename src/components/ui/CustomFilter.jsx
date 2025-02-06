@@ -2,9 +2,9 @@
 import { Box } from '@mui/material';
 import { colors } from '../../assets/theme/theme';
 
-const CustomFilter = ({ items, optionValue, handleOptionChange }) => {
+const CustomFilter = ({ items, optionValue, handleOptionChange,sx }) => {
   return (
-    <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
+    <Box sx={{ display: 'flex', gap: 1,  ...sx }}>
       {items.map((item) => (
         <Box
           key={item.value}
@@ -20,7 +20,7 @@ const CustomFilter = ({ items, optionValue, handleOptionChange }) => {
                 : colors.black[300]
             }`,
             border: `1px solid ${colors.paleBlue[800]}`,
-            width: '140px',
+            width: '120px',
             height: '40px',
             borderRadius: 5,
             display: 'flex',

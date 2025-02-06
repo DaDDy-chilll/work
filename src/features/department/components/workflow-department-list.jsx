@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Button, Checkbox } from '@mui/material';
+import { Button, Checkbox, Typography } from '@mui/material';
 import CustomFormLabel from '../../../components/shared/CustomFormLabel';
 import { Add } from '@mui/icons-material';
 import { useDisclosure } from '../../../hooks/useDisclosure';
@@ -97,8 +97,29 @@ export const WorkflowDepartmentList = ({
   selectedUsers,
   chosenDepartments,
   onDragDepartment,
+  error,
 }) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
+  const [departmentError, setDepartmentError] = useState({
+    error: false,
+    message: '',
+    type: '',
+  });
+
+  useEffect(() => {
+    if (error.error && error.type === 'departmentOrders' && !departmentError.error) {
+      setDepartmentError(error);
+    }
+
+    if(chosenDepartments.length > 0){
+      setDepartmentError({
+        error:false,
+        message:'',
+        type:''
+      })
+    }
+  }, [error,chosenDepartments]);
+
 
   return (
     <div>
@@ -134,6 +155,9 @@ export const WorkflowDepartmentList = ({
         }
         maxWidth="sm"
       />
+      {departmentError.error && departmentError.type === 'departmentOrders' && (
+        <Typography color="error">{departmentError.message}</Typography>
+      )}
     </div>
   );
 };

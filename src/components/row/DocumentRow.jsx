@@ -11,19 +11,7 @@ import { colors } from '../../assets/theme/theme';
 const DocumentRow = ({ payload, currentPath }) => {
   const navigate = useNavigate();
 
-  console.log(
-    'payload',
-    payload,
-    currentPath !== '/purchase-order',
-    payload[1]?.lastStep?.action,
-  );
-  console.log(
-    'payload',
-    payload,
-    currentPath !== '/purchase-order',
-    payload[0]?.lastStep?.action,
-  );
-  console.log('payload',payload,currentPath)
+
   return (
     <TableBody>
       {payload &&

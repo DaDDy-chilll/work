@@ -56,32 +56,44 @@ export const DraggableUserCard = ({ index, moveItem, item, onRemoveUser }) => {
           <p className="text-gray-500 text-sm">{item.jobLabel}</p>
         </div>
       </div>
-      <div className="flex gap-[148px] mr-20">
+      <div className="flex gap-[110px] mr-16">
+        {/* Approve */}
         {item?.permissions?.canApprove ? (
           <Check className="text-2xl text-primary-800" />
         ) : (
           <span className='w-6'></span>
         )}
+        {/* Authorize */}
         {item?.permissions?.canAuthorize ? (
           <Check className="text-2xl text-primary-800" />
         ) : (
           <span className='w-6'></span>
         )}
-        {item?.permissions?.canVerify ? (
-          <Check className="text-2xl text-primary-800" />
-        ) : (
-          <span className='w-6'></span>
-        )}
+        {/* Edit */}
         {item?.permissions?.canEdit ? (
           <Check className="text-2xl text-primary-800" />
         ) : (
           <span className='w-6'></span>
         )}
+        {/* Comment */}
+        {!item?.permissions?.canComment ? (
+          <Check className="text-2xl text-primary-800" />
+        ) : (
+          <span className='w-6'></span>
+        )}
+        {/* Reject */}
+        {!item?.permissions?.canReject ? (
+          <Check className="text-2xl text-primary-800" />
+        ) : (
+          <span className='w-6'></span>
+        )}
+        {/* Return */}
         {item?.permissions?.canNormalReturn ? (
           <Check className="text-2xl text-primary-800" />
         ) : (
           <span className='w-6'></span>
         )}
+        {/* Advance Return */}
         {item?.permissions?.canAdvanceReturn ? (
           <Check className="text-2xl text-primary-800" />
         ) : (

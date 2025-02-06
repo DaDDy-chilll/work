@@ -93,17 +93,19 @@ const DocumentForm = ({ workflowType, oldData, onClick, originalDocumentId,order
   };
 
   const handleEdit = (values) => {
-    console.log('values',values)
     if (!user.permissions.canEditAmount) {
       delete values.amount;
     }
+
+    console.log({...values,workflowType})
+
     editMutation(
-      { data: values, attachments: files, id },
+      { data: {...values,workflowType}, attachments: files, id },
       {
         onSuccess: () => {
           toast.success('ok');
           queryClient.invalidateQueries(['documents']);
-          navigate('/my-requests');
+          navigate('/');
         },
         onSettled: () => {
           setFiles(undefined);
