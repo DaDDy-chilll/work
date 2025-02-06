@@ -174,6 +174,7 @@ const WorkflowUsers = ({
         type:''
       })
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error,chosenUsers]);
 
   const users = chosenUsers.filter(

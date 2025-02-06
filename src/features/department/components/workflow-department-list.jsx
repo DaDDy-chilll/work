@@ -118,6 +118,7 @@ export const WorkflowDepartmentList = ({
         type:''
       })
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error,chosenDepartments]);
 
 
