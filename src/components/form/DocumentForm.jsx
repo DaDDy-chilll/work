@@ -71,11 +71,9 @@ const DocumentForm = ({ workflowType, oldData, onClick, originalDocumentId,order
   const navigate = useNavigate();
 
   const handleCreate = (values) => {
-    console.log('orderId',orderId)
     if(location.pathname.includes('purchase-order')){
       values = {...values,createdBy:Object.keys(WORKFLOW_TYPES_LIST)[1],originalDocumentId,orderId}
     }
-    console.log('values',values)
     createMutation(
       { data: values, attachments: files },
       {
@@ -97,7 +95,6 @@ const DocumentForm = ({ workflowType, oldData, onClick, originalDocumentId,order
       delete values.amount;
     }
 
-    console.log({...values,workflowType})
 
     editMutation(
       { data: {...values,workflowType}, attachments: files, id },
@@ -131,7 +128,6 @@ const DocumentForm = ({ workflowType, oldData, onClick, originalDocumentId,order
     >
       {(props) => 
      {
-      console.log('form props',props)
       
        return(
         <form onSubmit={props.handleSubmit}>

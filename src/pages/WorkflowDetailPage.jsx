@@ -69,11 +69,6 @@ const WorkflowDetailPage = () => {
     });
   }
 
-  console.log('workflow', workflow);
-  console.log(
-    'workflow?.payload?.workflowOrderId',
-    workflow?.payload?.workflowOrderId,
-  );
 
   return (
     <Box

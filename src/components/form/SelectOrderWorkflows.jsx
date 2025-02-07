@@ -72,7 +72,6 @@ const SelectOrderWorkflows = ({ name, formProps, type, workflowType,error }) => 
 
   const { data } = useGetWorkflowDetail(formProps.values[name]);
 
-console.log('data',data,formProps.values[name],name);
   // Handle error updates
   useEffect(() => {
     if (formProps.values[name]) {
@@ -88,7 +87,6 @@ console.log('data',data,formProps.values[name],name);
     }
   }, [error, formProps.values[name]]);
 
-  console.log('orderError',orderError,formProps.values[name]);
 
 // if(formProps.values[name]){
 //   setOrderError({

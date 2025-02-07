@@ -12,7 +12,6 @@ const FormSelect = ({
   choiseValue,
 }) => {
 
-  console.log("choiseValue",choiseValue)
   return (
     <FormControl
       variant={variant}

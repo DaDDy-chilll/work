@@ -1,8 +1,6 @@
 
 export const transformLastActivity = (lastActivity) => {
   if (
-    lastActivity === 'PREPARED' ||
-    lastActivity === 'VERIFIED' ||
     lastActivity === 'APPROVED' ||
     lastActivity === 'AUTHORIZE' 
   ) {

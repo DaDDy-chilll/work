@@ -38,6 +38,9 @@ export const WorkflowForm = ({ initialValues, departments, users }) => {
     onDragUser,
   } = useWorkflow();
 
+  console.log('selectedDepartments',selectedDepartments)
+  console.log('selectedUsers',selectedUsers)
+
   const [optionValue, setOptionValue] = useState(initialValues.type);
   const [error, setError] = useState({
     error: false,
@@ -173,7 +176,6 @@ export const WorkflowForm = ({ initialValues, departments, users }) => {
     users,
   ]);
 
-  console.log('error------------',error)
 
   return (
     <Formik

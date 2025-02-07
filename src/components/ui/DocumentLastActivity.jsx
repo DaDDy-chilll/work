@@ -8,7 +8,6 @@ import {
 import { colors } from '../../assets/theme/theme';
 
 const DocumentLastActivity = ({ lastActivity }) => {
-  console.log('lastActivity',lastActivity)
   const textColor = changeTextColor({
     action: transformLastActivity(lastActivity?.action),
   });

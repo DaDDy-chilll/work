@@ -19,13 +19,15 @@ import DateRangeFilter from '../../components/shared/DateRangeFilter';
 import CustomFilter from '../../components/ui/CustomFilter';
 import { FILTER_OPTIONS } from '../../constants';
 import DataTable from './DataTable';
-
+import { useEffect } from 'react';
 const RequestDocument = ({
   resultData,
   page,
   changePage,
   isFetching,
   currentPath,
+  setSearch,
+  setDate
 }) => {
   const navigate = useNavigate();
   const { date, openDate, setOpenDate, handleDateChange, handleRemoveDate } =
@@ -38,13 +40,19 @@ const RequestDocument = ({
     },
   });
 
+
+  useEffect(() => {
+    if (date?.startDate && date?.endDate && typeof setDate === 'function') {
+      setDate(date);
+    }
+  }, [date, setDate]);
   return (
     <Box m={2} borderRadius="1rem" bgcolor={colors.white[100]}>
       <Navbar />
       <Box p={3}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
           <Box sx={{ display: 'flex', gap: 3 }}>
-            <SearchBox placeholder="Search ID,Subject" />
+            <SearchBox placeholder="Search ID,Subject" setSearch={setSearch} />
             <DateRangeFilter
               date={date}
               openDate={openDate}

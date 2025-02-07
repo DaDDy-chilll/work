@@ -16,7 +16,6 @@ const SelectWorkflowUser = ({
 }) => {
   const [users, setUsers] = useState();
 
-  console.log('chosenUsers',chosenUsers);
   useEffect(() => {
     const fetchData = async () => {
       const data = await getUsers({ limit: 0, department: department._id });
@@ -162,12 +161,10 @@ const WorkflowUsers = ({
   });
   useEffect(() => {
     if (error && error?.error && error?.type === 'reviewers' && !userError.error && chosenUsers.length === 0) {
-      console.log('error run',error);
       setUserError(error);
     }
 
     if(chosenUsers.length > 0){
-      console.log('chosenUsers',chosenUsers);
       setUserError({
         error:false,
         message:'',

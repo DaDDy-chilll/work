@@ -76,7 +76,6 @@ const RemarkForm = ({ onClick }) => {
 
   if (document?.payload) {
     const allReviewers = document?.payload.reviewers.list;
-    console.log('allReviewers',allReviewers)
     const currentStage = allReviewers.filter(
       (item) => item.reviewer._id.toString() === actor._id.toString(),
     )[0];
@@ -91,7 +90,6 @@ const RemarkForm = ({ onClick }) => {
       advanceReviewers = allReviewers.filter((item) => item.index < currentStage.index);
     }
   }
-  console.log('advanceReviewers',advanceReviewers,reviewers)
   const { mutate: changeStatusMutation, isLoading: changeStatusLoading } =
     useChangeStatus();
 
@@ -107,9 +105,7 @@ const RemarkForm = ({ onClick }) => {
   const queryClient = useQueryClient();
 
   const handleChangeStatus = ({ action, workflowId, remark, userId }) => {
-   console.log('workflowType',{ action, workflowId, remark, userId })
     if (action === ACTIONS.REJECT) {
-      console.log('reject',workflowType)
       rejectMutation(
         { data: { remark,workflowType }, id, attachments: files },
         {
@@ -185,9 +181,9 @@ const RemarkForm = ({ onClick }) => {
   let actions = [];
   if (user.permissions.canApprove) actions.push(ACTIONS.APPROVE);
   if (user.permissions.canAuthorize) actions.push(ACTIONS.AUTHORIZE);
+  if (user.permissions.canVerify) actions.push(ACTIONS.VERIFY);
   actions.push(ACTIONS.COMMENT)
   actions.push(ACTIONS.REJECT)
-  // if (user.permissions.canVerify) actions.push(ACTIONS.VERIFY);
   // if (user.permissions.canForward) actions.push(ACTIONS.FORWARD);
   if (user.permissions.canNormalReturn )
     actions.push(ACTIONS.RETURN);
@@ -265,7 +261,6 @@ const RemarkForm = ({ onClick }) => {
                   >
                     {advanceReviewers &&
                       advanceReviewers?.map((item) => {
-                        console.log('item',item)
                         return(
                         <MenuItem
                           value={item.reviewer._id}

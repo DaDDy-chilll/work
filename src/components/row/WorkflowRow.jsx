@@ -7,7 +7,6 @@ import { TableActionButton } from '@/components';
 import { Error } from '@mui/icons-material';
 import { WORKFLOW_TYPES_LIST } from '@/constants';
 const WorkflowRow = ({ payload }) => {
-console.log(payload)
   return (
     <TableBody>
       {payload &&

@@ -21,7 +21,7 @@ export const userCreateValues = {
 
 export const userCreateSchema = yup.object().shape({
   name: yup.string().required('Name is required'),
-  email: yup.string().email('invalid email').required('Email is required'),
+  email: yup.string().matches(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/, 'Email must be in lowercase').email('Invalid email format').required('Email is required'),
 
   password: yup
     .string()

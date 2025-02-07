@@ -28,13 +28,6 @@ const InboxPage = () => {
     [optionValue.key]: optionValue.value,
   });
 
-  console.log('data mentioned --------',data)
-  console.log('data mentioned --------',{
-    sort: 'createdAt',
-    page,
-    limit: 10,
-    [optionValue.key]: optionValue.value,
-  })
 
 
   
