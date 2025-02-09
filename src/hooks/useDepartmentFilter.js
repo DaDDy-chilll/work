@@ -39,15 +39,29 @@ export const useDepartmentFilter = () => {
     setSearch('')
   }
 
+  const [filteredDepartments, setFilteredDepartments] = useState([]);
+
+    // FILTER BOX OK BUTTON
+    const handleFilter = () => {
+      const filteredValue = departments
+        .filter((department) => department.isChecked === true)
+        .map((item) => ({
+          id: item._id,
+          name: item.name
+        }));
+      setFilteredDepartments(filteredValue);
+    };
+
   // HANDLE CHECKBOX
   const handleChange = ({ name, checked }) => {
+    let tempUser;
     if (name === 'clearAll') {
-      let tempUser = departments.map((department) => {
+       tempUser = departments.map((department) => {
         return { ...department, isChecked: false };
       });
       setDepartments(tempUser);
     } else {
-      let tempUser = departments.map((department) =>
+       tempUser = departments.map((department) =>
         department.name === name
           ? { ...department, isChecked: checked }
           : department,
@@ -55,20 +69,16 @@ export const useDepartmentFilter = () => {
       setDepartments(tempUser);
       setSearchedDepartments(tempUser);
     }
+    const filteredValue = tempUser.filter((department) => department.isChecked === true)
+        .map((item) => ({
+          id: item._id,
+          name: item.name
+        }));
+      setFilteredDepartments(filteredValue);
+      onClose()
   };
 
-  // FILTER BOX OK BUTTON
-  const [filteredDepartments, setFilteredDepartments] = useState([]);
-  const handleFilter = () => {
-    const filteredValue = departments
-      .filter((department) => department.isChecked === true)
-      .map((item) => ({
-        id: item._id,
-        name: item.name
-      }));
-    setFilteredDepartments(filteredValue);
-    onClose()
-  };
+
 
   // DELETE CHIP
   const handleDelete = ({ id, name }) => {
@@ -79,6 +89,7 @@ export const useDepartmentFilter = () => {
 
   // (CLEAR ALL) CHIP
   const handleClearAll = () => {
+    onClose()
     setFilteredDepartments([])
     handleChange({ name: 'clearAll' })
   }

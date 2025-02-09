@@ -13,11 +13,9 @@ import Navbar from '../../components/Navbar';
 import { useNavigate } from 'react-router-dom';
 // import { AddOutlined } from '@mui/icons-material';
 import CustomPagination from '../../components/shared/CustomPagination';
-import { useDateRangeFilter, useCustomeFilter } from '../../hooks';
+import { useDateRangeFilter } from '../../hooks';
 import SearchBox from '../../components/shared/SearchBox';
 import DateRangeFilter from '../../components/shared/DateRangeFilter';
-import CustomFilter from '../../components/ui/CustomFilter';
-import { FILTER_OPTIONS } from '../../constants';
 import DataTable from './DataTable';
 import { useEffect } from 'react';
 const RequestDocument = ({
@@ -33,12 +31,12 @@ const RequestDocument = ({
   const { date, openDate, setOpenDate, handleDateChange, handleRemoveDate } =
     useDateRangeFilter();
 
-  const { optionValue, handleOptionChange } = useCustomeFilter({
-    initialValue: {
-      text: 'My Request',
-      value: `my-${currentPath.split('/')[1]}-request`,
-    },
-  });
+  // const { optionValue, handleOptionChange } = useCustomeFilter({
+  //   initialValue: {
+  //     text: 'My Request',
+  //     value: `my-${currentPath.split('/')[1]}-request`,
+  //   },
+  // });
 
 
   useEffect(() => {
@@ -74,7 +72,7 @@ const RequestDocument = ({
             />
           )}
         </Box>
-        <Box sx={{ marginTop: 2 }}>
+        {/* <Box sx={{ marginTop: 2 }}>
           <CustomFilter
             items={
               currentPath === '/purchase-request'
@@ -87,7 +85,7 @@ const RequestDocument = ({
                 mb: 2,
               }}
           />
-        </Box>
+        </Box> */}
         <>
           {isFetching ? (
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>

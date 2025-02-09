@@ -38,8 +38,6 @@ export const WorkflowForm = ({ initialValues, departments, users }) => {
     onDragUser,
   } = useWorkflow();
 
-  console.log('selectedDepartments',selectedDepartments)
-  console.log('selectedUsers',selectedUsers)
 
   const [optionValue, setOptionValue] = useState(initialValues.type);
   const [error, setError] = useState({
@@ -101,20 +99,25 @@ export const WorkflowForm = ({ initialValues, departments, users }) => {
       })
     }
 
-    const allDepartmentsHaveReviewer = departmentOrders.every(dept => 
-      reviewers.some(reviewer => reviewer.department === dept.department)
-    );
 
-    if (reviewers.length === 0 || !allDepartmentsHaveReviewer) {
-      toast.error('Each department must have at least one reviewer');
-      return;
-    } else {
-      setError({
-        error: false,
-        message: '',
-        type: ''
-      });
-    }
+    console.log('selectedDepartments', selectedDepartments);
+    const departmentsWithoutReviewer = selectedDepartments
+    .filter(dept => !reviewers.some(reviewer => reviewer.department === dept._id))
+    .map(dept => dept.name);
+    console.log('departmentsWithoutReviewer', departmentsWithoutReviewer);
+  if(reviewers.length === 0){
+    toast.error("Department must have at least one reviewer");
+    return;
+  }else  if (departmentsWithoutReviewer.length > 0) {
+    toast.error(`Missing reviewers for departments: ${departmentsWithoutReviewer.join(', ')}`);
+    return;
+  } else {
+    setError({
+      error: false,
+      message: '',
+      type: ''
+    });
+  }
 
     if (isEdit) {
       const { name, description, type, workflowType, workflowOrderId } = values;

@@ -75,7 +75,7 @@ const SelectWorkflowUser = ({
             <div>Comment</div>
             <div>Reject</div>
             <div>Return</div>
-            <div className='mr-5'>Advance Return</div>
+            <div className="mr-5">Advance Return</div>
           </div>
         </div>
         {users &&
@@ -101,34 +101,48 @@ const SelectWorkflowUser = ({
                 </div>
               </div>
               <div className="flex gap-[110px] mr-28">
-              {/* Approve */}
+                {/* Approve */}
                 {item?.permissions?.canApprove ? (
                   <Check className="text-2xl text-primary-800" />
-                ):<span className='w-6'></span>}
+                ) : (
+                  <span className="w-6"></span>
+                )}
                 {/* Authorize */}
                 {item?.permissions?.canAuthorize ? (
                   <Check className="text-2xl text-primary-800" />
-                ):<span className='w-6'></span>}
+                ) : (
+                  <span className="w-6"></span>
+                )}
                 {/* Edit */}
                 {item?.permissions?.canEdit ? (
                   <Check className="text-2xl text-primary-800" />
-                ):<span className='w-6'></span>}
+                ) : (
+                  <span className="w-6"></span>
+                )}
                 {/* Comment */}
                 {!item?.permissions?.canComment ? (
                   <Check className="text-2xl text-primary-800" />
-                ):<span className='w-6'></span>}
+                ) : (
+                  <span className="w-6"></span>
+                )}
                 {/* Reject */}
                 {!item?.permissions?.canReject ? (
                   <Check className="text-2xl text-primary-800" />
-                ):<span className='w-6'></span>}
+                ) : (
+                  <span className="w-6"></span>
+                )}
                 {/* Return */}
                 {item?.permissions?.canNormalReturn ? (
                   <Check className="text-2xl text-primary-800" />
-                ):<span className='w-6'></span>}
+                ) : (
+                  <span className="w-6"></span>
+                )}
                 {/* Advance Return */}
                 {item?.permissions?.canAdvanceReturn ? (
                   <Check className="text-2xl text-primary-800" />
-                ):<span className='w-6'></span>}
+                ) : (
+                  <span className="w-6"></span>
+                )}
               </div>
             </div>
           ))}
@@ -160,77 +174,81 @@ const WorkflowUsers = ({
     type: '',
   });
   useEffect(() => {
-    if (error && error?.error && error?.type === 'reviewers' && !userError.error && chosenUsers.length === 0) {
+    if (
+      error &&
+      error?.error &&
+      error?.type === 'reviewers' &&
+      !userError.error &&
+      chosenUsers.length === 0
+    ) {
       setUserError(error);
     }
 
-    if(chosenUsers.length > 0){
+    if (chosenUsers.length > 0) {
       setUserError({
-        error:false,
-        message:'',
-        type:''
-      })
+        error: false,
+        message: '',
+        type: '',
+      });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error,chosenUsers]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [error, chosenUsers]);
 
   const users = chosenUsers.filter(
     (user) => user.department._id === department._id,
   );
 
+  console.log('user', users);
 
   return (
     <>
-    
-    <div className="border-2 rounded-lg">
-
-<div className="flex justify-between p-3">
-  <div>Name & Role</div>
-  <div className="flex gap-20">
-    <div>Approve</div>
-    <div>Authorize</div>
-    <div>Edit</div>
-    <div>Comment</div>
-    <div>Reject</div>
-    <div>Return</div>
-    <div>Advance Return</div>
-  </div>
-</div>
-{users.map((item, index) => (
-  <DraggableUserCard
-    key={item._id}
-    moveItem={onDragUser}
-    index={index}
-    item={item}
-    onRemoveUser={onRemoveUser}
-  />
-))}
-<div
-  className="bg-primary-800 text-white p-3 text-center font-semibold cursor-pointer rounded-b-lg"
-  onClick={onOpen}
->
-  <Add /> Add Member
-</div>
-<Modal
-  title={`Add Member from ${department.name}`}
-  isOpen={isOpen}
-  onClose={onClose}
-  content={
-    <SelectWorkflowUser
-      department={department}
-      saveUsers={saveUsers}
-      onClose={onClose}
-      chosenUsers={chosenUsers}
-    />
-  }
-  maxWidth="lg"
-/>
-</div>
-{userError.error && userError.type === 'reviewers' && (
+      <div className="border-2 rounded-lg">
+        <div className="flex justify-between p-3">
+          <div>Name & Role</div>
+          <div className="flex gap-14">
+            <div>Approve</div>
+            <div>Authorize</div>
+            <div>Edit</div>
+            <div>Comment</div>
+            <div>Reject</div>
+            <div>Return</div>
+            <div>Advance Return</div>
+          </div>
+        </div>
+        {users.map((item, index) => (
+          <DraggableUserCard
+            key={item._id}
+            moveItem={onDragUser}
+            index={index}
+            item={item}
+            onRemoveUser={onRemoveUser}
+          />
+        ))}
+        <div
+          className="bg-primary-800 text-white p-3 text-center font-semibold cursor-pointer rounded-b-lg"
+          onClick={onOpen}
+        >
+          <Add /> Add Member
+        </div>
+        <Modal
+          title={`Add Member from ${department.name}`}
+          isOpen={isOpen}
+          onClose={onClose}
+          content={
+            <SelectWorkflowUser
+              department={department}
+              saveUsers={saveUsers}
+              onClose={onClose}
+              chosenUsers={chosenUsers}
+            />
+          }
+          maxWidth="lg"
+        />
+      </div>
+      {userError.error && userError.type === 'reviewers' && (
         <Typography color="error">{userError.message}</Typography>
       )}
     </>
-
   );
 };
 
@@ -242,10 +260,6 @@ export const WorkflowUserList = ({
   onDragUser,
   error,
 }) => {
- 
-
-
-
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center gap-1">

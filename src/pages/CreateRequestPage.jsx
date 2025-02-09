@@ -46,7 +46,7 @@ const CreateRequestPage = () => {
         <DocumentForm
           workflowType="PURCHASE_REQUEST"
           oldData={undefined}
-          onClick={() => navigate('/purchase-request')}
+          onClick={() => navigate(-1)}
         />
       </Box>
     </Box>

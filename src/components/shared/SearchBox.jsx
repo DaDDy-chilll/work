@@ -2,7 +2,8 @@
 import { Cancel, Search } from '@mui/icons-material';
 import { Box } from '@mui/material';
 import { colors } from '../../assets/theme/theme';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
+import _debounce from 'lodash/debounce';
 
 const SearchBox = ({ setSearch, placeholder }) => {
   const [value, setValue] = useState('');
@@ -12,9 +13,21 @@ const SearchBox = ({ setSearch, placeholder }) => {
     setSearch('');
   };
 
+  const debounceFn = useCallback(
+    (value) => {
+      _debounce(setSearch, 200)(value);
+    },
+    [setSearch]
+  );
+  
+  const handleChange = (event) => {
+    setValue(event.target.value);
+    debounceFn(event.target.value);
+  };
+
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
-      setSearch(event.target.value);
+      debounceFn(event.target.value);
     }
   };
 
@@ -27,7 +40,7 @@ const SearchBox = ({ setSearch, placeholder }) => {
           type="text"
           placeholder={placeholder}
           value={value}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={handleChange}
           onKeyUp={(e) => handleKeyPress(e)}
         />
         {value !== '' && (

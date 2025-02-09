@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Button, Checkbox, Typography } from '@mui/material';
+import { Button, Checkbox, Input, Typography } from '@mui/material';
 import CustomFormLabel from '../../../components/shared/CustomFormLabel';
 import { Add } from '@mui/icons-material';
 import { useDisclosure } from '../../../hooks/useDisclosure';
@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 
 const SelectDepartment = ({ saveDepartments, onClose, chosenDepartments }) => {
   const [departments, setDepartments] = useState();
-
+  const [searchValue, setSearchValue] = useState('');
   useEffect(() => {
     const fetchData = async () => {
       const data = await getDepartments({ limit: 0 });
@@ -63,9 +63,23 @@ const SelectDepartment = ({ saveDepartments, onClose, chosenDepartments }) => {
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex flex-col gap-3 h-[500px] overflow-y-scroll">
+      <div className="flex flex-col gap-3 ">
+        <Input
+        type='search'
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
+          placeholder="Search Department"
+          sx={{
+            width: '100%',
+            position: 'sticky',
+            top: 0,
+            zIndex: 100,
+            backgroundColor: 'white',
+
+          }}
+        />
         {departments &&
-          departments?.map((item) => (
+          departments?.filter((item) => item.name.toLowerCase().includes(searchValue.toLowerCase()))?.map((item) => (
             <div className="flex items-center cursor-pointer" key={item._id}>
               <Checkbox
                 sx={{
@@ -74,12 +88,13 @@ const SelectDepartment = ({ saveDepartments, onClose, chosenDepartments }) => {
                 name={item._id}
                 value={item.name}
                 onChange={onSelectDepartment}
+                id={item._id}
               />
-              <p>{item.name}</p>
+              <label htmlFor={item._id} className="cursor-pointer">{item.name}</label>
             </div>
           ))}
       </div>
-      <div className="flex gap-2 justify-end">
+      <div className="flex gap-2 justify-end sticky bottom-0 bg-white w-full">
         <Button variant="outlined" onClick={onClose}>
           Cancel
         </Button>

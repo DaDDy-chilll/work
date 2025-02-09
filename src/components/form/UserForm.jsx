@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Box, MenuItem } from '@mui/material';
+import { Box } from '@mui/material';
 import {
   useCreateUser,
   useEditPassword,
@@ -18,12 +18,12 @@ import {
   userCreateValues,
   userEditSchema,
 } from '../../schema/user.schema';
-import FormSelect from '../shared/FormSelect';
 import { toast } from 'react-toastify';
 import { useQueryClient } from 'react-query';
 import PasswordTextField from '../shared/PasswordTextField';
 import CustomFormLabel from '../shared/CustomFormLabel';
 import PasswordPolicy from '../ui/PasswordPolicy';
+import FormAutocomplete from '../shared/FormAutocomplete';
 
 const UserForm = ({ onClose, oldData, isChangePassword }) => {
   const { data } = useGetAllDepartments({
@@ -48,7 +48,6 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
       value: department.name,
     }));
   }
-
 
   const handleCreate = ({
     name,
@@ -112,7 +111,6 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
     canNormalReturn,
     canAdvanceReturn,
   }) => {
-
     editMutation(
       {
         data: {
@@ -167,8 +165,6 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
     }
   };
 
-
-
   return (
     <Formik
       initialValues={
@@ -177,7 +173,7 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
           : oldData
           ? {
               ...oldData,
-              department: oldData.department?._id || oldData.department 
+              department: oldData.department?._id || oldData.department,
             }
           : userCreateValues
       }
@@ -230,18 +226,12 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
                       label="Select Department"
                       required={true}
                     />
-                    <FormSelect
+                    <FormAutocomplete
                       placeholder="Select Department"
                       name="department"
+                      options={departments}
                       formProps={props}
-                    >
-                      {departments &&
-                        departments?.map((item) => (
-                          <MenuItem value={item._id} key={item._id}>
-                            {item.value}
-                          </MenuItem>
-                        ))}
-                    </FormSelect>
+                    />
                   </Box>
                   <Box width="50%">
                     <CustomFormLabel label="Job Label" required={true} />
@@ -296,12 +286,12 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
                       gridTemplateColumns: 'repeat(4, 22%)',
                     }}
                   >
-                    <FormCheckbox
+                    {/* <FormCheckbox
                       formProps={props}
                       label="Reverse"
                       disabled={true}
                       defaultValue={true}
-                    />
+                    /> */}
                     <FormCheckbox
                       formProps={props}
                       label="Approve"
@@ -335,30 +325,22 @@ const UserForm = ({ onClose, oldData, isChangePassword }) => {
                       label="Edit Amount"
                       name="canEditAmount"
                     />
-                    <FormCheckbox
+                    {/* <FormCheckbox
                       formProps={props}
                       label="Revise"
                       name="canEdit"
-                    />
-                    <FormCheckbox
+                    /> */}
+                    {/* <FormCheckbox
                       formProps={props}
                       label="Forward Work Flow"
                       name="canForward"
-                    />
-                  </Box>
-                  <Box
-                    sx={{
-                      display: 'grid',
-                      gap: 2,
-                      gridTemplateColumns: 'repeat(4, 22%)',
-                    }}
-                  >
+                    /> */}
+
                     <FormCheckbox
                       formProps={props}
                       label="Mention"
                       name="canMention"
                     />
-
                     <FormCheckbox
                       formProps={props}
                       label="Normal Return"

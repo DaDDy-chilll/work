@@ -11,6 +11,7 @@ export const useDateRangeFilter = () => {
 
   const handleDateChange = (ranges) => {
     setDate(ranges.selection);
+    setOpenDate(false)
   };
 
   const handleRemoveDate = () => {

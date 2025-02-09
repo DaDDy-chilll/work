@@ -17,7 +17,6 @@ const DepartmentFilter = ({
   searchedDepartments,
   handleSearch,
   handleSearchCancel,
-  handleFilter,
   handleChange,
 }) => {
   return (
@@ -58,7 +57,8 @@ const DepartmentFilter = ({
         <Button onClick={() => handleChange({ name: 'clearAll' })}>
           Clear All
         </Button>
-        {search === ''
+          <Box sx={{overflowY:'auto', maxHeight:'calc(100vh - 24rem)'}}>
+          {search === ''
           ? departments.map((department) => {
               return (
                 <li className="filter_item" key={department._id}>
@@ -87,14 +87,15 @@ const DepartmentFilter = ({
                 />
               </li>
             ))}
-        <Box display="flex" justifyContent="center" gap={2}>
+          </Box>
+        {/* <Box display="flex" justifyContent="center" gap={2}>
           <Button onClick={onClose} fullWidth variant="outlined">
             Cancel
           </Button>
           <Button onClick={handleFilter} fullWidth variant="contained">
             OK
           </Button>
-        </Box>
+        </Box> */}
       </ul>
     </div>
   );

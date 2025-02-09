@@ -14,7 +14,7 @@ const DateRangeFilter = ({
 }) => {
   return (
     <div className="date_range_container">
-      <div className="date_range_calendar">
+      <div className="date_range_calendar" onClick={() => setOpenDate((prev) => !prev)}>
         {date.startDate && date.endDate
           ? `${format(date.startDate, 'dd MMM yyyy')} - ${format(
               date.endDate,
@@ -27,7 +27,7 @@ const DateRangeFilter = ({
               <Cancel sx={{ color: colors.grey[800], fontSize: '22px' }} />
             </div>
           )}
-          <div onClick={() => setOpenDate((prev) => !prev)}>
+          <div>
             <CalendarToday
               sx={{ color: colors.black[300], fontSize: '22px' }}
             />

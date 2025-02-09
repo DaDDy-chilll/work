@@ -24,6 +24,7 @@ const FormCheckbox = ({
       onBlur={handleBlur}
       onChange={handleChange}
       disabled={disabled}
+      htmlFor={values[name]}
     />
   );
 };

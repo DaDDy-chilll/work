@@ -26,12 +26,25 @@ const CreateOrderPage = () => {
           gap: 2,
           my: 2,
           mx: 'auto',
-          width: '80%',
+          width: '100%',
+          px: 2,
         }}
       >
       {doc && (
 
         <Box display="flex" justifyContent="start" gap={2}>
+        <Button
+            sx={{
+              borderRadius: '5vmax',
+              width: '15%',
+            }}
+            type="submit"
+            color="primary"
+            variant={isPurchaseOrder ? 'contained' : 'outlined'}
+
+          >
+            Purchase Order
+          </Button>
           <Button
             sx={{
               borderRadius: '5vmax',
@@ -44,18 +57,7 @@ const CreateOrderPage = () => {
           >
             Purchase Request
           </Button>
-          <Button
-            sx={{
-              borderRadius: '5vmax',
-              width: '15%',
-            }}
-            type="submit"
-            color="primary"
-            variant={isPurchaseOrder ? 'contained' : 'outlined'}
-
-          >
-            Purchase Order
-          </Button>
+       
         </Box>
       )}
         <Typography
@@ -83,7 +85,7 @@ const CreateOrderPage = () => {
           <DocumentForm
             workflowType={Object.keys(WORKFLOW_TYPES_LIST)[1]}
             oldData={undefined}
-            onClick={() => navigate('/purchase-order')}
+            onClick={() => navigate(-1)}
             originalDocumentId={doc}
             orderId={orderId}
           />

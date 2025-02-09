@@ -69,7 +69,7 @@ const UserPermissions = ({ permissions }) => {
       <PermissionCheckbox label={PERMISSIONS.COMMENT} defaultValue={true} />
       <PermissionCheckbox label={PERMISSIONS.REJECT} defaultValue={true} />
       <PermissionCheckbox label={PERMISSIONS.ACKNOWLEDGE} defaultValue={true} />
-      <PermissionCheckbox label={PERMISSIONS.REVERSE} defaultValue={true} />
+      {/* <PermissionCheckbox label={PERMISSIONS.REVERSE} defaultValue={true} /> */}
       <PermissionCheckbox
         label={PERMISSIONS.APPROVE}
         defaultValue={permissions.canApprove}
@@ -91,14 +91,14 @@ const UserPermissions = ({ permissions }) => {
         label={PERMISSIONS.EDIT_AMOUNT}
         defaultValue={permissions.canEditAmount}
       />
-      <PermissionCheckbox
+      {/* <PermissionCheckbox
         label={PERMISSIONS.REVISE}
         defaultValue={permissions.canEdit}
-      />
-      <PermissionCheckbox
+      /> */}
+      {/* <PermissionCheckbox
         label={PERMISSIONS.FORWARD}
         defaultValue={permissions.canForward}
-      />
+      /> */}
       <PermissionCheckbox
         label={PERMISSIONS.MENTION}
         defaultValue={permissions.canMention}

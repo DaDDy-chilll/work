@@ -51,18 +51,7 @@ const DocumentDetailPage = () => {
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, m: 2 }}>
     {orderDoc && (
             <Box display="flex" justifyContent="start" gap={2}>
-          <Button
-            sx={{
-              borderRadius: '5vmax',
-              width: '15%',
-            }}
-            type="submit"
-            color="primary"
-            variant={ 'contained' }
-          >
-            Purchase Request
-          </Button>
-          <Button
+            <Button
             sx={{
               borderRadius: '5vmax',
               width: '15%',
@@ -75,6 +64,18 @@ const DocumentDetailPage = () => {
           >
             Purchase Order
           </Button>
+          <Button
+            sx={{
+              borderRadius: '5vmax',
+              width: '15%',
+            }}
+            type="submit"
+            color="primary"
+            variant={ 'contained' }
+          >
+            Purchase Request
+          </Button>
+        
         </Box>
       )}
       <Typography
@@ -191,7 +192,7 @@ const DocumentDetailPage = () => {
                   <LinkButton
                     width="200px"
                     innerText="Back"
-                    onClick={() => navigate('/')}
+                    onClick={() => navigate(-1)}
                     variant="contained"
                     color="primary"
                   />

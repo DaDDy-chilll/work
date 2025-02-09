@@ -87,21 +87,7 @@ const SelectOrderWorkflows = ({ name, formProps, type, workflowType,error }) => 
     }
   }, [error, formProps.values[name]]);
 
-
-// if(formProps.values[name]){
-//   setOrderError({
-//     error:false,
-//     message:'',
-//     type:''
-//   })
-// }
-
-// useEffect(()=>{
-//   if(error.error && error.type === 'workflowOrderId' && !orderError.error){
-//     setOrderError(error);
-//   }
-// },[error])
-
+  console.log('type',type)
 
   return (
     <>
@@ -156,7 +142,7 @@ const SelectOrderWorkflows = ({ name, formProps, type, workflowType,error }) => 
             formProps={formProps}
           >
             {type !== 'private' && (
-              <SelectWorkFlowHeader onChange={handleChange} index={value} />
+              <SelectWorkFlowHeader onChange={handleChange} index={value} type={type} />
             )}
             <Box sx={{ height: '50vh', overflowY: 'auto' }}>
               <SelectWorkflowBody
@@ -164,6 +150,7 @@ const SelectOrderWorkflows = ({ name, formProps, type, workflowType,error }) => 
                 name={name}
                 formProps={formProps}
                 workflowType={workflowType}
+                type={type}
               />
             </Box>
           </SelectOrderWorkFlowModal>

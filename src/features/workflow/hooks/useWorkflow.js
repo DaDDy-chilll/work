@@ -89,23 +89,47 @@ export const useWorkflow = () => {
   );
 
   const onDragUser = useCallback(
-    (dragIndex, hoverIndex) => {
+    (dragIndex, hoverIndex, dragId) => {
       if (dragIndex !== hoverIndex) {
-        const dragItem = selectedUsers[dragIndex];
-        const hoverItem = selectedUsers[hoverIndex];
-
         setSelectedUsers((users) => {
-          const items = [...users];
-          items[dragIndex] = hoverItem;
-          items[hoverIndex] = dragItem;
-          return items.map((item, index) => ({
+          // Get users from the same department
+          const departmentUsers = users.filter(user => user.department._id === dragId);
+          const otherUsers = users.filter(user => user.department._id !== dragId);
+          
+          // Find the actual indices within the department group
+          const deptDragIndex = departmentUsers.findIndex((_, i) => i === dragIndex);
+          const deptHoverIndex = departmentUsers.findIndex((_, i) => i === hoverIndex);
+          
+          // Perform the swap within department users
+          const dragItem = departmentUsers[deptDragIndex];
+          const hoverItem = departmentUsers[deptHoverIndex];
+          departmentUsers[deptDragIndex] = hoverItem;
+          departmentUsers[deptHoverIndex] = dragItem;
+          
+          // Update order indices for the department users
+          const updatedDeptUsers = departmentUsers.map((item, index) => ({
             ...item,
             order: index,
           }));
+          
+          // Combine the updated department users with other departments' users
+          const allUsers = [
+            ...otherUsers,
+            ...updatedDeptUsers
+          ].sort((a, b) => {
+            // Sort by department ID to maintain department grouping
+            if (a.department._id !== b.department._id) {
+              return a.department._id.localeCompare(b.department._id);
+            }
+            // Within same department, sort by order
+            return a.order - b.order;
+          });
+          
+          return allUsers;
         });
       }
     },
-    [selectedUsers],
+    [setSelectedUsers]
   );
 
   return {

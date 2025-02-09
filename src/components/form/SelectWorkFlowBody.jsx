@@ -82,9 +82,7 @@ const SelectWorkflowBody = ({
   const { workflows, favouriteWorkflowIds, saveWorkflow, error, isError } =
     useSelectWorkflow({ index, type, workflowType });
   
-
   if (isError) return <p>Error: {error?.response?.data?.message}</p>;
-
 
   return (
     <RadioGroup name={name} value={values[name]} onChange={handleChange}>

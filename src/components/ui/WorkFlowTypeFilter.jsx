@@ -19,11 +19,13 @@ const WorkFlowTypeFilter = ({ setWorkflowType }) => {
       if (isSelected) return prev.filter((item) => item !== value);
       else return [...prev, value];
     });
+    setIsOpen(false);
   };
 
   const clearAll = () => {
     setSelected([]);
     setWorkflowType('');
+    setIsOpen(false);
   };
 
   useEffect(() => {
@@ -33,12 +35,12 @@ const WorkFlowTypeFilter = ({ setWorkflowType }) => {
   }, [selected, setWorkflowType]);
 
   return (
-    <div className="filter_container">
+    <div className="filter_container min-w-[15rem]">
       <div
         className={`filter_select_btn ${isOpen && 'open'}`}
         onClick={() => setIsOpen(!isOpen)}
       >
-        <span className="filter_select_btn_text">Filter By Workflow Type</span>
+        <span className="filter_select_btn_text">{ selected.length === 2 ? 'All' : WORKFLOW_TYPES_LIST[selected] || 'Filter By Workflow Type'}</span>
         <span className="filter_select_arrow_down">
           <FilterAlt />
         </span>

@@ -20,7 +20,7 @@ const CustomFilter = ({ items, optionValue, handleOptionChange,sx }) => {
                 : colors.black[300]
             }`,
             border: `1px solid ${colors.paleBlue[800]}`,
-            width: '120px',
+            width: '100px',
             height: '40px',
             borderRadius: 5,
             display: 'flex',
