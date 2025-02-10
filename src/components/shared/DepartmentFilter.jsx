@@ -57,7 +57,7 @@ const DepartmentFilter = ({
         <Button onClick={() => handleChange({ name: 'clearAll' })}>
           Clear All
         </Button>
-          <Box sx={{overflowY:'auto', maxHeight:'calc(100vh - 24rem)'}}>
+          <Box sx={{overflowY:'auto', maxHeight:'250px'}}>
           {search === ''
           ? departments.map((department) => {
               return (

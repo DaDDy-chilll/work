@@ -11,7 +11,6 @@ export const DraggableUserCard = ({ index, moveItem, item, onRemoveUser }) => {
       isDragging: monitor.isDragging(),
     }),
   });
-console.log('item', index)
   // eslint-disable-next-line no-unused-vars
   const [spec, dropRef] = useDrop({
     accept: 'item',

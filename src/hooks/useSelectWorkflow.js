@@ -36,12 +36,6 @@ export const useSelectWorkflow = ({ index, type, workflowType }) => {
   let favouriteWorkflowIds = [];
 
   if (index === 0) {
-    if (!user.favouriteWorkflows) {
-      workflows = [];
-    } else {
-      workflows = transformWorkflow(user.favouriteWorkflows);
-    }
-  } else {
     if (data?.payload) {
       workflows = transformWorkflow(data?.payload);
 
@@ -58,6 +52,13 @@ export const useSelectWorkflow = ({ index, type, workflowType }) => {
           favouriteWorkflowIds.push(filteredWorkflows[i]._id);
         }
       }
+    }
+
+  } else {
+    if (!user.favouriteWorkflows) {
+      workflows = [];
+    } else {
+      workflows = transformWorkflow(user.favouriteWorkflows);
     }
   }
 

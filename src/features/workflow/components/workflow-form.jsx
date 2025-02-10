@@ -100,11 +100,9 @@ export const WorkflowForm = ({ initialValues, departments, users }) => {
     }
 
 
-    console.log('selectedDepartments', selectedDepartments);
     const departmentsWithoutReviewer = selectedDepartments
     .filter(dept => !reviewers.some(reviewer => reviewer.department === dept._id))
     .map(dept => dept.name);
-    console.log('departmentsWithoutReviewer', departmentsWithoutReviewer);
   if(reviewers.length === 0){
     toast.error("Department must have at least one reviewer");
     return;

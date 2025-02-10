@@ -8,3 +8,8 @@ export const WORKFLOW_TYPES_LIST = {
   PURCHASE_ORDER: 'Purchase Order',
 };
 
+export const TYPE_LIST = {
+  NORMAL: 'Normal',
+  AUTHORIZED: 'Authorized',
+};
+

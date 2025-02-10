@@ -87,7 +87,6 @@ const SelectOrderWorkflows = ({ name, formProps, type, workflowType,error }) => 
     }
   }, [error, formProps.values[name]]);
 
-  console.log('type',type)
 
   return (
     <>

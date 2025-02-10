@@ -62,9 +62,8 @@ const SelectDepartment = ({ saveDepartments, onClose, chosenDepartments }) => {
   };
 
   return (
-    <div className="flex flex-col gap-3">
-      <div className="flex flex-col gap-3 ">
-        <Input
+    <div className="flex flex-col gap-3 relative">
+      <Input
         type='search'
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
@@ -78,8 +77,25 @@ const SelectDepartment = ({ saveDepartments, onClose, chosenDepartments }) => {
 
           }}
         />
+      <div className="flex flex-col gap-3 h-[600px] overflow-y-auto">
+      
         {departments &&
-          departments?.filter((item) => item.name.toLowerCase().includes(searchValue.toLowerCase()))?.map((item) => (
+          departments?.filter((item) => item.name.toLowerCase().includes(searchValue.toLowerCase()))?.sort((a, b) => {
+              const aMatch = a.name.toLowerCase();
+              const bMatch = b.name.toLowerCase();
+              const search = searchValue.toLowerCase();
+              
+              // Exact match gets highest priority
+              if (aMatch === search && bMatch !== search) return -1;
+              if (bMatch === search && aMatch !== search) return 1;
+              
+              // Starts with gets second priority
+              if (aMatch.startsWith(search) && !bMatch.startsWith(search)) return -1;
+              if (bMatch.startsWith(search) && !aMatch.startsWith(search)) return 1;
+              
+              // Default to alphabetical order for other matches
+              return aMatch.localeCompare(bMatch);
+            })?.map((item) => (
             <div className="flex items-center cursor-pointer" key={item._id}>
               <Checkbox
                 sx={{
@@ -94,7 +110,8 @@ const SelectDepartment = ({ saveDepartments, onClose, chosenDepartments }) => {
             </div>
           ))}
       </div>
-      <div className="flex gap-2 justify-end sticky bottom-0 bg-white w-full">
+
+      <div className="flex gap-2 justify-end sticky bottom-0 bg-white py-2 w-full">
         <Button variant="outlined" onClick={onClose}>
           Cancel
         </Button>

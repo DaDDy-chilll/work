@@ -13,19 +13,24 @@ import Navbar from '../components/Navbar';
 import ModalButton from '../components/ui/ModalButton';
 import CustomPagination from '../components/shared/CustomPagination';
 import { usePageTitle } from '../hooks';
+import SearchBox from '../components/shared/SearchBox';
+import TypeFilter from '../components/ui/TypeFilter';
 
 const DepartmentsPage = () => {
   // eslint-disable-next-line no-unused-vars
   const { pageTitle, setPageTitle } = usePageTitle('Departments');
-
+  const  [search, setSearch] = useState('');
+  const  [type, setType] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [page, setPage] = useState(1);
 
   const { isError, error, data, isFetching } = useGetAllDepartments({
+    search,
     sort: '-createdAt',
     page,
     limit: 10,
+    type
   });
 
   if (isError) return <p>Error: {error?.response?.data?.message}</p>;
@@ -34,7 +39,14 @@ const DepartmentsPage = () => {
     <Box m={2} borderRadius="1rem" bgcolor={colors.white[100]}>
       <Navbar />
       <Box p={3}>
-        <ModalButton
+      <Box display="flex" gap={2} alignItems="center" justifyContent="space-between" mb={2}>
+      <Box display="flex" gap={2} alignItems="center" justifyContent="space-between" mb={2}>
+      <SearchBox placeholder="Search Department Name" setSearch={setSearch} />
+      <TypeFilter setType={setType} />
+      </Box>
+
+
+      <ModalButton
           mb={1}
           width="220px"
           color="primary"
@@ -42,6 +54,9 @@ const DepartmentsPage = () => {
           onOpen={onOpen}
           icon={<AddOutlined sx={{ ml: 1 }} />}
         />
+
+      </Box>
+        
         <>
           {isFetching ? (
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>

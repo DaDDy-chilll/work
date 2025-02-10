@@ -198,7 +198,6 @@ const WorkflowUsers = ({
     (user) => user.department._id === department._id,
   );
 
-  console.log('user', users);
 
   return (
     <>

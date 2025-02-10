@@ -27,7 +27,7 @@ const AddRemarkPage = () => {
         Give Decision
       </Typography>
       <Box bgcolor={colors.white[100]} borderRadius="1rem">
-        <RemarkForm onClick={() => navigate('/')} />
+        <RemarkForm onClick={() => navigate(-1)} />
       </Box>
     </Box>
   );
