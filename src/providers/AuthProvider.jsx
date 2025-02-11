@@ -13,6 +13,7 @@ const {
   LOG_OUT,
   START_VALIDATING_USER,
   END_VALIDATING_USER,
+  SET_USERS_COUNT,
 } = AUTH_ACTIONS;
 
 function reducer(state, action) {
@@ -57,6 +58,12 @@ function reducer(state, action) {
         isValidatingUser: false,
       };
 
+    case SET_USERS_COUNT:
+      return {
+        ...state,
+        usersCount: action.payload,
+      };
+
     default:
       return state;
   }
@@ -66,6 +73,7 @@ const initialState = {
   user: null,
   isValidatingUser: true,
   isLoggingIn: false,
+  usersCount: 0,
 };
 
 export const AuthContext = createContext({
@@ -73,6 +81,7 @@ export const AuthContext = createContext({
   login: () => {},
   logout: () => {},
   validateUser: () => {},
+  setUsersCount: () => {},
 });
 
 const AuthProvider = ({ children }) => {
@@ -139,6 +148,10 @@ const AuthProvider = ({ children }) => {
     dispatch({ type: LOG_OUT });
   };
 
+  const setUsersCount = (count) => {
+    dispatch({ type: SET_USERS_COUNT, payload: count });
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -146,6 +159,7 @@ const AuthProvider = ({ children }) => {
         login,
         logout,
         validateUser,
+        setUsersCount,
       }}
     >
       {children}

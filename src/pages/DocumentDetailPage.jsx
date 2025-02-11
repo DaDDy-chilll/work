@@ -47,6 +47,7 @@ const DocumentDetailPage = () => {
   const orderId = searchParams.get('orderId');
 
 
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, m: 2 }}>
     {orderDoc && (

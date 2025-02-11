@@ -42,6 +42,7 @@ const MentionForm = ({ onClick }) => {
   const queryClient = useQueryClient();
 
   const handleFormSubmit = (data) => {
+    console.log('data**************',data)
     const reviewers = data.reviewers.map((item) => item.id);
     const payload = {
       ...data,

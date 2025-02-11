@@ -18,15 +18,17 @@ import FormSelect from '../../../components/shared/FormSelect';
 import { Box, MenuItem } from '@mui/material';
 import { WORKFLOW_TYPES_LIST } from '@/constants';
 import SelectOrderWorkflows from '../../../components/form/SelectOrderWorkflows';
-
+import { useQueryClient } from 'react-query';
 const WORKFLOW_TYPES_LISTS = Object.keys(WORKFLOW_TYPES_LIST).map((item) => ({
   text: WORKFLOW_TYPES_LIST[item],
   value: item,
 }));
 
-
-
 export const WorkflowForm = ({ initialValues, departments, users }) => {
+
+  const queryClient = useQueryClient();
+
+
   const {
     saveUsers,
     saveDepartments,
@@ -37,7 +39,6 @@ export const WorkflowForm = ({ initialValues, departments, users }) => {
     onDragDepartment,
     onDragUser,
   } = useWorkflow();
-
 
   const [optionValue, setOptionValue] = useState(initialValues.type);
   const [error, setError] = useState({
@@ -75,47 +76,52 @@ export const WorkflowForm = ({ initialValues, departments, users }) => {
         type: 'workflowOrderId',
       });
       return;
-    }else{
+    } else {
       setError({
-        error:false,
-        message:'',
-        type:''
-      })
+        error: false,
+        message: '',
+        type: '',
+      });
     }
 
-
-    if (departmentOrders.length === 0 ) {
+    if (departmentOrders.length === 0) {
       setError({
         error: true,
         message: 'Please select at least one department',
         type: 'departmentOrders',
       });
       return;
-    }else{
+    } else {
       setError({
-        error:false,
-        message:'',
-        type:''
-      })
+        error: false,
+        message: '',
+        type: '',
+      });
     }
 
-
     const departmentsWithoutReviewer = selectedDepartments
-    .filter(dept => !reviewers.some(reviewer => reviewer.department === dept._id))
-    .map(dept => dept.name);
-  if(reviewers.length === 0){
-    toast.error("Department must have at least one reviewer");
-    return;
-  }else  if (departmentsWithoutReviewer.length > 0) {
-    toast.error(`Missing reviewers for departments: ${departmentsWithoutReviewer.join(', ')}`);
-    return;
-  } else {
-    setError({
-      error: false,
-      message: '',
-      type: ''
-    });
-  }
+      .filter(
+        (dept) =>
+          !reviewers.some((reviewer) => reviewer.department === dept._id),
+      )
+      .map((dept) => dept.name);
+    if (reviewers.length === 0) {
+      toast.error('Department must have at least one reviewer');
+      return;
+    } else if (departmentsWithoutReviewer.length > 0) {
+      toast.error(
+        `Missing reviewers for departments: ${departmentsWithoutReviewer.join(
+          ', ',
+        )}`,
+      );
+      return;
+    } else {
+      setError({
+        error: false,
+        message: '',
+        type: '',
+      });
+    }
 
     if (isEdit) {
       const { name, description, type, workflowType, workflowOrderId } = values;
@@ -128,12 +134,17 @@ export const WorkflowForm = ({ initialValues, departments, users }) => {
         departmentOrders,
         reviewers,
       };
-   
+
       if (workflowOrderId) {
         updateValues.workflowOrderId = workflowOrderId;
       }
+
+      if(workflowType === Object.keys(WORKFLOW_TYPES_LIST)[1]){
+        updateValues.workflowOrderId = null;
+      }
       updateWorkflow(updateValues, {
         onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['workflows',initialValues?._id] });
           toast.success('Workflow is updated.');
           navigate('/workflows');
         },
@@ -153,11 +164,14 @@ export const WorkflowForm = ({ initialValues, departments, users }) => {
         },
       );
     }
+    queryClient.invalidateQueries({ queryKey: ['workflows'] });
   };
 
   const onChange = (values) => {
     console.log('values', values);
   };
+
+
 
   const navigate = useNavigate();
 
@@ -187,14 +201,22 @@ export const WorkflowForm = ({ initialValues, departments, users }) => {
     >
       {(props) => {
 
+        console.log('props',props)
         const handleOptionChange = (value) => {
           setOptionValue(value);
           props.setFieldValue('type', value);
         };
         if (props.values.workflowType === WORKFLOW_TYPES_LIST.PURCHASE_ORDER)
-          props.unregisterField('workflowId');
-        
-     
+         { props.unregisterField('workflowId');
+          props.unregisterField('workflowOrderId'); 
+          delete props.values.workflowOrderId; 
+         }
+
+         {/* if(props.values.workflowType === WORKFLOW_TYPES_LIST.PURCHASE_REQUEST){
+          props.unregisterField('workflowOrderId'); 
+          delete props.values.workflowOrderId; 
+         } */}
+
         return (
           <form className="flex flex-col gap-5" onSubmit={props.handleSubmit}>
             <div className="flex gap-2">
@@ -215,9 +237,11 @@ export const WorkflowForm = ({ initialValues, departments, users }) => {
                   formProps={props}
                   name="workflowType"
                   value={props.values.workflowType ?? ''}
-                  defaultValue={!props.values.workflowType ? "Select Work Flow Type" : null}
+                  defaultValue={
+                    !props.values.workflowType ? 'Select Work Flow Type' : null
+                  }
                 >
-                 {/* {!props.values.workflowType && (
+                  {/* {!props.values.workflowType && (
                     <MenuItem value="default" disabled>
                       <Box textTransform={'capitalize'}>
                         Select Work Flow Type
@@ -248,6 +272,7 @@ export const WorkflowForm = ({ initialValues, departments, users }) => {
                   error.error && error.type === 'workflowOrderId' ? error : {}
                 }
                 setError={setError}
+                isEdit={isEdit}
               />
             )}
             <div className="w-full">
@@ -293,7 +318,9 @@ export const WorkflowForm = ({ initialValues, departments, users }) => {
               selectedUsers={selectedUsers}
               chosenDepartments={selectedDepartments}
               onDragDepartment={onDragDepartment}
-              error={error.error && error.type === 'departmentOrders' ? error : {}}
+              error={
+                error.error && error.type === 'departmentOrders' ? error : {}
+              }
             />
             {selectedDepartments &&
               selectedDepartments.map((item) => (

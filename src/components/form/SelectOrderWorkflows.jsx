@@ -65,12 +65,15 @@ const SelectOrderWorkflows = ({ name, formProps, type, workflowType,error }) => 
 
   const [value, setValue] = useState(0);
 
+
+
+  const { data } = useGetWorkflowDetail(formProps.values[name],workflowType);
+
+
   const handleChange = (_e, newValue) => {
-      setValue(newValue);
-  };
+    setValue(newValue);
+};
 
-
-  const { data } = useGetWorkflowDetail(formProps.values[name]);
 
   // Handle error updates
   useEffect(() => {
@@ -87,6 +90,8 @@ const SelectOrderWorkflows = ({ name, formProps, type, workflowType,error }) => 
     }
   }, [error, formProps.values[name]]);
 
+
+console.log('data.payload',data?.payload)
 
   return (
     <>
@@ -105,7 +110,7 @@ const SelectOrderWorkflows = ({ name, formProps, type, workflowType,error }) => 
         onClick={onOpen}
       >
         {formProps.values[name] ? (
-          data?.payload?.reviewers && (
+          data?.payload?.reviewers &&  (
             <WorkflowRoute
               name={data?.payload?.name}
               departments={getDepartmentsFromWorkflow(data?.payload?.reviewers)}

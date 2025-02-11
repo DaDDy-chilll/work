@@ -12,12 +12,18 @@ import {
 } from '@mui/icons-material';
 import { colors } from '../assets/theme/theme';
 import { ROLES } from '../constants';
-import { useGetAllUsers } from '../api';
+import PropTypes from 'prop-types';
+import { AuthContext } from '../providers/AuthProvider';
+import { useContext } from 'react';
 
 export default function Navbar() {
-  const { data: users } = useGetAllUsers({ limit: 0 });
+  const { usersCount } = useContext(AuthContext);
+  // const { data: users } = useGetAllUsers({ limit: 0 });
 
   const { user } = useAuth();
+
+
+  
 
   const currentPath = useLocation(); //an object including the 'pathname' property
 
@@ -26,8 +32,8 @@ export default function Navbar() {
       icon: <UserIcon />,
       label: 'Users',
       to: '/users',
-      roles: [ROLES.SUPER_ADMIN],
-      count: users?.total,
+        roles: [ROLES.SUPER_ADMIN],
+      count: usersCount,
       index: 0,
     },
     {
@@ -125,3 +131,11 @@ export default function Navbar() {
     </Box>
   );
 }
+
+Navbar.propTypes = {
+  users: PropTypes.number
+};
+
+Navbar.defaultProps = {
+  users: 0
+};

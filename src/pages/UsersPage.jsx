@@ -7,7 +7,7 @@ import DataTable from '../components/ui/DataTable';
 import UserRow from '../components/row/UserRow';
 import { UserColumn } from '../components/column/UserColumn';
 import { colors } from '../assets/theme/theme';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AddOutlined } from '@mui/icons-material';
 import Navbar from '../components/Navbar';
 import ModalButton from '../components/ui/ModalButton';
@@ -15,8 +15,10 @@ import SearchBox from '../components/shared/SearchBox';
 import CustomPagination from '../components/shared/CustomPagination';
 import { useDepartmentFilter, usePageTitle } from '../hooks';
 import DepartmentFilter from '../components/shared/DepartmentFilter';
-
+import { AuthContext } from '../providers/AuthProvider';
+import { useContext } from 'react';
 const UsersPage = () => {
+  const { setUsersCount } = useContext(AuthContext);
   // eslint-disable-next-line no-unused-vars
   const { pageTitle, setPageTitle } = usePageTitle('Users');
   const {
@@ -48,7 +50,9 @@ const UsersPage = () => {
 
   const { isError, error, data, isFetching } = useGetAllUsers(query);
 
-
+  useEffect(() => {
+    setUsersCount(data?.total || 0);
+  }, [data?.total,setUsersCount]);
 
 
   if (isError) return <p>Error: {error?.response?.data?.message}</p>;

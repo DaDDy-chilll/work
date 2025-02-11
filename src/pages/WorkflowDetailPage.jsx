@@ -69,6 +69,7 @@ const WorkflowDetailPage = () => {
     });
   }
 
+  console.log('payloads', workflow);
 
   return (
     <Box
@@ -94,14 +95,14 @@ const WorkflowDetailPage = () => {
         px={5}
         sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}
       >
-        <Box sx={{ display: 'flex', gap: 5,justifyContent:'flex-start' }}>
+        <Box sx={{ display: 'flex', gap: 5, justifyContent: 'flex-start' }}>
           <Box
             sx={{
               display: 'flex',
               gap: 5,
               flexDirection: 'column',
               justifyContent: 'flex-start',
-              marginRight:'10%'
+              marginRight: '10%',
             }}
           >
             <Item
@@ -119,9 +120,8 @@ const WorkflowDetailPage = () => {
             <Item
               sx={{ color: colors.black[100] }}
               fieldName="Private Work Flow ?"
-              value={workflow?.payload?.type === 'normal' ? "No" : "Yes"}
+              value={workflow?.payload?.type === 'normal' ? 'No' : 'Yes'}
             />
-
           </Box>
 
           <Item
@@ -129,17 +129,20 @@ const WorkflowDetailPage = () => {
             fieldName="Workflow Type"
             value={WORKFLOW_TYPES_LIST[workflow?.payload?.workflowType]}
           />
-           {workflow?.payload?.workflowOrderId && (
+          {workflow?.payload?.workflowOrderId &&
             workflow?.payload?.reviewers && (
-              <Item fieldName="Purchase Order Work Flow" value={ <WorkflowRoute
-              name={workflow?.payload?.workflowOrderId.name}
-              departments={getDepartmentsFromWorkflow(workflow?.payload?.workflowOrderId.reviewers)}
-            />} />
-           
-          )
-          )}
-
-            
+              <Item
+                fieldName="Purchase Order Work Flow"
+                value={
+                  <WorkflowRoute
+                    name={workflow?.payload?.workflowOrderId.name}
+                    departments={getDepartmentsFromWorkflow(
+                      workflow?.payload?.workflowOrderId.reviewers,
+                    )}
+                  />
+                }
+              />
+            )}
         </Box>
         {workflowLoading ? (
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>

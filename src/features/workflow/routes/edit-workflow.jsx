@@ -38,7 +38,7 @@ export const EditWorkflow = () => {
       <div className="bg-white rounded-lg py-7 px-10">
         {data?.payload && (
           <WorkflowForm
-            initialValues={{...data?.payload,workflowOrderId:data?.payload._id}}
+            initialValues={{...data?.payload,workflowOrderId:data?.payload?.workflowOrderId || null}}
             id={id}
             departments={departments}
             users={users}
